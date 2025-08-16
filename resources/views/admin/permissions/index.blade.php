@@ -1,0 +1,203 @@
+@extends('admin.partial.app')
+@section('content')
+
+<link rel="stylesheet" href="{{asset('backend/assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css')}}" />
+<link rel="stylesheet" href="{{asset('backend/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css')}}" />
+<link rel="stylesheet" href="{{asset('backend/assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css')}}" />
+<link rel="stylesheet" href="{{asset('backend/assets/vendor/libs/@form-validation/form-validation.css')}}" />
+<script src="{{ asset('backend/assets/vendor/libs/jquery/jquery.js') }}"></script>
+<script src="{{ asset('backend/assets/vendor/libs/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('backend/assets/vendor/libs/datatables-bs5/datatables.bootstrap5.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('backend/assets/vendor/libs/animate-css/animate.css') }}" />
+    <link rel="stylesheet" href="{{ asset('backend/assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
+
+
+<div class="container-xxl flex-grow-1 container-p-y">
+
+<!-- <h4 class="mb-1">Permissions</h4> -->
+    <!-- Permission Table -->
+    <div class="card">
+    <h5 class="card-header d-flex justify-content-between align-items-center">
+    <span>Permissions</span>
+    @can("permissions create")
+    <button class="add-new btn btn-primary" data-bs-toggle='modal' data-bs-target='#addPermissionModal'>
+        <i class="icon-base ti tabler-plus icon-xs me-0 me-sm-2"></i>
+        <span class="d-none d-sm-inline-block">Add Permission</span>
+    </button>
+    @endcan
+</h5>
+@can("permissions read")
+    <div class="card-datatable table-responsive">
+        <table class="datatables-permissions table border-top">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Assigned To</th>
+                        <th>Created Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        @endcan
+    </div>
+    <!--/ Permission Table -->
+    <!-- Modal -->
+    <!-- Add Permission Modal -->
+@can("permissions read")
+    <div class="modal fade" id="addPermissionModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-simple">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="btn-close btn-pinned" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                    <div class="text-center mb-6">
+                        <h3>Add New Permission</h3>
+                        <p class="text-body-secondary">Permissions you may use and assign to your users.</p>
+                    </div>
+                    <form action="{{route('permissions.store')}}" method="post" class="row">
+                        @csrf
+                        <div class="col-12 form-control-validation mb-4">
+                            <label class="form-label" for="modalPermissionName">Permission Name</label>
+                            <input type="text" id="modalPermissionName" name="name" class="form-control"
+                                placeholder="Permission Name" autofocus />
+                        </div>
+                        <div class="col-12 mb-2">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="corePermission" />
+                                <label class="form-check-label" for="corePermission"> Set as core permission </label>
+                            </div>
+                        </div>
+                        <div class="col-12 text-center demo-vertical-spacing">
+                            <button type="submit" class="btn btn-primary me-sm-4 me-1">Create Permission</button>
+                            <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="modal"
+                                aria-label="Close">
+                                Discard
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endcan
+    <!--/ Add Permission Modal -->
+    <!-- Edit Permission Modal -->
+    <div class="modal fade" id="editPermissionModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-simple">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="btn-close btn-pinned" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                    <div class="text-center mb-6">
+                        <h3>Edit Permission</h3>
+                        <p class="text-body-secondary">Edit permission as per your requirements.</p>
+                    </div>
+                    <div class="alert alert-warning" role="alert">
+                        <h6 class="alert-heading mb-2">Warning</h6>
+                        <p class="mb-0">
+                            By editing the permission name, you might break the system permissions functionality. Please
+                            ensure you're absolutely certain before proceeding.
+                        </p>
+                    </div>
+                    <form id="editPermissionForm" class="row" onsubmit="return false">
+                        <div class="col-sm-9 form-control-validation">
+                            <label class="form-label" for="editPermissionName">Permission Name</label>
+                            <input type="text" id="editPermissionName" name="editPermissionName" class="form-control"
+                                placeholder="Permission Name" tabindex="-1" />
+                        </div>
+                        <div class="col-sm-3 mb-4">
+                            <label class="form-label invisible d-none d-sm-inline-block">Button</label>
+                            <button type="submit" class="btn btn-primary mt-1 mt-sm-0">Update</button>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="editCorePermission" />
+                                <label class="form-check-label" for="editCorePermission"> Set as core permission
+                                </label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/ Edit Permission Modal -->
+
+    <!-- /Modal -->
+</div>
+
+@endsection
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{asset('backend/assets/js/extended-ui-sweetalert2.js')}}"></script>
+@if(session('success'))
+<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Success!',
+        text: '{{ session('success') }}',
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'OK'
+    });
+</script>
+@endif
+@if($errors->any())
+<script>
+    Swal.fire({
+        icon: 'error',
+        title: 'Validation Error',
+        html: `{!! implode('<br>', $errors->all()) !!}`
+    });
+
+    // Optional: re-open modal after redirect
+    const addModal = new bootstrap.Modal(document.getElementById('addPermissionModal'));
+    addModal.show();
+</script>
+@endif
+<script src="{{asset('backend/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js')}}"></script><script>
+$(function () {
+    $('.datatables-permissions').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: '{{ route("permissions.index") }}',
+        columns: [
+            { data: 'id', name: 'id', visible: true },
+            { data: 'name', name: 'name' },
+            { data: 'assigned_to', name: 'assigned_to', orderable: false, searchable: false },
+            { data: 'created_at', name: 'created_at' },
+            { data: 'actions', name: 'actions', orderable: false, searchable: false }
+        ],
+    });
+});
+$(document).on('click', '.edit-permission', function () {
+    const id = $(this).data('id');
+    const name = $(this).data('name');
+
+    $('#editPermissionName').val(name);
+    $('#editPermissionForm').data('id', id); // For submit later
+});
+
+
+$('#editPermissionForm').submit(function (e) {
+    e.preventDefault();
+    const id = $(this).data('id');
+    $.ajax({
+        url: `/permissions/${id}`,
+        method: 'PUT',
+        data: {
+            name: $('#editPermissionName').val(),
+            _token: '{{ csrf_token() }}'
+        },
+        success: function (res) {
+            if (res.success) {
+                $('#editPermissionModal').modal('hide');
+                $('.datatables-permissions').DataTable().ajax.reload();
+            }
+        }
+    });
+});
+</script>

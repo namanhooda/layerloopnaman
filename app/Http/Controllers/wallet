@@ -1,0 +1,57 @@
+public function creditWallet($userId, $amount, $source = null, $description = null)
+{
+    $wallet = Wallet::firstOrCreate(['user_id' => $userId]);
+
+    $wallet->balance += $amount;
+    $wallet->save();
+
+    WalletTransaction::create([
+        'user_id' => $userId,
+        'type' => 'credit',
+        'amount' => $amount,
+        'source' => $source,
+        'description' => $description
+    ]);
+}
+public function debitWallet($userId, $amount, $source = null, $description = null)
+{
+    $wallet = Wallet::where('user_id', $userId)->firstOrFail();
+
+    if ($wallet->balance < $amount) {
+        throw new \Exception('Insufficient wallet balance');
+    }
+
+    $wallet->balance -= $amount;
+    $wallet->save();
+
+    WalletTransaction::create([
+        'user_id' => $userId,
+        'type' => 'debit',
+        'amount' => $amount,
+        'source' => $source,
+        'description' => $description
+    ]);
+}
+
+
+public function logOrderEvent($orderId, $status, $action, $remarks = null)
+{
+    OrderLog::create([
+        'order_id' => $orderId,
+        'user_id' => auth()->id(), // or admin ID if backend
+        'status' => $status,
+        'action' => $action,
+        'remarks' => $remarks,
+    ]);
+}
+
+
+$this->logOrderEvent($order->id, 'placed', 'Order placed successfully');
+When updating status to shipped:
+php
+Copy
+Edit
+$order->status = 'shipped';
+$order->save();
+
+$this->logOrderEvent($order->id, 'shipped', 'Order marked as shipped by Admin');
