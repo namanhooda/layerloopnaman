@@ -96,7 +96,7 @@
                             <div class="row">
                                 <div class="col-sm-6 col-md-4">
                                     <span class="widget-about-title">Got Question? Call us 24/7</span>
-                                    <a href="tel:123456789">+91 8059808185</a>
+                                    <a href="tel:8059808185">+91 8059808185</a>
                                 </div><!-- End .col-sm-6 -->
                                 <div class="col-sm-6 col-md-8">
                                     <span class="widget-about-title">Payment Method</span>
