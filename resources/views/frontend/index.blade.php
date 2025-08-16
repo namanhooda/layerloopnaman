@@ -48,7 +48,7 @@
                                     }
                                 }
                             }'>
-                    @foreach($featured as $products)
+                    @foreach($clothes as $products)
                     <div class="product product-11 text-center product-manual">
                         <figure class="product-media">
                             <a href="{{url('shop-product-detail/'.$products->id)}}">

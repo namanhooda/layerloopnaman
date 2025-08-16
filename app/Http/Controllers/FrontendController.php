@@ -25,8 +25,9 @@ class FrontendController extends Controller
         }
         $featured = Product::latest()->take(10)->get(); // Latest 10 products
         $sale     = Product::inRandomOrder()->take(10)->get(); // 10 random products
+        $clothes     = Product::where('category','tshirts')->inRandomOrder()->take(10)->get(); // 10 random products
         $rated    = Product::take(10)->get();    
-        return view('frontend.index',compact('featured','sale','rated'));
+        return view('frontend.index',compact('featured','sale','rated','clothes'));
     }
     public function about()
     {
