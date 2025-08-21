@@ -58,7 +58,8 @@
       bottom: 0;
       left: 0;
       width: 100%;
-      background: #fff;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
       display: flex;
       justify-content: space-around;
       align-items: center;
