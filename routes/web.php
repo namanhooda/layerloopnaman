@@ -7,6 +7,7 @@ use App\Http\Controllers\{CartController, FrontendController, AddressController,
 use Laravel\Fortify\Features;
 
 //// cart & Checkout
+Route::get('/send-mail', [App\Http\Controllers\FrontendController::class, 'sendMail']);
 Route::get('/', [FrontendController::class, 'index'])->name('index');
 Route::get('about', [FrontendController::class, 'about'])->name('about');
 Route::get('contact_us', [FrontendController::class, 'contactUs'])->name('contact_us');

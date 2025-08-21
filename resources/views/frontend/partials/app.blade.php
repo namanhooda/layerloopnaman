@@ -52,7 +52,42 @@
     border-radius: 10px !important;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05) !important;
 }
+    /* Footer Bar */
+    .mobile-footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #fff;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 10px 0;
+      border-top: 1px solid #ddd;
+      box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+      z-index: 999;
+    }
 
+    .mobile-footer a {
+      flex: 1;
+      text-align: center;
+      font-size: 14px;
+      text-decoration: none;
+      color: #333;
+    }
+
+    .mobile-footer a i {
+      display: block;
+      font-size: 3rem;
+      
+    }
+
+    /* Show only on mobile */
+    @media(min-width: 768px) {
+      .mobile-footer {
+        display: none;
+      }
+    }
 </style>
 
     <div class="page-wrapper">
@@ -62,6 +97,28 @@
             @yield('content')
         
         @include('frontend.partials.footer')
+        <div class="mobile-footer">
+           <a href="{{url('/')}}" title="My account">
+                        <div class="icon">
+                            <i class="icon-user"></i>
+                        </div>
+                    </a>
+            <a href="{{url('wishlist')}}" title="My account">
+                        <div class="icon">
+                            <i class="icon-heart-o"></i>
+                        </div>
+                    </a>
+            <a href="{{url('cart')}}" title="My account">
+                        <div class="icon">
+                            <i class="icon-shopping-cart"></i>
+                        </div>
+                    </a>
+            <a href="{{url('account')}}" title="My account">
+                        <div class="icon">
+                            <i class="icon-user"></i>
+                        </div>
+                    </a>
+        </div>
         <!-- End .footer -->
     </div><!-- End .page-wrapper -->
     <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>

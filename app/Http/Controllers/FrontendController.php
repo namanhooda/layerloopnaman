@@ -4,9 +4,28 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\ProductReview;
 use Illuminate\Http\Request;
+use App\Mail\TestMail;
+use App\Mail\WelcomeMail;
+use Illuminate\Support\Facades\Mail;
 
 class FrontendController extends Controller
 {
+
+    public function sendMail()
+{
+
+
+
+
+        $title = 'Welcome to the laracoding.com example email';
+        $body = 'Thank you for participating!';
+
+        Mail::to('namanhooda86@gmail.com')->send(new WelcomeMail($title, $body));
+
+        return "Email sent successfully!";
+
+
+}
     public function index()
     {   
 
