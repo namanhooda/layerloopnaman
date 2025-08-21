@@ -101,21 +101,25 @@
            <a href="{{url('/')}}" title="My account">
                         <div class="icon">
                             <i class="icon-user"></i>
+                            Home
                         </div>
                     </a>
             <a href="{{url('wishlist')}}" title="My account">
                         <div class="icon">
                             <i class="icon-heart-o"></i>
+                            Wishlist
                         </div>
                     </a>
             <a href="{{url('cart')}}" title="My account">
                         <div class="icon">
                             <i class="icon-shopping-cart"></i>
+                            Cart
                         </div>
                     </a>
             <a href="{{url('account')}}" title="My account">
                         <div class="icon">
                             <i class="icon-user"></i>
+                            Account
                         </div>
                     </a>
         </div>
