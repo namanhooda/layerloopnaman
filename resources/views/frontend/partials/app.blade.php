@@ -62,7 +62,7 @@
       display: flex;
       justify-content: space-around;
       align-items: center;
-      padding: 10px 0;
+      padding-bottom: 10px;
       border-top: 1px solid #ddd;
       box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
       z-index: 999;
@@ -100,25 +100,25 @@
         <div class="mobile-footer">
            <a href="{{url('/')}}" title="My account">
                         <div class="icon">
-                            <i class="icon-user"></i>
+                            <i class="icon-user" style="    margin-bottom: -15px;"></i>
                             Home
                         </div>
                     </a>
             <a href="{{url('wishlist')}}" title="My account">
                         <div class="icon">
-                            <i class="icon-heart-o"></i>
+                            <i class="icon-heart-o" style="    margin-bottom: -15px;"></i>
                             Wishlist
                         </div>
                     </a>
             <a href="{{url('cart')}}" title="My account">
                         <div class="icon">
-                            <i class="icon-shopping-cart"></i>
+                            <i class="icon-shopping-cart" style="    margin-bottom: -15px;"></i>
                             Cart
                         </div>
                     </a>
             <a href="{{url('account')}}" title="My account">
                         <div class="icon">
-                            <i class="icon-user"></i>
+                            <i class="icon-user" style="    margin-bottom: -15px;"></i>
                             Account
                         </div>
                     </a>
