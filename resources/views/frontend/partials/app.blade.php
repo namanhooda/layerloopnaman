@@ -35,6 +35,15 @@
     <link rel="stylesheet" href="{{asset('frontend/assets/css/style.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/assets/css/skins/skin-demo-2.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/assets/css/demos/demo-2.css')}}">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-T8NR051ED9"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-T8NR051ED9');
+    </script>
 </head>
 
 <body>
