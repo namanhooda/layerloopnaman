@@ -43,11 +43,11 @@ Route::get('/order-success', function () {
 
 // Route::middleware(['role:admin'])->group(function () {
     Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])->group(function () {
-        // Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/dashboard', [DashboardController::class, 'ecomDashboard'])->name('dashboard');
 
-        Route::get('/dashboard', function () {
-            return view('dashboard');
-        })->name('dashboard');
+        // Route::get('/dashboard', function () {
+        //     return view('dashboard');
+        // })->name('dashboard');
         Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
         Route::resource('roles', RoleController::class);
         Route::resource('permissions', \App\Http\Controllers\Admin\PermissionController::class)->except(['create', 'show']);
