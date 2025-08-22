@@ -315,5 +315,13 @@
 
     @include('frontend.sections.blogs')
 </main><!-- End .main -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-T8NR051ED9"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
+  gtag('config', 'G-T8NR051ED9');
+</script>
 @endsection
