@@ -9,6 +9,25 @@
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">
                         <div class="row">
+                            <h2>Website Analytics (Last 7 Days)</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Active Users</th>
+            <th>Page Views</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach($report as $row)
+            <tr>
+                <td>{{ $row->getDimensionValues()[0]->getValue() }}</td>
+                <td>{{ $row->getMetricValues()[0]->getValue() }}</td>
+                <td>{{ $row->getMetricValues()[1]->getValue() }}</td>
+            </tr>
+        @endforeach
+    </tbody>
+</table>
                             <div class="col-12">
                                 <h5 class="text-white mb-0">Website Analytics</h5>
                                 <small>Total 28.5% Conversion Rate</small>

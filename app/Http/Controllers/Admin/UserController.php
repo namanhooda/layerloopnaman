@@ -45,8 +45,8 @@ class UserController extends Controller
                     return $user->created_at;
                 })
                 ->addColumn('actions', function ($user) {
-                    $editUrl = route('users.edit', $user->id);
-                    $deleteUrl = route('users.destroy', $user->id);
+                    $editUrl = route('admin.users.edit', $user->id);
+                    $deleteUrl = route('admin.users.destroy', $user->id);
                 
                     $actions = '<div class="d-flex align-items-center">';
                 
@@ -75,71 +75,98 @@ class UserController extends Controller
 
         return view('admin.users.index', compact('roles'));
     }
-
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'mobile' => 'nullable|string|max:15',
-            'role_id' => 'required|exists:roles,id',
-        ]);
+        try {
+            $validated = $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|unique:users,email',
+                'mobile' => 'nullable|string|max:15',
+                'role_id' => 'required|exists:roles,id',
+            ]);
 
-        // Create the user (set a default password or generate one)
-        $user = User::create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'phone' => $validated['mobile'],
-            'password' => Hash::make('password123'), // you can change this
-            'status' => 1, // you can change this
-        ]);
+            // Create the user
+            $user = User::create([
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+                'phone' => $validated['mobile'],
+                'password' => Hash::make('password123'), // default password
+                'status' => 1,
+            ]);
 
-        // Assign role
-        $role = Role::find($validated['role_id']);
-        $user->assignRole($role);
+            // Assign role
+            $role = Role::find($validated['role_id']);
+            $user->assignRole($role);
 
-        return redirect()->back()->with('success', 'User created and role assigned.');
+            return redirect()->route('admin.users.index')->with('success', 'User created and role assigned successfully.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Failed to create user. Please try again.');
+        }
     }
+
     public function edit(User $User)
     {
         $user = $User;
         return view('admin.users.edit', compact('user'));
     }
-
     public function update(Request $request, User $user)
     {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', Rule::unique('users')->ignore($user->id)],
-            'mobile' => ['nullable', 'string', 'max:15'],
-            'password' => ['nullable', 'confirmed', 'min:6'],
-            'image' => ['nullable', 'image', 'max:2048'],
-            'status' => ['required', 'boolean'],
-        ]);
+        try {
+            $request->validate([
+                'name' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'email', Rule::unique('users')->ignore($user->id)],
+                'mobile' => ['nullable', 'string', 'max:15'],
+                'password' => ['nullable', 'confirmed', 'min:6'],
+                'image' => ['nullable', 'image', 'max:2048'],
+                'status' => ['required', 'boolean'],
+            ]);
 
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->phone = $request->mobile;
-        $user->status = $request->status;
+            $user->name   = $request->name;
+            $user->email  = $request->email;
+            $user->phone  = $request->mobile;
+            $user->status = $request->status;
 
-        if ($request->filled('password')) {
-            $user->password = Hash::make($request->password);
+            if ($request->filled('password')) {
+                $user->password = Hash::make($request->password);
+            }
+
+            if ($request->hasFile('image')) {
+                // Delete old image if exists
+                if ($user->profile && Storage::disk('public')->exists($user->profile)) {
+                    Storage::disk('public')->delete($user->profile);
+                }
+
+                // Upload new image to profile-photos (public disk)
+                $user->profile = $request->file('image')->store('profile-photos', 'public');
+            }
+
+            $user->save();
+
+            return redirect()->route('admin.users.index')->with('success', 'User updated successfully.');
+        } catch (\Exception $e) {
+
+            return redirect()->back()->with('error', 'Failed to update user. Please try again.' .$e->getMessage());
         }
+    }
+    public function destroy($id)
+    {
+        try {
+            $user = User::findOrFail($id);
 
-
-        if ($request->hasFile('image')) {
-            // Delete old image if exists
+            // Delete profile image if exists
             if ($user->profile && Storage::disk('public')->exists($user->profile)) {
                 Storage::disk('public')->delete($user->profile);
             }
-        
-            // Upload new image to profile-photos (public disk)
-            $user->profile = $request->file('image')->store('profile-photos', 'public');
-        }
-        
-        $user->save();
 
-        return redirect()->back()->with('success', 'User updated successfully.');
+            $user->delete();
+
+            return redirect()->route('admin.users.index')->with('success', 'User deleted successfully.');
+        } catch (\Exception $e) {
+            \Log::error('User delete failed: ' . $e->getMessage());
+
+            return redirect()->back()->with('error', 'Failed to delete user. Please try again.');
+        }
     }
+
 
 }

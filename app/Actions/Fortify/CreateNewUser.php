@@ -39,7 +39,7 @@ class CreateNewUser implements CreatesNewUsers
         ]);
 
         // ✅ Assign default role ID 3 (safely)
-        $defaultRole = Role::find(3);
+        $defaultRole = Role::find(2);
         if ($defaultRole) {
             $user->assignRole($defaultRole);
         }

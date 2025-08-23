@@ -90,57 +90,63 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'productTitle' => 'required|string|max:255',
-            'productSku' => 'nullable|string|max:255',
-            'productBarcode' => 'nullable|string|max:255',
-            'description' => 'nullable|string',
-            'price' => 'required|numeric',
-            'discount_price' => 'nullable|numeric',
-            'stock' => 'required|integer|min:0',
-            'featuredimage' => 'nullable|image|mimes:jpeg,png,webp,jpg|max:5000',
-            'images.*' => 'nullable|image|mimes:jpeg,webp,png,jpg|max:5000',
-            'category' => 'required|string',
-            'status' => 'nullable|string',
-            'tags' => 'nullable|string',
-        ]);
-    
-        // Handle single featured image
-        $featuredImagePath = null;
-        if ($request->hasFile('featuredimage')) {
-            $featuredImagePath = $request->file('featuredimage')->store('product_featured', 'public');
-        }
-    
-        // Handle multiple product images
-        $imagePaths = [];
-        if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $image) {
-                $imagePaths[] = $image->store('product_images', 'public');
+        try {
+            $request->validate([
+                'productTitle' => 'required|string|max:255',
+                'productSku' => 'nullable|string|max:255',
+                'productBarcode' => 'nullable|string|max:255',
+                'description' => 'nullable|string',
+                'price' => 'required|numeric',
+                'discount_price' => 'nullable|numeric',
+                'stock' => 'required|integer|min:0',
+                'featuredimage' => 'nullable|image|mimes:jpeg,png,webp,jpg|max:5000',
+                'images.*' => 'nullable|image|mimes:jpeg,webp,png,jpg|max:5000',
+                'category' => 'required|string',
+                'status' => 'nullable|string',
+                'tags' => 'nullable|string',
+            ]);
+
+            // Handle single featured image
+            $featuredImagePath = null;
+            if ($request->hasFile('featuredimage')) {
+                $featuredImagePath = $request->file('featuredimage')->store('product_featured', 'public');
             }
+
+            // Handle multiple product images
+            $imagePaths = [];
+            if ($request->hasFile('images')) {
+                foreach ($request->file('images') as $image) {
+                    $imagePaths[] = $image->store('product_images', 'public');
+                }
+            }
+
+            $code = 'LL' . str_pad(mt_rand(0, 99999999), 8, '0', STR_PAD_LEFT);
+
+            Product::create([
+                'name' => $request->productTitle,
+                'sku' => $request->productSku,
+                'code' => $code,
+                'barcode' => $request->productBarcode,
+                'description' => $request->description,
+                'price' => $request->price,
+                'discounted_price' => $request->discount_price,
+                'stock_quantity' => $request->stock,
+                'charge_tax' => $request->has('charge_tax'),
+                'in_stock' => $request->has('in_stock'),
+                'image_path' => !empty($imagePaths) ? json_encode($imagePaths) : null,
+                'featured_image' => $featuredImagePath,
+                'category' => $request->category,
+                'status' => $request->status ?? 'Draft',
+                'tags' => $request->tags,
+                'is_draft' => $request->has('draft'),
+            ]);
+
+            return redirect()->route('admin.products.index')->with('success', 'Product created successfully!');
+        } catch (\Exception $e) {
+            return redirect()->back()->withInput()->with('error', 'Failed to create product. Please try again. Error: ' . $e->getMessage());
         }
-    
-        $code = 'LL' . str_pad(mt_rand(0, 99999999), 8, '0', STR_PAD_LEFT);
-        Product::create([
-            'name' => $request->productTitle,
-            'sku' => $request->productSku,
-            'code' => $code,
-            'barcode' => $request->productBarcode,
-            'description' => $request->description,
-            'price' => $request->price,
-            'discounted_price' => $request->discount_price,
-            'stock_quantity' => $request->stock,
-            'charge_tax' => $request->has('charge_tax'),
-            'in_stock' => $request->has('in_stock'),
-            'image_path' => !empty($imagePaths) ? json_encode($imagePaths) : null,
-            'featured_image' => $featuredImagePath,
-            'category' => $request->category,
-            'status' => $request->status ?? 'Draft',
-            'tags' => $request->tags,
-            'is_draft' => $request->has('draft'),
-        ]);
-    
-        return redirect()->route('admin.products.index')->with('success', 'Product created successfully!');
     }
+
     
     
 

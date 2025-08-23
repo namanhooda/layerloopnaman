@@ -4,7 +4,7 @@
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body mx-0 flex-grow-0 p-6 h-100">
-        <form class="add-new-user pt-0" id="addNewUserForm" method="POST" action="{{ route('users.store') }}">
+        <form class="add-new-user pt-0" id="addNewUserForm" method="POST" action="{{ route('admin.users.store') }}">
             @csrf
             <div class="mb-6 form-control-validation">
                 <label class="form-label" for="add-user-fullname">Full Name</label>

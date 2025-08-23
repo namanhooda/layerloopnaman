@@ -40,7 +40,7 @@
                     <div class="d-flex justify-content-between align-items-end">
                         <div class="role-heading">
                             <h5 class="mb-1">{{$role->name}}</h5>
-                            <a href="{{ route('roles.edit', $role->id) }}" class="role-edit-modal">
+                            <a href="{{ route('admin.roles.edit', $role->id) }}" class="role-edit-modal">
                                 <span>Edit Role</span>
                             </a>
                         </div>
@@ -103,7 +103,7 @@
                     });
                     @endphp
 
-                    <form action="{{ route('roles.store') }}" method="POST" class="row g-3">
+                    <form action="{{ route('admin.roles.store') }}" method="POST" class="row g-3">
                         @csrf
 
                         <div class="col-12 form-control-validation mb-3">

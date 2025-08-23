@@ -125,7 +125,7 @@
           <a href="#" class="btn btn-icon rounded-circle btn-text-github me-1_5">
             <i class="icon-base ti tabler-brand-github-filled icon-20px"></i>
           </a>
-          <a href="#" class="btn btn-icon rounded-circle btn-text-google-plus">
+          <a href="{{ url('auth/google') }}" class="btn btn-icon rounded-circle btn-text-google-plus">
             <i class="icon-base ti tabler-brand-google-filled icon-20px"></i>
           </a>
         </div>

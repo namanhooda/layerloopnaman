@@ -5,9 +5,37 @@ use App\Http\Controllers\Admin\{RoleController, PermissionController, UserContro
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\{CartController, FrontendController, AddressController, WishlistController};
 use Laravel\Fortify\Features;
+use Laravel\Socialite\Facades\Socialite;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+
+
+
+
+
+Route::get('auth/google', function () {
+    return Socialite::driver('google')->redirect();
+});
+
+Route::get('auth/google/callback', function () {
+    $googleUser = Socialite::driver('google')->stateless()->user();
+
+    $user = User::updateOrCreate(
+        ['email' => $googleUser->getEmail()],
+        [
+            'name' => $googleUser->getName(),
+            'password' => $googleUser->getName().'@12345',
+            'google_id' => $googleUser->getId(),
+            'avatar' => $googleUser->getAvatar(),
+        ]
+    );
+    Auth::login($user);
+    return redirect('/dashboard'); // change to your home/dashboard
+});
+
 
 //// cart & Checkout
-Route::get('/send-mail', [App\Http\Controllers\FrontendController::class, 'sendMail']);
+Route::get('/send-mail', [FrontendController::class, 'sendMail']);
 Route::get('/', [FrontendController::class, 'index'])->name('index');
 Route::get('about', [FrontendController::class, 'about'])->name('about');
 Route::get('contact_us', [FrontendController::class, 'contactUs'])->name('contact_us');
@@ -41,18 +69,15 @@ Route::get('/order-success', function () {
     return view('frontend.order-success');
 })->name('order.success');
 
-// Route::middleware(['role:admin'])->group(function () {
+Route::middleware(['role:Admin'])->group(function () {
     Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])->group(function () {
-        Route::get('/dashboard', [DashboardController::class, 'ecomDashboard'])->name('dashboard');
-
-        // Route::get('/dashboard', function () {
-        //     return view('dashboard');
-        // })->name('dashboard');
-        Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
-        Route::resource('roles', RoleController::class);
-        Route::resource('permissions', \App\Http\Controllers\Admin\PermissionController::class)->except(['create', 'show']);
-        Route::resource('users', \App\Http\Controllers\Admin\UserController::class)->except(['create', 'show']);
+        Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
         Route::prefix('admin')->name('admin.')->group(function () {
+
+            Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+            Route::resource('roles', RoleController::class);
+            Route::resource('permissions', \App\Http\Controllers\Admin\PermissionController::class)->except(['create', 'show']);
+            Route::resource('users', \App\Http\Controllers\Admin\UserController::class)->except(['create', 'show']);
 
             //// ecom
             Route::get('/ecom-dashboard', [DashboardController::class, 'ecomDashboard'])->name('ecom.dashboard');
@@ -71,4 +96,4 @@ Route::get('/order-success', function () {
             Route::resource('newsletters', NewsLetterController::class);
         });
     });
-// });
+});

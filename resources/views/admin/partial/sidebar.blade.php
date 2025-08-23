@@ -25,13 +25,6 @@
             </a>
             <ul class="menu-sub">
 
-                <!-- eCommerce Dashboard -->
-                <li class="menu-item {{ request()->routeIs('admin.ecom.dashboard') ? 'active' : '' }}">
-                    <a href="{{ route('admin.ecom.dashboard') }}" class="menu-link">
-                        <div data-i18n="Dashboard">Dashboard</div>
-                    </a>
-                </li>
-
                 <!-- Products -->
                 <li class="menu-item {{ request()->routeIs('admin.products.*') || request()->routeIs('admin.product-categories.*') || request()->routeIs('admin.coupons.*') ? 'active open' : '' }}">
                     <a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -86,7 +79,7 @@
         <!-- Users -->
         @can('users read')
         <li class="menu-item {{ request()->routeIs('users.index') ? 'active' : '' }}">
-            <a href="{{ route('users.index') }}" class="menu-link">
+            <a href="{{ route('admin.users.index') }}" class="menu-link">
                 <i class="menu-icon icon-base ti tabler-user"></i>
                 <div data-i18n="Users">Users</div>
             </a>
@@ -103,14 +96,14 @@
             <ul class="menu-sub">
                 @can('role read')
                 <li class="menu-item {{ request()->routeIs('roles.index') ? 'active' : '' }}">
-                    <a href="{{ route('roles.index') }}" class="menu-link">
+                    <a href="{{ route('admin.roles.index') }}" class="menu-link">
                         <div data-i18n="Roles">Roles</div>
                     </a>
                 </li>
                 @endcan
                 @can('permissions read')
                 <li class="menu-item {{ request()->routeIs('permissions.index') ? 'active' : '' }}">
-                    <a href="{{ route('permissions.index') }}" class="menu-link">
+                    <a href="{{ route('admin.permissions.index') }}" class="menu-link">
                         <div data-i18n="Permission">Permission</div>
                     </a>
                 </li>
@@ -165,9 +158,16 @@
 
         <!-- Profile -->
         <li class="menu-item {{ request()->routeIs('profile.index') ? 'active' : '' }}">
-            <a href="{{ route('profile.index') }}" class="menu-link">
+            <a href="{{ route('admin.profile.index') }}" class="menu-link">
                 <i class="menu-icon icon-base ti tabler-user"></i>
                 <div data-i18n="Profile">Profile</div>
+            </a>
+        </li>
+        <!-- Profile -->
+        <li class="menu-item {{ request()->routeIs('profile.index') ? 'active' : '' }}">
+            <a href="{{ route('admin.profile.index') }}" class="menu-link">
+                <i class="menu-icon icon-base ti tabler-user"></i>
+                <div data-i18n="Profile">Setting</div>
             </a>
         </li>
 
