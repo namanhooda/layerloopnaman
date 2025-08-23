@@ -9,6 +9,7 @@ use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
+use App\Http\Controllers\ContactController;
 
 
 
@@ -46,6 +47,9 @@ Route::get('shop', [FrontendController::class, 'shop'])->name('shop');
 Route::get('category/{category_name}', [FrontendController::class, 'categoryProduct'])->name('categoryProduct');
 Route::get('/search-suggestions', [FrontendController::class, 'searchSuggestions']);
 
+
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+
 Route::get('shop-product-detail/{id}', [FrontendController::class, 'detail'])->name('index');
 Route::get('account', [FrontendController::class, 'account'])->name('account');
 Route::post('adrrrs', [FrontendController::class, 'storeReview'])->name('reviews.store');
@@ -53,6 +57,7 @@ Route::post('adrrrs', [FrontendController::class, 'storeReview'])->name('reviews
 Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
 Route::post('/cart/remove', [CartController::class, 'add'])->name('cart.remove');
 Route::get('cart', [CartController::class, 'cart'])->name('cart');
+
 Route::get('checkout', [CartController::class, 'checkout'])->name('checkout');
 Route::post('ads', [AddressController::class, 'store'])->name('addresses.store');
 Route::post('/apply-coupon', [CartController::class, 'applyCoupon'])->name('apply.coupon');
@@ -73,6 +78,8 @@ Route::middleware(['role:Admin'])->group(function () {
     Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
         Route::prefix('admin')->name('admin.')->group(function () {
+
+            Route::get('contact', [ContactController::class, 'index'])->name('contact.index');
 
             Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
             Route::resource('roles', RoleController::class);

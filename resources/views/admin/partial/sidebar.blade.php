@@ -1,6 +1,6 @@
 <aside id="layout-menu" class="layout-menu menu-vertical menu">
     <div class="app-brand demo">
-        <a href="index.html" class="app-brand-link">
+        <a href="{{url('/')}}" class="app-brand-link">
             <img src="{{ asset('images/WhatsApp Image 2025-07-22 at 19.56.01.jpeg') }}" alt="Molla Logo"
                 style="width: 100%;">
         </a>
@@ -167,7 +167,13 @@
         <li class="menu-item {{ request()->routeIs('profile.index') ? 'active' : '' }}">
             <a href="{{ route('admin.profile.index') }}" class="menu-link">
                 <i class="menu-icon icon-base ti tabler-user"></i>
-                <div data-i18n="Profile">Setting</div>
+                <div data-i18n="Setting">Setting</div>
+            </a>
+        </li>
+        <li class="menu-item {{ request()->routeIs('profile.index') ? 'active' : '' }}">
+            <a href="{{ route('admin.contact.index') }}" class="menu-link">
+                <i class="menu-icon icon-base ti tabler-user"></i>
+                <div data-i18n="Contacts">Inquaries</div>
             </a>
         </li>
 
