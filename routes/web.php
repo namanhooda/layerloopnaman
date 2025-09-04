@@ -34,7 +34,6 @@ Route::get('auth/google/callback', function () {
     return redirect('/dashboard'); // change to your home/dashboard
 });
 
-
 //// cart & Checkout
 Route::get('/send-mail', [FrontendController::class, 'sendMail']);
 Route::get('/', [FrontendController::class, 'index'])->name('index');
@@ -46,7 +45,6 @@ Route::get('blog-detail', [FrontendController::class, 'blogDetail'])->name('blog
 Route::get('shop', [FrontendController::class, 'shop'])->name('shop');
 Route::get('category/{category_name}', [FrontendController::class, 'categoryProduct'])->name('categoryProduct');
 Route::get('/search-suggestions', [FrontendController::class, 'searchSuggestions']);
-
 
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 

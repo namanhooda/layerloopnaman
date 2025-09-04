@@ -103,27 +103,11 @@
                                             <h2 class="card-title">
                                                 <a role="button" data-toggle="collapse" href="#collapse-1"
                                                     aria-expanded="true" aria-controls="collapse-1">
-                                                    Cash on Delivery
-                                                </a>
-                                            </h2>
-                                        </div>
-                                        <div id="collapse-1" class="collapse show" aria-labelledby="heading-1"
-                                            data-parent="#accordion-payment">
-                                            <div class="card-body">
-                                                Pay with cash upon delivery.
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card">
-                                        <div class="card-header" id="heading-1">
-                                            <h2 class="card-title">
-                                                <a role="button" data-toggle="collapse" href="#collapse-1"
-                                                    aria-expanded="true" aria-controls="collapse-1">
                                                     Pay Online
                                                 </a>
                                             </h2>
                                         </div>
-                                        <div id="collapse-1" class="collapse show" aria-labelledby="heading-1"
+                                        <div id="collapse-3" class="collapse show" aria-labelledby="heading-1"
                                             data-parent="#accordion-payment">
                                             <div class="card-body">
                                                 Pay with cash upon delivery.
@@ -143,6 +127,22 @@
                                             data-parent="#accordion-payment">
                                             <div class="card-body">
                                                 Pay with cash upon delivery.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header" id="heading-1">
+                                            <h2 class="card-title">
+                                                <a role="button" data-toggle="collapse" href="#collapse-1"
+                                                    aria-expanded="true" aria-controls="collapse-1">
+                                                    Cash on Delivery
+                                                </a>
+                                            </h2>
+                                        </div>
+                                        <div id="collapse-2" class="collapse show" aria-labelledby="heading-1"
+                                            data-parent="#accordion-payment">
+                                            <div class="card-body">
+                                                $100 will be charged of you select cash on delivery.
                                             </div>
                                         </div>
                                     </div>
