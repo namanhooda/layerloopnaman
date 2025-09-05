@@ -47,7 +47,7 @@
                     </a>
                 </div><!-- End .compare-dropdown -->
 
-                <div class="wishlist">
+                <div class="wishlist d-none d-md-block" style="padding-top: 3.8rem;">
                     <a href="{{url('wishlist')}}" title="Wishlist">
                         <div class="icon">
                             <i class="icon-heart-o"></i>
@@ -57,7 +57,7 @@
                     </a>
                 </div><!-- End .compare-dropdown -->
 
-                <div class="dropdown cart-dropdown">
+                <div class="dropdown cart-dropdown d-none d-md-block" style="padding-top: 3.8rem;">
                     <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false" data-display="static">
                         <div class="icon">
