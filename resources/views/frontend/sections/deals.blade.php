@@ -7,7 +7,7 @@
                             <h4>Limited Quantities</h4>
                             <h2>Deal of the Day</h2>
 
-                            <h3 class="product-title"><a href="product.html">Lithiophane Keychains</a></h3><!-- End .product-title -->
+                            <h3 class="product-title"><a href="{{url('shop')}}">Lithiophane Keychains</a></h3><!-- End .product-title -->
 
                             <div class="product-price">
                                 <span class="new-price">₹ 300.00</span>
@@ -16,12 +16,12 @@
 
                             <div class="deal-countdown" data-until="+10h"></div><!-- End .deal-countdown -->
 
-                            <a href="product.html" class="btn btn-primary">
+                            <a href="{{url('shop')}}" class="btn btn-primary">
                                 <span>Shop Now</span><i class="icon-long-arrow-right"></i>
                             </a>
                         </div><!-- End .deal-content -->
                         <div class="deal-image">
-                            <a href="product.html">
+                            <a href="{{url('shop')}}">
                                 <img src="{{asset('frontend/assets/images/demos/demo-2/deal/product-1.jpg')}}"
                                     alt="image">
                             </a>
@@ -38,9 +38,9 @@
 
                         <div class="banner-content banner-content-top banner-content-center">
                             <h4 class="banner-subtitle">The Best Choice</h4><!-- End .banner-subtitle -->
-                            <h3 class="banner-title">AGEN</h3><!-- End .banner-title -->
-                            <div class="banner-text text-primary">$49.99</div><!-- End .banner-text -->
-                            <a href="#" class="btn btn-outline-gray banner-link">Shop Now<i
+                            <h3 class="banner-title text-white">Virel Chess Set</h3><!-- End .banner-title -->
+                            <div class="banner-text text-primary">₹ 799</div><!-- End .banner-text -->
+                            <a href="{{url('shop')}}" class="btn btn-outline-white banner-link">Shop Now<i
                                     class="icon-long-arrow-right"></i></a>
                         </div><!-- End .banner-content -->
                     </div><!-- End .banner -->

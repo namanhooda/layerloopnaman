@@ -5,9 +5,9 @@
             <div class="intro-slide" style="background-image: url(frontend/assets/images/demos/demo-2/slider/slide-1.jpg);">
                 <div class="container intro-content">
                     <h3 class="intro-subtitle">Customized</h3>
-                    <h1 class="intro-title" style="margin-bottom: 0px !important;">Customized Lithiofanes</h1><h2>Convert Your Image To Lightbox.</h2>
+                    <h1 class="intro-title" style="margin-bottom: 0px !important;">Customized Lithiofanes</h1><h2 style="color: lightgrey !important;">Convert Your Image To Lightbox.</h2>
 
-                    <a href="category.html" class="btn btn-primary">
+                    <a href="{{url('shop')}}" class="btn btn-primary">
                         <span>Shop Now</span>
                         <i class="icon-long-arrow-right"></i>
                     </a>
@@ -20,7 +20,7 @@
                     <h1 class="intro-title">Ypperlig <br>Coffee Table <br><span
                             class="text-primary"><sup>$</sup>49,99</span></h1><!-- End .intro-title -->
 
-                    <a href="category.html" class="btn btn-primary">
+                    <a href="{{url('shop')}}" class="btn btn-primary">
                         <span>Shop Now</span>
                         <i class="icon-long-arrow-right"></i>
                     </a>
@@ -34,10 +34,10 @@
                     <h1 class="intro-title" style="margin-bottom: 0px !important;">Customized Tshirts </h1>
                     <h2 style="color: lightgrey !important;">Walk In Style With Our Tshirts.</h2>
                     
-                            <span class="text-primary">
+                            <!-- <span class="text-primary">
                             <sup class="text-white font-weight-light">from</sup><sup>$</sup>9,99
-                        </span>
-                    <a href="category.html" class="btn btn-primary">
+                        </span> -->
+                    <a href="{{url('shop')}}" class="btn btn-primary">
                         <span>Shop Now</span>
                         <i class="icon-long-arrow-right"></i>
                     </a>

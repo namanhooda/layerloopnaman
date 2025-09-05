@@ -8,7 +8,7 @@
                     <a class="nav-link active" id="top-all-link" data-toggle="tab" href="#top-all-tab" role="tab"
                         aria-controls="top-all-tab" aria-selected="true">All</a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link" id="top-fur-link" data-toggle="tab" href="#top-fur-tab" role="tab"
                         aria-controls="top-fur-tab" aria-selected="false">Furniture</a>
                 </li>
@@ -19,7 +19,7 @@
                 <li class="nav-item">
                     <a class="nav-link" id="top-light-link" data-toggle="tab" href="#top-light-tab" role="tab"
                         aria-controls="top-light-tab" aria-selected="false">Lighting</a>
-                </li>
+                </li> -->
             </ul>
         </div><!-- End .heading -->
 
@@ -48,10 +48,10 @@
                                     <div class="product-cat">
                                         <a href="#">Lighting</a>
                                     </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.html">Petite Table Lamp</a></h3>
+                                    <h3 class="product-title"><a href="product.html">{{$products->name}}</a></h3>
                                     <!-- End .product-title -->
                                     <div class="product-price">
-                                        $401,00
+                                        ₹ {{$products->discounted_price}}
                                     </div><!-- End .product-price -->
                                 </div><!-- End .product-body -->
                                 <div class="product-action">
@@ -194,7 +194,7 @@
                                     <h3 class="product-title"><a href="product.html">Madra Log Holder</a></h3>
                                     <!-- End .product-title -->
                                     <div class="product-price">
-                                        $401,00
+                                        
                                     </div><!-- End .product-price -->
 
                                     <div class="product-nav product-nav-dots">
@@ -335,7 +335,7 @@
                                     <h3 class="product-title"><a href="product.html">Petite Table Lamp</a></h3>
                                     <!-- End .product-title -->
                                     <div class="product-price">
-                                        $401,00
+                                        ₹ 
                                     </div><!-- End .product-price -->
                                 </div><!-- End .product-body -->
                                 <div class="product-action">
@@ -367,7 +367,7 @@
                                     <h3 class="product-title"><a href="product.html">Carronade Large Suspension Lamp</a>
                                     </h3><!-- End .product-title -->
                                     <div class="product-price">
-                                        $401,00
+                                        ₹ 
                                     </div><!-- End .product-price -->
 
                                     <div class="product-nav product-nav-dots">

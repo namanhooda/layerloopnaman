@@ -7973,13 +7973,11 @@ p {
     background-color: rgba(255, 255, 255, 0.95);
     z-index: 10;
     transition: all .35s ease;
-    opacity: 0;
-    visibility: hidden;
     transform: translateY(100%)
 }
 
-.product:hover .product-action,
-.product:focus .product-action {
+.product .product-action,
+.product .product-action {
     visibility: visible;
     opacity: 1;
     transform: translateY(0)
@@ -8067,13 +8065,16 @@ p {
     top: 2rem;
     background-color: transparent;
     z-index: 10;
-    visibility: hidden;
-    opacity: 0;
+   
+    visibility: visible;
+    opacity: 1;
+    transform: translateX(0);
+    
     transition: all .35s ease;
     transform: translateX(-15px)
 }
 
-.product:hover .product-action-vertical {
+.product .product-action-vertical {
     visibility: visible;
     opacity: 1;
     transform: translateX(0)
@@ -8988,8 +8989,8 @@ p {
     box-shadow: 0 5px 10px rgba(34, 34, 34, 0.2)
 }
 
-.product.product-11 a:hover,
-.product.product-11 a:focus {
+.product.product-11 a,
+.product.product-11 a {
     color: #cc9966
 }
 
@@ -8998,8 +8999,8 @@ p {
     border: .1rem solid #ebebeb
 }
 
-.product.product-11 .btn-product-icon:hover,
-.product.product-11 .btn-product-icon:focus {
+.product.product-11 .btn-product-icon,
+.product.product-11 .btn-product-icon {
     color: #fff;
     background-color: #cc9966;
     border-color: #cc9966
@@ -9035,21 +9036,21 @@ p {
     font-size: 1.4rem
 }
 
-.product.product-11 .btn-product:hover,
-.product.product-11 .btn-product:focus {
+.product.product-11 .btn-product,
+.product.product-11 .btn-product {
     color: #fff;
     border-color: #cc9966;
     background-color: #cc9966
 }
 
-.product.product-11 .btn-product:hover span,
-.product.product-11 .btn-product:focus span {
+.product.product-11 .btn-product span,
+.product.product-11 .btn-product span {
     color: #fff;
     box-shadow: none
 }
 
-.product.product-11:hover,
-.product.product-11:focus {
+.product.product-11,
+.product.product-11 {
     z-index: 10
 }
 
