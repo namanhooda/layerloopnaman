@@ -1,8 +1,8 @@
 @extends('frontend.partials.app')
 @section('content')
 <main class="main">
-    
-@include('frontend.sections.banner')
+
+    @include('frontend.sections.banner')
     @include('frontend.sections.brands')
 
     <div class="mb-3 mb-lg-5"></div><!-- End .mb-3 mb-lg-5 -->
@@ -12,7 +12,7 @@
     <div class="mb-3"></div><!-- End .mb-6 -->
 
 
-    <div class="container text-center" >
+    <div class="container text-center">
         <h3>Latest Tshirts</h3>
     </div>
 
@@ -52,13 +52,19 @@
                     <div class="product product-11 text-center product-manual">
                         <figure class="product-media">
                             <a href="{{url('shop-product-detail/'.$products->id)}}">
-                                    <img src="{{ asset('storage/' . $products->featured_image) }}" alt="Product image" class="product-image product-image-manual">
+                                <img src="{{ asset('storage/' . $products->featured_image) }}" alt="Product image"
+                                    class="product-image product-image-manual">
                                 <!-- <img src="{{asset('frontend/assets/images/demos/demo-2/products/product-1-2.jpg')}}"
                                     alt="Product image" class="product-image-hover"> -->
                             </a>
 
                             <div class="product-action-vertical">
-                                <a href="#" class="btn-product-icon btn-wishlist"><span>add to wishlist</span></a>
+                                <form action="{{ route('wishlist.store') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="product_id" value="{{ $products->id }}">
+                                    <button type="submit" class="btn-product-icon btn-wishlist"><span>add to
+                                            wishlist</span></button>
+                                </form>
                             </div><!-- End .product-action-vertical -->
                         </figure><!-- End .product-media -->
 
@@ -66,12 +72,19 @@
                             <h3 class="product-title"><a href="product.html">{{$products->name}}</a></h3>
                             <!-- End .product-title -->
                             <div class="product-price">
-                                ₹ {{$products->discounted_price}} <span style="font-size: 12px;"><del>{{$products->discounted_price}} </del></span>
+                                ₹ {{$products->discounted_price}} <span
+                                    style="font-size: 12px;"><del>{{$products->discounted_price}} </del></span>
                             </div><!-- End .product-price -->
                         </div><!-- End .product-body -->
-                        <div class="product-action">
-                            <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                        </div><!-- End .product-action -->
+
+                        <form action="{{ route('cart.add') }}" method="POST">
+                            @csrf
+                            <div class="product-action">
+                                <input type="hidden" name="product_id" value="{{ $products->id }}">
+                                <input type="hidden" name="quantity" value="1">
+                                <button type="submit" class="btn-product btn-cart"><span>add to cart</span></button>
+                            </div>
+                        </form><!-- End .product-action -->
                     </div><!-- End .product -->
                     @endforeach
 
@@ -83,7 +96,7 @@
 
 
 
-    <div class="container text-center" >
+    <div class="container text-center">
         <h3>Our Products</h3>
     </div>
 
@@ -142,13 +155,19 @@
                     <div class="product product-11 text-center product-manual">
                         <figure class="product-media">
                             <a href="{{url('shop-product-detail/'.$products->id)}}">
-                                    <img src="{{ asset('storage/' . $products->featured_image) }}" alt="Product image" class="product-image product-image-manual">
+                                <img src="{{ asset('storage/' . $products->featured_image) }}" alt="Product image"
+                                    class="product-image product-image-manual">
                                 <!-- <img src="{{asset('frontend/assets/images/demos/demo-2/products/product-1-2.jpg')}}"
                                     alt="Product image" class="product-image-hover"> -->
                             </a>
 
                             <div class="product-action-vertical">
-                                <a href="#" class="btn-product-icon btn-wishlist"><span>add to wishlist</span></a>
+                                <form action="{{ route('wishlist.store') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="product_id" value="{{ $products->id }}">
+                                    <button type="submit" class="btn-product-icon btn-wishlist"><span>add to
+                                            wishlist</span></button>
+                                </form>
                             </div><!-- End .product-action-vertical -->
                         </figure><!-- End .product-media -->
 
@@ -159,9 +178,14 @@
                                 ₹ {{$products->discounted_price}}
                             </div><!-- End .product-price -->
                         </div><!-- End .product-body -->
-                        <div class="product-action">
-                            <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                        </div><!-- End .product-action -->
+                        <form action="{{ route('cart.add') }}" method="POST">
+                            @csrf
+                            <div class="product-action">
+                                <input type="hidden" name="product_id" value="{{ $products->id }}">
+                                <input type="hidden" name="quantity" value="1">
+                                <button type="submit" class="btn-product btn-cart"><span>add to cart</span></button>
+                            </div>
+                        </form><!-- End .product-action -->
                     </div><!-- End .product -->
                     @endforeach
 
@@ -201,14 +225,20 @@
                     <div class="product product-11 text-center product-manual">
                         <figure class="product-media">
                             <a href="product.html">
-                                
-                            <img src="{{ asset('storage/' . $products->featured_image) }}" alt="Product image" class="product-image product-image-manual">
+
+                                <img src="{{ asset('storage/' . $products->featured_image) }}" alt="Product image"
+                                    class="product-image product-image-manual">
                                 <!-- <img src="{{asset('frontend/assets/images/demos/demo-2/products/product-5-2.jpg')}}"
                                     alt="Product image" class="product-image-hover"> -->
                             </a>
 
                             <div class="product-action-vertical">
-                                <a href="#" class="btn-product-icon btn-wishlist"><span>add to wishlist</span></a>
+                                <form action="{{ route('wishlist.store') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="product_id" value="{{ $products->id }}">
+                                    <button type="submit" class="btn-product-icon btn-wishlist"><span>add to
+                                            wishlist</span></button>
+                                </form>
                             </div><!-- End .product-action-vertical -->
 
                         </figure><!-- End .product-media -->
@@ -226,9 +256,14 @@
                                 <a href="#" style="background: #e8e8e8;"><span class="sr-only">Color name</span></a>
                             </div><!-- End .product-nav -->
                         </div><!-- End .product-body -->
-                        <div class="product-action">
-                            <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                        </div><!-- End .product-action -->
+                        <form action="{{ route('cart.add') }}" method="POST">
+                            @csrf
+                            <div class="product-action">
+                                <input type="hidden" name="product_id" value="{{ $products->id }}">
+                                <input type="hidden" name="quantity" value="1">
+                                <button type="submit" class="btn-product btn-cart"><span>add to cart</span></button>
+                            </div>
+                        </form><!-- End .product-action -->
                     </div><!-- End .product -->
                     @endforeach
 
@@ -268,13 +303,21 @@
                     <div class="product product-11 text-center product-manual">
                         <figure class="product-media">
                             <a href="product.html">
-                            <img src="{{ asset('storage/' . $products->featured_image) }}" alt="Product image" class="product-image product-image-manual">
+                                <img src="{{ asset('storage/' . $products->featured_image) }}" alt="Product image"
+                                    class="product-image product-image-manual">
                                 <!-- <img src="{{asset('frontend/assets/images/demos/demo-2/products/product-2-2.jpg')}}"
                                     alt="Product image" class="product-image-hover"> -->
                             </a>
 
                             <div class="product-action-vertical">
-                                <a href="#" class="btn-product-icon btn-wishlist"><span>add to wishlist</span></a>
+
+
+                                <form action="{{ route('wishlist.store') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="product_id" value="{{ $products->id }}">
+                                    <button type="submit" class="btn-product-icon btn-wishlist"><span>add to
+                                            wishlist</span></button>
+                                </form>
                             </div><!-- End .product-action-vertical -->
                         </figure><!-- End .product-media -->
 
@@ -291,9 +334,14 @@
                                 <a href="#" style="background: #e8e8e8;"><span class="sr-only">Color name</span></a>
                             </div><!-- End .product-nav -->
                         </div><!-- End .product-body -->
-                        <div class="product-action">
-                            <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                        </div><!-- End .product-action -->
+                        <form action="{{ route('cart.add') }}" method="POST">
+                            @csrf
+                            <div class="product-action">
+                                <input type="hidden" name="product_id" value="{{ $products->id }}">
+                                <input type="hidden" name="quantity" value="1">
+                                <button type="submit" class="btn-product btn-cart"><span>add to cart</span></button>
+                            </div>
+                        </form><!-- End .product-action -->
                     </div><!-- End .product -->
                     @endforeach
 
@@ -307,7 +355,7 @@
     @include('frontend.sections.deals')
     <div class="mb-6"></div><!-- End .mb-6 -->
 
-    
+
     @include('frontend.sections.topproducts')
     <div class="container">
         <hr class="mt-1 mb-6">

@@ -2,12 +2,15 @@
 @section('content')
 
 <style>
-.btn-product.btn-cart {
-    border: none !important;
-    outline: none;
-    background-color: transparent; /* Optional if you want no background */
-    box-shadow: none; /* Optional if you want to remove any shadow */
-}
+    .btn-product.btn-cart {
+        border: none !important;
+        outline: none;
+        background-color: transparent;
+        /* Optional if you want no background */
+        box-shadow: none;
+        /* Optional if you want to remove any shadow */
+    }
+
 </style>
 <main class="main">
     <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
@@ -25,25 +28,28 @@
             </ol>
         </div><!-- End .container -->
     </nav><!-- End .breadcrumb-nav -->
-        <div class="container text-center">
-            <a href="{{ route('shop') }}">
-                <button class="btn {{ request('filter') === null ? 'btn-primary' : 'btn-outline-primary' }} rounded-pill shadow mx-1">
-                    All Products
-                </button>
-            </a>
+    <div class="container text-center">
+        <a href="{{ route('shop') }}">
+            <button
+                class="btn {{ request('filter') === null ? 'btn-primary' : 'btn-outline-primary' }} rounded-pill shadow mx-1">
+                All Products
+            </button>
+        </a>
 
-            <a href="{{ route('shop', ['filter' => 'clothing']) }}">
-                <button class="btn {{ request('filter') === 'clothing' ? 'btn-primary' : 'btn-outline-primary' }} rounded-pill shadow mx-1">
-                    Cloths
-                </button>
-            </a>
-            <a href="{{ route('shop', ['filter' => 'customize']) }}">
-                <button class="btn {{ request('filter') === 'customize' ? 'btn-primary' : 'btn-outline-primary' }} rounded-pill shadow mx-1">
-                    Customize
-                </button>
-            </a>
-        </div>
-        <br>
+        <a href="{{ route('shop', ['filter' => 'clothing']) }}">
+            <button
+                class="btn {{ request('filter') === 'clothing' ? 'btn-primary' : 'btn-outline-primary' }} rounded-pill shadow mx-1">
+                Cloths
+            </button>
+        </a>
+        <a href="{{ route('shop', ['filter' => 'customize']) }}">
+            <button
+                class="btn {{ request('filter') === 'customize' ? 'btn-primary' : 'btn-outline-primary' }} rounded-pill shadow mx-1">
+                Customize
+            </button>
+        </a>
+    </div>
+    <br>
     <div class="page-content">
         <div class="container">
             <div class="toolbox">
@@ -75,49 +81,39 @@
                 <div class="row">
                     @foreach($products as $product)
                     <div class="col-6 col-md-4 col-lg-4 col-xl-3">
-                        <div class="product product-manual">
+                        <div class="product  product-11 product-manual">
                             <figure class="product-media">
                                 <span class="product-label label-new">New</span>
                                 <a href="{{ url('shop-product-detail/' . $product->id) }}">
                                     <!-- <img src="assets/images/products/product-1.jpg" alt="Product image"
                                         class="product-image"> -->
-                                        <img src="{{ asset('storage/' . $product->featured_image) }}" alt="Product image" class="product-image product-image-manual">
+                                    <img src="{{ asset('storage/' . $product->featured_image) }}" alt="Product image"
+                                        class="product-image product-image-manual">
 
                                 </a>
 
                                 <div class="product-action-vertical">
-                                    <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to
-                                            wishlist</span></a>
+                                    <form action="{{ route('wishlist.store') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                        <button type="submit"
+                                            class="btn-product-icon btn-wishlist btn-expandable"><span>add to
+                                                wishlist</span></button>
+                                    </form>
                                 </div><!-- End .product-action -->
 
-                                <div class="product-action action-icon-top">
-
-                                <form action="{{ route('cart.add') }}" method="POST">
-                                    @csrf
-                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                    <input type="hidden" name="quantity" value="1">
-                                    
-                                    <button type="submit" class="btn-product btn-cart"  style="border: none;">
-                                        <span>add to cart</span>
-                                    </button>
-                                </form>
-
-
-
-                                    <a href="{{ url('shop-product-detail/' . $product->id) }}" class="btn-product btn-quickview"
-                                        title="Quick view"><span>quick view</span></a>
-                                    <a href="#" class="btn-product btn-compare" title="Compare"><span>compare</span></a>
-                                </div><!-- End .product-action -->
                             </figure><!-- End .product-media -->
 
                             <div class="product-body">
                                 <div class="product-cat">
                                     <a href="#">{{$product->category}}</a>
                                 </div><!-- End .product-cat -->
-                                <h3 class="product-title"><a href="{{ url('shop-product-detail/' . $product->id) }}">{{$product->name}}</a></h3>
+                                <h3 class="product-title"><a
+                                        href="{{ url('shop-product-detail/' . $product->id) }}">{{$product->name}}</a>
+                                </h3>
                                 <!-- End .product-title -->
                                 <div class="product-price">
-                                ₹{{$product->discounted_price}}
+                                    ₹{{$product->discounted_price}}
                                 </div><!-- End .product-price -->
                                 <div class="ratings-container">
                                     <div class="ratings">
@@ -126,12 +122,18 @@
                                     <span class="ratings-text">( 0 Reviews )</span>
                                 </div><!-- End .rating-container -->
 
-                                <div class="product-nav product-nav-dots">
-                                    <a href="#" style="background: #cc9966;"><span class="sr-only">Color name</span></a>
-                                    <a href="#" class="active" style="background: #ebebeb;"><span class="sr-only">Color
-                                            name</span></a>
+                                <div class="product-nav product-nav-dots"></a>
+
                                 </div><!-- End .product-nav -->
-                            </div><!-- End .product-body -->
+                            </div>
+                            <form action="{{ route('cart.add') }}" method="POST">
+                                @csrf
+                                <div class="product-action">
+                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                    <input type="hidden" name="quantity" value="1">
+                                    <button type="submit" class="btn-product btn-cart"><span>add to cart</span></button>
+                                </div>
+                            </form><!-- End .product-body -->
                         </div><!-- End .product -->
                     </div>
                     @endforeach
