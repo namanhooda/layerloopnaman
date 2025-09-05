@@ -4,28 +4,20 @@
 .btn-wishlist {
     border: none !important;
     outline: none;
-    background-color: transparent; /* Optional if you want no background */
-    box-shadow: none; /* Optional if you want to remove any shadow */
+    background-color: transparent; 
+    box-shadow: none; 
 }</style>
 <main class="main">
     <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
         <div class="container d-flex align-items-center">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Products</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Extended Description</li>
+                <li class="breadcrumb-item"><a href="{{url('/')}}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{url('shop')}}">Shop</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{$product->name}}</li>
             </ol>
 
             <nav class="product-pager ml-auto" aria-label="Product">
-                <a class="product-pager-link product-pager-prev" href="#" aria-label="Previous" tabindex="-1">
-                    <i class="icon-angle-left"></i>
-                    <span>Prev</span>
-                </a>
-
-                <a class="product-pager-link product-pager-next" href="#" aria-label="Next" tabindex="-1">
-                    <span>Next</span>
-                    <i class="icon-angle-right"></i>
-                </a>
+                
             </nav>
         </div>
     </nav>
@@ -86,6 +78,7 @@
                                 </p>
                             </div>
 
+                            @if($product->color)
                             <div class="details-filter-row details-row-size">
                                 <label>Color:</label>
 
@@ -97,7 +90,9 @@
                                     <a href="#" style="background: #caab97;"><span class="sr-only">Color name</span></a>
                                 </div>
                             </div>
+                            @endif
 
+                            @if($product->size)
                             <div class="details-filter-row details-row-size">
                                 <label for="size">Size:</label>
                                 <div class="select-custom">
@@ -112,6 +107,7 @@
 
                                 <a href="#" class="size-guide"><i class="icon-th-list"></i>size guide</a>
                             </div>
+                            @endif
 
                             <form action="{{ route('cart.add') }}" method="POST">
                             <div class="details-filter-row details-row-size">

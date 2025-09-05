@@ -13,13 +13,11 @@
                     <span class="sr-only">Toggle mobile menu</span>
                     <i class="icon-bars"></i>
                 </button>
-
                 <a href="{{url('/')}}" class="logo">
                     <img src="{{asset('images/WhatsApp Image 2025-07-22 at 19.56.01.jpeg')}}" alt="Molla Logo"
                         width="105" height="25" class="desktop-logo">
                 </a>
-            </div><!-- End .header-left -->
-
+            </div>
             <div class="header-center">
                 <div
                     class="header-search header-search-extended header-search-visible header-search-no-radius d-none d-lg-block">
@@ -34,9 +32,8 @@
                             <ul id="search-results" class="list-group position-absolute w-100 mt-1" style="z-index: 1000; display: none;"></ul>
                         </div>
                     </form>
-                </div><!-- End .header-search -->
+                </div>
             </div>
-
             <div class="header-right">
                 <div class="account">
                     <a href="{{url('account')}}" title="My account">
@@ -45,8 +42,7 @@
                         </div>
                         <p>Account</p>
                     </a>
-                </div><!-- End .compare-dropdown -->
-
+                </div>
                 <div class="wishlist d-none d-md-block" style="padding-top: 3.8rem;">
                     <a href="{{url('wishlist')}}" title="Wishlist">
                         <div class="icon">
@@ -55,8 +51,7 @@
                         </div>
                         <p>Wishlist</p>
                     </a>
-                </div><!-- End .compare-dropdown -->
-
+                </div>
                 <div class="dropdown cart-dropdown d-none d-md-block" style="padding-top: 3.8rem;">
                     <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false" data-display="static">
@@ -73,7 +68,6 @@
                         @php
                         $total = 0;
                         @endphp
-
                         <div class="dropdown-cart-products">
                             @if(!empty($cartItems))
                             @foreach($cartItems as $item)
@@ -81,7 +75,6 @@
                             $price = $item['product']->discounted_price;
                             $total += $price * $item['quantity'];
                             @endphp
-
                             <div class="product">
                                 <div class="product-cart-details">
                                     <h4 class="product-title">
@@ -89,13 +82,11 @@
                                             {{ $item['name'] ?? $item['product']->name }}
                                         </a>
                                     </h4>
-
                                     <span class="cart-product-info">
                                         <span class="cart-product-qty">{{ $item['quantity'] }}</span>
                                         x ₹{{ number_format($price, 2) }}
                                     </span>
-                                </div><!-- End .product-cart-details -->
-
+                                </div>
                                 <figure class="product-image-container">
                                     <a href="{{ url('product/' . $item['product']->slug) }}" class="product-image">
                                         <img src="{{ asset('storage/' . $item['product']->featured_image) }}"
@@ -109,19 +100,17 @@
                                         <i class="icon-close"></i>
                                     </button>
                                 </form>
-                            </div><!-- End .product -->
+                            </div>
                             @endforeach
                             @else
                             <p class="text-center">Your cart is empty.</p>
                             @endif
-                        </div><!-- End .dropdown-cart-products -->
-
+                        </div>
                         @if(!empty($cartItems))
                         <div class="dropdown-cart-total">
                             <span>Total</span>
                             <span class="cart-total-price">₹{{ number_format($total, 2) }}</span>
                         </div>
-
                         <div class="dropdown-cart-action">
                             <a href="{{ url('cart') }}" class="btn btn-primary">View Cart</a>
                             <a href="{{ url('checkout') }}" class="btn btn-outline-primary-2">
@@ -129,12 +118,11 @@
                             </a>
                         </div>
                         @endif
-                    </div><!-- End .dropdown-menu -->
-                </div><!-- End .cart-dropdown -->
-            </div><!-- End .header-right -->
-        </div><!-- End .container -->
-    </div><!-- End .header-middle -->
-
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="header-bottom sticky-header">
         <div class="container">
             <div class="header-left">
@@ -144,25 +132,22 @@
                         style="font-size: 20px !important;">
                         Browse Categories
                     </a>
-
                     <div class="dropdown-menu">
                         <nav class="side-nav">
                             <ul class="menu-vertical sf-arrows">
                                 <li class="item-lead"><a href="{{ route('shop', ['filter' => 'clothing']) }}">Clothes</a></li>
                                 <li class="item-lead"><a href="{{url('category/tshirts')}}">Tshirts</a></li>
-
                                     @php
                                     $getCaregories = \App\Helpers\CartHelper::getCaregories();
                                     @endphp
                                 @foreach($getCaregories as $categories)
                                 <li><a href="{{url('category/'.$categories->slug)}}">{{$categories->name}}</a></li>
                                 @endforeach
-                            </ul><!-- End .menu-vertical -->
-                        </nav><!-- End .side-nav -->
-                    </div><!-- End .dropdown-menu -->
-                </div><!-- End .category-dropdown -->
-            </div><!-- End .header-left -->
-
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
             <div class="header-center">
                 <nav class="main-nav">
                     <ul class="menu sf-arrows">
@@ -171,11 +156,9 @@
                         </li>
                         <li>
                             <a href="{{url('shop')}}" style="font-size: 20px !important;">Shop</a>
-
                         </li>
                         <li>
                             <a href="#" class="sf-with-ul" style="font-size: 20px !important;">Pages</a>
-
                             <ul>
                                 <li>
                                     <a href="{{url('about')}}" class="sf-with-ul">About</a>
@@ -190,17 +173,17 @@
                         <li>
                             <a href="{{url('blogs')}}" style="font-size: 20px !important;">Blog</a>
                         </li>
-                    </ul><!-- End .menu -->
-                </nav><!-- End .main-nav -->
-            </div><!-- End .header-center -->
+                    </ul>
+                </nav>
+            </div>
 
             <div class="header-right" style="font-size: 20px !important;">
                 <i class="la la-lightbulb-o"></i>
                 <p>Clearance<span class="highlight">&nbsp;Up to 30% Off</span></p>
             </div>
-        </div><!-- End .container -->
-    </div><!-- End .header-bottom -->
-</header><!-- End .header -->
+        </div>
+    </div>
+</header>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
     const input = document.getElementById('product-search');
@@ -226,7 +209,7 @@
                         li.textContent = product.name;
                         li.style.cursor = 'pointer';
                         li.onclick = () => {
-                            window.location.href = `/shop-product-detail/${product.id}`; // Or use ID
+                            window.location.href = `/shop-product-detail/${product.id}`; 
                         };
                         resultList.appendChild(li);
                     });
