@@ -66,7 +66,7 @@
                             <h3 class="product-title"><a href="product.html">{{$products->name}}</a></h3>
                             <!-- End .product-title -->
                             <div class="product-price">
-                                ₹ {{$products->discounted_price}}
+                                ₹ {{$products->discounted_price}} <span style="font-size: 12px;"><del>{{$products->discounted_price}} </del></span>
                             </div><!-- End .product-price -->
                         </div><!-- End .product-body -->
                         <div class="product-action">
