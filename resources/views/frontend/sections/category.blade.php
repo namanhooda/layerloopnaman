@@ -6,13 +6,13 @@
                     <div class="banner banner-large banner-overlay banner-overlay-light">
                         <a href="#">
                             <img src="{{asset('images/banner-1.jpg')}}"
-                                alt="Banner">
+                                alt="Banner" style="height:510px">
                         </a>
 
                         <div class="banner-content banner-content-top">
                             <h4 class="banner-subtitle text-white">Customized</h4><!-- End .banner-subtitle -->
                             <h3 class="banner-title text-white">Customized Potrait Lamps</h3><!-- End .banner-title -->
-                            <div class="banner-text text-white">from ₹800</div><!-- End .banner-text -->
+                            <div class="banner-text text-white">from ₹ 800</div><!-- End .banner-text -->
                             <a href="#" class="btn btn-outline-white banner-link">Shop Now<i
                                     class="icon-long-arrow-right"></i></a>
                         </div><!-- End .banner-content -->
@@ -27,9 +27,9 @@
                         </a>
 
                         <div class="banner-content banner-content-bottom">
-                            <h4 class="banner-subtitle text-grey">On Sale</h4><!-- End .banner-subtitle -->
-                            <h3 class="banner-title text-white">Amazing <br>Armchairs</h3><!-- End .banner-title -->
-                            <div class="banner-text text-white">from $39.99</div><!-- End .banner-text -->
+                            <h4 class="banner-subtitle text-grey">Tshirts</h4><!-- End .banner-subtitle -->
+                            <h3 class="banner-title text-white">Amazing Tshirts</h3><!-- End .banner-title -->
+                            <div class="banner-text text-white">from ₹ 499.99</div><!-- End .banner-text -->
                             <a href="#" class="btn btn-outline-white banner-link">Discover Now<i
                                     class="icon-long-arrow-right"></i></a>
                         </div><!-- End .banner-content -->
@@ -44,8 +44,8 @@
                         </a>
 
                         <div class="banner-content banner-content-top">
-                            <h4 class="banner-subtitle text-grey">New Arrivals</h4><!-- End .banner-subtitle -->
-                            <h3 class="banner-title text-white">Storage <br>Boxes & Baskets</h3>
+                            <h4 class="banner-subtitle text-grey">Keychains</h4><!-- End .banner-subtitle -->
+                            <h3 class="banner-title text-white">Customized Keychains</h3>
                             <!-- End .banner-title -->
                             <a href="#" class="btn btn-outline-white banner-link">Discover Now<i
                                     class="icon-long-arrow-right"></i></a>
@@ -59,10 +59,10 @@
                         </a>
 
                         <div class="banner-content banner-content-top">
-                            <h4 class="banner-subtitle">On Sale</h4><!-- End .banner-subtitle -->
-                            <h3 class="banner-title">Lamps Offer</h3><!-- End .banner-title -->
-                            <div class="banner-text">up to 30% off</div><!-- End .banner-text -->
-                            <a href="#" class="btn btn-outline-gray banner-link">Shop Now<i
+                            <h4 class="banner-subtitle">Lamps</h4><!-- End .banner-subtitle -->
+                            <h3 class="banner-title text-white">Lamps Offer</h3><!-- End .banner-title -->
+                            <div class="banner-text text-white">up to 30% off</div><!-- End .banner-text -->
+                            <a href="#" class="btn btn-outline-white banner-link text-white">Shop Now<i
                                     class="icon-long-arrow-right"></i></a>
                         </div><!-- End .banner-content -->
                     </div><!-- End .banner -->

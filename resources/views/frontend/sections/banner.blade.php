@@ -4,8 +4,8 @@
             data-owl-options='{"nav": false}'>
             <div class="intro-slide" style="background-image: url(frontend/assets/images/demos/demo-2/slider/slide-1.jpg);">
                 <div class="container intro-content">
-                    <h3 class="intro-subtitle">Bedroom Furniture</h3>
-                    <h1 class="intro-title">Find Comfort <br>That Suits You.</h1>
+                    <h3 class="intro-subtitle">Customized</h3>
+                    <h1 class="intro-title" style="margin-bottom: 0px !important;">Customized Lithiofanes</h1><h2>Convert Your Image To Lightbox.</h2>
 
                     <a href="category.html" class="btn btn-primary">
                         <span>Shop Now</span>
@@ -29,14 +29,14 @@
 
             <div class="intro-slide" style="background-image: url(frontend/assets/images/demos/demo-2/slider/slide-3.jpg);">
                 <div class="container intro-content">
-                    <h3 class="intro-subtitle">Living Room</h3><!-- End .h3 intro-subtitle -->
-                    <h1 class="intro-title">
-                        Make Your Living Room <br>Work For You.<br>
-                        <span class="text-primary">
+                    <h3 class="intro-subtitle">Customized</h3><!-- End .h3 intro-subtitle -->
+
+                    <h1 class="intro-title" style="margin-bottom: 0px !important;">Customized Tshirts </h1>
+                    <h2 style="color: lightgrey !important;">Walk In Style With Our Tshirts.</h2>
+                    
+                            <span class="text-primary">
                             <sup class="text-white font-weight-light">from</sup><sup>$</sup>9,99
                         </span>
-                    </h1><!-- End .intro-title -->
-
                     <a href="category.html" class="btn btn-primary">
                         <span>Shop Now</span>
                         <i class="icon-long-arrow-right"></i>

@@ -7,11 +7,11 @@
                             <h4>Limited Quantities</h4>
                             <h2>Deal of the Day</h2>
 
-                            <h3 class="product-title"><a href="product.html">POÄNG</a></h3><!-- End .product-title -->
+                            <h3 class="product-title"><a href="product.html">Lithiophane Keychains</a></h3><!-- End .product-title -->
 
                             <div class="product-price">
-                                <span class="new-price">$149.00</span>
-                                <span class="old-price">Was $240.00</span>
+                                <span class="new-price">₹ 300.00</span>
+                                <span class="old-price">Was ₹ 500.00</span>
                             </div><!-- End .product-price -->
 
                             <div class="deal-countdown" data-until="+10h"></div><!-- End .deal-countdown -->
