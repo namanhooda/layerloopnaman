@@ -66,9 +66,10 @@
                                         ₹{{ number_format($item->product->price * $item->quantity, 2) }}
                                     </td>
                                     <td class="remove-col">
-                                        <form method="POST" action="">
+                                        <form method="POST" action="{{ route('cart.remove') }}">
                                             @csrf
                                             @method('DELETE')
+                                            <input type="hidden" name="cart_item_id" value="{{ $item->id }}">
                                             <button type="submit" class="btn-remove"><i class="icon-close"></i></button>
                                         </form>
                                     </td>
@@ -87,34 +88,35 @@
 
                         <div class="cart-bottom">
                             <div class="cart-discount">@if(session()->has('coupon'))
-    <form action="{{ route('remove.coupon') }}" method="POST">
-        @csrf
-        <div class="input-group">
-            <input type="text" class="form-control" name="coupon_code"
-                value="{{ session('coupon.code') }}" disabled>
+                                <form action="{{ route('remove.coupon') }}" method="POST">
+                                    @csrf
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="coupon_code"
+                                            value="{{ session('coupon.code') }}" disabled>
 
-            <div class="input-group-append">
-                <button class="btn btn-danger" type="submit">
-                    Remove
-                </button>
-            </div>
-        </div>
-    </form>
-@else
-    <form action="{{ route('apply.coupon') }}" method="POST">
-        @csrf
-        <div class="input-group">
-            <input type="text" class="form-control" name="coupon_code" required placeholder="Coupon code">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-danger" type="submit">
+                                                Remove
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                                @else
+                                <form action="{{ route('apply.coupon') }}" method="POST">
+                                    @csrf
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="coupon_code" required
+                                            placeholder="Coupon code">
 
-            <div class="input-group-append">
-                <button class="btn btn-outline-primary-2" type="submit">
-                    Apply
-                </button>
-                
-            </div>
-        </div>
-    </form>
-@endif
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-primary-2" type="submit">
+                                                Apply
+                                            </button>
+
+                                        </div>
+                                    </div>
+                                </form>
+                                @endif
 
                             </div><!-- End .cart-discount -->
 
@@ -133,16 +135,16 @@
                                         <td>₹{{ number_format($subtotal, 2) }}</td>
                                     </tr>
                                     @php
-                                        $total = $subtotal;
-                                        $discount = 0;
-                                        $coupon = session('coupon');
+                                    $total = $subtotal;
+                                    $discount = 0;
+                                    $coupon = session('coupon');
 
-                                        if ($coupon && $total >= $coupon['min_cart_value']) {
-                                            $discount = $coupon['type'] === 'percent'
-                                                ? ($total * $coupon['value'] / 100)
-                                                : $coupon['value'];
-                                            $total -= $discount;
-                                        }
+                                    if ($coupon && $total >= $coupon['min_cart_value']) {
+                                    $discount = $coupon['type'] === 'percent'
+                                    ? ($total * $coupon['value'] / 100)
+                                    : $coupon['value'];
+                                    $total -= $discount;
+                                    }
                                     @endphp
                                     @if(session()->has('coupon') && $discount > 0)
                                     <tr class="summary-subtotal">
@@ -171,31 +173,31 @@
                                         <td>
                                             <div class="custom-control custom-radio">
                                                 <input type="radio" id="standart-shipping" name="shipping"
-                                                    class="custom-control-input shipping-option" data-price="10">
+                                                    class="custom-control-input shipping-option" data-price="40">
                                                 <label class="custom-control-label"
                                                     for="standart-shipping">Standard:</label>
                                             </div>
                                         </td>
-                                        <td>₹10.00</td>
+                                        <td>₹40.00</td>
                                     </tr>
 
                                     <tr class="summary-shipping-row">
                                         <td>
                                             <div class="custom-control custom-radio">
                                                 <input type="radio" id="express-shipping" name="shipping"
-                                                    class="custom-control-input shipping-option" data-price="20">
+                                                    class="custom-control-input shipping-option" data-price="60">
                                                 <label class="custom-control-label"
                                                     for="express-shipping">Express:</label>
                                             </div>
                                         </td>
-                                        <td>₹20.00</td>
+                                        <td>₹60.00</td>
                                     </tr>
 
-                                    <tr class="summary-shipping-estimate">
+                                    <!-- <tr class="summary-shipping-estimate">
                                         <td>Estimate for Your Country<br> <a href="dashboard.html">Change address</a>
                                         </td>
                                         <td>&nbsp;</td>
-                                    </tr><!-- End .summary-shipping-estimate -->
+                                    </tr> -->
 
                                     <tr class="summary-total">
                                         <td>Total:</td>
@@ -203,7 +205,7 @@
                                         </td>
                                     </tr>
                                 </tbody>
-                            </table><!-- End .table table-summary -->
+                            </table>
 
                             @if(auth()->check())
                             <a href="{{ url('checkout') }}" class="btn btn-outline-primary-2 btn-order btn-block">
@@ -227,6 +229,31 @@
 </main><!-- End .main -->
 
 @endsection
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+<script>
+    $(document).on('change', '.shipping-option', function () {
+        let shippingType = $(this).attr('id'); // free-shipping, standart-shipping, express-shipping
+        let shippingLabel = $(this).siblings('label').text().trim();
+        let shippingPrice = $(this).data('price');
+
+        // Send AJAX to backend to store in session
+        $.ajax({
+            url: "{{ route('cart.shipping') }}",
+            method: "POST",
+            data: {
+                _token: "{{ csrf_token() }}",
+                type: shippingType,
+                label: shippingLabel,
+                price: shippingPrice
+            },
+            success: function (response) {
+                console.log("Shipping updated:", response);
+            }
+        });
+    });
+</script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const shippingOptions = document.querySelectorAll('.shipping-option');

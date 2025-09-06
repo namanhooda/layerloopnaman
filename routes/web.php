@@ -53,8 +53,11 @@ Route::get('account', [FrontendController::class, 'account'])->name('account');
 Route::post('adrrrs', [FrontendController::class, 'storeReview'])->name('reviews.store');
 //// cart & Checkout
 Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
-Route::post('/cart/remove', [CartController::class, 'add'])->name('cart.remove');
+Route::delete('/cart/remove', [CartController::class, 'removeItem'])->name('cart.remove');
 Route::get('cart', [CartController::class, 'cart'])->name('cart');
+
+Route::post('/cart/shipping', [App\Http\Controllers\CartController::class, 'setShipping'])->name('cart.shipping');
+
 
 Route::get('checkout', [CartController::class, 'checkout'])->name('checkout');
 Route::post('ads', [AddressController::class, 'store'])->name('addresses.store');

@@ -35,6 +35,9 @@
     <link rel="stylesheet" href="{{asset('frontend/assets/css/style.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/assets/css/skins/skin-demo-2.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/assets/css/demos/demo-2.css')}}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-T8NR051ED9"></script>
     <script>
@@ -273,8 +276,10 @@
     
     @include('frontend.partials.newsletter')
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    @if(session('success'))
+
+</body>
+
+    <!-- @if(session('success'))
     <script>
         Swal.fire({
             title: '🎉 Product Added!',
@@ -291,7 +296,7 @@
             timerProgressBar: true
         });
     </script>
-    @endif
+    @endif -->
     <!-- Plugins JS File -->
     <script src="{{asset('frontend/assets/js/jquery.min.js')}}"></script>
     <script src="{{asset('frontend/assets/js/bootstrap.bundle.min.js')}}"></script>
@@ -305,6 +310,42 @@
     <!-- Main JS File -->
     <script src="{{asset('frontend/assets/js/main.js')}}"></script>
     <script src="{{asset('frontend/assets/js/demos/demo-2.js')}}"></script>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+   <script>
+    function showToastr(type, message) {
+        toastr.options = {
+            closeButton: true,
+            progressBar: true,
+            positionClass: "toast-top-right",
+            timeOut: 5000
+        };
+
+        if (type === 'success') {
+            toastr.success(message, 'Success');
+        } else {
+            toastr.error(message, 'Error');
+        }
+    }
+
+    @if(session('success'))
+        showToastr('success', @json(session('success')));
+    @endif
+
+    @if(session('error'))
+        showToastr('error', @json(session('error')));
+    @endif
+
+    @if($errors->any())
+        @foreach($errors->all() as $error)
+            showToastr('error', @json($error));
+        @endforeach
+    @endif
+</script>
 </body>
 
 

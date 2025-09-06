@@ -13,6 +13,7 @@ use App\Models\OrderItem;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Razorpay\Api\Api; 
+use Illuminate\Support\Facades\Validator;
 
 class CartController extends Controller
 {
@@ -99,9 +100,43 @@ class CartController extends Controller
                       ->when(!$userId && $systemId, fn($q) => $q->where('system_id', $systemId));
             })
             ->get();
-    
+            
+        if ($cartItems->isEmpty()) {
+            return redirect('/')
+                ->with('error', 'Your cart is empty.');
+        }
+
         return view('frontend.cart', ['cartItems' => $cartItems]);
     }
+    public function removeItem(Request $request)
+    {
+        $cartItemId = $request->input('cart_item_id');
+
+        $cartItem = Cart::find($cartItemId);
+
+        if (!$cartItem) {
+            return redirect()->back()->with('error', 'Cart item not found.');
+        }
+
+        $cartItem->delete();
+
+        return redirect()->back()->with('success', 'Item removed from cart.');
+    }
+    public function setShipping(Request $request)
+{
+    $shipping = [
+        'type'  => $request->type,
+        'label' => $request->label,
+        'price' => $request->price,
+    ];
+
+    session(['shipping' => $shipping]);
+
+    return response()->json([
+        'status' => 'success',
+        'shipping' => $shipping
+    ]);
+}
     public function checkout()
     {
         $userId = auth()->id();
@@ -120,9 +155,23 @@ class CartController extends Controller
     }
     public function placeOrder(Request $request)
     {
-        $request->validate([
+     
+        $validator = Validator::make($request->all(), [
+            'shipping_type' => 'required',
+            'shipping_charges' => 'required',
             'billing_address' => 'required|exists:addresses,id',
+        ], [
+            'shipping_type.required' => 'Please select a shipping type.',
+            'shipping_charges.required' => 'Shipping charges are required.',
+            'billing_address.required' => 'Please select a billing address.',
+            'billing_address.exists' => 'Selected billing address is invalid.',
         ]);
+
+       if ($validator->fails()) {
+            return redirect()->back()
+                ->with('error', $validator->errors()->first()) // first error only
+                ->withInput();
+        }
     
         $userId = auth()->id();
         $systemId = session('system_id');
@@ -143,6 +192,9 @@ class CartController extends Controller
         $order = new Order();
         $order->user_id = $userId;
         $order->address_id = $request->billing_address;
+        $order->shipping_type = $request->shipping_type;
+        $order->shipping_charges = $request->shipping_charges;
+        $order->payment_mod = $request->payment_mod;
         $order->total = $cartItems->sum(fn($item) => $item->product->price * $item->quantity);
         $order->status = 'pending';
         $order->save();
@@ -241,7 +293,8 @@ class CartController extends Controller
         ]);
     
         return back()->with('success', 'Coupon applied successfully!');
-    }public function removeCoupon()
+    }
+    public function removeCoupon()
     {
         session()->forget('coupon');
         return back()->with('success', 'Coupon removed.');
