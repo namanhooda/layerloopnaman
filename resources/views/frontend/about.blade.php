@@ -22,12 +22,12 @@
                     <div class="row">
                         <div class="col-lg-6 mb-3 mb-lg-0">
                             <h2 class="title">Our Vision</h2><!-- End .title -->
-                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id, mattis vel, nisi. Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. </p>
+                            <p>To revolutionize how people express creativity by offering unique, customizable 3D printed products and DTF printed t-shirts — blending technology, art, and self-expression into everyday life.</p>
                         </div><!-- End .col-lg-6 -->
                         
                         <div class="col-lg-6">
                             <h2 class="title">Our Mission</h2><!-- End .title -->
-                            <p>Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing, commodo quis, gravida id, est. Sed lectus. <br>Praesent elementum hendrerit tortor. Sed semper lorem at felis. </p>
+                            <p>We are committed to providing high-quality, affordable, and personalized products through the power of 3D printing and Direct-to-Film (DTF) technology. Whether it's a one-of-a-kind gift or a statement t-shirt, our mission is to help our customers bring their ideas to life with ease, style, and precision — all through a seamless online shopping experience. </p>
                         </div><!-- End .col-lg-6 -->
                     </div><!-- End .row -->
 
@@ -39,8 +39,8 @@
                         <div class="row">
                             <div class="col-lg-5 mb-3 mb-lg-0">
                                 <h2 class="title">Who We Are</h2><!-- End .title -->
-                                <p class="lead text-primary mb-3">Pellentesque odio nisi, euismod pharetra a ultricies <br>in diam. Sed arcu. Cras consequat</p><!-- End .lead text-primary -->
-                                <p class="mb-2">Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Suspendisse potenti. Sed egestas, ante et vulputate volutpat, uctus metus libero eu augue. </p>
+                                <p class="lead text-primary mb-3">At Layerloop, we blend creativity with cutting-edge technology to bring your ideas to life. Specializing in custom 3D printed products and high-quality DTF printed t-shirts, we offer unique, personalized items that let you express yourself in style.</p><!-- End .lead text-primary -->
+                                <p class="mb-2">We’re a team of makers, designers, and innovators who believe that individuality should be celebrated. Whether you're looking for a one-of-a-kind gift or bold apparel that speaks your truth, Layerloop is your go-to destination for products that are as original as you are.</p>
 
                                 <a href="blog.html" class="btn btn-sm btn-minwidth btn-outline-primary-2">
                                     <span>VIEW OUR NEWS</span>
@@ -62,8 +62,8 @@
                     <div class="row">
                         <div class="col-lg-5">
                             <div class="brands-text">
-                                <h2 class="title">The world's premium design brands in one destination.</h2><!-- End .title -->
-                                <p>Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id, mattis vel, nis</p>
+                                <h2 class="title">Premium Custom Designs, All in One Place</h2><!-- End .title -->
+                                <p>Discover expertly crafted 3D printed products and high-quality DTF printed t-shirts — all designed to help you stand out. At Layerloop, we bring premium, personalized design to your fingertips.</p>
                             </div><!-- End .brands-text -->
                         </div><!-- End .col-lg-5 -->
                         <div class="col-lg-7">

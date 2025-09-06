@@ -31,7 +31,7 @@
 
                 <div class="col-lg-3">
                     <div class="banner banner-overlay banner-overlay-light text-center d-none d-lg-block">
-                        <a href="#">
+                        <a href="{{url('shop')}}">
                             <img src="{{asset('frontend/assets/images/demos/demo-2/banners/banner-5.jpg')}}"
                                 alt="Banner">
                         </a>

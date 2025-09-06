@@ -9043,6 +9043,9 @@ p {
     border-color: #64c474;
     background-color: #64c474
 }
+ .prodcatlink{
+    color: #777 !important;
+}
 
 
 .product.product-11 .btn-product span,

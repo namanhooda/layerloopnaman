@@ -32,10 +32,9 @@
                         <div class="col-6 col-md-4 col-lg-3 col-xl-5col">
                             <div class="product product-11 text-center product-manual">
                                 <figure class="product-media">
-                                    <a href="product.html">
+                                    <a href="{{url('shop-product-detail/'.$products->id)}}">
                                     <img src="{{ asset('storage/' . $products->featured_image) }}" alt="Product image" class="product-image product-image-manual">
-                                        <!-- <img src="{{asset('frontend/assets/images/demos/demo-2/products/product-7-2.jpg')}}"
-                                            alt="Product image" class="product-image-hover"> -->
+                                     
                                     </a>
 
                                     <div class="product-action-vertical">
@@ -46,9 +45,9 @@
 
                                 <div class="product-body">
                                     <div class="product-cat">
-                                        <a href="#">Lighting</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.html">{{$products->name}}</a></h3>
+                                        <a href="#" class="prodcatlink">Lighting</a>
+                                    </div>
+                                    <h3 class="product-title"><a href="{{url('shop-product-detail/'.$products->id)}}">{{$products->name}}</a></h3>
                                     <!-- End .product-title -->
                                     <div class="product-price">
                                         ₹ {{$products->discounted_price}}
@@ -86,8 +85,8 @@
 
                                 <div class="product-body">
                                     <div class="product-cat">
-                                        <a href="#">Furniture</a>
-                                    </div><!-- End .product-cat -->
+                                        <a href="#" class="prodcatlink">Furniture</a>
+                                    </div>
                                     <h3 class="product-title"><a href="product.html">Garden Armchair</a></h3>
                                     <!-- End .product-title -->
                                     <div class="product-price">
@@ -120,8 +119,8 @@
 
                                 <div class="product-body">
                                     <div class="product-cat">
-                                        <a href="#">Furniture</a>
-                                    </div><!-- End .product-cat -->
+                                        <a href="#" class="prodcatlink">Furniture</a>
+                                    </div>
                                     <h3 class="product-title"><a href="product.html">2-Seater</a></h3>
                                     <!-- End .product-title -->
                                     <div class="product-price">
@@ -152,8 +151,8 @@
 
                                 <div class="product-body">
                                     <div class="product-cat">
-                                        <a href="#">Furniture</a>
-                                    </div><!-- End .product-cat -->
+                                        <a href="#" class="prodcatlink">Furniture</a>
+                                    </div>
                                     <h3 class="product-title"><a href="product.html">Wingback Chair</a></h3>
                                     <!-- End .product-title -->
                                     <div class="product-price">
@@ -189,8 +188,8 @@
 
                                 <div class="product-body">
                                     <div class="product-cat">
-                                        <a href="#">Decor</a>
-                                    </div><!-- End .product-cat -->
+                                        <a href="#" class="prodcatlink">Decor</a>
+                                    </div>
                                     <h3 class="product-title"><a href="product.html">Madra Log Holder</a></h3>
                                     <!-- End .product-title -->
                                     <div class="product-price">
@@ -229,8 +228,8 @@
 
                                 <div class="product-body">
                                     <div class="product-cat">
-                                        <a href="#">Decor</a>
-                                    </div><!-- End .product-cat -->
+                                        <a href="#" class="prodcatlink">Decor</a>
+                                    </div>
                                     <h3 class="product-title"><a href="product.html">Original Outdoor Beanbag</a></h3>
                                     <!-- End .product-title -->
                                     <div class="product-price">
@@ -261,8 +260,8 @@
 
                                 <div class="product-body">
                                     <div class="product-cat">
-                                        <a href="#">Decor</a>
-                                    </div><!-- End .product-cat -->
+                                        <a href="#" class="prodcatlink">Decor</a>
+                                    </div>
                                     <h3 class="product-title"><a href="product.html">Cushion Set 3 Pieces</a></h3>
                                     <!-- End .product-title -->
                                     <div class="product-price">
@@ -293,8 +292,8 @@
 
                                 <div class="product-body">
                                     <div class="product-cat">
-                                        <a href="#">Decor</a>
-                                    </div><!-- End .product-cat -->
+                                        <a href="#" class="prodcatlink">Decor</a>
+                                    </div>
                                     <h3 class="product-title"><a href="product.html">Cushion Set 3 Pieces</a></h3>
                                     <!-- End .product-title -->
                                     <div class="product-price">
@@ -330,8 +329,8 @@
 
                                 <div class="product-body">
                                     <div class="product-cat">
-                                        <a href="#">Lighting</a>
-                                    </div><!-- End .product-cat -->
+                                        <a href="#" class="prodcatlink">Lighting</a>
+                                    </div>
                                     <h3 class="product-title"><a href="product.html">Petite Table Lamp</a></h3>
                                     <!-- End .product-title -->
                                     <div class="product-price">
@@ -362,8 +361,8 @@
 
                                 <div class="product-body">
                                     <div class="product-cat">
-                                        <a href="#">Lighting</a>
-                                    </div><!-- End .product-cat -->
+                                        <a href="#" class="prodcatlink">Lighting</a>
+                                    </div>
                                     <h3 class="product-title"><a href="product.html">Carronade Large Suspension Lamp</a>
                                     </h3><!-- End .product-title -->
                                     <div class="product-price">
@@ -402,8 +401,8 @@
 
                                 <div class="product-body">
                                     <div class="product-cat">
-                                        <a href="#">Lighting</a>
-                                    </div><!-- End .product-cat -->
+                                        <a href="#" class="prodcatlink">Lighting</a>
+                                    </div>
                                     <h3 class="product-title"><a href="product.html">Carronade Table Lamp</a></h3>
                                     <!-- End .product-title -->
                                     <div class="product-price">

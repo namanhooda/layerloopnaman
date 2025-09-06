@@ -22,7 +22,7 @@
                         }'>
             <article class="entry entry-display">
                 <figure class="entry-media">
-                    <a href="single.html">
+                    <a href="#">
                         <img src="{{asset('frontend/assets/images/demos/demo-2/blog/post-1.jpg')}}" alt="image desc">
                     </a>
                 </figure><!-- End .entry-media -->
@@ -33,18 +33,18 @@
                     </div><!-- End .entry-meta -->
 
                     <h3 class="entry-title">
-                        <a href="single.html">Sed adipiscing ornare.</a>
+                        <a href="#">Sed adipiscing ornare.</a>
                     </h3><!-- End .entry-title -->
 
                     <div class="entry-content">
-                        <a href="single.html" class="read-more">Continue Reading</a>
+                        <a href="single." class="read-more">Continue Reading</a>
                     </div><!-- End .entry-content -->
                 </div><!-- End .entry-body -->
             </article><!-- End .entry -->
 
             <article class="entry entry-display">
                 <figure class="entry-media">
-                    <a href="single.html">
+                    <a href="#">
                         <img src="{{asset('frontend/assets/images/demos/demo-2/blog/post-2.jpg')}}" alt="image desc">
                     </a>
                 </figure><!-- End .entry-media -->
@@ -55,33 +55,33 @@
                     </div><!-- End .entry-meta -->
 
                     <h3 class="entry-title">
-                        <a href="single.html">Fusce lacinia arcuet nulla.</a>
+                        <a href="#">Fusce lacinia arcuet nulla.</a>
                     </h3><!-- End .entry-title -->
 
                     <div class="entry-content">
-                        <a href="single.html" class="read-more">Continue Reading</a>
+                        <a href="#" class="read-more">Continue Reading</a>
                     </div><!-- End .entry-content -->
                 </div><!-- End .entry-body -->
             </article><!-- End .entry -->
 
             <article class="entry entry-display">
                 <figure class="entry-media">
-                    <a href="single.html">
+                    <a href="#">
                         <img src="{{asset('frontend/assets/images/demos/demo-2/blog/post-3.jpg')}}" alt="image desc">
                     </a>
                 </figure><!-- End .entry-media -->
 
-                <div class="entry-body text-center">
+                <div class="entry-htmlbody text-center">
                     <div class="entry-meta">
                         <a href="#">Dec 19, 2018</a>, 2 Comments
                     </div><!-- End .entry-meta -->
 
                     <h3 class="entry-title">
-                        <a href="single.html">Quisque volutpat mattis eros.</a>
+                        <a href="#">Quisque volutpat mattis eros.</a>
                     </h3><!-- End .entry-title -->
 
                     <div class="entry-content">
-                        <a href="single.html" class="read-more">Continue Reading</a>
+                        <a href="#" class="read-more">Continue Reading</a>
                     </div><!-- End .entry-content -->
                 </div><!-- End .entry-body -->
             </article><!-- End .entry -->

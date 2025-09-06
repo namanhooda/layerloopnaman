@@ -31,7 +31,7 @@
 					        </div><!-- End .card-header -->
 					        <div id="collapse-1" class="collapse show" aria-labelledby="heading-1" data-parent="#accordion-1">
 					            <div class="card-body">
-					                Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque felis. Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique cursus. Nam nulla quam, gravida non, commodo a, sodales sit amet, nisi. 
+					                Your order will be shipped via trusted courier partners like Delhivery, Bluedart, or India Post, depending on your location. You will receive a tracking link once your order has been dispatched.
 					            </div><!-- End .card-body -->
 					        </div><!-- End .collapse -->
 					    </div><!-- End .card -->
@@ -46,7 +46,7 @@
 					        </div><!-- End .card-header -->
 					        <div id="collapse-2" class="collapse" aria-labelledby="heading-2" data-parent="#accordion-1">
 					            <div class="card-body">
-					                Ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. 
+We offer free shipping across India on all prepaid orders. Cash on delivery (COD) may include a small additional fee, which will be shown at checkout.
 					            </div><!-- End .card-body -->
 					        </div><!-- End .collapse -->
 					    </div><!-- End .card -->
@@ -61,7 +61,7 @@
 					        </div><!-- End .card-header -->
 					        <div id="collapse-3" class="collapse" aria-labelledby="heading-3" data-parent="#accordion-1">
 					            <div class="card-body">
-					                Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. 
+Currently, we ship only within India, so there are no customs duties or import fees involved.
 					            </div><!-- End .card-body -->
 					        </div><!-- End .collapse -->
 					    </div><!-- End .card -->
@@ -76,7 +76,7 @@
 					        </div><!-- End .card-header -->
 					        <div id="collapse-4" class="collapse" aria-labelledby="heading-4" data-parent="#accordion-1">
 					            <div class="card-body">
-					                Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. 
+We're sorry to hear that! If your product arrives damaged or becomes faulty within 7 days of delivery, please contact us with images, and we’ll arrange a replacement or refund based on the issue.
 					            </div><!-- End .card-body -->
 					        </div><!-- End .collapse -->
 					    </div><!-- End .card -->
@@ -94,7 +94,7 @@
 					        </div><!-- End .card-header -->
 					        <div id="collapse2-1" class="collapse" aria-labelledby="heading2-1" data-parent="#accordion-2">
 					            <div class="card-body">
-					                Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum.
+Once your order is shipped, you’ll receive an email and SMS with a tracking number. You can also track it anytime from your account dashboard.
 					            </div><!-- End .card-body -->
 					        </div><!-- End .collapse -->
 					    </div><!-- End .card -->
@@ -109,7 +109,7 @@
 					        </div><!-- End .card-header -->
 					        <div id="collapse2-2" class="collapse" aria-labelledby="heading2-2" data-parent="#accordion-2">
 					            <div class="card-body">
-					                Ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. 
+If your order is delayed beyond the estimated delivery time, please contact us at shop.layerloop@gmail.com or call +91 8059808185. We'll help you track and resolve it quickly.
 					            </div><!-- End .card-body -->
 					        </div><!-- End .collapse -->
 					    </div><!-- End .card -->
@@ -124,7 +124,7 @@
 					        </div><!-- End .card-header -->
 					        <div id="collapse2-3" class="collapse" aria-labelledby="heading2-3" data-parent="#accordion-2">
 					            <div class="card-body">
-					                Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. 
+We accept returns only if the product is defective, damaged during shipping, or the wrong item was sent. Contact us within 7 days of delivery with photo proof, and we’ll guide you through the return or exchange process.
 					            </div><!-- End .card-body -->
 					        </div><!-- End .collapse -->
 					    </div><!-- End .card -->
@@ -142,7 +142,7 @@
 					        </div><!-- End .card-header -->
 					        <div id="collapse3-1" class="collapse" aria-labelledby="heading3-1" data-parent="#accordion-3">
 					            <div class="card-body">
-					                Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum.
+We accept major payment methods including UPI, credit/debit cards, net banking, and wallets via secure Razorpay checkout. COD is also available for select pin codes.
 					            </div><!-- End .card-body -->
 					        </div><!-- End .collapse -->
 					    </div><!-- End .card -->
@@ -157,7 +157,7 @@
 					        </div><!-- End .card-header -->
 					        <div id="collapse3-2" class="collapse" aria-labelledby="heading3-2" data-parent="#accordion-3">
 					            <div class="card-body">
-					                Ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. 
+We currently do not accept gift cards, but we’re working on adding this feature in the future.
 					            </div><!-- End .card-body -->
 					        </div><!-- End .collapse -->
 					    </div><!-- End .card -->
@@ -172,7 +172,7 @@
 					        </div><!-- End .card-header -->
 					        <div id="collapse3-3" class="collapse" aria-labelledby="heading3-3" data-parent="#accordion-3">
 					            <div class="card-body">
-					                Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. 
+Make sure your internet connection is stable and your card or UPI app has sufficient balance. If it still doesn't work, try another payment method or contact us for help.
 					            </div><!-- End .card-body -->
 					        </div><!-- End .collapse -->
 					    </div><!-- End .card -->
@@ -187,7 +187,7 @@
 					        </div><!-- End .card-header -->
 					        <div id="collapse3-4" class="collapse" aria-labelledby="heading3-4" data-parent="#accordion-3">
 					            <div class="card-body">
-					                Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. 
+Once payment is successful, you’ll receive an order confirmation via email and SMS. If you’re unsure, check your bank statement or contact us with your payment details for verification.
 					            </div><!-- End .card-body -->
 					        </div><!-- End .collapse -->
 					    </div><!-- End .card -->
@@ -195,18 +195,18 @@
                 </div><!-- End .container -->
             </div><!-- End .page-content -->
 
-            <div class="cta cta-display bg-image pt-4 pb-4" style="background-image: url(assets/images/backgrounds/cta/bg-7.jpg);">
+            <div class="cta cta-display bg-image pt-4 pb-4" style="background-image: url(frontend/assets/images/backgrounds/cta/bg-7.jpg);">
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-md-10 col-lg-9 col-xl-7">
                             <div class="row no-gutters flex-column flex-sm-row align-items-sm-center">
                                 <div class="col">
                                     <h3 class="cta-title text-white">If You Have More Questions</h3><!-- End .cta-title -->
-                                    <p class="cta-desc text-white">Quisque volutpat mattis eros</p><!-- End .cta-desc -->
+                                    <p class="cta-desc text-white">We're just a message away. Reach out and we'll help you with anything you need.</p><!-- End .cta-desc -->
                                 </div><!-- End .col -->
 
                                 <div class="col-auto">
-                                    <a href="contact.html" class="btn btn-outline-white"><span>CONTACT US</span><i class="icon-long-arrow-right"></i></a>
+                                    <a href="{{url('contact_us')}}" class="btn btn-outline-white"><span>CONTACT US</span><i class="icon-long-arrow-right"></i></a>
                                 </div><!-- End .col-auto -->
                             </div><!-- End .row no-gutters -->
                         </div><!-- End .col-md-10 col-lg-9 -->

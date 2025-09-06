@@ -50,7 +50,7 @@
 
                     <div class="product-body">
                         <div class="product-cat">
-                            <a href="#">Women</a>
+                            <a href="#" class="prodcatlink">Women</a>
                         </div><!-- End .product-cat -->
                         <h3 class="product-title">{{$relatedproduct->name}}</h3><!-- End .product-title -->
                         <div class="product-price">
