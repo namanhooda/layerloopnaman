@@ -51,11 +51,11 @@
                                 <div data-i18n="Category List">Category List</div>
                             </a>
                         </li>
-                        <!-- <li class="menu-item {{ request()->routeIs('admin.coupons.index') ? 'active' : '' }}">
+                        <li class="menu-item {{ request()->routeIs('admin.coupons.index') ? 'active' : '' }}">
                             <a href="{{ route('admin.coupons.index') }}" class="menu-link">
                                 <div data-i18n="Coupons">Coupons</div>
                             </a>
-                        </li> -->
+                        </li>
                     </ul>
                 </li>
 

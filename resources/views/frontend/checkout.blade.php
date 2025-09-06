@@ -109,6 +109,12 @@
                                             <td>Subtotal:</td>
                                             <td>₹ {{ number_format($subtotal, 2) }}</td>
                                         </tr>
+                                    @if(session()->has('coupon') && $discount > 0)
+                                        <tr class="summary-subtotal">
+                                            <td>Coupon Applied:</td>
+                                            <td>- ₹{{ number_format($discount, 2) }}</td>
+                                        </tr>
+                                        @endif
                                         <tr>
                                             <td>
                                                 Shipping

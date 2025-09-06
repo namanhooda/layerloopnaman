@@ -193,6 +193,16 @@ class CartController extends Controller
         $order->user_id = $userId;
         $order->address_id = $request->billing_address;
         $order->shipping_type = $request->shipping_type;
+
+        // Check if coupon exists in session
+        if (Session::has('coupon')) {
+            $coupon = Session::get('coupon');
+
+            $order->coupon_applied = 'yes';
+            $order->coupon_code = $coupon['code'] ?? null;
+            $order->coupon_discount = $coupon['value'] ?? 0;
+        }
+
         $order->shipping_charges = $request->shipping_charges;
         $order->payment_mod = $request->payment_mod;
         $order->total = $cartItems->sum(fn($item) => $item->product->price * $item->quantity);
