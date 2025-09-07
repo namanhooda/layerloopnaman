@@ -24,46 +24,33 @@ class CartController extends Controller
             'product_id' => 'required|exists:products,id',
             'quantity'   => 'required|integer|min:1'
         ]);
-    
+
         $userId = auth()->id();
-    
-        // Use user agent + IP as fallback system_id (hashed to keep it short and unique-ish)
+
         if (!$userId) {
             $rawIdentifier = $request->userAgent() . '|' . $request->ip();
-            $systemId = hash('sha256', $rawIdentifier); // or just md5() if shorter
+            $systemId = hash('sha256', $rawIdentifier);
         } else {
-            $systemId = null; // no need if user is logged in
+            $systemId = null;
         }
-    
-        // Build match condition
+
         $match = ['product_id' => $request->product_id];
-    
-        if ($userId) {
-            $match['user_id'] = $userId;
-        } else {
-            $match['system_id'] = $systemId;
-        }
-    
-        // Check if a cart already exists for this user/session
+        if ($userId) $match['user_id'] = $userId;
+        else $match['system_id'] = $systemId;
+
         $existingCartItem = Cart::where(function ($query) use ($userId, $systemId) {
-            if ($userId) {
-                $query->where('user_id', $userId);
-            } else {
-                $query->where('system_id', $systemId);
-            }
+            if ($userId) $query->where('user_id', $userId);
+            else $query->where('system_id', $systemId);
         })->first();
-    
-        // Determine cart_id
+
         if ($existingCartItem) {
             $cartId = $existingCartItem->cart_id;
         } else {
-            // Generate new cart ID, e.g., CRT + random 7-digit number
             do {
                 $cartId = 'CRT' . mt_rand(1000000, 9999999);
             } while (Cart::where('cart_id', $cartId)->exists());
         }
-    
-        // Store or update cart item
+
         Cart::updateOrCreate(
             $match,
             [
@@ -71,10 +58,13 @@ class CartController extends Controller
                 'cart_id' => $cartId
             ]
         );
-    
-        return back()->with('success', 'Product added to cart!');
+
+        // Return JSON instead of redirect
+        return response()->json([
+            'success' => true,
+            'message' => 'Product added to cart!'
+        ]);
     }
-    
 
     public function cart(Request $request)
     {
@@ -108,6 +98,7 @@ class CartController extends Controller
 
         return view('frontend.cart', ['cartItems' => $cartItems]);
     }
+
     public function removeItem(Request $request)
     {
         $cartItemId = $request->input('cart_item_id');
@@ -122,160 +113,23 @@ class CartController extends Controller
 
         return redirect()->back()->with('success', 'Item removed from cart.');
     }
+
     public function setShipping(Request $request)
-{
-    $shipping = [
-        'type'  => $request->type,
-        'label' => $request->label,
-        'price' => $request->price,
-    ];
-
-    session(['shipping' => $shipping]);
-
-    return response()->json([
-        'status' => 'success',
-        'shipping' => $shipping
-    ]);
-}
-    public function checkout()
     {
-        $userId = auth()->id();
-        $systemId = session('system_id');
-    
-        $cartItems = Cart::with('product')
-            ->where(function ($query) use ($userId, $systemId) {
-                $query->when($userId, fn($q) => $q->where('user_id', $userId))
-                      ->when(!$userId && $systemId, fn($q) => $q->where('system_id', $systemId));
-            })
-            ->get();
-    
-        $addresses = Address::where('user_id', $userId)->get();
-    
-        return view('frontend.checkout', compact('addresses', 'cartItems'));
-    }
-    public function placeOrder(Request $request)
-    {
-     
-        $validator = Validator::make($request->all(), [
-            'shipping_type' => 'required',
-            'shipping_charges' => 'required',
-            'billing_address' => 'required|exists:addresses,id',
-        ], [
-            'shipping_type.required' => 'Please select a shipping type.',
-            'shipping_charges.required' => 'Shipping charges are required.',
-            'billing_address.required' => 'Please select a billing address.',
-            'billing_address.exists' => 'Selected billing address is invalid.',
+        $shipping = [
+            'type'  => $request->type,
+            'label' => $request->label,
+            'price' => $request->price,
+        ];
+
+        session(['shipping' => $shipping]);
+
+        return response()->json([
+            'status' => 'success',
+            'shipping' => $shipping
         ]);
-
-       if ($validator->fails()) {
-            return redirect()->back()
-                ->with('error', $validator->errors()->first()) // first error only
-                ->withInput();
-        }
-    
-        $userId = auth()->id();
-        $systemId = session('system_id');
-    
-        // Get cart items
-        $cartItems = Cart::with('product')
-            ->where(function ($query) use ($userId, $systemId) {
-                $query->when($userId, fn($q) => $q->where('user_id', $userId))
-                      ->when(!$userId && $systemId, fn($q) => $q->where('system_id', $systemId));
-            })
-            ->get();
-    
-        if ($cartItems->isEmpty()) {
-            return redirect()->back()->with('error', 'Your cart is empty.');
-        }
-    
-        // Create Order
-        $order = new Order();
-        $order->user_id = $userId;
-        $order->address_id = $request->billing_address;
-        $order->shipping_type = $request->shipping_type;
-
-        // Check if coupon exists in session
-        if (Session::has('coupon')) {
-            $coupon = Session::get('coupon');
-
-            $order->coupon_applied = 'yes';
-            $order->coupon_code = $coupon['code'] ?? null;
-            $order->coupon_discount = $coupon['value'] ?? 0;
-        }
-
-        $order->shipping_charges = $request->shipping_charges;
-        $order->payment_mod = $request->payment_mod;
-        $order->total = $cartItems->sum(fn($item) => $item->product->price * $item->quantity);
-        $order->status = 'pending';
-        $order->save();
-    
-        // Create Order Items
-        foreach ($cartItems as $item) {
-            OrderItem::create([
-                'order_id'   => $order->id,
-                'product_id' => $item->product_id,
-                'quantity'   => $item->quantity,
-                'price'      => $item->product->price,
-            ]);
-        }
-
-        if ($request->payment_mode === 'online') {
-            // Razorpay order creation
-
-        $order = Order::find(1);
-
-            $totalAmount = $order->total;
-            $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
-
-            $razorpayOrder = $api->order->create([
-                'receipt' => 'order_' . $order->id,
-                'amount' => $totalAmount * 100, // In paise
-                'currency' => 'INR',
-                'payment_capture' => 1
-            ]);
-
-            // Optionally save Razorpay order ID to database
-            $order->razorpay_order_id = $razorpayOrder->id;
-            $order->save();
-
-            // Redirect to Razorpay checkout page
-            return view('frontend.razorpay', [
-                'order' => $order,
-                'razorpayOrder' => $razorpayOrder,
-                'amount' => $totalAmount,
-                'billingAddress' => $request->billing_address,
-                'user' => auth()->user(),
-                'razorpayKey' => env('RAZORPAY_KEY'),
-            ]);
-        }
-
-
-    
-        Cart::where(function ($query) use ($userId, $systemId) {
-            $query->when($userId, fn($q) => $q->where('user_id', $userId))
-                  ->when(!$userId && $systemId, fn($q) => $q->where('system_id', $systemId));
-        })->delete();
-    
-        return redirect()->route('order.success')->with('success', 'Order placed successfully!');
     }
 
-    public function verifyPayment(Request $request)
-    {
-        $paymentId = $request->input('payment_id');
-        $orderId = $request->input('order_id');
-
-        $order = Order::findOrFail($orderId);
-        $order->payment_id = $paymentId;
-        $order->payment_status = 'paid';
-        $order->save();
-
-        // Clear cart
-        $userId = auth()->id();
-        $systemId = session('system_id');
-        
-
-        return redirect()->route('order.success')->with('success', 'Payment successful and order placed!');
-    }
     public function applyCoupon(Request $request)
     {
         $code = $request->input('coupon_code');
@@ -304,6 +158,7 @@ class CartController extends Controller
     
         return back()->with('success', 'Coupon applied successfully!');
     }
+    
     public function removeCoupon()
     {
         session()->forget('coupon');

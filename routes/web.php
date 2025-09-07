@@ -49,7 +49,6 @@ Route::get('/search-suggestions', [FrontendController::class, 'searchSuggestions
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
 Route::get('shop-product-detail/{id}', [FrontendController::class, 'detail'])->name('index');
-Route::get('account', [FrontendController::class, 'account'])->name('account');
 Route::post('adrrrs', [FrontendController::class, 'storeReview'])->name('reviews.store');
 //// cart & Checkout
 Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
@@ -58,19 +57,19 @@ Route::get('cart', [CartController::class, 'cart'])->name('cart');
 
 Route::post('/cart/shipping', [App\Http\Controllers\CartController::class, 'setShipping'])->name('cart.shipping');
 
-
-Route::get('checkout', [CartController::class, 'checkout'])->name('checkout');
-Route::post('ads', [AddressController::class, 'store'])->name('addresses.store');
 Route::post('/apply-coupon', [CartController::class, 'applyCoupon'])->name('apply.coupon');
 Route::post('/remove-coupon', [CartController::class, 'removeCoupon'])->name('remove.coupon');
 
 //// Frontend Auth Routes
 Route::middleware('auth')->group(function () {
+    Route::get('checkout', [CheckoutController::class, 'checkout'])->name('checkout');
+    Route::post('ads', [AddressController::class, 'store'])->name('addresses.store');
     Route::resource('wishlist', WishlistController::class)->only(['index', 'store', 'destroy']);
+    Route::get('account', [FrontendController::class, 'account'])->name('account');
+    Route::post('/checkout/place-order', [CheckoutController::class, 'placeOrder'])->name('checkout.placeOrder');
+    Route::get('/checkout/verify-order', [CheckoutController::class, 'verifyPayment'])->name('order.payment.verify');
 });
 
-Route::post('/checkout/place-order', [CartController::class, 'placeOrder'])->name('checkout.placeOrder');
-Route::get('/checkout/verify-order', [CartController::class, 'verifyPayment'])->name('order.payment.verify');
 Route::get('/order-success', function () {
     return view('frontend.order-success');
 })->name('order.success');

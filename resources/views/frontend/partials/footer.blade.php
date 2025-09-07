@@ -9,7 +9,7 @@
                         </span>
                         <div class="icon-box-content">
                             <h3 class="icon-box-title">Free Shipping</h3>
-                            <p>orders $50 or more</p>
+                            <p>Orders ₹ 1000 or more</p>
                         </div>
                     </div>
                 </div>
@@ -22,7 +22,7 @@
 
                         <div class="icon-box-content">
                             <h3 class="icon-box-title">Free Returns</h3>
-                            <p>within 30 days</p>
+                            <p>Within 7 days</p>
                         </div>
                     </div>
                 </div>

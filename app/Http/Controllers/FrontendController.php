@@ -97,7 +97,7 @@ class FrontendController extends Controller
     {
         $products = Product::where('category', $category_name)->get();
 
-        return view('frontend.category_product', compact('products'));
+        return view('frontend.category_product', compact('products','category_name'));
     }
     public function searchSuggestions(Request $request)
 {

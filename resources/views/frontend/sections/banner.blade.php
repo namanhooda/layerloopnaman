@@ -16,9 +16,11 @@
 
             <div class="intro-slide" style="background-image: url(frontend/assets/images/demos/demo-2/slider/slide-2.jpg);">
                 <div class="container intro-content">
-                    <h3 class="intro-subtitle">Deals and Promotions</h3><!-- End .h3 intro-subtitle -->
-                    <h1 class="intro-title">Ypperlig <br>Coffee Table <br><span
-                            class="text-primary"><sup>$</sup>49,99</span></h1><!-- End .intro-title -->
+                    <h3 class="intro-subtitle">Lamps</h3><!-- End .h3 intro-subtitle -->
+                    <h1 class="intro-title">Ypperlig <br>Moon lamps <br><span
+                            class="text-primary">
+                            <!-- <sup>$</sup>49,99</span> -->
+                        </h1><!-- End .intro-title -->
 
                     <a href="{{url('shop')}}" class="btn btn-primary">
                         <span>Shop Now</span>

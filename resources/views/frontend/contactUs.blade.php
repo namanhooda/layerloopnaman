@@ -170,7 +170,7 @@
 	                			</div><!-- End .store -->
 	                		</div><!-- End .col-lg-6 -->
 	                	</div><!-- End .row -->
-                	</div><!-- End .stores -->
+                	</div>
                 </div><!-- End .container -->
             	<div id="map"><iframe 
     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3504.9654014604424!2d77.2110193753188!3d28.54077387572726!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce30a05ba07c3%3A0x68ef5a9a771e8da0!2sIndia%20Gate!5e0!3m2!1sen!2sin!4v1658234567890!5m2!1sen!2sin" 
