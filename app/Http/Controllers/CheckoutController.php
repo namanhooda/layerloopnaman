@@ -1,8 +1,17 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use App\Models\Cart;
+use App\Models\Address;
+use App\Models\Order;
+use App\Models\Coupon;
+use Illuminate\Support\Facades\Session;
+use App\Models\OrderItem;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Razorpay\Api\Api; 
+use Illuminate\Support\Facades\Validator;
 
 class CheckoutController extends Controller
 {
