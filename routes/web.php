@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\{RoleController, PermissionController, UserController, ProfileController, ProductController, ProductCategoryController, OrderController, CouponController, PrototypeController, InvoiceController};
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\{CartController, FrontendController, AddressController, WishlistController};
+use App\Http\Controllers\{CartController, CheckoutController, FrontendController, AddressController, WishlistController};
 use Laravel\Fortify\Features;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
