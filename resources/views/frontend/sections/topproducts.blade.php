@@ -37,10 +37,14 @@
                                      
                                     </a>
 
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist "><span>add to
-                                                wishlist</span></a>
-                                    </div><!-- End .product-action-vertical -->
+                                    
+                                <div class="product-action-vertical">
+                                    <button type="button"
+                                        class="btn-product-icon btn-wishlist btn-expandable add-to-wishlist"
+                                        data-product-id="{{ $products->id }}">
+                                        <span>Add to wishlist</span>
+                                    </button>
+                                </div><!-- End .product-action-vertical -->
                                 </figure><!-- End .product-media -->
 
                                 <div class="product-body">
@@ -54,7 +58,11 @@
                                     </div><!-- End .product-price -->
                                 </div><!-- End .product-body -->
                                 <div class="product-action">
-                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
+                                    <input type="hidden" id="product-id-{{ $products->id }}" value="{{ $products->id }}">
+                                    <input type="hidden" id="quantity-{{ $products->id }}" value="1">
+                                    <button type="button" class="btn-product btn-cart" onclick="addToCart({{ $products->id }})">
+                                        <span>add to cart</span>
+                                    </button>
                                 </div><!-- End .product-action -->
                             </div><!-- End .product -->
                         </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->

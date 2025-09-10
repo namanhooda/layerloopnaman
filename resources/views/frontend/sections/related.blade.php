@@ -26,51 +26,59 @@
                                 }
                             }
                         }'>
-                @foreach($related as $relatedproduct)
-                <div class="product product-7 product-manual">
-                    <figure class="product-media">
-                        <span class="product-label label-new">New</span>
-                        <a href="product.html">
-                            <img src="{{ asset('storage/' . $relatedproduct->featured_image) }}" alt="Product image"
-                                class="product-image product-image-manual">
-                        </a>
+                @foreach($related as $product)
+                
+                        <div class="product  product-11 product-manual">
+                            <figure class="product-media">
+                                <span class="product-label label-new">New</span>
+                                <a href="{{ url('shop-product-detail/' . $product->id) }}">
+                                    <!-- <img src="assets/images/products/product-1.jpg" alt="Product image"
+                                        class="product-image"> -->
+                                    <img src="{{ asset('storage/' . $product->featured_image) }}" alt="Product image"
+                                        class="product-image product-image-manual">
 
-                        <div class="product-action-vertical">
-                            <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to
-                                    wishlist</span></a>
-                            <a href="popup/quickView.html" class="btn-product-icon btn-quickview"
-                                title="Quick view"><span>Quick view</span></a>
-                            <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Compare</span></a>
-                        </div><!-- End .product-action-vertical -->
+                                </a>
+                                <div class="product-action-vertical">
+                                    <button type="button"
+                                        class="btn-product-icon btn-wishlist btn-expandable add-to-wishlist"
+                                        data-product-id="{{ $product->id }}">
+                                        <span>Add to wishlist</span>
+                                    </button>
+                                </div><!-- End .product-action -->
 
-                        <div class="product-action">
-                            <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                        </div><!-- End .product-action -->
-                    </figure><!-- End .product-media -->
+                            </figure><!-- End .product-media -->
 
-                    <div class="product-body">
-                        <div class="product-cat">
-                            <a href="#" class="prodcatlink">Women</a>
-                        </div><!-- End .product-cat -->
-                        <h3 class="product-title">{{$relatedproduct->name}}</h3><!-- End .product-title -->
-                        <div class="product-price">
-                            $60.00
-                        </div><!-- End .product-price -->
-                        <div class="ratings-container">
-                            <div class="ratings">
-                                <div class="ratings-val" style="width: 20%;"></div><!-- End .ratings-val -->
-                            </div><!-- End .ratings -->
-                            <span class="ratings-text">( 2 Reviews )</span>
-                        </div><!-- End .rating-container -->
+                            <div class="product-body">
+                                <div class="product-cat">
+                                    <a href="#" class="prodcatlink">{{$product->category}}</a>
+                                </div><!-- End .product-cat -->
+                                <h3 class="product-title"><a
+                                        href="{{ url('shop-product-detail/' . $product->id) }}">{{$product->name}}</a>
+                                </h3>
+                                <!-- End .product-title -->
+                                <div class="product-price">
+                                    ₹{{$product->discounted_price}}
+                                </div><!-- End .product-price -->
+                                <div class="ratings-container">
+                                    <div class="ratings">
+                                        <div class="ratings-val" style="width: 0%;"></div><!-- End .ratings-val -->
+                                    </div><!-- End .ratings -->
+                                    <span class="ratings-text">( 0 Reviews )</span>
+                                </div><!-- End .rating-container -->
 
-                        <div class="product-nav product-nav-dots">
-                            <a href="#" class="active" style="background: #cc9966;"><span class="sr-only">Color
-                                    name</span></a>
-                            <a href="#" style="background: #7fc5ed;"><span class="sr-only">Color name</span></a>
-                            <a href="#" style="background: #e8c97a;"><span class="sr-only">Color name</span></a>
-                        </div><!-- End .product-nav -->
-                    </div><!-- End .product-body -->
-                </div>
+                                <div class="product-nav product-nav-dots"></a>
+
+                                </div><!-- End .product-nav -->
+                            </div>
+                            <div class="product-action">
+                                <input type="hidden" id="product-id-{{ $product->id }}" value="{{ $product->id }}">
+                                <input type="hidden" id="quantity-{{ $product->id }}" value="1">
+                                <button type="button" class="btn-product btn-cart"
+                                    onclick="addToCart({{ $product->id }})">
+                                    <span>add to cart</span>
+                                </button>
+                            </div><!-- End .product-body -->
+                        </div>
                 @endforeach
 
             </div><!-- End .owl-carousel -->

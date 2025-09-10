@@ -43,14 +43,14 @@
                                     class="product-image product-image-manual">
                             </a>
 
-                            <div class="product-action-vertical">
-                                <form action="{{ route('wishlist.store') }}" method="POST">
-                                    @csrf
-                                    <input type="hidden" name="product_id" value="{{ $products->id }}">
-                                    <button type="submit" class="btn-product-icon btn-wishlist"><span>add to
-                                            wishlist</span></button>
-                                </form>
-                            </div>
+                            
+                                <div class="product-action-vertical">
+                                    <button type="button"
+                                        class="btn-product-icon btn-wishlist btn-expandable add-to-wishlist"
+                                        data-product-id="{{ $products->id }}">
+                                        <span>Add to wishlist</span>
+                                    </button>
+                                </div>
                         </figure>
 
                         <div class="product-body">
@@ -61,14 +61,14 @@
                             </div>
                         </div>
 
-                        <form action="{{ route('cart.add') }}" method="POST">
-                            @csrf
-                            <div class="product-action">
-                                <input type="hidden" name="product_id" value="{{ $products->id }}">
-                                <input type="hidden" name="quantity" value="1">
-                                <button type="submit" class="btn-product btn-cart"><span>add to cart</span></button>
+                        <div class="product-action">
+                                <input type="hidden" id="product-id-{{ $products->id }}" value="{{ $products->id }}">
+                                <input type="hidden" id="quantity-{{ $products->id }}" value="1">
+                                <button type="button" class="btn-product btn-cart"
+                                    onclick="addToCart({{ $products->id }})">
+                                    <span>add to cart</span>
+                                </button>
                             </div>
-                        </form>
                     </div>
                     @endforeach
 

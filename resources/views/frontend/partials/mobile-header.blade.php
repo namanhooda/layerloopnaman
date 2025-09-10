@@ -98,8 +98,6 @@
                 <div class="tab-pane fade" id="mobile-cats-tab" role="tabpanel" aria-labelledby="mobile-cats-link">
                     <nav class="mobile-cats-nav">
                         <ul class="mobile-cats-menu">
-                            <li class="mobile-cats-lead"><a
-                                    href="{{ route('shop', ['filter' => 'clothing']) }}">Clothes</a></li>
                             <li class="mobile-cats-lead"><a href="{{url('category/tshirts')}}">Tshirts</a></li>
 
                             @php

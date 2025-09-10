@@ -9,12 +9,7 @@
         /* Optional if you want no background */
         box-shadow: none;
         /* Optional if you want to remove any shadow */
-    }.btn-wishlist.active {
-    color: #fff !important;
-    background-color: #e63946 !important; /* red heart */
-    border-radius: 50%;
-    border-color: #e63946 !important;
-}
+    }
 
 </style>
 <main class="main">
@@ -95,7 +90,7 @@
 
                                 </a>
                                 <div class="product-action-vertical">
-                                    <button type="button" 
+                                    <button type="button"
                                         class="btn-product-icon btn-wishlist btn-expandable add-to-wishlist"
                                         data-product-id="{{ $product->id }}">
                                         <span>Add to wishlist</span>
@@ -126,10 +121,11 @@
 
                                 </div><!-- End .product-nav -->
                             </div>
-                           <div class="product-action">
+                            <div class="product-action">
                                 <input type="hidden" id="product-id-{{ $product->id }}" value="{{ $product->id }}">
                                 <input type="hidden" id="quantity-{{ $product->id }}" value="1">
-                                <button type="button" class="btn-product btn-cart" onclick="addToCart({{ $product->id }})">
+                                <button type="button" class="btn-product btn-cart"
+                                    onclick="addToCart({{ $product->id }})">
                                     <span>add to cart</span>
                                 </button>
                             </div><!-- End .product-body -->
@@ -394,96 +390,14 @@
                                         <span id="filter-price-range"></span>
                                     </div><!-- End .filter-price-text -->
 
-                                    <div id="price-slider"></div><!-- End #price-slider -->
-                                </div><!-- End .filter-price -->
-                            </div><!-- End .widget-body -->
-                        </div><!-- End .collapse -->
-                    </div><!-- End .widget -->
-                </div><!-- End .sidebar-filter-wrapper -->
-            </aside><!-- End .sidebar-filter -->
-        </div><!-- End .container -->
-    </div><!-- End .page-content -->
-</main><!-- End .main -->
-
-
-<script>
-function addToCart(productId) {
-    let product_id = document.getElementById("product-id-" + productId).value;
-    let quantity = document.getElementById("quantity-" + productId).value;
-
-    fetch("{{ route('cart.add') }}", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "X-CSRF-TOKEN": "{{ csrf_token() }}"
-        },
-        body: JSON.stringify({ product_id, quantity })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            // Update cart count
-            document.querySelector(".cart-count").textContent = data.cart_count;
-
-            // Replace dropdown HTML
-            document.querySelector(".dropdown-menu").innerHTML = data.cart_html;
-
-            // ✅ Show toastr success
-            showToastr('success', data.message);
-        } else {
-            // ✅ Show toastr error if backend sent failure
-            showToastr('error', data.message ?? "Something went wrong!");
-        }
-    })
-    .catch(error => {
-        console.error("Error:", error);
-        showToastr('error', "Unexpected error occurred!");
-    });
-
-}
-</script>
-
-<script>
-document.querySelectorAll(".add-to-wishlist").forEach(button => {
-    button.addEventListener("click", function () {
-        let productId = this.dataset.productId;
-        let btn = this; // current button
-
-        fetch("{{ route('wishlist.store') }}", {
-            method: "POST",
-            headers: {
-                "X-CSRF-TOKEN": "{{ csrf_token() }}",
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ product_id: productId })
-        })
-        .then(response => response.json())
-        .then(data => {
-            
-        if (data.success) {
-            
-                document.querySelector(".wishlist-count").textContent = data.count;
-
-                // ✅ change button style (heart filled)
-                btn.classList.add("active");
-                btn.innerHTML = `<span>In wishlist</span>`;
-
-            showToastr('success', data.message);
-        } else {
-            // ✅ Show toastr error if backend sent failure
-            showToastr('error', data.message ?? "Something went wrong!");
-        }
-        })
-        .catch(err => {
-            console.error("Wishlist error:", err);
-            showToastr('error', "Unexpected error occurred!");
-        });
-    });
-});
-</script>
-
-
-
-
-
+                                    <div id="price-slider"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+</main>
 @endsection

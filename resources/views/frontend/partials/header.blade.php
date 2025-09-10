@@ -134,7 +134,7 @@
                     </a>
                     <div class="dropdown-menu">
                         <nav class="side-nav">
-                            <ul class="menu-vertical sf-arrows">]
+                            <ul class="menu-vertical sf-arrows">
                                 <li class="item-lead"><a href="{{url('category/tshirts')}}">Tshirts</a></li>
                                     @php
                                     $getCaregories = \App\Helpers\CartHelper::getCaregories();

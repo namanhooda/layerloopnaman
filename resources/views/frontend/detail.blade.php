@@ -6,7 +6,38 @@
     outline: none;
     background-color: transparent; 
     box-shadow: none; 
-}</style>
+}
+
+.product-details-quantity {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.qty-btn {
+    background-color: #64c474;
+    color: white;
+    border: none;
+    padding: 5px 12px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    user-select: none;
+}
+
+.qty-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.qty-input {
+    width: 60px;
+    text-align: center;
+    font-size: 16px;
+    padding: 5px;
+}
+
+</style>
 <main class="main">
     <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
         <div class="container d-flex align-items-center">
@@ -74,7 +105,7 @@
                             </div>
 
                             <div class="product-content">
-                                <p>{{$product->description ?? "Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing. Sed lectus."}}
+                                <p>{{$product->description ?? "Discover our premium 3D printed creations and custom DTF printed T-shirts, made for style and durability. From intricate 3D printed products to vibrant DTF T-shirts, we bring your ideas to life with quality and care."}}
                                 </p>
                             </div>
 
@@ -109,33 +140,27 @@
                             </div>
                             @endif
 
-                            <form action="{{ route('cart.add') }}" method="POST">
                             <div class="details-filter-row details-row-size">
                                 <label for="qty">Qty:</label>
                                 <div class="product-details-quantity">
-                                    <input type="number" id="qty" name="quantity" class="form-control" value="1" min="1" max="10"
-                                        step="1" data-decimals="0" required>
+                                    <button type="button" class="qty-btn minus">-</button>
+                                    <input type="number"  id="qty quantity-{{ $product->id }}" name="quantity" class="form-control qty-input" value="1" min="1" max="10" step="1" data-decimals="0" required>
+                                    <button type="button" class="qty-btn plus">+</button>
                                 </div>
                             </div>
 
                             <div class="product-details-action">
-                                    @csrf
-                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                    <button type="submit" class="btn-product btn-cart">
-                                        <span>Add to Cart</span>
-                                    </button>
-                                </form>
+                                <input type="hidden" id="product-id-{{ $product->id }}" value="{{ $product->id }}">
+                                    <button type="button" class="btn-product btn-cart"
+                                    onclick="addToCart({{ $product->id }})">
+                                    <span>add to cart</span>
+                                </button>
 
                                 <div class="details-action-wrapper">
-                                    <!-- <a href="#" class="btn-product btn-wishlist" title="Wishlist"><span>Add to
-                                            Wishlist</span></a> -->
-                                    <form action="{{ route('wishlist.store') }}" method="POST">
-                                        @csrf
-                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                        <button type="submit" class="btn-product btn-wishlist" title="Wishlist">
+                                        <button type="button" class="btn-product btn-wishlist add-to-wishlist" title="Wishlist"
+                                        data-product-id="{{ $product->id }}">
                                             <span>Add to Wishlist</span>
                                         </button>
-                                    </form>
                                 </div>
                             </div>
 
@@ -147,13 +172,16 @@
 
                                 <div class="social-icons social-icons-sm">
                                     <span class="social-label">Share:</span>
-                                    <a href="#" class="social-icon" title="Facebook" target="_blank"><i
+                                    
+                                    <a href="#" class="social-icon social-facebook" title="Facebook" target="_blank"><i
                                             class="icon-facebook-f"></i></a>
-                                    <a href="#" class="social-icon" title="Twitter" target="_blank"><i
+                                    <a href="#" class="social-icon social-twitter" title="Twitter" target="_blank"><i
                                             class="icon-twitter"></i></a>
-                                    <a href="#" class="social-icon" title="Instagram" target="_blank"><i
+                                    <a href="{{url('https://www.instagram.com/layerloop.web/')}}" class="social-icon social-instagram" title="Instagram" target="_blank"><i
                                             class="icon-instagram"></i></a>
-                                    <a href="#" class="social-icon" title="Pinterest" target="_blank"><i
+                                    <a href="#" class="social-icon social-youtube" title="Youtube" target="_blank"><i
+                                            class="icon-youtube"></i></a>
+                                    <a href="#" class="social-icon social-pinterest" title="Pinterest" target="_blank"><i
                                             class="icon-pinterest"></i></a>
                                 </div>
                             </div>
@@ -369,6 +397,26 @@
 </main><!-- End .main -->
 
 @include('frontend.modals.addReview')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const qtyInput = document.getElementById('qty');
+    const plusBtn = document.querySelector('.qty-btn.plus');
+    const minusBtn = document.querySelector('.qty-btn.minus');
 
+    plusBtn.addEventListener('click', function() {
+        let current = parseInt(qtyInput.value) || 1;
+        if(current < parseInt(qtyInput.max)) {
+            qtyInput.value = current + 1;
+        }
+    });
+
+    minusBtn.addEventListener('click', function() {
+        let current = parseInt(qtyInput.value) || 1;
+        if(current > parseInt(qtyInput.min)) {
+            qtyInput.value = current - 1;
+        }
+    });
+});
+</script>
 
 @endsection

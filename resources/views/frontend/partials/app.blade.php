@@ -98,7 +98,12 @@
       .mobile-footer {
         display: none;
       }
-    }
+    }.btn-wishlist.active {
+    color: #fff !important;
+    background-color: #e63946 !important; /* red heart */
+    border-radius: 50%;
+    border-color: #e63946 !important;
+}
 </style>
 
     <div class="page-wrapper">
@@ -313,6 +318,86 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+
+
+<script>
+function addToCart(productId) {
+    let product_id = document.getElementById("product-id-" + productId).value;
+    let quantity = document.getElementById("quantity-" + productId).value;
+
+    fetch("{{ route('cart.add') }}", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+        },
+        body: JSON.stringify({ product_id, quantity })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Update cart count
+            document.querySelector(".cart-count").textContent = data.cart_count;
+
+            // Replace dropdown HTML
+            document.querySelector(".dropdown-menu").innerHTML = data.cart_html;
+
+            // ✅ Show toastr success
+            showToastr('success', data.message);
+        } else {
+            // ✅ Show toastr error if backend sent failure
+            showToastr('error', data.message ?? "Something went wrong!");
+        }
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        showToastr('error', "Unexpected error occurred!");
+    });
+
+}
+</script>
+
+<script>
+document.querySelectorAll(".add-to-wishlist").forEach(button => {
+    button.addEventListener("click", function () {
+        let productId = this.dataset.productId;
+        let btn = this; // current button
+
+        fetch("{{ route('wishlist.store') }}", {
+            method: "POST",
+            headers: {
+                "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ product_id: productId })
+        })
+        .then(response => response.json())
+        .then(data => {
+            
+        if (data.success) {
+            
+                document.querySelector(".wishlist-count").textContent = data.count;
+
+                // ✅ change button style (heart filled)
+                btn.classList.add("active");
+                btn.innerHTML = `<span>In wishlist</span>`;
+
+            showToastr('success', data.message);
+        } else {
+            // ✅ Show toastr error if backend sent failure
+            showToastr('error', data.message ?? "Something went wrong!");
+        }
+        })
+        .catch(err => {
+            console.error("Wishlist error:", err);
+            showToastr('error', "Unexpected error occurred!");
+        });
+    });
+});
+</script>
+
+
 
    <script>
     function showToastr(type, message) {
