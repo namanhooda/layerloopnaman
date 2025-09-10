@@ -35,7 +35,7 @@
                         <ul class="nav nav-pills nav-fill" role="tablist">
                             <li class="nav-item">
                                 <a class="nav-link active" id="signin-tab" data-toggle="tab" href="#signin" role="tab"
-                                    aria-controls="signin" aria-selected="true">Add Review</a>
+                                    aria-controls="signin" aria-selected="true">Add Address</a>
                             </li>
                         </ul>
                         <div class="tab-content" id="tab-content-5">
