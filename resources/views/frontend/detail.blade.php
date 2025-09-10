@@ -13,7 +13,16 @@
     align-items: center;
     gap: 5px;
 }
+.qty-input::-webkit-inner-spin-button,
+.qty-input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
 
+/* Remove arrows in Firefox */
+.qty-input {
+    -moz-appearance: textfield;
+}
 .qty-btn {
     background-color: #64c474;
     color: white;
@@ -63,7 +72,7 @@
 
                                 <img id="product-zoom" src="{{ asset('storage/' . $product->featured_image) }}"
                                     data-zoom-image="{{ asset('storage/' . $product->featured_image) }}"
-                                    alt="Product image">
+                                    alt="Product image" style="    border-radius: 10px;">
                                 <a href="#" id="btn-product-gallery" class="btn-product-gallery">
                                     <i class="icon-arrows"></i>
                                 </a>
@@ -141,18 +150,21 @@
                             @endif
 
                             <div class="details-filter-row details-row-size">
-                                <label for="qty">Qty:</label>
-                                <div class="product-details-quantity">
-                                    <button type="button" class="qty-btn minus">-</button>
-                                    <input type="number"  id="qty quantity-{{ $product->id }}" name="quantity" class="form-control qty-input" value="1" min="1" max="10" step="1" data-decimals="0" required>
-                                    <button type="button" class="qty-btn plus">+</button>
-                                </div>
+                                <label for="qty">Qty:</label><div class="product-details-quantity">
+    <button type="button" class="qty-btn minus">-</button>
+    <input type="number" id="qty-{{ $product->id }}" name="quantity" 
+           class="form-control qty-input" value="1" min="1" max="10" step="1" required>
+    <button type="button" class="qty-btn plus">+</button>
+</div>
                             </div>
 
                             <div class="product-details-action">
-                                <input type="hidden" id="product-id-{{ $product->id }}" value="{{ $product->id }}">
+                                <input type="hidden" id="product-id-{{ $product->id }}" value="{{ $product->id }}" style="">
                                     <button type="button" class="btn-product btn-cart"
-                                    onclick="addToCart({{ $product->id }})">
+                                    onclick="addToCart({{ $product->id }})" style="
+    color: #fff;
+    border-color: #64c474;
+    background-color: #64c474;">
                                     <span>add to cart</span>
                                 </button>
 
@@ -398,25 +410,29 @@
 
 @include('frontend.modals.addReview')
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const qtyInput = document.getElementById('qty');
-    const plusBtn = document.querySelector('.qty-btn.plus');
-    const minusBtn = document.querySelector('.qty-btn.minus');
+document.addEventListener('DOMContentLoaded', function () {
+    // Select all quantity groups
+    document.querySelectorAll('.product-details-quantity').forEach(function (qtyContainer) {
+        const qtyInput = qtyContainer.querySelector('.qty-input');
+        const plusBtn = qtyContainer.querySelector('.qty-btn.plus');
+        const minusBtn = qtyContainer.querySelector('.qty-btn.minus');
 
-    plusBtn.addEventListener('click', function() {
-        let current = parseInt(qtyInput.value) || 1;
-        if(current < parseInt(qtyInput.max)) {
-            qtyInput.value = current + 1;
-        }
-    });
+        plusBtn.addEventListener('click', function () {
+            let current = parseInt(qtyInput.value) || 1;
+            if (current < parseInt(qtyInput.max)) {
+                qtyInput.value = current + 1;
+            }
+        });
 
-    minusBtn.addEventListener('click', function() {
-        let current = parseInt(qtyInput.value) || 1;
-        if(current > parseInt(qtyInput.min)) {
-            qtyInput.value = current - 1;
-        }
+        minusBtn.addEventListener('click', function () {
+            let current = parseInt(qtyInput.value) || 1;
+            if (current > parseInt(qtyInput.min)) {
+                qtyInput.value = current - 1;
+            }
+        });
     });
 });
+
 </script>
 
 @endsection

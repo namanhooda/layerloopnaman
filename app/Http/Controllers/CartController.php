@@ -10,6 +10,7 @@ use App\Models\Order;
 use App\Models\Coupon;
 use Illuminate\Support\Facades\Session;
 use App\Models\OrderItem;
+use App\Models\Wishlist;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Razorpay\Api\Api; 
@@ -70,6 +71,56 @@ class CartController extends Controller
         ]);
     }
 
+    public function addWishlist(Request $request)
+    {
+        $request->validate([
+            'product_id' => 'required|exists:products,id',
+            'quantity'   => 'required|integer|min:1'
+        ]);
+
+        $userId = auth()->id();
+
+        if (!$userId) {
+            $rawIdentifier = $request->userAgent() . '|' . $request->ip();
+            $systemId = hash('sha256', $rawIdentifier);
+        } else {
+            $systemId = null;
+        }
+
+        $match = ['product_id' => $request->product_id];
+        if ($userId) $match['user_id'] = $userId;
+        else $match['system_id'] = $systemId;
+
+        $existingCartItem = Cart::where(function ($query) use ($userId, $systemId) {
+            if ($userId) $query->where('user_id', $userId);
+            else $query->where('system_id', $systemId);
+        })->first();
+
+        if ($existingCartItem) {
+            $cartId = $existingCartItem->cart_id;
+        } else {
+            do {
+                $cartId = 'CRT' . mt_rand(1000000, 9999999);
+            } while (Cart::where('cart_id', $cartId)->exists());
+        }
+
+        Cart::updateOrCreate(
+            $match,
+            [
+                'quantity' => $request->quantity,
+                'cart_id' => $cartId
+            ]
+        );
+
+
+
+        $removewishlist = Wishlist::find($request->wishlist_id);
+        $removewishlist->delete();
+
+        // Return JSON instead of redirect
+        
+        return redirect()->back()->with('success', 'Item Added to cart.');
+    }
     public function cart(Request $request)
     {
         $userId = auth()->id();

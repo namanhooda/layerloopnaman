@@ -56,10 +56,11 @@
                             </td>
                             <td class="action-col">
                                 @if($item->product->stock_quantity > 0)
-                                    <form action="{{ route('cart.add') }}" method="POST">
+                                    <form action="{{ route('cart.add.wishlist') }}" method="POST">
                                         @csrf
                                         <input type="hidden" name="product_id" value="{{ $item->product->id }}">
                                         <input type="hidden" name="quantity" value="1">
+                                        <input type="hidden" name="wishlist_id" value="{{ $item->id }}">
                                         <button type="submit" class="btn btn-outline-primary-2 btn-block">
                                             <i class="icon-cart-plus"></i> Add to Cart
                                         </button>

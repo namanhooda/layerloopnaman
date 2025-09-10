@@ -78,6 +78,9 @@
       box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
       z-index: 999;
     }
+    .btn-cart{
+        border-radius: 7px;
+    }
 
     .mobile-footer a {
       flex: 1;

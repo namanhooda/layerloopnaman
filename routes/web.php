@@ -52,6 +52,7 @@ Route::get('shop-product-detail/{id}', [FrontendController::class, 'detail'])->n
 Route::post('adrrrs', [FrontendController::class, 'storeReview'])->name('reviews.store');
 //// cart & Checkout
 Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+Route::post('/cart/add/wishlist', [CartController::class, 'addWishlist'])->name('cart.add.wishlist');
 Route::delete('/cart/remove', [CartController::class, 'removeItem'])->name('cart.remove');
 Route::get('cart', [CartController::class, 'cart'])->name('cart');
 
