@@ -12,7 +12,7 @@
     <meta name="description" content="Layerloop - 3d pronted Store">
     <meta name="author" content="p-themes">
     <!-- Favicon -->
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
     <link rel="apple-touch-icon" sizes="180x180" href="{{asset('frontend/assets/images/icons/apple-touch-icon.png')}}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{asset('frontend/assets/images/icons/favicon-32x32.png')}}">
@@ -20,8 +20,8 @@
     <link rel="manifest" href="{{asset('frontend/assets/images/icons/favicon-32x32.png')}}">
     <link rel="mask-icon" href="{{asset('frontend/assets/images/icons/favicon-32x32.png')}}" color="#666666">
     <link rel="shortcut icon" href="{{asset('frontend/assets/images/icons/favicon-32x32.png')}}">
-    <meta name="apple-mobile-web-app-title" content="Molla">
-    <meta name="application-name" content="Molla">
+    <meta name="apple-mobile-web-app-title" content="Layerloop">
+    <meta name="application-name" content="Layerloop">
     <meta name="msapplication-TileColor" content="#cc9966">
     <meta name="msapplication-config" content="{{asset('frontend/assets/images/icons/favicon-32x32.png')}}">
     <meta name="theme-color" content="#ffffff">
@@ -35,9 +35,7 @@
     <link rel="stylesheet" href="{{asset('frontend/assets/css/style.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/assets/css/skins/skin-demo-2.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/assets/css/demos/demo-2.css')}}">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-T8NR051ED9"></script>
     <script>
