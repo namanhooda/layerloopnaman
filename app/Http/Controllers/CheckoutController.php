@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Razorpay\Api\Api; 
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
 
 class CheckoutController extends Controller
 {
