@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Models\Cart;
+use App\Models\Wishlist;
 use App\Models\ProductCategory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -44,6 +45,23 @@ class CartHelper
     }
     public static function getCaregories()
     {
-            return ProductCategory::get();
+            return ProductCategory::where('name', 'not like', '%Tshirt%')->get();
+
+    }
+
+    public static function getWishlistCount()
+    {
+        $request = request(); 
+
+        if (Auth::check()) {
+            // Logged in user - use user_id
+            return Wishlist::where('user_id', Auth::id())->count();
+        } else {
+            // Guest - use system_id
+            $rawIdentifier = $request->userAgent() . '|' . $request->ip();
+            $systemId = hash('sha256', $rawIdentifier);
+
+            return Wishlist::where('system_id', $systemId)->count();
+        }
     }
 }

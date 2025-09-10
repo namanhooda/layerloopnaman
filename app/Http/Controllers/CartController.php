@@ -62,7 +62,11 @@ class CartController extends Controller
         // Return JSON instead of redirect
         return response()->json([
             'success' => true,
-            'message' => 'Product added to cart!'
+            'message' => 'Product added to cart!',
+            'cart_count' => \App\Helpers\CartHelper::getCartCount(),
+            'cart_html' => view('partials.cart_dropdown', [
+                'cartItems' => \App\Helpers\CartHelper::getCart()
+            ])->render()
         ]);
     }
 

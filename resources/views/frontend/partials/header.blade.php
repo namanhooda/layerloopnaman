@@ -47,7 +47,7 @@
                     <a href="{{url('wishlist')}}" title="Wishlist">
                         <div class="icon">
                             <i class="icon-heart-o"></i>
-                            <span class="wishlist-count badge">3</span>
+                            <span class="wishlist-count badge">{{ \App\Helpers\CartHelper::getWishlistCount() }}</span>
                         </div>
                         <p>Wishlist</p>
                     </a>
@@ -134,8 +134,7 @@
                     </a>
                     <div class="dropdown-menu">
                         <nav class="side-nav">
-                            <ul class="menu-vertical sf-arrows">
-                                <li class="item-lead"><a href="{{ route('shop', ['filter' => 'clothing']) }}">Clothes</a></li>
+                            <ul class="menu-vertical sf-arrows">]
                                 <li class="item-lead"><a href="{{url('category/tshirts')}}">Tshirts</a></li>
                                     @php
                                     $getCaregories = \App\Helpers\CartHelper::getCaregories();

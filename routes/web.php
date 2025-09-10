@@ -61,10 +61,10 @@ Route::post('/apply-coupon', [CartController::class, 'applyCoupon'])->name('appl
 Route::post('/remove-coupon', [CartController::class, 'removeCoupon'])->name('remove.coupon');
 
 //// Frontend Auth Routes
+    Route::resource('wishlist', WishlistController::class)->only(['index', 'store', 'destroy']);
 Route::middleware('auth')->group(function () {
     Route::get('checkout', [CheckoutController::class, 'checkout'])->name('checkout');
     Route::post('ads', [AddressController::class, 'store'])->name('addresses.store');
-    Route::resource('wishlist', WishlistController::class)->only(['index', 'store', 'destroy']);
     Route::get('account', [FrontendController::class, 'account'])->name('account');
     Route::post('/checkout/place-order', [CheckoutController::class, 'placeOrder'])->name('checkout.placeOrder');
     Route::get('/checkout/verify-order', [CheckoutController::class, 'verifyPayment'])->name('order.payment.verify');
