@@ -53,7 +53,7 @@
                                 <span class="dropdown-shortcuts-icon rounded-circle mb-3">
                                     <i class="icon-base ti tabler-device-desktop-analytics icon-26px text-heading"></i>
                                 </span>
-                                <a href="index.html" class="stretched-link">Dashboard</a>
+                                <a href="{{url('/')}}" class="stretched-link">Dashboard</a>
                                 <small>User Dashboard</small>
                             </div>
                             <div class="dropdown-shortcuts-item col">

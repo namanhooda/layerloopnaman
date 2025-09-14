@@ -3,6 +3,8 @@
 namespace App\Actions\Fortify;
 
 use App\Models\User;
+use App\Models\Wallet;
+use App\Models\WalletTransaction;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -44,6 +46,23 @@ class CreateNewUser implements CreatesNewUsers
             $user->assignRole($defaultRole);
         }
 
+        // Create wallet
+        $wallet = Wallet::create([
+            'user_id' => $user->id,
+            'amount' => 20,
+            'type' => 'credit',
+            'source' => 'new user discount',
+            'description' => 'Wallet created with new user discount',
+        ]);
+
+        // Create wallet transaction
+        WalletTransaction::create([
+            'user_id' => $user->id,
+            'amount' => 20,
+            'type' => 'credit',
+            'source' => 'new user discount',
+            'description' => 'Initial credit from new user discount',
+        ]);
         return $user;
     }
 }

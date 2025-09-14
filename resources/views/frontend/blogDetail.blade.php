@@ -10,8 +10,8 @@
             <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
                 <div class="container">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Blog</a></li>
+                        <li class="breadcrumb-item"><a href="{{url('/')}}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{url('blogs')}}">Blog</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Default With Sidebar</li>
                     </ol>
                 </div><!-- End .container -->

@@ -13,7 +13,7 @@
         <div class="container">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Shop</a></li>
+                <li class="breadcrumb-item"><a href="{{url('shop')}}">Shop</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Wishlist</li>
             </ol>
         </div>
@@ -42,7 +42,7 @@
                                         </a>
                                     </figure>
                                     <h3 class="product-title">
-                                        <a href="#">{{ $item->product->name }}</a>
+                                        <a href="$item->product->id">{{ $item->product->name }}</a>
                                     </h3>
                                 </div>
                             </td>

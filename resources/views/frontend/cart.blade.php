@@ -10,8 +10,8 @@
     <nav aria-label="breadcrumb" class="breadcrumb-nav">
         <div class="container">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Shop</a></li>
+                <li class="breadcrumb-item"><a href="{{url('/')}}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{url('shop')}}">Shop</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Shopping Cart</li>
             </ol>
         </div><!-- End .container -->
@@ -45,13 +45,13 @@
                                     <td class="product-col">
                                         <div class="product">
                                             <figure class="product-media">
-                                                <a href="#">
+                                                <a href="{{ url('shop-product-detail/' . $item->product->id) }}">
                                                     <img src="{{ asset('storage/' . $item->product->featured_image) }}"
                                                         alt="{{ $item->product->name }}" style="width: 80px;">
                                                 </a>
                                             </figure>
                                             <h3 class="product-title">
-                                                <a href="#">{{ $item->product->name }}</a>
+                                                <a href="{{ url('shop-product-detail/' . $item->product->id) }}">{{ $item->product->name }}</a>
                                             </h3>
                                         </div>
                                     </td>

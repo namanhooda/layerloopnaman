@@ -2,12 +2,15 @@
 @section('content')
 
 <style>
-.btn-product.btn-cart {
-    border: none !important;
-    outline: none;
-    background-color: transparent; /* Optional if you want no background */
-    box-shadow: none; /* Optional if you want to remove any shadow */
-}
+    .btn-product.btn-cart {
+        border: none !important;
+        outline: none;
+        background-color: transparent;
+        /* Optional if you want no background */
+        box-shadow: none;
+        /* Optional if you want to remove any shadow */
+    }
+
 </style>
 <main class="main">
     <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
@@ -19,12 +22,12 @@
         <div class="container">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{url('/')}}">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Category</a></li>
+                <li class="breadcrumb-item"><a href="#">Categrories</a></li>
                 <li class="breadcrumb-item active" aria-current="page">{{$category_name}}</li>
             </ol>
         </div><!-- End .container -->
     </nav><!-- End .breadcrumb-nav -->
-        
+
     <div class="page-content">
         <div class="container">
             <div class="toolbox">
@@ -54,67 +57,63 @@
 
             <div class="products">
                 <div class="row">
-                    @foreach($products as $product)
-                    <div class="col-6 col-md-4 col-lg-4 col-xl-3">
-                        <div class="product product-manual">
+                    @foreach($products as $products)
+                    <div class="col-6 col-md-4 col-lg-3 col-xl-5col">
+                        <div class="product product-11 text-center product-manual">
                             <figure class="product-media">
-                                <span class="product-label label-new">New</span>
-                                <a href="{{ url('shop-product-detail/' . $product->id) }}">
-                                    <!-- <img src="assets/images/products/product-1.jpg" alt="Product image"
-                                        class="product-image"> -->
-                                        <img src="{{ asset('storage/' . $product->featured_image) }}" alt="Product image" class="product-image product-image-manual">
+                                <a href="{{url('shop-product-detail/'.$products->id)}}">
+                                    <img src="{{ asset('storage/' . $products->featured_image) }}" alt="Product image"
+                                        class="product-image product-image-manual">
 
                                 </a>
 
+
                                 <div class="product-action-vertical">
-                                    <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to
-                                            wishlist</span></a>
-                                </div><!-- End .product-action -->
+                                    @php
+                                    $isInWishlist = \App\Models\Wishlist::where(function ($query) use ($products) {
+                                    $userId = auth()->id();
+                                    $systemId = $userId ? null : hash('sha256', request()->userAgent() . '|' .
+                                    request()->ip());
 
-                                <div class="product-action action-icon-top">
+                                    if ($userId) {
+                                    $query->where('user_id', $userId);
+                                    } else {
+                                    $query->where('system_id', $systemId);
+                                    }
+                                    })->where('product_id', $products->id)->exists();
+                                    @endphp
 
-                                <form action="{{ route('cart.add') }}" method="POST">
-    @csrf
-    <input type="hidden" name="product_id" value="{{ $product->id }}">
-    <input type="hidden" name="quantity" value="1">
-    
-    <button type="submit" class="btn-product btn-cart"  style="border: none;">
-        <span>add to cart</span>
-    </button>
-</form>
-
-
-
-                                    <a href="{{ url('shop-product-detail/' . $product->id) }}" class="btn-product btn-quickview"
-                                        title="Quick view"><span>quick view</span></a>
-                                    <a href="#" class="btn-product btn-compare" title="Compare"><span>compare</span></a>
-                                </div><!-- End .product-action -->
+                                    <!-- Wishlist Button -->
+                                    <button type="button"
+                                        class="btn-product-icon btn-wishlist {{ $isInWishlist ? 'active' : '' }} btn-expandable add-to-wishlist {{ $isInWishlist ? 'wishlist-active' : '' }}"
+                                        data-product-id="{{ $products->id }}">
+                                        <span>{{ $isInWishlist ? 'Remove from wishlist' : 'Add to wishlist' }}</span>
+                                    </button>
+                                </div><!-- End .product-action-vertical -->
                             </figure><!-- End .product-media -->
 
                             <div class="product-body">
                                 <div class="product-cat">
-                                    <a href="#" class="prodcatlink">{{$product->category}}</a>
-                                </div><!-- End .product-cat -->
-                                <h3 class="product-title"><a href="{{ url('shop-product-detail/' . $product->id) }}">{{$product->name}}</a></h3>
+                                    <a href="#" class="prodcatlink">Lighting</a>
+                                </div>
+                                <h3 class="product-title"><a
+                                        href="{{url('shop-product-detail/'.$products->id)}}">{{$products->name}}</a>
+                                </h3>
                                 <!-- End .product-title -->
                                 <div class="product-price">
-                                ₹{{$product->discounted_price}}
+                                    ₹ {{$products->discounted_price}}
                                 </div><!-- End .product-price -->
-                                <div class="ratings-container">
-                                    <div class="ratings">
-                                        <div class="ratings-val" style="width: 0%;"></div><!-- End .ratings-val -->
-                                    </div><!-- End .ratings -->
-                                    <span class="ratings-text">( 0 Reviews )</span>
-                                </div><!-- End .rating-container -->
-
-                                <div class="product-nav product-nav-dots">
-                                    <a href="#" style="background: #cc9966;"><span class="sr-only">Color name</span></a>
-                                    <a href="#" class="active" style="background: #ebebeb;"><span class="sr-only">Color
-                                            name</span></a>
-                                </div><!-- End .product-nav -->
                             </div><!-- End .product-body -->
+                            <div class="product-action">
+                                <input type="hidden" id="product-id-{{ $products->id }}" value="{{ $products->id }}">
+                                <input type="hidden" id="quantity-{{ $products->id }}" value="1">
+                                <button type="button" class="btn-product btn-cart"
+                                    onclick="addToCart({{ $products->id }})">
+                                    <span>add to cart</span>
+                                </button>
+                            </div><!-- End .product-action -->
                         </div><!-- End .product -->
-                    </div>
+                    </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
                     @endforeach
 
                 </div><!-- End .row -->

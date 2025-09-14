@@ -19,7 +19,7 @@
 @endphp
 <div class="authentication-wrapper authentication-cover">
   <!-- Logo -->
-  <a href="index.html" class="app-brand auth-cover-brand">
+  <a href="{{url('/')}}" class="app-brand auth-cover-brand">
     <span class="app-brand-logo demo">
       <span class="text-primary">
         <!-- SVG logo code (unchanged) -->
@@ -46,7 +46,7 @@
     <div class="d-flex col-12 col-xl-4 align-items-center authentication-bg p-sm-12 p-6">
       <div class="w-px-400 mx-auto">
       <div style="text-align: center;padding-bottom: 20px;">
-    <a href="index.html" class="logo">
+    <a href="{{url('/')}}" class="logo">
         <img src="{{ asset('images/WhatsApp Image 2025-07-22 at 19.56.01.jpeg') }}" 
              alt="Molla Logo" style="width: 60%;">
     </a>

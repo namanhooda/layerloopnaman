@@ -1,50 +1,52 @@
 @extends('frontend.partials.app')
 @section('content')
 <style>
-.btn-wishlist {
-    border: none !important;
-    outline: none;
-    background-color: transparent; 
-    box-shadow: none; 
-}
+    .btn-wishlist {
+        border: none !important;
+        outline: none;
+        background-color: transparent;
+        box-shadow: none;
+    }
 
-.product-details-quantity {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-.qty-input::-webkit-inner-spin-button,
-.qty-input::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
+    .product-details-quantity {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
 
-/* Remove arrows in Firefox */
-.qty-input {
-    -moz-appearance: textfield;
-}
-.qty-btn {
-    background-color: #64c474;
-    color: white;
-    border: none;
-    padding: 5px 12px;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 4px;
-    user-select: none;
-}
+    .qty-input::-webkit-inner-spin-button,
+    .qty-input::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
 
-.qty-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
+    /* Remove arrows in Firefox */
+    .qty-input {
+        -moz-appearance: textfield;
+    }
 
-.qty-input {
-    width: 60px;
-    text-align: center;
-    font-size: 16px;
-    padding: 5px;
-}
+    .qty-btn {
+        background-color: #64c474;
+        color: white;
+        border: none;
+        padding: 5px 12px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 4px;
+        user-select: none;
+    }
+
+    .qty-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    .qty-input {
+        width: 60px;
+        text-align: center;
+        font-size: 16px;
+        padding: 5px;
+    }
 
 </style>
 <main class="main">
@@ -57,7 +59,7 @@
             </ol>
 
             <nav class="product-pager ml-auto" aria-label="Product">
-                
+
             </nav>
         </div>
     </nav>
@@ -108,7 +110,8 @@
 
                             <div class="product-price">
                                 ₹{{ $product->discounted_price }}
-                                <span style="text-decoration: line-through; color: red; margin-left: 10px;font-size: 12px;">
+                                <span
+                                    style="text-decoration: line-through; color: red; margin-left: 10px;font-size: 12px;">
                                     ₹{{ $product->price }}
                                 </span>
                             </div>
@@ -150,29 +153,29 @@
                             @endif
 
                             <div class="details-filter-row details-row-size">
-                                <label for="qty">Qty:</label><div class="product-details-quantity">
-    <button type="button" class="qty-btn minus">-</button>
-    <input type="number" id="qty-{{ $product->id }}" name="quantity" 
-           class="form-control qty-input" value="1" min="1" max="10" step="1" required>
-    <button type="button" class="qty-btn plus">+</button>
-</div>
+                                <label for="qty">Qty:</label>
+                                <div class="product-details-quantity">
+                                    <button type="button" class="qty-btn minus">-</button>
+                                    <input type="number" id="quantity-{{ $product->id }}" name="quantity"
+                                        class="form-control qty-input" value="1" min="1" max="10" step="1" required>
+                                    <button type="button" class="qty-btn plus">+</button>
+                                </div>
                             </div>
 
                             <div class="product-details-action">
-                                <input type="hidden" id="product-id-{{ $product->id }}" value="{{ $product->id }}" style="">
-                                    <button type="button" class="btn-product btn-cart"
-                                    onclick="addToCart({{ $product->id }})" style="
-    color: #fff;
-    border-color: #64c474;
-    background-color: #64c474;">
+                                <input type="hidden" id="product-id-{{ $product->id }}" value="{{ $product->id }}"
+                                    style="">
+                                <button type="button" class="btn-product btn-cart"
+                                    onclick="addToCart({{ $product->id }})"
+                                    style="color: #fff;border-color: #64c474;background-color: #64c474;">
                                     <span>add to cart</span>
                                 </button>
 
                                 <div class="details-action-wrapper">
-                                        <button type="button" class="btn-product btn-wishlist add-to-wishlist" title="Wishlist"
-                                        data-product-id="{{ $product->id }}">
-                                            <span>Add to Wishlist</span>
-                                        </button>
+                                    <button type="button" class="btn-product btn-wishlist add-to-wishlist"
+                                        title="Wishlist" data-product-id="{{ $product->id }}">
+                                        <span>Add to Wishlist</span>
+                                    </button>
                                 </div>
                             </div>
 
@@ -184,17 +187,18 @@
 
                                 <div class="social-icons social-icons-sm">
                                     <span class="social-label">Share:</span>
-                                    
+
                                     <a href="#" class="social-icon social-facebook" title="Facebook" target="_blank"><i
                                             class="icon-facebook-f"></i></a>
                                     <a href="#" class="social-icon social-twitter" title="Twitter" target="_blank"><i
                                             class="icon-twitter"></i></a>
-                                    <a href="{{url('https://www.instagram.com/layerloop.web/')}}" class="social-icon social-instagram" title="Instagram" target="_blank"><i
+                                    <a href="{{url('https://www.instagram.com/layerloop.web/')}}"
+                                        class="social-icon social-instagram" title="Instagram" target="_blank"><i
                                             class="icon-instagram"></i></a>
                                     <a href="#" class="social-icon social-youtube" title="Youtube" target="_blank"><i
                                             class="icon-youtube"></i></a>
-                                    <a href="#" class="social-icon social-pinterest" title="Pinterest" target="_blank"><i
-                                            class="icon-pinterest"></i></a>
+                                    <a href="#" class="social-icon social-pinterest" title="Pinterest"
+                                        target="_blank"><i class="icon-pinterest"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -410,28 +414,28 @@
 
 @include('frontend.modals.addReview')
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    // Select all quantity groups
-    document.querySelectorAll('.product-details-quantity').forEach(function (qtyContainer) {
-        const qtyInput = qtyContainer.querySelector('.qty-input');
-        const plusBtn = qtyContainer.querySelector('.qty-btn.plus');
-        const minusBtn = qtyContainer.querySelector('.qty-btn.minus');
+    document.addEventListener('DOMContentLoaded', function () {
+        // Select all quantity groups
+        document.querySelectorAll('.product-details-quantity').forEach(function (qtyContainer) {
+            const qtyInput = qtyContainer.querySelector('.qty-input');
+            const plusBtn = qtyContainer.querySelector('.qty-btn.plus');
+            const minusBtn = qtyContainer.querySelector('.qty-btn.minus');
 
-        plusBtn.addEventListener('click', function () {
-            let current = parseInt(qtyInput.value) || 1;
-            if (current < parseInt(qtyInput.max)) {
-                qtyInput.value = current + 1;
-            }
-        });
+            plusBtn.addEventListener('click', function () {
+                let current = parseInt(qtyInput.value) || 1;
+                if (current < parseInt(qtyInput.max)) {
+                    qtyInput.value = current + 1;
+                }
+            });
 
-        minusBtn.addEventListener('click', function () {
-            let current = parseInt(qtyInput.value) || 1;
-            if (current > parseInt(qtyInput.min)) {
-                qtyInput.value = current - 1;
-            }
+            minusBtn.addEventListener('click', function () {
+                let current = parseInt(qtyInput.value) || 1;
+                if (current > parseInt(qtyInput.min)) {
+                    qtyInput.value = current - 1;
+                }
+            });
         });
     });
-});
 
 </script>
 

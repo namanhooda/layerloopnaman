@@ -12,7 +12,7 @@
         <div class="container">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Shop</a></li>
+                <li class="breadcrumb-item"><a href="{{url('shop')}}">Shop</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Checkout</li>
             </ol>
         </div>
@@ -28,7 +28,7 @@
                         <div class="col-lg-9 summary">
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <h2 class="checkout-title mb-0">Billing Address</h2>
-                                <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal"
+                                <button type="button" class="btn btn-sm btn-outline-primary my-button" data-toggle="modal"
                                     data-target="#addAddressModal">
                                     + Add New Address
                                 </button>
@@ -127,7 +127,7 @@
                                                 @else
                                                 Free Shipping
                                                 @endif 
-                                                <input type="hidden" name="shipping_type" value="{{$shippingType}}">
+                                                <input type="hidden" name="shipping_type" value="{{$shippingType ?? 'free-shipping'}}">
                                                 <input type="hidden" name="shipping_charges" value="{{$shippingCharge}}">
                                             </td>
                                         </tr>
@@ -139,24 +139,25 @@
                                 </table>
 
                                 <div class="accordion-summary" id="accordion-payment">
-                                    <!-- Pay Online -->
+
+                                    <!-- Cash on Delivery -->
                                     <div class="card">
-                                        <div class="card-header" id="heading-1">
+                                        <div class="card-header" id="heading-3">
                                             <h2 class="card-title">
                                                 <div class="custom-control custom-radio">
                                                     <input type="radio" class="custom-control-input payment-method"
-                                                        name="payment_method" id="pay-online" value="online" checked
-                                                        data-target="#collapse-1">
-                                                    <label class="custom-control-label" for="pay-online">
-                                                        Pay Online
+                                                        name="payment_method" id="pay-cod" value="cod"
+                                                        data-target="#collapse-3">
+                                                    <label class="custom-control-label" for="pay-cod">
+                                                        Cash on Delivery
                                                     </label>
                                                 </div>
                                             </h2>
                                         </div>
-                                        <div id="collapse-1" class="collapse show" aria-labelledby="heading-1"
+                                        <div id="collapse-3" class="collapse" aria-labelledby="heading-3"
                                             data-parent="#accordion-payment">
                                             <div class="card-body">
-                                                Pay online using cards, UPI, or net banking.
+                                                ₹100 extra will be charged if you select cash on delivery.
                                             </div>
                                         </div>
                                     </div>
@@ -183,24 +184,24 @@
                                         </div>
                                     </div>
 
-                                    <!-- Cash on Delivery -->
+                                    <!-- Pay Online -->
                                     <div class="card">
-                                        <div class="card-header" id="heading-3">
+                                        <div class="card-header" id="heading-1">
                                             <h2 class="card-title">
                                                 <div class="custom-control custom-radio">
                                                     <input type="radio" class="custom-control-input payment-method"
-                                                        name="payment_method" id="pay-cod" value="cod"
-                                                        data-target="#collapse-3">
-                                                    <label class="custom-control-label" for="pay-cod">
-                                                        Cash on Delivery
+                                                        name="payment_method" id="pay-online" value="online" 
+                                                        data-target="#collapse-1">
+                                                    <label class="custom-control-label" for="pay-online">
+                                                        Pay Online
                                                     </label>
                                                 </div>
                                             </h2>
                                         </div>
-                                        <div id="collapse-3" class="collapse" aria-labelledby="heading-3"
+                                        <div id="collapse-1" class="collapse show" aria-labelledby="heading-1"
                                             data-parent="#accordion-payment">
                                             <div class="card-body">
-                                                ₹100 extra will be charged if you select cash on delivery.
+                                                Pay online using cards, UPI, or net banking.
                                             </div>
                                         </div>
                                     </div>

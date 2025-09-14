@@ -5,6 +5,9 @@
             width: 24% !important;
         }
     }
+    .activate{
+        color: #64c474 !important;
+    }
 </style>
     <div class="header-middle">
         <div class="container">
@@ -35,93 +38,100 @@
                 </div>
             </div>
             <div class="header-right">
-                <div class="account">
-                    <a href="{{url('account')}}" title="My account">
-                        <div class="icon">
-                            <i class="icon-user"></i>
-                        </div>
-                        <p>Account</p>
-                    </a>
-                </div>
-                <div class="wishlist d-none d-md-block" style="padding-top: 3.8rem;">
-                    <a href="{{url('wishlist')}}" title="Wishlist">
-                        <div class="icon">
-                            <i class="icon-heart-o"></i>
-                            <span class="wishlist-count badge">{{ \App\Helpers\CartHelper::getWishlistCount() }}</span>
-                        </div>
-                        <p>Wishlist</p>
-                    </a>
-                </div>
-                <div class="dropdown cart-dropdown d-none d-md-block" style="padding-top: 3.8rem;">
-                    <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false" data-display="static">
-                        <div class="icon">
-                            <i class="icon-shopping-cart"></i>
-                            <span class="cart-count">{{ \App\Helpers\CartHelper::getCartCount() }}</span>
-                        </div>
-                        <p>Cart</p>
-                    </a>
-                    @php
-                    $cartItems = \App\Helpers\CartHelper::getCart();
-                    @endphp
-                    <div class="dropdown-menu dropdown-menu-right">
+    <!-- Account -->
+    <div class="account {{ request()->is('account*') ? 'active' : '' }}">
+        <a href="{{ url('account') }}" title="My account"  class="account {{ request()->is('account*') ? 'activate' : '' }}">
+            <div class="icon">
+                <i class="icon-user"></i>
+            </div>
+            <p>Account</p>
+        </a>
+    </div>
+
+    <!-- Wishlist -->
+    <div class="wishlist d-none d-md-block {{ request()->is('wishlist*') ? 'active' : '' }}" style="padding-top: 3.8rem;">
+        <a href="{{ url('wishlist') }}" title="Wishlist" class="{{ request()->is('wishlist*') ? 'activate' : '' }}">
+            <div class="icon">
+                <i class="icon-heart-o"></i>
+                <span class="wishlist-count badge">{{ \App\Helpers\CartHelper::getWishlistCount() }}</span>
+            </div>
+            <p>Wishlist</p>
+        </a>
+    </div>
+
+    <!-- Cart -->
+    <div class="dropdown cart-dropdown d-none d-md-block {{ request()->is('cart*') || request()->is('checkout*') ? 'active' : '' }}" style="padding-top: 3.8rem;">
+        <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false" data-display="static" class="{{ request()->is('cart*') ? 'activate' : '' }}">
+            <div class="icon">
+                <i class="icon-shopping-cart {{ request()->is('cart*') ? 'activate' : '' }}"></i>
+                <span class="cart-count">{{ \App\Helpers\CartHelper::getCartCount() }}</span>
+            </div>
+            <p>Cart</p>
+        </a>
+
+        @php
+            $cartItems = \App\Helpers\CartHelper::getCart();
+            $total = 0;
+        @endphp
+
+        <div class="dropdown-menu dropdown-menu-right">
+            <div class="dropdown-cart-products">
+                @if(!empty($cartItems))
+                    @foreach($cartItems as $item)
                         @php
-                        $total = 0;
-                        @endphp
-                        <div class="dropdown-cart-products">
-                            @if(!empty($cartItems))
-                            @foreach($cartItems as $item)
-                            @php
                             $price = $item['product']->discounted_price;
                             $total += $price * $item['quantity'];
-                            @endphp
-                            <div class="product">
-                                <div class="product-cart-details">
-                                    <h4 class="product-title">
-                                        <a href="{{ url('product/' . $item['product']->slug) }}">
-                                            {{ $item['name'] ?? $item['product']->name }}
-                                        </a>
-                                    </h4>
-                                    <span class="cart-product-info">
-                                        <span class="cart-product-qty">{{ $item['quantity'] }}</span>
-                                        x ₹{{ number_format($price, 2) }}
-                                    </span>
-                                </div>
-                                <figure class="product-image-container">
-                                    <a href="{{ url('product/' . $item['product']->slug) }}" class="product-image">
-                                        <img src="{{ asset('storage/' . $item['product']->featured_image) }}"
-                                            alt="product" style="width: 60px; height: auto;">
+                        @endphp
+                        <div class="product">
+                            <div class="product-cart-details">
+                                <h4 class="product-title">
+                                    <a href="{{ url('product/' . $item['product']->slug) }}">
+                                        {{ $item['name'] ?? $item['product']->name }}
                                     </a>
-                                </figure>
-
-                                <form action="{{ route('cart.remove', $item['id']) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn-remove" title="Remove Product">
-                                        <i class="icon-close"></i>
-                                    </button>
-                                </form>
+                                </h4>
+                                <span class="cart-product-info">
+                                    <span class="cart-product-qty">{{ $item['quantity'] }}</span>
+                                    x ₹{{ number_format($price, 2) }}
+                                </span>
                             </div>
-                            @endforeach
-                            @else
-                            <p class="text-center">Your cart is empty.</p>
-                            @endif
+                            <figure class="product-image-container">
+                                <a href="{{ url('shop-product-detail/' . $item['product']->id) }}" class="product-image">
+                                    <img src="{{ asset('storage/' . $item['product']->featured_image) }}"
+                                        alt="product" style="width: 60px; height: auto;">
+                                </a>
+                            </figure>
+
+                            <form action="{{ route('cart.remove', $item['id']) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn-remove" title="Remove Product">
+                                    <i class="icon-close"></i>
+                                </button>
+                            </form>
                         </div>
-                        @if(!empty($cartItems))
-                        <div class="dropdown-cart-total">
-                            <span>Total</span>
-                            <span class="cart-total-price">₹{{ number_format($total, 2) }}</span>
-                        </div>
-                        <div class="dropdown-cart-action">
-                            <a href="{{ url('cart') }}" class="btn btn-primary">View Cart</a>
-                            <a href="{{ url('checkout') }}" class="btn btn-outline-primary-2">
-                                <span>Checkout</span><i class="icon-long-arrow-right"></i>
-                            </a>
-                        </div>
-                        @endif
-                    </div>
-                </div>
+                    @endforeach
+                @else
+                    <p class="text-center">Your cart is empty.</p>
+                @endif
             </div>
+
+            @if(!empty($cartItems))
+                <div class="dropdown-cart-total">
+                    <span>Total</span>
+                    <span class="cart-total-price">₹{{ number_format($total, 2) }}</span>
+                </div>
+                <div class="dropdown-cart-action">
+                    <a href="{{ url('cart') }}" class="btn btn-primary">View Cart</a>
+                    <a href="{{ url('checkout') }}" class="btn btn-outline-primary-2">
+                        <span>Checkout</span><i class="icon-long-arrow-right"></i>
+                    </a>
+                </div>
+            @endif
+        </div>
+    </div>
+</div>
+
         </div>
     </div>
     <div class="header-bottom sticky-header">
@@ -149,32 +159,34 @@
                 </div>
             </div>
             <div class="header-center">
-                <nav class="main-nav">
+               <nav class="main-nav">
                     <ul class="menu sf-arrows">
-                        <li class="megamenu-container active">
-                            <a href="{{url('/')}}" style="font-size: 20px !important;">Home</a>
+                        <li class="megamenu-container {{ request()->is('/') ? 'active' : '' }}">
+                            <a href="{{ url('/') }}" style="font-size: 20px !important;">Home</a>
                         </li>
-                        <li>
-                            <a href="{{url('shop')}}" style="font-size: 20px !important;">Shop</a>
+                        <li class="{{ request()->is('shop*') ? 'active' : '' }}">
+                            <a href="{{ url('shop') }}" style="font-size: 20px !important;">Shop</a>
                         </li>
-                        <li>
+                        <li class="{{ request()->is('about') || request()->is('contact_us') || request()->is('faq') ? 'active' : '' }}">
                             <a href="#" class="sf-with-ul" style="font-size: 20px !important;">Pages</a>
                             <ul>
                                 <li>
-                                    <a href="{{url('about')}}" class="sf-with-ul">About</a>
+                                    <a href="{{ url('about') }}" class="{{ request()->is('about') ? 'active' : '' }}">About</a>
                                 </li>
                                 <li>
-                                    <a href="{{url('contact_us')}}" class="sf-with-ul">Contact</a>
+                                    <a href="{{ url('contact_us') }}" class="{{ request()->is('contact_us') ? 'active' : '' }}">Contact</a>
                                 </li>
-                                <li><a href="{{url('login')}}">Login</a></li>
-                                <li><a href="{{url('faq')}}">FAQs</a></li>
+                                <li>
+                                    <a href="{{ url('faq') }}" class="{{ request()->is('faq') ? 'active' : '' }}">FAQs</a>
+                                </li>
                             </ul>
                         </li>
-                        <li>
-                            <a href="{{url('blogs')}}" style="font-size: 20px !important;">Blog</a>
+                        <li class="{{ request()->is('blogs*') ? 'active' : '' }}">
+                            <a href="{{ url('blogs') }}" style="font-size: 20px !important;">Blog</a>
                         </li>
                     </ul>
                 </nav>
+
             </div>
 
             <div class="header-right" style="font-size: 20px !important;">

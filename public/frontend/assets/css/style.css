@@ -6065,7 +6065,20 @@ p {
         margin-bottom: 1rem
     }
 }
+.my-button {
+    color: #fff !important;
+    border-color: #64c474 !important;
+    background-color: #64c474 !important;
+    border-radius: 10px !important;
+    border: 1px solid #64c474 !important; /* ensures border shows properly */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2) !important; /* subtle shadow */
+    transition: all 0.3s ease-in-out; /* smooth hover effect */
+}
 
+.my-button:hover {
+    background-color: #57b567 !important; /* slightly darker green */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25) !important;
+}
 .page-header {
     background-size: cover;
     background-position: center;

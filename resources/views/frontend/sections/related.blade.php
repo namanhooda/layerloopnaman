@@ -38,13 +38,28 @@
                                         class="product-image product-image-manual">
 
                                 </a>
-                                <div class="product-action-vertical">
-                                    <button type="button"
-                                        class="btn-product-icon btn-wishlist btn-expandable add-to-wishlist"
-                                        data-product-id="{{ $product->id }}">
-                                        <span>Add to wishlist</span>
-                                    </button>
-                                </div><!-- End .product-action -->
+                                
+                        <div class="product-action-vertical">
+                            @php
+                            $isInWishlist = \App\Models\Wishlist::where(function ($query) use ($product) {
+                            $userId = auth()->id();
+                            $systemId = $userId ? null : hash('sha256', request()->userAgent() . '|' . request()->ip());
+
+                            if ($userId) {
+                            $query->where('user_id', $userId);
+                            } else {
+                            $query->where('system_id', $systemId);
+                            }
+                            })->where('product_id', $product->id)->exists();
+                            @endphp
+
+                            <!-- Wishlist Button -->
+                            <button type="button"
+                                class="btn-product-icon btn-wishlist {{ $isInWishlist ? 'active' : '' }} btn-expandable add-to-wishlist {{ $isInWishlist ? 'wishlist-active' : '' }}"
+                                data-product-id="{{ $product->id }}">
+                                <span>{{ $isInWishlist ? 'Remove from wishlist' : 'Add to wishlist' }}</span>
+                            </button>
+                        </div><!-- End .product-action -->
 
                             </figure><!-- End .product-media -->
 

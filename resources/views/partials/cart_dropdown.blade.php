@@ -19,7 +19,7 @@
                     </span>
                 </div>
                 <figure class="product-image-container">
-                    <a href="{{ url('product/' . $item['product']->slug) }}" class="product-image">
+                    <a href="{{ url('shop-product-detail/' . $item['product']->id) }}" class="product-image">
                         <img src="{{ asset('storage/' . $item['product']->featured_image) }}"
                              alt="product" style="width: 60px; height: auto;">
                     </a>

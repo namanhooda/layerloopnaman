@@ -45,8 +45,10 @@ class CheckoutController extends Controller
         $validator = Validator::make($request->all(), [
             'shipping_type' => 'required',
             'shipping_charges' => 'required',
+            'payment_method' => 'required',
             'billing_address' => 'required|exists:addresses,id',
         ], [
+            'payment_method.required' => 'Please select a Payment Method.',
             'shipping_type.required' => 'Please select a shipping type.',
             'shipping_charges.required' => 'Shipping charges are required.',
             'billing_address.required' => 'Please select a billing address.',
@@ -73,10 +75,13 @@ class CheckoutController extends Controller
         if ($cartItems->isEmpty()) {
             return redirect()->back()->with('error', 'Your cart is empty.');
         }
+
+        $code = 'LLORD' . str_pad(mt_rand(0, 999999), 6, '0', STR_PAD_LEFT);
     
         // Create Order
         $order = new Order();
         $order->user_id = $userId;
+        $order->order_code = $code;
         $order->address_id = $request->billing_address;
         $order->shipping_type = $request->shipping_type;
 
@@ -141,8 +146,9 @@ class CheckoutController extends Controller
             $query->when($userId, fn($q) => $q->where('user_id', $userId))
                   ->when(!$userId && $systemId, fn($q) => $q->where('system_id', $systemId));
         })->delete();
-    
-        return redirect()->route('order.success')->with('success', 'Order placed successfully!');
+        return redirect()
+    ->route('order.success', ['code' => $order->order_code])
+    ->with('success', 'Order placed successfully!');
     }
 
     public function verifyPayment(Request $request)
@@ -162,4 +168,16 @@ class CheckoutController extends Controller
 
         return redirect()->route('order.success')->with('success', 'Payment successful and order placed!');
     }
+ public function success($order_code)
+{
+    $order = Order::with(['items.product', 'user', 'address'])
+        ->where('order_code', $order_code)
+        ->first();
+
+    if (!$order) {
+        return redirect()->route('home')->with('error', 'Order not found.');
+    }
+
+    return view('frontend.order-success', compact('order'));
+}
 }

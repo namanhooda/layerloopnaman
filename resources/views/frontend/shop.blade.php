@@ -90,8 +90,20 @@
 
                                 </a>
                                 <div class="product-action-vertical">
+                                    @php
+                                        $isInWishlist = \App\Models\Wishlist::where(function ($query) use ($product) {
+                                            $userId = auth()->id();
+                                            $systemId = $userId ? null : hash('sha256', request()->userAgent() . '|' . request()->ip());
+
+                                            if ($userId) {
+                                                $query->where('user_id', $userId);
+                                            } else {
+                                                $query->where('system_id', $systemId);
+                                            }
+                                        })->where('product_id', $product->id)->exists();
+                                    @endphp
                                     <button type="button"
-                                        class="btn-product-icon btn-wishlist btn-expandable add-to-wishlist"
+                                        class="btn-product-icon btn-wishlist {{ $isInWishlist ? 'active' : '' }} btn-expandable add-to-wishlist "
                                         data-product-id="{{ $product->id }}">
                                         <span>Add to wishlist</span>
                                     </button>

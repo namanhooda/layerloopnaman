@@ -17,3 +17,15 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+
+# Allow all other files in public (images, css, js)
+!/public/**/*.jpg
+!/public/**/*.jpeg
+!/public/**/*.png
+!/public/**/*.gif
+!/public/**/*.svg
+!/public/**/*.css
+!/public/**/*.js
+
+# Allow all files in storage/app/public
+!/storage/app/public/

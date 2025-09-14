@@ -22,4 +22,16 @@ class Order extends Model
     {
         return $this->hasMany(OrderLog::class);
     }
+
+    // Each order belongs to an address
+    public function address()
+    {
+        return $this->belongsTo(Address::class, 'address_id');
+    }
+
+    // Each order has many order items
+    public function items()
+    {
+        return $this->hasMany(OrderItem::class, 'order_id');
+    }
 }

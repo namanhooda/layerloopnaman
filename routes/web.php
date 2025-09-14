@@ -62,18 +62,34 @@ Route::post('/apply-coupon', [CartController::class, 'applyCoupon'])->name('appl
 Route::post('/remove-coupon', [CartController::class, 'removeCoupon'])->name('remove.coupon');
 
 //// Frontend Auth Routes
-    Route::resource('wishlist', WishlistController::class)->only(['index', 'store', 'destroy']);
+Route::resource('wishlist', WishlistController::class)->only(['index', 'store', 'destroy']);
+
 Route::middleware('auth')->group(function () {
     Route::get('checkout', [CheckoutController::class, 'checkout'])->name('checkout');
     Route::post('ads', [AddressController::class, 'store'])->name('addresses.store');
     Route::get('account', [FrontendController::class, 'account'])->name('account');
     Route::post('/checkout/place-order', [CheckoutController::class, 'placeOrder'])->name('checkout.placeOrder');
     Route::get('/checkout/verify-order', [CheckoutController::class, 'verifyPayment'])->name('order.payment.verify');
+    Route::get('/order/success/{code}', [CheckoutController::class, 'success'])->name('order.success');
+
+
+
+
+
+    Route::get('orders', [App\Http\Controllers\AuthUserController::class, 'orders'])->name('orders');
+    Route::post('orders-cancel/{id}', [App\Http\Controllers\AuthUserController::class, 'cancelOrder'])->name('orders.cancel');
+    Route::get('orders-show/{code}', [App\Http\Controllers\AuthUserController::class, 'orderDetail'])->name('orders.show');
+    Route::get('account-settings', [App\Http\Controllers\AuthUserController::class, 'accountSettings'])->name('accountSettings');
+    Route::get('addresses', [App\Http\Controllers\AuthUserController::class, 'addresses'])->name('addresses');
+    Route::get('wallet', [App\Http\Controllers\AuthUserController::class, 'wallet'])->name('wallet');
+
+
+    Route::put('user-profile-update', [App\Http\Controllers\AuthUserController::class, 'updateProfile'])->name('profile.update');
+
+
 });
 
-Route::get('/order-success', function () {
-    return view('frontend.order-success');
-})->name('order.success');
+
 
 Route::middleware(['role:Admin'])->group(function () {
     Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])->group(function () {

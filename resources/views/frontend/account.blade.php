@@ -10,8 +10,7 @@
     <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
         <div class="container">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Shop</a></li>
+                <li class="breadcrumb-item"><a href="{{url('/')}}">Home</a></li>
                 <li class="breadcrumb-item active" aria-current="page">My Account</li>
             </ol>
         </div><!-- End .container -->
@@ -25,7 +24,7 @@
             <div class="row justify-content-center">
                 <div class="col-md-6 col-lg-4" style="border-radius: 15px;">
                     <div class="banner" style="border-radius: 15px;">
-                        <a href="#">
+                        <a href="{{url('orders')}}">
                             <img src="{{asset('frontend/assets/images/banners/3cols/banner-1.jpg')}}" alt="Banner" style="border-radius: 15px;">
                         </a>
 
@@ -38,7 +37,7 @@
                 </div><!-- End .col-md-6 -->
                 <div class="col-md-6 col-lg-4" style="border-radius: 15px;">
                     <div class="banner" style="border-radius: 15px;">
-                        <a href="#">
+                        <a href="{{url('account-settings')}}">
                             <img src="{{asset('frontend/assets/images/banners/3cols/banner-1.jpg')}}" alt="Banner" style="border-radius: 15px;">
                         </a>
                         <div class="banner-content">
@@ -49,7 +48,7 @@
                 </div>
                 <div class="col-md-6 col-lg-4" style="border-radius: 15px;">
                     <div class="banner" style="border-radius: 15px;">
-                        <a href="#">
+                        <a href="{{url('addresses')}}">
                             <img src="{{asset('frontend/assets/images/banners/3cols/banner-1.jpg')}}" alt="Banner" style="border-radius: 15px;">
                         </a>
 
@@ -62,7 +61,7 @@
                 </div>
                 <div class="col-md-6 col-lg-4" style="border-radius: 15px;">
                     <div class="banner" style="border-radius: 15px;">
-                        <a href="#">
+                        <a href="{{url('wishlist')}}">
                             <img src="{{asset('frontend/assets/images/banners/3cols/banner-1.jpg')}}" alt="Banner" style="border-radius: 15px;">
                         </a>
                         <div class="banner-content">
@@ -73,7 +72,7 @@
                 </div>
                 <div class="col-md-6 col-lg-4" style="border-radius: 15px;">
                     <div class="banner" style="border-radius: 15px;">
-                        <a href="#">
+                        <a href="{{url('wallet')}}">
                             <img src="{{asset('frontend/assets/images/banners/3cols/banner-1.jpg')}}" alt="Banner" style="border-radius: 15px;">
                         </a>
                         <div class="banner-content">
@@ -84,7 +83,7 @@
                 </div>
                 <div class="col-md-6 col-lg-4" style="border-radius: 15px;">
                     <div class="banner" style="border-radius: 15px;">
-                        <a href="#">
+                        <a href="{{url('contact_us')}}">
                             <img src="{{asset('frontend/assets/images/banners/3cols/banner-1.jpg')}}" alt="Banner" style="border-radius: 15px;" style="border-radius: 15px;">
                         </a>
                         <div class="banner-content">

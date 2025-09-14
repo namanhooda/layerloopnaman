@@ -13,6 +13,7 @@
     <meta name="author" content="p-themes">
     <!-- Favicon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <link rel="apple-touch-icon" sizes="180x180" href="{{asset('frontend/assets/images/icons/apple-touch-icon.png')}}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{asset('frontend/assets/images/icons/favicon-32x32.png')}}">
@@ -329,6 +330,8 @@ function addToCart(productId) {
     let product_id = document.getElementById("product-id-" + productId).value;
     let quantity = document.getElementById("quantity-" + productId).value;
 
+
+    console.log(quantity);
     fetch("{{ route('cart.add') }}", {
         method: "POST",
         headers: {
