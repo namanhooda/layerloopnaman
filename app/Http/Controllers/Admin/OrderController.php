@@ -19,6 +19,12 @@ class OrderController extends Controller
 
             return DataTables::of($order)
                 ->addIndexColumn()
+                ->addColumn('order_code', function ($order) {
+                    return $order->order_code ?? 'N/A';
+                })
+                ->addColumn('phone', function ($order) {
+                    return $order->user->phone ?? 'N/A';
+                })
                 ->addColumn('email', function ($order) {
                     return $order->user->email ?? 'N/A';
                 })
@@ -27,6 +33,9 @@ class OrderController extends Controller
                 })
                 ->editColumn('status', function ($order) {
                     return $order->status ?? 'N/A';
+                })
+                ->editColumn('payment_mod', function ($order) {
+                    return $order->payment_mod ?? 'N/A';
                 })
                 ->addColumn('created_at', function ($user) {
                     return $user->created_at;
@@ -46,7 +55,7 @@ class OrderController extends Controller
                 
                     return $actions;
                 })
-                ->rawColumns(['roles', 'actions'])
+                ->rawColumns(['roles', 'actions','order_code','payment_mod'])
                 ->make(true);
         }
 

@@ -8,9 +8,9 @@
         class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-6 row-gap-4">
         <div class="d-flex flex-column justify-content-center">
             <div class="mb-1">
-                <span class="h5">Order {{$order->order_id}} </span><span
-                    class="badge bg-label-success me-1 ms-2">{{$order->payment_mode}}</span>
-                <span class="badge bg-label-info">{{$order->status}}</span>
+                <span class="h5">Order: {{$order->order_code}} </span><br>
+                <span class="h6">Status: </span><span class="badge bg-label-success me-1 ms-2">{{$order->status}}</span><br>
+                <span class="h6">Payment Status: </span><span class="badge bg-label-info">{{$order->payment_mod}}</span>
             </div>
             <p class="mb-0">
                 {{ $order->created_at->timezone('Asia/Kolkata')->format('M d, Y, g:i A') }} (IST)
@@ -47,6 +47,9 @@
                                 <td class="w-25">{{ $item->quantity }}</td>
                                 <td>₹{{ number_format($item->price * $item->quantity, 2) }}</td>
                             </tr>
+                            @php
+                            $subtotal = $order->items->sum(fn($item) => $item->product->price * $item->quantity);
+                            @endphp
                             @endforeach
                         </tbody>
                     </table>
@@ -55,19 +58,32 @@
                         <div class="order-calculations">
                             <div class="d-flex justify-content-start mb-2">
                                 <span class="w-px-100 text-heading">Subtotal:</span>
-                                <h6 class="mb-0">₹{{ number_format($order->subtotal ?? 0, 2) }}</h6>
+                                <h6 class="mb-0">₹{{ number_format($subtotal ?? 0, 2) }}</h6>
                             </div>
+                            @php
+                            $total = $subtotal;
+                            $discount = 0;
+
+                            $total = $subtotal + $order->shipping_charges;
+                            if ($order->coupon_discount != null) {
+                            $total -= $order->coupon_discount;
+                            }
+                            @endphp
+                            <div class="d-flex justify-content-start mb-2">
+                                <span class="w-px-100 text-heading">Shipping:</span>
+                                <h6 class="mb-0">+ ₹{{ number_format($order->shipping_charges, 2) }}
+                                    <br>({{$order->shipping_type}})
+                                </h6>
+                            </div>
+                            @if($order->coupon_discount != null)
                             <div class="d-flex justify-content-start mb-2">
                                 <span class="w-px-100 text-heading">Discount:</span>
-                                <h6 class="mb-0">₹{{ number_format($order->discount ?? 0, 2) }}</h6>
+                                <h6 class="mb-0">- ₹{{ number_format($order->coupon_discount, 2) }}</h6>
                             </div>
-                            <div class="d-flex justify-content-start mb-2">
-                                <span class="w-px-100 text-heading">Tax:</span>
-                                <h6 class="mb-0">₹{{ number_format($order->tax ?? 0, 2) }}</h6>
-                            </div>
+                            @endif
                             <div class="d-flex justify-content-start">
                                 <h6 class="w-px-100 mb-0">Total:</h6>
-                                <h6 class="mb-0">₹{{ number_format($order->total ?? 0, 2) }}</h6>
+                                <h6 class="mb-0">₹{{ number_format($total ?? 0, 2) }}</h6>
                             </div>
                         </div>
                     </div>
@@ -183,10 +199,10 @@
                 </div>
                 <div class="card-body">
                     <p class="mb-0">{{$address->first_name}} {{$address->last_name}} <br />
-                    {{$address->address_line1}}<br />
-                    {{$address->address_line2}} <br />
-                    {{$address->city}}, {{$address->state}}, {{$address->zip}}<br />
-                    {{$address->phone}} {{$address->email}}</p>
+                        {{$address->address_line1}}<br />
+                        {{$address->address_line2}} <br />
+                        {{$address->city}}, {{$address->state}}, {{$address->zip}}<br />
+                        {{$address->phone}} {{$address->email}}</p>
                 </div>
             </div>
             <div class="card mb-6">
@@ -198,10 +214,10 @@
                 </div>
                 <div class="card-body">
                     <p class="mb-0">{{$address->first_name}} {{$address->last_name}} <br />
-                    {{$address->address_line1}}<br />
-                    {{$address->address_line2}} <br />
-                    {{$address->city}}, {{$address->state}}, {{$address->zip}}<br />
-                    {{$address->phone}} {{$address->email}}</p>
+                        {{$address->address_line1}}<br />
+                        {{$address->address_line2}} <br />
+                        {{$address->city}}, {{$address->state}}, {{$address->zip}}<br />
+                        {{$address->phone}} {{$address->email}}</p>
                 </div>
             </div>
         </div>

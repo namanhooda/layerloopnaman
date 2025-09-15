@@ -15,76 +15,73 @@
 
 <div class="container-xxl flex-grow-1 container-p-y">
 
-<div class="card mb-6">
-                <div class="card-widget-separator-wrapper">
-                  <div class="card-body card-widget-separator">
-                    <div class="row gy-4 gy-sm-1">
-                      <div class="col-sm-6 col-lg-3">
+    <div class="card mb-6">
+        <div class="card-widget-separator-wrapper">
+            <div class="card-body card-widget-separator">
+                <div class="row gy-4 gy-sm-1">
+                    <div class="col-sm-6 col-lg-3">
                         <div
-                          class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-4 pb-sm-0">
-                          <div>
-                            <h4 class="mb-0">56</h4>
-                            <p class="mb-0">Pending Payment</p>
-                          </div>
-                          <span class="avatar me-sm-6">
-                            <span class="avatar-initial bg-label-secondary rounded text-heading">
-                              <i class="icon-base ti tabler-calendar-stats icon-26px text-heading"></i>
+                            class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-4 pb-sm-0">
+                            <div>
+                                <h4 class="mb-0">56</h4>
+                                <p class="mb-0">Pending Payment</p>
+                            </div>
+                            <span class="avatar me-sm-6">
+                                <span class="avatar-initial bg-label-secondary rounded text-heading">
+                                    <i class="icon-base ti tabler-calendar-stats icon-26px text-heading"></i>
+                                </span>
                             </span>
-                          </span>
                         </div>
                         <hr class="d-none d-sm-block d-lg-none me-6" />
-                      </div>
-                      <div class="col-sm-6 col-lg-3">
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
                         <div
-                          class="d-flex justify-content-between align-items-start card-widget-2 border-end pb-4 pb-sm-0">
-                          <div>
-                            <h4 class="mb-0">12,689</h4>
-                            <p class="mb-0">Completed</p>
-                          </div>
-                          <span class="avatar p-2 me-lg-6">
-                            <span class="avatar-initial bg-label-secondary rounded"
-                              ><i class="icon-base ti tabler-checks icon-26px text-heading"></i
-                            ></span>
-                          </span>
+                            class="d-flex justify-content-between align-items-start card-widget-2 border-end pb-4 pb-sm-0">
+                            <div>
+                                <h4 class="mb-0">12,689</h4>
+                                <p class="mb-0">Completed</p>
+                            </div>
+                            <span class="avatar p-2 me-lg-6">
+                                <span class="avatar-initial bg-label-secondary rounded"><i
+                                        class="icon-base ti tabler-checks icon-26px text-heading"></i></span>
+                            </span>
                         </div>
                         <hr class="d-none d-sm-block d-lg-none" />
-                      </div>
-                      <div class="col-sm-6 col-lg-3">
-                        <div
-                          class="d-flex justify-content-between align-items-start border-end pb-4 pb-sm-0 card-widget-3">
-                          <div>
-                            <h4 class="mb-0">124</h4>
-                            <p class="mb-0">Refunded</p>
-                          </div>
-                          <span class="avatar p-2 me-sm-6">
-                            <span class="avatar-initial bg-label-secondary rounded"
-                              ><i class="icon-base ti tabler-wallet icon-26px text-heading"></i
-                            ></span>
-                          </span>
-                        </div>
-                      </div>
-                      <div class="col-sm-6 col-lg-3">
-                        <div class="d-flex justify-content-between align-items-start">
-                          <div>
-                            <h4 class="mb-0">32</h4>
-                            <p class="mb-0">Failed</p>
-                          </div>
-                          <span class="avatar p-2">
-                            <span class="avatar-initial bg-label-secondary rounded"
-                              ><i class="icon-base ti tabler-alert-octagon icon-26px text-heading"></i
-                            ></span>
-                          </span>
-                        </div>
-                      </div>
                     </div>
-                  </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <div
+                            class="d-flex justify-content-between align-items-start border-end pb-4 pb-sm-0 card-widget-3">
+                            <div>
+                                <h4 class="mb-0">124</h4>
+                                <p class="mb-0">Refunded</p>
+                            </div>
+                            <span class="avatar p-2 me-sm-6">
+                                <span class="avatar-initial bg-label-secondary rounded"><i
+                                        class="icon-base ti tabler-wallet icon-26px text-heading"></i></span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h4 class="mb-0">32</h4>
+                                <p class="mb-0">Failed</p>
+                            </div>
+                            <span class="avatar p-2">
+                                <span class="avatar-initial bg-label-secondary rounded"><i
+                                        class="icon-base ti tabler-alert-octagon icon-26px text-heading"></i></span>
+                            </span>
+                        </div>
+                    </div>
                 </div>
-              </div>
+            </div>
+        </div>
+    </div>
     <!-- Permission Table -->
     <div class="card">
         <h5 class="card-header d-flex justify-content-between align-items-center">
             <span>Orders</span>
-            
+
         </h5>
         @can("users read")
         <div class="card-datatable table-responsive">
@@ -92,9 +89,12 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Email / User ID</th>
+                        <th>Order Code</th>
+                        <th>Email</th>
+                        <th>Mobile</th>
                         <th>Total</th>
                         <th>Status</th>
+                        <th>Payment Mode</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -102,7 +102,7 @@
             </table>
         </div>
         @endcan
-       
+
     </div>
 </div>
 
@@ -146,12 +146,40 @@
             processing: true,
             serverSide: true,
             ajax: '{{ route("admin.orders.index") }}',
-            columns: [
-                { data: 'id', name: 'id' },
-                { data: 'email', name: 'email' },
-                { data: 'total', name: 'total' },
-                { data: 'status', name: 'status' },
-                { data: 'actions', name: 'actions', orderable: false, searchable: false }
+            columns: [{
+                    data: 'id',
+                    name: 'id'
+                },
+                {
+                    data: 'order_code',
+                    name: 'order_code'
+                },
+                {
+                    data: 'phone',
+                    name: 'phone'
+                },
+                {
+                    data: 'email',
+                    name: 'email'
+                },
+                {
+                    data: 'total',
+                    name: 'total'
+                },
+                {
+                    data: 'status',
+                    name: 'status'
+                },
+                {
+                    data: 'payment_mod',
+                    name: 'payment_mod'
+                },
+                {
+                    data: 'actions',
+                    name: 'actions',
+                    orderable: false,
+                    searchable: false
+                }
             ],
         });
     });
@@ -162,7 +190,5 @@
         $('#editPermissionName').val(name);
         $('#editPermissionForm').data('id', id); // For submit later
     });
-
-
 
 </script>

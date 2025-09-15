@@ -38,42 +38,39 @@
         </div>
 
         <!-- Order + Shipping Side by Side -->
-        <div class="row">
-            <!-- Order Details -->
-            <div class="col-md-6">
-                <div class="card mb-4 shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title">Order Details</h5>
-                        <p><strong>Order Code:</strong> {{ $order->order_code }}</p>
-                        <p><strong>Status:</strong> 
-                            @if($order->status == 'Pending')
-                                <span class="badge rounded-pill bg-primary">Pending</span>
-                            @elseif($order->status == 'Cancelled')
-                                <span class="badge rounded-pill bg-danger">Cancelled</span>
-                            @elseif($order->status == 'Delivered')
-                                <span class="badge rounded-pill bg-success">Delivered</span>
-                            @else
-                                <span class="badge rounded-pill bg-secondary">{{ $order->status }}</span>
-                            @endif
-                        </p>
-                        <p><strong>Total Amount:</strong> ₹{{ number_format($order->total, 2) }}</p>
-                        <p><strong>Payment Status:</strong> {{ ucfirst($order->payment_status) }}</p>
-                    </div>
+        
+        <div class="card mb-4 shadow-sm">
+            <div class="card-body d-flex justify-content-between">
+                <!-- Order Details -->
+                <div>
+                    <h5 class="mb-3">Order Details</h5>
+                    <p><strong>Order Code:</strong> {{ $order->order_code }}</p>
+                    <p><strong>Status:</strong>
+                        @if($order->status == 'Pending')
+                        <span class="badge bg-success text-white">Pending</span>
+                        @elseif($order->status == 'Cancelled')
+                        <span class="badge bg-danger text-white">Cancelled</span>
+                        @elseif($order->status == 'Delivered')
+                        <span class="badge bg-primary text-white">Delivered</span>
+                        @else
+                        <span class="badge bg-secondary">{{ $order->status }}</span>
+                        @endif
+                    </p>
+                    <p><strong>Total Amount:</strong> ₹{{ number_format($order->total, 2) }}</p>
+                    <p><strong>Payment Status:</strong> {{ ucfirst($order->payment_status) }}</p>
                 </div>
-            </div>
 
-            <!-- Shipping Info -->
-            <div class="col-md-6">
-                <div class="card mb-4 shadow-sm">
-                    <div class="card-body" style="text-align: right">
-                        <h5 class="card-title">Shipping Address</h5>
-                        <p>
-                            {{ $order->address->name }} <br>
-                            {{ $order->address->street }}, {{ $order->address->city }} <br>
-                            {{ $order->address->state }} - {{ $order->address->pincode }} <br>
-                            Phone: {{ $order->address->phone }}
-                        </p>
-                    </div>
+                <!-- Shipping Address -->
+                <div class="text-end">
+                    <h5 class="mb-3">Shipping Address</h5>
+
+                    <p>{{ $order->address->first_name }} {{ $order->address->last_name }}</p>
+
+                    <p>{{ $order->address->address_line1 }}</p>
+                    <p>{{ $order->address->address_line2 }}</p>
+
+                    <p>{{ $order->address->city}}, {{ $order->address->state }} - {{ $order->address->zip }}</p>
+                    <p>{{ $order->address->phone }} {{ $order->address->email }}</p>
                 </div>
             </div>
         </div>
@@ -130,7 +127,7 @@
 
                                     $total = $subtotal + $order->shipping_charges;
                                     if ($order->coupon_discount != null) {
-                                        $total -= $discount;
+                                        $total -= $order->coupon_discount;
                                     }
                                     @endphp
                                     <tr class="summary-subtotal">
@@ -144,7 +141,7 @@
                                     @if($order->coupon_discount != null)
                                     <tr class="summary-subtotal">
                                         <td>Coupon Applied:</td>
-                                        <td>- ₹{{ number_format($discount, 2) }}</td>
+                                        <td>- ₹{{ number_format($order->coupon_discount, 2) }}</td>
                                     </tr>
                                     @endif
 
