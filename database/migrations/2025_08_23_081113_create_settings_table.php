@@ -18,6 +18,13 @@ return new class extends Migration
             $table->string('site_mobile')->nullable();
             $table->string('site_email')->nullable();
             $table->string('site_address')->nullable();
+
+            $table->string('facebook_url')->nullable();
+            $table->string('twitter_url')->nullable();
+            $table->string('instagram_url')->nullable();
+            $table->string('youtube_url')->nullable();
+            $table->string('pinterest_url')->nullable();
+
             $table->string('site_logo')->nullable();
             $table->string('site_favicon')->nullable();
             $table->timestamps();

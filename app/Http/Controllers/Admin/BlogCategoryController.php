@@ -26,8 +26,8 @@ class BlogCategoryController extends Controller
                     return $user->slug;
                 })
                 ->addColumn('actions', function ($user) {
-                    $editUrl = route('users.edit', $user->id);
-                    $deleteUrl = route('users.destroy', $user->id);
+                    $editUrl = null;
+                    $deleteUrl = null;
                 
                     $actions = '<div class="d-flex gap-1 align-items-center">';
                 

@@ -77,14 +77,6 @@
         </li>
 
         <!-- Users -->
-        @can('users read')
-        <li class="menu-item {{ request()->routeIs('users.index') ? 'active' : '' }}">
-            <a href="{{ route('admin.users.index') }}" class="menu-link">
-                <i class="menu-icon icon-base ti tabler-user"></i>
-                <div data-i18n="Users">Users</div>
-            </a>
-        </li>
-        @endcan
 
         <!-- Roles & Permissions -->
         @can('role read')
@@ -147,6 +139,14 @@
             </a>
         </li>
         @endcan
+        @can('users read')
+        <li class="menu-item {{ request()->routeIs('users.index') ? 'active' : '' }}">
+            <a href="{{ route('admin.users.index') }}" class="menu-link">
+                <i class="menu-icon icon-base ti tabler-user"></i>
+                <div data-i18n="Users">Users</div>
+            </a>
+        </li>
+        @endcan
 
         <!-- Email Subscriptions -->
         <li class="menu-item {{ request()->routeIs('admin.newsletters.index') ? 'active' : '' }}">
@@ -165,14 +165,17 @@
         </li>
         <!-- Profile -->
         <li class="menu-item {{ request()->routeIs('profile.index') ? 'active' : '' }}">
-            <a href="{{ route('admin.profile.index') }}" class="menu-link">
-                <i class="menu-icon icon-base ti tabler-user"></i>
+            <a href="{{ route('admin.setting.index') }}" class="menu-link">
+                <i class="menu-icon icon-base ti tabler-settings"></i>
+
                 <div data-i18n="Setting">Setting</div>
             </a>
         </li>
         <li class="menu-item {{ request()->routeIs('profile.index') ? 'active' : '' }}">
             <a href="{{ route('admin.contact.index') }}" class="menu-link">
-                <i class="menu-icon icon-base ti tabler-user"></i>
+               <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-phone"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" /></svg>
+
+
                 <div data-i18n="Contacts">Inquaries</div>
             </a>
         </li>

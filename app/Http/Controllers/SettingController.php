@@ -12,7 +12,8 @@ class SettingController extends Controller
      */
     public function index()
     {
-        //
+        $setting = Setting::first();
+        return view('admin.setting.index', compact('setting'));
     }
 
     /**
@@ -50,9 +51,56 @@ class SettingController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Setting $setting)
+    public function update(Request $request)
     {
-        //
+        $setting = Setting::first();
+
+        $request->validate([
+            'site_name' => 'nullable|string|max:255',
+            'site_description' => 'nullable|string',
+            'site_mobile' => 'nullable|string|max:20',
+            'site_email' => 'nullable|email|max:255',
+            'site_address' => 'nullable|string|max:500',
+            'site_logo' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:800',
+            'site_favicon' => 'nullable|image|mimes:jpg,jpeg,png,ico|max:500',
+            'facebook_url' => 'nullable|url',
+            'twitter_url' => 'nullable|url',
+            'instagram_url' => 'nullable|url',
+            'youtube_url' => 'nullable|url',
+            'pinterest_url' => 'nullable|url',
+        ]);
+
+        // Handle site_logo upload (save in public/)
+       if ($request->hasFile('image')) {
+            $imageName = 'banner_' . time() . '.' . $request->image->getClientOriginalExtension();
+            $request->image->move(public_path('uploads/banners'), $imageName);
+            $banner->image = 'uploads/banners/' . $imageName;
+        }
+
+        // Handle Image Upload (Mobile)
+        if ($request->hasFile('mobile_image')) {
+            $mobileName = 'banner_mobile_' . time() . '.' . $request->mobile_image->getClientOriginalExtension();
+            $request->mobile_image->move(public_path('uploads/banners'), $mobileName);
+            $banner->mobile_image = 'uploads/banners/' . $mobileName;
+        }
+
+        // Update text fields
+        $setting->fill($request->only([
+            'site_name',
+            'site_description',
+            'site_mobile',
+            'site_email',
+            'site_address',
+            'facebook_url',
+            'twitter_url',
+            'instagram_url',
+            'youtube_url',
+            'pinterest_url',
+        ]));
+
+        $setting->save();
+
+        return redirect()->back()->with('success', 'Settings updated successfully.');
     }
 
     /**

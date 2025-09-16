@@ -41,7 +41,7 @@ Route::get('about', [FrontendController::class, 'about'])->name('about');
 Route::get('contact_us', [FrontendController::class, 'contactUs'])->name('contact_us');
 Route::get('faq', [FrontendController::class, 'faq'])->name('faq');
 Route::get('blogs', [FrontendController::class, 'blogs'])->name('blogs');
-Route::get('blog-detail', [FrontendController::class, 'blogDetail'])->name('blog-detail');
+Route::get('blog-detail/{slug}', [FrontendController::class, 'blogDetail'])->name('blog-detail');
 Route::get('shop', [FrontendController::class, 'shop'])->name('shop');
 Route::get('category/{category_name}', [FrontendController::class, 'categoryProduct'])->name('categoryProduct');
 Route::get('/search-suggestions', [FrontendController::class, 'searchSuggestions']);
@@ -108,7 +108,7 @@ Route::middleware(['role:Admin'])->group(function () {
             Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
             Route::get('order-detail/{id}', [OrderController::class, 'show'])->name('orders.show');
 
-            Route::resource('blog-categories', BlogCategoryController::class);
+            Route::resource('blog-categories', App\Http\Controllers\Admin\BlogCategoryController::class);
             Route::resource('blogs', App\Http\Controllers\Admin\BlogController::class);
             Route::resource('product-prototypes', PrototypeController::class) ->parameters(['product-prototypes' => 'prototype']);
             Route::resource('product-categories', ProductCategoryController::class);
@@ -118,6 +118,10 @@ Route::middleware(['role:Admin'])->group(function () {
             Route::resource('invoices', InvoiceController::class);
             Route::resource('coupons', CouponController::class);
             Route::resource('newsletters', NewsLetterController::class);
+            Route::resource('banner', App\Http\Controllers\Admin\BannerController::class);
+
+            Route::get('setting', [App\Http\Controllers\SettingController::class, 'index'])->name('setting.index');
+            Route::post('setting-update', [App\Http\Controllers\SettingController::class, 'update'])->name('setting-update');
         });
     });
 });

@@ -20,28 +20,30 @@
                                 }
                             }
                         }'>
+            @foreach($blogs as $blog)
             <article class="entry entry-display">
                 <figure class="entry-media">
-                    <a href="#">
-                        <img src="{{asset('frontend/assets/images/demos/demo-2/blog/post-1.jpg')}}" alt="image desc">
+                    <a href="{{url('blog-detail/'. $blog->slug)}}">
+                        <img src="{{ asset('storage/' . $blog->featured_image) }}" alt="Blog Image">
+
                     </a>
                 </figure><!-- End .entry-media -->
 
                 <div class="entry-body text-center">
                     <div class="entry-meta">
-                        <a href="#">Nov 22, 2018</a>, 0 Comments
+                        <a href="{{url('blog-detail/'. $blog->slug)}}">{{ $blog->created_at->format('M d, Y') }}</a>
                     </div><!-- End .entry-meta -->
 
                     <h3 class="entry-title">
-                        <a href="#">Sed adipiscing ornare.</a>
+                        <a href="{{url('blog-detail/'. $blog->slug)}}">{{$blog->title}}</a>
                     </h3><!-- End .entry-title -->
 
                     <div class="entry-content">
-                        <a href="single." class="read-more">Continue Reading</a>
+                        <a href="{{url('blog-detail/'. $blog->slug)}}" class="read-more">Continue Reading</a>
                     </div><!-- End .entry-content -->
                 </div><!-- End .entry-body -->
             </article><!-- End .entry -->
-
+            @endforeach
             <article class="entry entry-display">
                 <figure class="entry-media">
                     <a href="#">

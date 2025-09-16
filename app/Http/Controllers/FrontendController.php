@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\ProductReview;
+use App\Models\Blog;
 use Illuminate\Http\Request;
 use App\Mail\TestMail;
 use App\Mail\WelcomeMail;
@@ -46,7 +47,9 @@ class FrontendController extends Controller
         $sale     = Product::inRandomOrder()->take(10)->get(); // 10 random products
         $clothes     = Product::where('category','tshirts')->inRandomOrder()->take(10)->get(); // 10 random products
         $rated    = Product::take(10)->get();    
-        return view('frontend.index',compact('featured','sale','rated','clothes'));
+
+        $blogs    = Blog::get();
+        return view('frontend.index',compact('featured','sale','rated','clothes','blogs'));
     }
     public function about()
     {
@@ -62,11 +65,14 @@ class FrontendController extends Controller
     }
     public function blogs()
     {
-        return view('frontend.blogs');
+        $blogs    = Blog::get();
+        return view('frontend.blogs', compact('blogs'));
     }
-    public function blogDetail()
+    public function blogDetail($slug)
     {
-        return view('frontend.blogDetail');
+        $blogs    = Blog::get();
+        $blog = Blog::where('slug', $slug)->first();
+        return view('frontend.blogDetail', compact('blog','blogs'));
     }
 
 

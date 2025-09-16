@@ -12,7 +12,7 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{url('/')}}">Home</a></li>
                         <li class="breadcrumb-item"><a href="{{url('blogs')}}">Blog</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Default With Sidebar</li>
+                        <li class="breadcrumb-item active" aria-current="page">{{$blog->title}}</li>
                     </ol>
                 </div><!-- End .container -->
             </nav><!-- End .breadcrumb-nav -->
@@ -23,65 +23,30 @@
                 		<div class="col-lg-9">
                             <article class="entry single-entry">
                                 <figure class="entry-media">
-                                    <img src="assets/images/blog/single/1.jpg" alt="image desc">
+                                    <img src="{{ asset('storage/' . $blog->featured_image) }}" alt="Blog Image">
                                 </figure><!-- End .entry-media -->
 
                                 <div class="entry-body">
                                     <div class="entry-meta">
                                         <span class="entry-author">
-                                            by <a href="#">John Doe</a>
+                                            by <a href="#">{{$blog->author_name}}</a>
                                         </span>
                                         <span class="meta-separator">|</span>
-                                        <a href="#">Nov 22, 2018</a>
-                                        <span class="meta-separator">|</span>
-                                        <a href="#">2 Comments</a>
+                                        <a href="#">{{ $blog->created_at->format('M d, Y') }}</a>
+                                        <!-- <span class="meta-separator">|</span>
+                                        <a href="#">2 Comments</a> -->
                                     </div><!-- End .entry-meta -->
 
                                     <h2 class="entry-title">
-                                        Cras ornare tristique elit.
+                                        {{$blog->category->name ?? ''}}
                                     </h2><!-- End .entry-title -->
 
                                     <div class="entry-cats">
-                                        in <a href="#">Lifestyle</a>,
-                                        <a href="#">Shopping</a>
+                                        in <a href="#">{{$blog->category->name ?? ''}}</a>
                                     </div><!-- End .entry-cats -->
 
                                     <div class="entry-content editor-content">
-                                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id, mattis vel, nisi. Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Nullam mollis. Ut justo. Suspendisse potenti.</p>
-
-                                        <p>Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing, commodo quis, gravida id, est. Sed lectus. Praesent elementum hendrerit tortor. Sed semper lorem at felis. Vestibulum volutpat, lacus a <a href="#">ultrices sagittis</a>, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna.</p>
-
-                                        <div class="pb-1"></div><!-- End .mb-1 -->
-
-                                        <img src="assets/images/blog/single/2.jpg" alt="image" class="float-left">
-
-                                        <h3>Quisque volutpat mattiseros. </h3>
-
-                                        <ul>
-                                            <li>Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Nullam mollis. Ut justo. Suspendisse potenti. </li>
-                                            <li>Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing, commodo quis, gravida id, est. </li>
-                                            <li>Sed lectus. Praesent elementum hendrerit tortor. Sed semper lorem at felis. Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna.</li>
-                                        </ul>
-
-                                        <div class="pb-1 clearfix"></div><!-- End .clearfix -->
-
-                                        <p>Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id, mattis vel, nisi. Sed pretium, ligula <a href="#">sollicitudin laoreet</a> viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Nullam mollis. Ut justo. Suspendisse potenti. Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing, commodo quis, gravida id, est. Sed lectus. Praesent elementum hendrerit tortor. Sed semper lorem at felis. </p>
-
-                                        <blockquote>
-                                            <p>“ Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. ”</p>
-                                        </blockquote>
-
-                                        <p>Morbi purus libero, faucibus adipiscing, commodo quis, gravida id, est. Sed lectus. Praesent elementum hendrerit tortor. Sed semper lorem at felis. Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna. Morbi interdum mollis sapien. Sed ac risus. Phasellus lacinia, magna a ullamcorper laoreet, lectus arcu pulvinar risus, vitae facilisis libero dolor a purus. </p>
-
-                                        <div class="pb-1"></div><!-- End .pb-1 -->
-
-                                        <h3>Morbi interdum mollis sapien.</h3>
-
-                                        <img src="assets/images/blog/single/3.jpg" alt="image">
-
-                                        <p>Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Nullam mollis. Ut justo. Suspendisse potenti. Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing, commodo quis, gravida id, est. Sed lectus. Praesent <a href="#">elementum hendrerit</a> tortor. Sed semper lorem at felis. Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna.</p>
-
-                                        <p>Morbi interdum mollis sapien. Sed ac risus. Phasellus lacinia, magna a ullamcorper laoreet, lectus arcu pulvinar risus, vitae facilisis libero dolor a purus. Sed vel lacus. Mauris nibh felis, adipiscing varius, adipiscing in, lacinia vel, tellus. Suspendisse ac urna. Etiam pellentesque mauris ut lectus. Nunc tellus ante, mattis eget, gravida vitae, ultricies ac, leo. Integer leo pede, ornare a, lacinia eu, vulputate vel, nisl. Suspendisse mauris. Fusce accumsan mollis eros. Pellentesque a diam sit amet mi ullamcorper vehicula. Integer adipiscing risus a sem. Nullam quis massa sit amet nibh viverra malesuada. Nunc sem lacus, accumsan quis, faucibus non, congue vel, arcu. </p>
+                                       {!! $blog->content !!}
                                     </div><!-- End .entry-content -->
 
                                     <div class="entry-footer row no-gutters flex-column flex-md-row">
@@ -103,163 +68,14 @@
                                     </div><!-- End .entry-footer row no-gutters -->
                                 </div><!-- End .entry-body -->
 
-                                <div class="entry-author-details">
-                                    <figure class="author-media">
-                                        <a href="#">
-                                            <img src="assets/images/blog/single/author.jpg" alt="User name">
-                                        </a>
-                                    </figure><!-- End .author-media -->
-
-                                    <div class="author-body">
-                                        <div class="author-header row no-gutters flex-column flex-md-row">
-                                            <div class="col">
-                                                <h4><a href="#">John Doe</a></h4>
-                                            </div><!-- End .col -->
-                                            <div class="col-auto mt-1 mt-md-0">
-                                                <a href="#" class="author-link">View all posts by John Doe <i class="icon-long-arrow-right"></i></a>
-                                            </div><!-- End .col -->
-                                        </div><!-- End .row -->
-
-                                        <div class="author-content">
-                                            <p>Praesent dapibus, neque id cursus faucibus, tortor neque egestas auguae, eu vulputate magna eros eu erat. Aliquam erat volutpat. </p>
-                                        </div><!-- End .author-content -->
-                                    </div><!-- End .author-body -->
-                                </div><!-- End .entry-author-details-->
+                                    @include('frontend.sections.blog.author')
+                                
                             </article><!-- End .entry -->
 
-                            <nav class="pager-nav" aria-label="Page navigation">
-                                <a class="pager-link pager-link-prev" href="#" aria-label="Previous" tabindex="-1">
-                                    Previous Post
-                                    <span class="pager-link-title">Cras iaculis ultricies nulla</span>
-                                </a>
-
-                                <a class="pager-link pager-link-next" href="#" aria-label="Next" tabindex="-1">
-                                    Next Post
-                                    <span class="pager-link-title">Praesent placerat risus</span>
-                                </a>
-                            </nav><!-- End .pager-nav -->
-
-                            <div class="related-posts">
-                                <h3 class="title">Related Posts</h3><!-- End .title -->
-
-                                <div class="owl-carousel owl-simple" data-toggle="owl" 
-                                    data-owl-options='{
-                                        "nav": false, 
-                                        "dots": true,
-                                        "margin": 20,
-                                        "loop": false,
-                                        "responsive": {
-                                            "0": {
-                                                "items":1
-                                            },
-                                            "480": {
-                                                "items":2
-                                            },
-                                            "768": {
-                                                "items":3
-                                            }
-                                        }
-                                    }'>
-                                    <article class="entry entry-grid">
-                                        <figure class="entry-media">
-                                            <a href="single.html">
-                                                <img src="assets/images/blog/grid/3cols/post-1.jpg" alt="image desc">
-                                            </a>
-                                        </figure><!-- End .entry-media -->
-
-                                        <div class="entry-body">
-                                            <div class="entry-meta">
-                                                <a href="#">Nov 22, 2018</a>
-                                                <span class="meta-separator">|</span>
-                                                <a href="#">2 Comments</a>
-                                            </div><!-- End .entry-meta -->
-
-                                            <h2 class="entry-title">
-                                                <a href="single.html">Cras ornare tristique elit.</a>
-                                            </h2><!-- End .entry-title -->
-
-                                            <div class="entry-cats">
-                                                in <a href="#">Lifestyle</a>,
-                                                <a href="#">Shopping</a>
-                                            </div><!-- End .entry-cats -->
-                                        </div><!-- End .entry-body -->
-                                    </article><!-- End .entry -->
-
-                                    <article class="entry entry-grid">
-                                        <figure class="entry-media">
-                                            <a href="single.html">
-                                                <img src="assets/images/blog/grid/3cols/post-2.jpg" alt="image desc">
-                                            </a>
-                                        </figure><!-- End .entry-media -->
-
-                                        <div class="entry-body">
-                                            <div class="entry-meta">
-                                                <a href="#">Nov 21, 2018</a>
-                                                <span class="meta-separator">|</span>
-                                                <a href="#">0 Comments</a>
-                                            </div><!-- End .entry-meta -->
-
-                                            <h2 class="entry-title">
-                                                <a href="single.html">Vivamus ntulla necante.</a>
-                                            </h2><!-- End .entry-title -->
-
-                                            <div class="entry-cats">
-                                                in <a href="#">Lifestyle</a>
-                                            </div><!-- End .entry-cats -->
-                                        </div><!-- End .entry-body -->
-                                    </article><!-- End .entry -->
-
-                                    <article class="entry entry-grid">
-                                        <figure class="entry-media">
-                                            <a href="single.html">
-                                                <img src="assets/images/blog/grid/3cols/post-3.jpg" alt="image desc">
-                                            </a>
-                                        </figure><!-- End .entry-media -->
-
-                                        <div class="entry-body">
-                                            <div class="entry-meta">
-                                                <a href="#">Nov 18, 2018</a>
-                                                <span class="meta-separator">|</span>
-                                                <a href="#">3 Comments</a>
-                                            </div><!-- End .entry-meta -->
-
-                                            <h2 class="entry-title">
-                                                <a href="single.html">Utaliquam sollicitudin leo.</a>
-                                            </h2><!-- End .entry-title -->
-
-                                            <div class="entry-cats">
-                                                in <a href="#">Fashion</a>,
-                                                <a href="#">Lifestyle</a>
-                                            </div><!-- End .entry-cats -->
-                                        </div><!-- End .entry-body -->
-                                    </article><!-- End .entry -->
-
-                                    <article class="entry entry-grid">
-                                        <figure class="entry-media">
-                                            <a href="single.html">
-                                                <img src="assets/images/blog/grid/3cols/post-4.jpg" alt="image desc">
-                                            </a>
-                                        </figure><!-- End .entry-media -->
-
-                                        <div class="entry-body">
-                                            <div class="entry-meta">
-                                                <a href="#">Nov 15, 2018</a>
-                                                <span class="meta-separator">|</span>
-                                                <a href="#">4 Comments</a>
-                                            </div><!-- End .entry-meta -->
-
-                                            <h2 class="entry-title">
-                                                <a href="single.html">Fusce pellentesque suscipit.</a>
-                                            </h2><!-- End .entry-title -->
-
-                                            <div class="entry-cats">
-                                                in <a href="#">Travel</a>
-                                            </div><!-- End .entry-cats -->
-                                        </div><!-- End .entry-body -->
-                                    </article><!-- End .entry -->
-                                </div><!-- End .owl-carousel -->
-                            </div><!-- End .related-posts -->
-
+                            
+                                    @include('frontend.sections.blog.pagination')
+                                    @include('frontend.sections.blog.related')
+                            
                             <div class="comments">
                                 <h3 class="title">3 Comments</h3><!-- End .title -->
 
@@ -391,54 +207,21 @@
                                     <h3 class="widget-title">Popular Posts</h3><!-- End .widget-title -->
 
                                     <ul class="posts-list">
+                                        @foreach($blogs as $blogdata)
                                         <li>
                                             <figure>
                                                 <a href="#">
-                                                    <img src="assets/images/blog/sidebar/post-1.jpg" alt="post">
+                                                    <img src="{{ asset('storage/' . $blogdata->featured_image) }}" alt="Blog Image">
                                                 </a>
                                             </figure>
 
                                             <div>
                                                 <span>Nov 22, 2018</span>
-                                                <h4><a href="#">Aliquam tincidunt mauris eurisus.</a></h4>
+                                                <h4><a href="#">{{$blogdata->title}}</a></h4>
                                             </div>
                                         </li>
-                                        <li>
-                                            <figure>
-                                                <a href="#">
-                                                    <img src="assets/images/blog/sidebar/post-2.jpg" alt="post">
-                                                </a>
-                                            </figure>
+                                        @endforeach
 
-                                            <div>
-                                                <span>Nov 19, 2018</span>
-                                                <h4><a href="#">Cras ornare tristique elit.</a></h4>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <figure>
-                                                <a href="#">
-                                                    <img src="assets/images/blog/sidebar/post-3.jpg" alt="post">
-                                                </a>
-                                            </figure>
-
-                                            <div>
-                                                <span>Nov 12, 2018</span>
-                                                <h4><a href="#">Vivamus vestibulum ntulla nec ante.</a></h4>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <figure>
-                                                <a href="#">
-                                                    <img src="assets/images/blog/sidebar/post-4.jpg" alt="post">
-                                                </a>
-                                            </figure>
-
-                                            <div>
-                                                <span>Nov 25, 2018</span>
-                                                <h4><a href="#">Donec quis dui at dolor  tempor interdum.</a></h4>
-                                            </div>
-                                        </li>
                                     </ul><!-- End .posts-list -->
                                 </div><!-- End .widget -->
 

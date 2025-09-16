@@ -7,6 +7,7 @@ use App\Models\Blog;
 use Yajra\DataTables\Facades\DataTables;
 use App\Models\BlogCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class BlogController extends Controller
 {
