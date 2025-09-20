@@ -122,10 +122,6 @@ class FrontendController extends Controller
         $related = Product::get();
         return view('frontend.detail',compact('product','related'));
     }
-    public function account()
-    {
-        return view('frontend.account');
-    }
 
     public function storeReview(Request $request)
     {

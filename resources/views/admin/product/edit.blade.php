@@ -134,6 +134,63 @@
                         </div>
                     </div>
 
+                    <div class="card mb-6">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Variants</h5>
+                        </div>
+                        <div class="card-body">
+                            <form class="form-repeater">
+                                <div data-repeater-list="group-a">
+                                    <div data-repeater-item>
+                                        <div class="row g-sm-6 mb-6">
+                                           @php
+    $selectedSizes = $product->size ? json_decode($product->size) : [];
+@endphp
+
+<div class="col-sm-12">
+    <label class="form-label">Sizes</label>
+    @foreach(['S','M','L','XL','XXL'] as $size)
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="sizes[]" value="{{ $size }}" id="size{{ $size }}"
+                {{ in_array($size, $selectedSizes) ? 'checked' : '' }}>
+            <label class="form-check-label" for="size{{ $size }}">{{ $size }}</label>
+        </div>
+    @endforeach
+</div>
+
+
+                                        </div>
+                                        <div class="row g-sm-6 mb-6">
+                                            <div class="col-sm-4">
+                                                <label class="form-label" for="form-repeater-1-1">Options</label>
+                                                <select id="form-repeater-1-1" class="select2 form-select"
+                                                    data-placeholder="Size">
+                                                    <option value="">Size</option>
+                                                    <option value="size">Size</option>
+                                                    <option value="color">Color</option>
+                                                    <option value="weight">Weight</option>
+                                                    <option value="smell">Smell</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-sm-8">
+                                                <label class="form-label invisible" for="form-repeater-1-2">Not
+                                                    visible</label>
+                                                <input type="number" id="form-repeater-1-2" class="form-control"
+                                                    placeholder="Enter size" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <button class="btn btn-primary" data-repeater-create>
+                                        <i class="icon-base ti tabler-plus icon-xs me-2"></i>
+                                        Add another option
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                     <!-- Inventory -->
                     <div class="card mb-6">
                         <div class="card-header">

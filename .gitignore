@@ -18,6 +18,11 @@ yarn-error.log
 /.idea
 /.vscode
 
+
+.wwebjs_auth/
+.wwebjs_cache/
+public/.wwebjs_auth/
+
 # Allow all other files in public (images, css, js)
 !/public/**/*.jpg
 !/public/**/*.jpeg

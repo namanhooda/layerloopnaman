@@ -17,6 +17,10 @@ use Illuminate\Support\Facades\Mail;
 
 class AuthUserController extends Controller
 {
+    public function account()
+    {
+        return view('frontend.account');
+    }
 
     public function orders()
     {

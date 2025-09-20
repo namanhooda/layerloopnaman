@@ -8,10 +8,12 @@ use Laravel\Fortify\Features;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-
+use App\Http\Controllers\WhatsAppController;
 use App\Http\Controllers\ContactController;
 
 
+Route::get('/whatsapp', [WhatsAppController::class, 'form'])->name('whatsapp.form');
+Route::post('/whatsapp/send', [WhatsAppController::class, 'send'])->name('whatsapp.send');
 
 
 Route::get('auth/google', function () {
@@ -55,38 +57,28 @@ Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
 Route::post('/cart/add/wishlist', [CartController::class, 'addWishlist'])->name('cart.add.wishlist');
 Route::delete('/cart/remove', [CartController::class, 'removeItem'])->name('cart.remove');
 Route::get('cart', [CartController::class, 'cart'])->name('cart');
-
 Route::post('/cart/shipping', [App\Http\Controllers\CartController::class, 'setShipping'])->name('cart.shipping');
-
 Route::post('/apply-coupon', [CartController::class, 'applyCoupon'])->name('apply.coupon');
 Route::post('/remove-coupon', [CartController::class, 'removeCoupon'])->name('remove.coupon');
 
-//// Frontend Auth Routes
+//// Wishlist 
 Route::resource('wishlist', WishlistController::class)->only(['index', 'store', 'destroy']);
 
 Route::middleware('auth')->group(function () {
     Route::get('checkout', [CheckoutController::class, 'checkout'])->name('checkout');
-    Route::post('ads', [AddressController::class, 'store'])->name('addresses.store');
-    Route::get('account', [FrontendController::class, 'account'])->name('account');
     Route::post('/checkout/place-order', [CheckoutController::class, 'placeOrder'])->name('checkout.placeOrder');
     Route::get('/checkout/verify-order', [CheckoutController::class, 'verifyPayment'])->name('order.payment.verify');
     Route::get('/order/success/{code}', [CheckoutController::class, 'success'])->name('order.success');
+    Route::post('ads', [AddressController::class, 'store'])->name('addresses.store');
 
-
-
-
-
+    Route::get('account', [App\Http\Controllers\AuthUserController::class, 'account'])->name('account');
     Route::get('orders', [App\Http\Controllers\AuthUserController::class, 'orders'])->name('orders');
     Route::post('orders-cancel/{id}', [App\Http\Controllers\AuthUserController::class, 'cancelOrder'])->name('orders.cancel');
     Route::get('orders-show/{code}', [App\Http\Controllers\AuthUserController::class, 'orderDetail'])->name('orders.show');
     Route::get('account-settings', [App\Http\Controllers\AuthUserController::class, 'accountSettings'])->name('accountSettings');
     Route::get('addresses', [App\Http\Controllers\AuthUserController::class, 'addresses'])->name('addresses');
     Route::get('wallet', [App\Http\Controllers\AuthUserController::class, 'wallet'])->name('wallet');
-
-
     Route::put('user-profile-update', [App\Http\Controllers\AuthUserController::class, 'updateProfile'])->name('profile.update');
-
-
 });
 
 

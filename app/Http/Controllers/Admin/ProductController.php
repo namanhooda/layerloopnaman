@@ -119,7 +119,10 @@ class ProductController extends Controller
                     $imagePaths[] = $image->store('product_images', 'public');
                 }
             }
-
+            $size = null;
+            if($request->prototype == 'clothing' && $request->has('sizes')){
+                $size = json_encode($request->sizes); // convert array to JSON string
+            }
             $code = 'LL' . str_pad(mt_rand(0, 99999999), 8, '0', STR_PAD_LEFT);
 
             Product::create([
@@ -130,6 +133,7 @@ class ProductController extends Controller
                 'description' => $request->description,
                 'price' => $request->price,
                 'discounted_price' => $request->discount_price,
+                'size' => $size,
                 'stock_quantity' => $request->stock,
                 'charge_tax' => $request->has('charge_tax'),
                 'in_stock' => $request->has('in_stock'),

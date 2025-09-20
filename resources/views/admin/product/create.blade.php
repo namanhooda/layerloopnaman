@@ -14,29 +14,30 @@
     <div class="app-ecommerce">
         <!-- Success Message -->
         @if(session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
         @endif
 
         <!-- Error Messages -->
         @if ($errors->any())
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <strong>Whoops!</strong> There were some problems with your input:
-                <ul class="mt-2 mb-0">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Whoops!</strong> There were some problems with your input:
+            <ul class="mt-2 mb-0">
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
         @endif
         <!-- Add Product -->
         <form method="POST" action="{{ route('admin.products.store') }}" enctype="multipart/form-data">
             @csrf
 
-            <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-6 row-gap-4">
+            <div
+                class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-6 row-gap-4">
                 <div class="d-flex flex-column justify-content-center">
                     <h4 class="mb-1">Add a new Product</h4>
                     <p class="mb-0">Orders placed across your store</p>
@@ -61,7 +62,8 @@
                         <div class="card-body">
                             <div class="mb-6">
                                 <label class="form-label">Name</label>
-                                <input type="text" class="form-control" name="productTitle" placeholder="Product title" required />
+                                <input type="text" class="form-control" name="productTitle" placeholder="Product title"
+                                    required />
                             </div>
 
                             <!-- <div class="row mb-6">
@@ -120,44 +122,74 @@
                     </div>
 
                     <div class="card mb-6">
-                      <div class="card-header">
-                        <h5 class="card-title mb-0">Variants</h5>
-                      </div>
-                      <div class="card-body">
-                        <form class="form-repeater">
-                          <div data-repeater-list="group-a">
-                            <div data-repeater-item>
-                              <div class="row g-sm-6 mb-6">
-                                <div class="col-sm-4">
-                                  <label class="form-label" for="form-repeater-1-1">Options</label>
-                                  <select id="form-repeater-1-1" class="select2 form-select" data-placeholder="Size">
-                                    <option value="">Size</option>
-                                    <option value="size">Size</option>
-                                    <option value="color">Color</option>
-                                    <option value="weight">Weight</option>
-                                    <option value="smell">Smell</option>
-                                  </select>
-                                </div>
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Variants</h5>
+                        </div>
+                        <div class="card-body">
+                            <form class="form-repeater">
+                                <div data-repeater-list="group-a">
+                                    <div data-repeater-item>
+                                        <div class="row g-sm-6 mb-6">
+                                            <div class="col-sm-12">
+                                                <label class="form-label">Sizes</label>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" name="sizes[]"
+                                                        value="S" id="sizeS">
+                                                    <label class="form-check-label" for="sizeS">S</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" name="sizes[]"
+                                                        value="M" id="sizeM" checked>
+                                                    <label class="form-check-label" for="sizeM">M</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" name="sizes[]"
+                                                        value="L" id="sizeL" checked>
+                                                    <label class="form-check-label" for="sizeL">L</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" name="sizes[]"
+                                                        value="XL" id="sizeXL" checked>
+                                                    <label class="form-check-label" for="sizeXL">XL</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" name="sizes[]"
+                                                        value="XXL" id="sizeXXL">
+                                                    <label class="form-check-label" for="sizeXXL">XXL</label>
+                                                </div>
+                                            </div>
 
-                                <div class="col-sm-8">
-                                  <label class="form-label invisible" for="form-repeater-1-2">Not visible</label>
-                                  <input
-                                    type="number"
-                                    id="form-repeater-1-2"
-                                    class="form-control"
-                                    placeholder="Enter size" />
+                                        </div>
+                                        <div class="row g-sm-6 mb-6">
+                                            <div class="col-sm-4">
+                                                <label class="form-label" for="form-repeater-1-1">Options</label>
+                                                <select id="form-repeater-1-1" class="select2 form-select"
+                                                    data-placeholder="Size">
+                                                    <option value="">Size</option>
+                                                    <option value="size">Size</option>
+                                                    <option value="color">Color</option>
+                                                    <option value="weight">Weight</option>
+                                                    <option value="smell">Smell</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-sm-8">
+                                                <label class="form-label invisible" for="form-repeater-1-2">Not
+                                                    visible</label>
+                                                <input type="number" id="form-repeater-1-2" class="form-control"
+                                                    placeholder="Enter size" />
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div>
-                            <button class="btn btn-primary" data-repeater-create>
-                              <i class="icon-base ti tabler-plus icon-xs me-2"></i>
-                              Add another option
-                            </button>
-                          </div>
-                        </form>
-                      </div>
+                                <div>
+                                    <button class="btn btn-primary" data-repeater-create>
+                                        <i class="icon-base ti tabler-plus icon-xs me-2"></i>
+                                        Add another option
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
 
                     <!-- Inventory -->
@@ -167,7 +199,8 @@
                         </div>
                         <div class="card-body">
                             <label class="form-label">Add to Stock</label>
-                            <input type="number" name="stock" class="form-control mb-4" placeholder="Quantity" required />
+                            <input type="number" name="stock" class="form-control mb-4" placeholder="Quantity"
+                                required />
                             <div>
                                 <h6 class="mb-2 fw-normal">Product in stock now: 0</h6>
                                 <h6 class="mb-2 fw-normal">Last updated: {{ now()->format('d M, Y') }}</h6>
@@ -190,10 +223,12 @@
                             </div>
                             <div class="mb-6">
                                 <label class="form-label">Discounted Price</label>
-                                <input type="number" name="discount_price" class="form-control" placeholder="Discounted Price" />
+                                <input type="number" name="discount_price" class="form-control"
+                                    placeholder="Discounted Price" />
                             </div>
                             <div class="form-check ms-2 mt-2 mb-4">
-                                <input class="form-check-input" type="checkbox" name="charge_tax" id="price-charge-tax" checked />
+                                <input class="form-check-input" type="checkbox" name="charge_tax" id="price-charge-tax"
+                                    checked />
                                 <label class="switch-label" for="price-charge-tax"> Charge tax on this product </label>
                             </div>
                             <div class="d-flex justify-content-between align-items-center border-top pt-2">
@@ -248,13 +283,13 @@
                         </div>
                         <div class="card-body">
                             <div class="mb-6">
-                                
-                            <div class="d-flex justify-content-between align-items-center border-top pt-2">
-                                <span class="mb-0">Is Featured</span>
-                                <div class="form-check form-switch">
-                                    <input type="checkbox" name="in_stock" class="form-check-input" checked />
+
+                                <div class="d-flex justify-content-between align-items-center border-top pt-2">
+                                    <span class="mb-0">Is Featured</span>
+                                    <div class="form-check form-switch">
+                                        <input type="checkbox" name="in_stock" class="form-check-input" checked />
+                                    </div>
                                 </div>
-                            </div>
                             </div>
                             <div class="mb-6">
                                 <div class="d-flex justify-content-between align-items-center border-top pt-2">
@@ -268,7 +303,8 @@
 
                             <div>
                                 <label class="form-label">Tags</label>
-                                <input name="tags" id="ecommerce-product-tags" class="form-control" value="Normal,Standard,Premium" />
+                                <input name="tags" id="ecommerce-product-tags" class="form-control"
+                                    value="Normal,Standard,Premium" />
                             </div>
                         </div>
                     </div>
@@ -304,6 +340,7 @@
     });
 
     new Tagify(document.querySelector('#ecommerce-product-tags'));
+
 </script>
 
 @endsection

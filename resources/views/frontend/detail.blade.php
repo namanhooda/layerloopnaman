@@ -136,21 +136,33 @@
                             @endif
 
                             @if($product->size)
+                            @php
+                            $selectedSizes = $product->size ? json_decode($product->size) : [];
+                            @endphp
+
                             <div class="details-filter-row details-row-size">
                                 <label for="size">Size:</label>
                                 <div class="select-custom">
                                     <select name="size" id="size" class="form-control">
-                                        <option value="#" selected="selected">Select a size</option>
-                                        <option value="s">Small</option>
-                                        <option value="m">Medium</option>
-                                        <option value="l">Large</option>
-                                        <option value="xl">Extra Large</option>
+                                        <option value="#" {{ empty($selectedSizes) ? 'selected' : '' }}>Select a size
+                                        </option>
+                                        <option value="S" {{ in_array('S', $selectedSizes) ? 'selected' : '' }}>Small
+                                        </option>
+                                        <option value="M" {{ in_array('M', $selectedSizes) ? 'selected' : '' }}>Medium
+                                        </option>
+                                        <option value="L" {{ in_array('L', $selectedSizes) ? 'selected' : '' }}>Large
+                                        </option>
+                                        <option value="XL" {{ in_array('XL', $selectedSizes) ? 'selected' : '' }}>Extra
+                                            Large</option>
+                                        <option value="XXL" {{ in_array('XXL', $selectedSizes) ? 'selected' : '' }}>XXL
+                                        </option>
                                     </select>
                                 </div>
 
-                                <a href="#" class="size-guide"><i class="icon-th-list"></i>size guide</a>
+                                <a href="#" class="size-guide"><i class="icon-th-list"></i> size guide</a>
                             </div>
                             @endif
+
 
                             <div class="details-filter-row details-row-size">
                                 <label for="qty">Qty:</label>
