@@ -18,6 +18,8 @@ yarn-error.log
 /.idea
 /.vscode
 
+# Node modules
+node_modules/
 
 .wwebjs_auth/
 .wwebjs_cache/
