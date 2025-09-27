@@ -10,10 +10,13 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\WhatsAppController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\TestController;
 
 
 Route::get('/whatsapp', [WhatsAppController::class, 'form'])->name('whatsapp.form');
 Route::post('/whatsapp/send', [WhatsAppController::class, 'send'])->name('whatsapp.send');
+Route::get('/products/bulk', [TestController::class, 'form'])->name('bulk_upload');
+Route::post('/products/bulk-upload', [TestController::class, 'bulkUpload'])->name('products.bulk_upload');
 
 
 Route::get('auth/google', function () {
