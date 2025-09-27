@@ -23,7 +23,7 @@
                 
                 <div class="container intro-content">
                     <h3 class="intro-subtitle">Customized</h3>
-                    <h1 class="intro-title" style="margin-bottom: 0px !important;">Customized Lithiofanes</h1><h2 style="color: lightgrey !important;">Convert Your Image To Lightbox.</h2>
+                    <h1 class="intro-title" style="margin-bottom: 0px !important;">cCustomized Lithiofanes</h1><h2 style="color: lightgrey !important;">Convert Your Image To Lightbox.</h2>
 
                     <a href="{{url('shop')}}" class="btn btn-primary">
                         <span>Shop Now</span>
