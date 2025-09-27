@@ -28,19 +28,19 @@
                 <div class="products">
                     <div class="row justify-content-center">
 
-                        @foreach($sale as $products)
+                        @foreach($sale as $product)
                         <div class="col-6 col-md-4 col-lg-3 col-xl-5col">
                             <div class="product product-11 text-center product-manual">
                                 <figure class="product-media">
-                                    <a href="{{url('shop-product-detail/'.$products->id)}}">
-                                    <img src="{{ asset('storage/' . $products->featured_image) }}" alt="Product image" class="product-image product-image-manual">
+                                    <a href="{{url('shop-product-detail/'.$product->id)}}">
+                                    <img src="{{ asset('storage/' . $product->featured_image) }}" alt="Product image" class="product-image product-image-manual">
                                      
                                     </a>
 
                                     
                                 <div class="product-action-vertical">
                                     @php
-                                    $isInWishlist = \App\Models\Wishlist::where(function ($query) use ($products) {
+                                    $isInWishlist = \App\Models\Wishlist::where(function ($query) use ($product) {
                                     $userId = auth()->id();
                                     $systemId = $userId ? null : hash('sha256', request()->userAgent() . '|' .
                                     request()->ip());
@@ -50,13 +50,13 @@
                                     } else {
                                     $query->where('system_id', $systemId);
                                     }
-                                    })->where('product_id', $products->id)->exists();
+                                    })->where('product_id', $product->id)->exists();
                                     @endphp
 
                                     <!-- Wishlist Button -->
                                     <button type="button"
                                         class="btn-product-icon btn-wishlist {{ $isInWishlist ? 'active' : '' }} btn-expandable add-to-wishlist {{ $isInWishlist ? 'wishlist-active' : '' }}"
-                                        data-product-id="{{ $products->id }}">
+                                        data-product-id="{{ $product->id }}">
                                         <span>{{ $isInWishlist ? 'Remove from wishlist' : 'Add to wishlist' }}</span>
                                     </button>
                                 </div><!-- End .product-action-vertical -->
@@ -66,19 +66,14 @@
                                     <div class="product-cat">
                                         <a href="#" class="prodcatlink">Lighting</a>
                                     </div>
-                                    <h3 class="product-title"><a href="{{url('shop-product-detail/'.$products->id)}}">{{$products->name}}</a></h3>
+                                    <h3 class="product-title"><a href="{{url('shop-product-detail/'.$product->id)}}">{{$product->name}}</a></h3>
                                     <!-- End .product-title -->
                                     <div class="product-price">
-                                        ₹ {{$products->discounted_price}}
+                                        ₹ {{$product->discounted_price}}
                                     </div><!-- End .product-price -->
                                 </div><!-- End .product-body -->
-                                <div class="product-action">
-                                    <input type="hidden" id="product-id-{{ $products->id }}" value="{{ $products->id }}">
-                                    <input type="hidden" id="quantity-{{ $products->id }}" value="1">
-                                    <button type="button" class="btn-product btn-cart" onclick="addToCart({{ $products->id }})">
-                                        <span>add to cart</span>
-                                    </button>
-                                </div><!-- End .product-action -->
+                                
+                                @include('frontend.buttons.addtocart')
                             </div><!-- End .product -->
                         </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
                         @endforeach

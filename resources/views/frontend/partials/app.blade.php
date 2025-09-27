@@ -282,6 +282,11 @@
         </div><!-- End .modal-content -->
     </div><!-- End .modal-dialog -->
 </div>
+
+
+    @include('frontend.modals.add-to-cart-model')
+
+
 <!-- End .modal -->
     
     @include('frontend.partials.newsletter')
@@ -325,46 +330,97 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
-
+<script src="bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-function addToCart(productId) {
-    let product_id = document.getElementById("product-id-" + productId).value;
-    let quantity = document.getElementById("quantity-" + productId).value;
+    let customizeModalInstance = null;
 
+    // Open modal
+    function openCustomizeModal(productId) {
+        document.getElementById('customize-product-id').value = productId;
+        let modalEl = document.getElementById('customizeModal');
+        customizeModalInstance = new bootstrap.Modal(modalEl);
+        customizeModalInstance.show();
+    }
 
-    console.log(quantity);
-    fetch("{{ route('cart.add') }}", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "X-CSRF-TOKEN": "{{ csrf_token() }}"
-        },
-        body: JSON.stringify({ product_id, quantity })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            // Update cart count
-            document.querySelector(".cart-count").textContent = data.cart_count;
+    // Submit customized product
+    function submitCustomizedCart() {
+        let product_id = document.getElementById('customize-product-id').value;
+        let quantity = document.getElementById("quantity-" + product_id).value;
+        let size = document.getElementById('customize-size').value;
+        let imageInput = document.getElementById('customize-image').files[0];
 
-            // Replace dropdown HTML
-            document.querySelector(".dropdown-menu").innerHTML = data.cart_html;
-
-            // ✅ Show toastr success
-            showToastr('success', data.message);
-        } else {
-            // ✅ Show toastr error if backend sent failure
-            showToastr('error', data.message ?? "Something went wrong!");
+        if (!size) {
+            showToastr('error', 'Please select a size.');
+            return;
         }
-    })
-    .catch(error => {
-        console.error("Error:", error);
-        showToastr('error', "Unexpected error occurred!");
-    });
 
-}
+        let formData = new FormData();
+        formData.append('product_id', product_id);
+        formData.append('quantity', quantity);
+        formData.append('size', size);
+        if (imageInput) {
+            formData.append('image', imageInput);
+        }
+
+        fetch("{{ route('cart.add') }}", {
+            method: "POST",
+            headers: {
+                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+            },
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                document.querySelector(".cart-count").textContent = data.cart_count;
+                document.querySelector(".dropdown-menu").innerHTML = data.cart_html;
+                showToastr('success', data.message);
+
+                // ✅ Close modal and reset form
+                let modalEl = document.getElementById('customizeModal');
+                customizeModalInstance.hide();
+                modalEl.querySelector('#customize-size').value = '';
+                modalEl.querySelector('#customize-image').value = '';
+            } else {
+                showToastr('error', data.message ?? "Something went wrong!");
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            showToastr('error', "Unexpected error occurred!");
+        });
+    }
+
+    // Add normal product to cart
+    function addToCart(productId) {
+        let product_id = document.getElementById("product-id-" + productId).value;
+        let quantity = document.getElementById("quantity-" + productId).value;
+
+        fetch("{{ route('cart.add') }}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+            },
+            body: JSON.stringify({ product_id, quantity })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                document.querySelector(".cart-count").textContent = data.cart_count;
+                document.querySelector(".dropdown-menu").innerHTML = data.cart_html;
+                showToastr('success', data.message);
+            } else {
+                showToastr('error', data.message ?? "Something went wrong!");
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            showToastr('error', "Unexpected error occurred!");
+        });
+    }
 </script>
 
 <script>

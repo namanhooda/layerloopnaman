@@ -33,6 +33,7 @@
                                 <tr>
                                     <th>Product</th>
                                     <th>Price</th>
+                                    <th>Size</th>
                                     <th>Quantity</th>
                                     <th>Total</th>
                                     <th></th>
@@ -56,6 +57,7 @@
                                         </div>
                                     </td>
                                     <td class="price-col">₹{{ number_format($item->product->price, 2) }}</td>
+                                    <td class="price-col">{{ $item->size ?? 'Free' }}</td>
                                     <td class="quantity-col">
                                         <div class="cart-product-quantity">
                                             <input type="number" class="form-control" value="{{ $item->quantity }}"
@@ -219,7 +221,7 @@
                             @endif
                         </div><!-- End .summary -->
 
-                        <a href="category.html" class="btn btn-outline-dark-2 btn-block mb-3"><span>CONTINUE
+                        <a href="{{url('shop')}}" class="btn btn-outline-dark-2 btn-block mb-3"><span>CONTINUE
                                 SHOPPING</span><i class="icon-refresh"></i></a>
                     </aside><!-- End .col-lg-3 -->
                 </div><!-- End .row -->

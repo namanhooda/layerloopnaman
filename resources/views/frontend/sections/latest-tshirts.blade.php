@@ -34,17 +34,17 @@
                                     }
                                 }
                             }'>
-                @foreach($clothes as $products)
+                @foreach($clothes as $product)
                 <div class="product product-11 text-center product-manual">
                     <figure class="product-media">
-                        <a href="{{ url('shop-product-detail/' . $products->id) }}">
-                            <img src="{{ asset('storage/' . $products->featured_image) }}" alt="Product image"
+                        <a href="{{ url('shop-product-detail/' . $product->id) }}">
+                            <img src="{{ asset('storage/' . $product->featured_image) }}" alt="Product image"
                                 class="product-image product-image-manual">
                         </a>
 
                         <div class="product-action-vertical">
                             @php
-                            $isInWishlist = \App\Models\Wishlist::where(function ($query) use ($products) {
+                            $isInWishlist = \App\Models\Wishlist::where(function ($query) use ($product) {
                             $userId = auth()->id();
                             $systemId = $userId ? null : hash('sha256', request()->userAgent() . '|' . request()->ip());
 
@@ -53,13 +53,13 @@
                             } else {
                             $query->where('system_id', $systemId);
                             }
-                            })->where('product_id', $products->id)->exists();
+                            })->where('product_id', $product->id)->exists();
                             @endphp
 
                             <!-- Wishlist Button -->
                             <button type="button"
                                 class="btn-product-icon btn-wishlist {{ $isInWishlist ? 'active' : '' }} btn-expandable add-to-wishlist {{ $isInWishlist ? 'wishlist-active' : '' }}"
-                                data-product-id="{{ $products->id }}">
+                                data-product-id="{{ $product->id }}">
                                 <span>{{ $isInWishlist ? 'Remove from wishlist' : 'Add to wishlist' }}</span>
                             </button>
                         </div>
@@ -67,24 +67,19 @@
 
                     <div class="product-body">
                         <h3 class="product-title">
-                            <a href="{{ url('shop-product-detail/' . $products->id) }}">{{ $products->name }}</a>
+                            <a href="{{ url('shop-product-detail/' . $product->id) }}">{{ $product->name }}</a>
                         </h3>
                         <div class="product-price">
-                            ₹{{ $products->discounted_price }}
+                            ₹{{ $product->discounted_price }}
                             <span style="font-size: 12px;">
-                                <del>{{ $products->original_price }}</del>
+                                <del>{{ $product->original_price }}</del>
                                 <!-- Assuming you have the original price stored -->
                             </span>
                         </div>
                     </div>
 
-                    <div class="product-action">
-                        <input type="hidden" id="product-id-{{ $products->id }}" value="{{ $products->id }}">
-                        <input type="hidden" id="quantity-{{ $products->id }}" value="1">
-                        <button type="button" class="btn-product btn-cart" onclick="addToCart({{ $products->id }})">
-                            <span>add to cart</span>
-                        </button>
-                    </div>
+
+                    @include('frontend.buttons.addtocart')
                 </div>
                 @endforeach
 

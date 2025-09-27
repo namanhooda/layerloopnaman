@@ -13,20 +13,14 @@ class FrontendController extends Controller
 {
 
     public function sendMail()
-{
+    {
+            $title = 'Welcome to the laracoding.com example email';
+            $body = 'Thank you for participating!';
 
+            Mail::to('namanhooda86@gmail.com')->send(new WelcomeMail($title, $body));
 
-
-
-        $title = 'Welcome to the laracoding.com example email';
-        $body = 'Thank you for participating!';
-
-        Mail::to('namanhooda86@gmail.com')->send(new WelcomeMail($title, $body));
-
-        return "Email sent successfully!";
-
-
-}
+            return "Email sent successfully!";
+    }
     public function index()
     {   
 
@@ -95,9 +89,10 @@ class FrontendController extends Controller
             $products->where('prototype', 'customize'); // adjust to match your DB field
         }
 
+        $productsCount = $products->count();
         $products = $products->get();
 
-        return view('frontend.shop', compact('products', 'query', 'filter'));
+        return view('frontend.shop', compact('products', 'query', 'filter', 'productsCount'));
     }
     public function categoryProduct(Request $request, $category_name)
     {

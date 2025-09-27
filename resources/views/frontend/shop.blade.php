@@ -57,7 +57,7 @@
 
                 <div class="toolbox-center">
                     <div class="toolbox-info">
-                        Showing <span>12 of 56</span> Products
+                        Showing <span>{{$productsCount}} of {{$productsCount}}</span> Products
                     </div><!-- End .toolbox-info -->
                 </div><!-- End .toolbox-center -->
 
@@ -133,14 +133,9 @@
 
                                 </div><!-- End .product-nav -->
                             </div>
-                            <div class="product-action">
-                                <input type="hidden" id="product-id-{{ $product->id }}" value="{{ $product->id }}">
-                                <input type="hidden" id="quantity-{{ $product->id }}" value="1">
-                                <button type="button" class="btn-product btn-cart"
-                                    onclick="addToCart({{ $product->id }})">
-                                    <span>add to cart</span>
-                                </button>
-                            </div><!-- End .product-body -->
+                               
+                            @include('frontend.buttons.addtocart')
+
                         </div><!-- End .product -->
                     </div>
                     @endforeach

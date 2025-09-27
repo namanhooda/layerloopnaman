@@ -19,57 +19,80 @@ use Illuminate\Support\Facades\Validator;
 class CartController extends Controller
 {
     
-    public function add(Request $request)
-    {
-        $request->validate([
-            'product_id' => 'required|exists:products,id',
-            'quantity'   => 'required|integer|min:1'
-        ]);
+public function add(Request $request)
+{
+    $request->validate([
+        'product_id' => 'required|exists:products,id',
+        'quantity'   => 'required|integer|min:1',
+        'size'       => 'nullable|string|max:10', // handle size if customizable
+        'image'      => 'nullable|image|max:2048', // handle image if uploaded
+    ]);
 
-        $userId = auth()->id();
+    $userId = auth()->id();
 
-        if (!$userId) {
-            $rawIdentifier = $request->userAgent() . '|' . $request->ip();
-            $systemId = hash('sha256', $rawIdentifier);
-        } else {
-            $systemId = null;
-        }
+    if (!$userId) {
+        $rawIdentifier = $request->userAgent() . '|' . $request->ip();
+        $systemId = hash('sha256', $rawIdentifier);
+    } else {
+        $systemId = null;
+    }
 
-        $match = ['product_id' => $request->product_id];
-        if ($userId) $match['user_id'] = $userId;
-        else $match['system_id'] = $systemId;
+    // If your cart can have same product but different size, include size in the match
+    $match = ['product_id' => $request->product_id];
+    if ($userId) $match['user_id'] = $userId;
+    else $match['system_id'] = $systemId;
 
-        $existingCartItem = Cart::where(function ($query) use ($userId, $systemId) {
+    // (Optional) If you want different cart items per size:
+    if ($request->size) {
+        $match['size'] = $request->size;
+    }
+
+    // handle image upload if present
+    $imagePath = null;
+    if ($request->hasFile('image')) {
+        $imagePath = $request->file('image')->store('cart_custom_images', 'public');
+    }
+
+    // find existing cart item (based on user/system and product and size)
+    $existingCartItem = Cart::where(function ($query) use ($userId, $systemId) {
             if ($userId) $query->where('user_id', $userId);
             else $query->where('system_id', $systemId);
-        })->first();
+        })
+        ->where('product_id', $request->product_id)
+        ->when($request->size, function ($query) use ($request) {
+            $query->where('size', $request->size);
+        })
+        ->first();
 
-        if ($existingCartItem) {
-            $cartId = $existingCartItem->cart_id;
-        } else {
-            do {
-                $cartId = 'CRT' . mt_rand(1000000, 9999999);
-            } while (Cart::where('cart_id', $cartId)->exists());
-        }
-
-        Cart::updateOrCreate(
-            $match,
-            [
-                'quantity' => $request->quantity,
-                'cart_id' => $cartId
-            ]
-        );
-
-        // Return JSON instead of redirect
-        return response()->json([
-            'success' => true,
-            'message' => 'Product added to cart!',
-            'cart_count' => \App\Helpers\CartHelper::getCartCount(),
-            'cart_html' => view('partials.cart_dropdown', [
-                'cartItems' => \App\Helpers\CartHelper::getCart()
-            ])->render()
-        ]);
+    if ($existingCartItem) {
+        $cartId = $existingCartItem->cart_id;
+    } else {
+        do {
+            $cartId = 'CRT' . mt_rand(1000000, 9999999);
+        } while (Cart::where('cart_id', $cartId)->exists());
     }
+
+    // store/update cart
+    Cart::updateOrCreate(
+        $match,
+        [
+            'quantity' => $request->quantity,
+            'cart_id'  => $cartId,
+            'size'     => $request->size, // save size
+            'image'    => $imagePath,     // save image path
+        ]
+    );
+
+    return response()->json([
+        'success'    => true,
+        'message'    => 'Product added to cart!',
+        'cart_count' => \App\Helpers\CartHelper::getCartCount(),
+        'cart_html'  => view('partials.cart_dropdown', [
+            'cartItems' => \App\Helpers\CartHelper::getCart()
+        ])->render()
+    ]);
+}
+
 
     public function addWishlist(Request $request)
     {
