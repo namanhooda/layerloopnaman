@@ -22,7 +22,7 @@
             <div class="intro-slide  slide-1" >
                 
                 <div class="container intro-content">
-                    <h3 class="intro-subtitle">Customized</h3>
+                    <h3 class="intro-subtitle">ssCustomized</h3>
                     <h1 class="intro-title" style="margin-bottom: 0px !important;">Customized Lithiofanes</h1><h2 style="color: lightgrey !important;">Convert Your Image To Lightbox.</h2>
 
                     <a href="{{url('shop')}}" class="btn btn-primary">
