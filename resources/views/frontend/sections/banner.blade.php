@@ -22,11 +22,11 @@
             <div class="intro-slide  slide-1" >
                 
                 <div class="container intro-content">
-                    <h3 class="intro-subtitle">Customizedddsssss</h3>
-                    <h1 class="intro-title" style="margin-bottom: 0px !important;">sssCustomized Lithiofanes</h1><h2 style="color: lightgrey !important;">Convert Your Image To Lightbox.</h2>
+                    <h3 class="intro-subtitle">Customized</h3>
+                    <h1 class="intro-title" style="margin-bottom: 0px !important;">Customized Lithiofanes</h1><h2 style="color: lightgrey !important;">Convert Your Image To Lightbox.</h2>
 
                     <a href="{{url('shop')}}" class="btn btn-primary">
-                        <span>Shop Nowss</span>
+                        <span>Shop Now</span>
                         <i class="icon-long-arrow-right"></i>
                     </a>
                 </div>
