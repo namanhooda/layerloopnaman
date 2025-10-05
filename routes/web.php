@@ -13,19 +13,22 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\TestController;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\Tags\Url;
+use Illuminate\Http\Request;
 
 
-Route::get('/sitemap.xml', function () {
-    return Sitemap::create()
+
+
+Route::get('/sitemap.xml', function (Request $request) {
+    $sitemap = Sitemap::create()
         ->add(Url::create('/'))
         ->add(Url::create('/about'))
         ->add(Url::create('/contact_us'))
         ->add(Url::create('/faq'))
         ->add(Url::create('/blogs'))
-        ->add(Url::create('/shop'))
-        ->toResponse(request());
-});
+        ->add(Url::create('/shop'));
 
+    return $sitemap->toResponse($request); // <- Only works if Spatie version supports it
+});
 
 Route::get('/whatsapp', [WhatsAppController::class, 'form'])->name('whatsapp.form');
 Route::post('/whatsapp/send', [WhatsAppController::class, 'send'])->name('whatsapp.send');
