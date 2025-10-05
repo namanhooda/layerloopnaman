@@ -31,16 +31,16 @@
 
                 <div class="col-lg-3">
                     <div class="banner banner-overlay banner-overlay-light text-center d-none d-lg-block">
-                        <a href="{{url('shop-product-detail/1')}}">
+                        <a href="{{url('shop-product-detail/geometric-chess-set')}}">
                             <img src="{{asset('frontend/assets/images/demos/demo-2/banners/banner-5.jpg')}}"
                                 alt="Banner">
                         </a>
 
                         <div class="banner-content banner-content-top banner-content-center">
                             <h4 class="banner-subtitle">The Best Choice</h4><!-- End .banner-subtitle -->
-                            <h3 class="banner-title text-white">Virel Chess Set</h3><!-- End .banner-title -->
+                            <h3 class="banner-title text-white">Viral Chess Set</h3><!-- End .banner-title -->
                             <div class="banner-text text-primary">₹ 799</div><!-- End .banner-text -->
-                            <a href="{{url('shop-product-detail/1')}}" class="btn btn-outline-white banner-link">Shop Now<i
+                            <a href="{{url('shop-product-detail/geometric-chess-set')}}" class="btn btn-outline-white banner-link">Shop Now<i
                                     class="icon-long-arrow-right"></i></a>
                         </div><!-- End .banner-content -->
                     </div><!-- End .banner -->

@@ -37,7 +37,7 @@
                 @foreach($clothes as $product)
                 <div class="product product-11 text-center product-manual">
                     <figure class="product-media">
-                        <a href="{{ url('shop-product-detail/' . $product->id) }}">
+                        <a href="{{ url('shop-product-detail/' . $product->slug) }}">
                             <img src="{{ asset('storage/' . $product->featured_image) }}" alt="Product image"
                                 class="product-image product-image-manual">
                         </a>
@@ -67,7 +67,7 @@
 
                     <div class="product-body">
                         <h3 class="product-title">
-                            <a href="{{ url('shop-product-detail/' . $product->id) }}">{{ $product->name }}</a>
+                            <a href="{{ url('shop-product-detail/' . $product->slug) }}">{{ $product->name }}</a>
                         </h3>
                         <div class="product-price">
                             ₹{{ $product->discounted_price }}
