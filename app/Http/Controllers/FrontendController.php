@@ -111,10 +111,10 @@ class FrontendController extends Controller
 
     return response()->json($products);
 }
-    public function detail($id)
+    public function detail($slug)
     {
-        $product = Product::find($id);
-        $related = Product::get();
+        $product = Product::where('slug', $slug)->first();
+        $related = Product::take(10)->get();
         return view('frontend.detail',compact('product','related'));
     }
 

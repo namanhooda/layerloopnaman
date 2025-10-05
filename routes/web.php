@@ -11,6 +11,20 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\WhatsAppController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\TestController;
+use Spatie\Sitemap\Sitemap;
+use Spatie\Sitemap\Tags\Url;
+
+
+Route::get('/sitemap.xml', function () {
+    return Sitemap::create()
+        ->add(Url::create('/'))
+        ->add(Url::create('/about'))
+        ->add(Url::create('/contact_us'))
+        ->add(Url::create('/faq'))
+        ->add(Url::create('/blogs'))
+        ->add(Url::create('/shop'))
+        ->toResponse(request());
+});
 
 
 Route::get('/whatsapp', [WhatsAppController::class, 'form'])->name('whatsapp.form');
@@ -53,7 +67,7 @@ Route::get('/search-suggestions', [FrontendController::class, 'searchSuggestions
 
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
-Route::get('shop-product-detail/{id}', [FrontendController::class, 'detail'])->name('index');
+Route::get('shop-product-detail/{slug}', [FrontendController::class, 'detail'])->name('index');
 Route::post('adrrrs', [FrontendController::class, 'storeReview'])->name('reviews.store');
 //// cart & Checkout
 Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');

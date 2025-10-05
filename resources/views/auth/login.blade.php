@@ -77,9 +77,14 @@
           @csrf
 
           <div class="mb-4">
-            <label for="email" class="form-label">Email</label>
-            <input id="email" class="form-control" type="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="username" />
-          </div>
+    <label for="login" class="form-label">Email or Mobile</label>
+    <input id="login" 
+           class="form-control" 
+           type="text" 
+           name="login" 
+           value="{{ old('login') }}" 
+           required autofocus autocomplete="username" />
+</div>
 
           <div class="mb-4">
             <label for="password" class="form-label">Password</label>

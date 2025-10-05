@@ -10,6 +10,7 @@
     <title>LayerLoop - 3d pronted Store</title>
     <meta name="keywords" content="HTML5 Template">
     <meta name="description" content="Layerloop - 3d pronted Store">
+    <meta name="google-site-verification" content="SA4k7tR0Adq975MTs1RDqcRfGaIvdiJ7OLnqR2A4qrg" />
     <meta name="author" content="p-themes">
     <!-- Favicon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>

@@ -82,7 +82,7 @@
                         <div class="product  product-11 product-manual">
                             <figure class="product-media">
                                 <span class="product-label label-new">New</span>
-                                <a href="{{ url('shop-product-detail/' . $product->id) }}">
+                                <a href="{{ url('shop-product-detail/' . $product->slug) }}">
                                     <!-- <img src="assets/images/products/product-1.jpg" alt="Product image"
                                         class="product-image"> -->
                                     <img src="{{ asset('storage/' . $product->featured_image) }}" alt="Product image"
@@ -116,7 +116,7 @@
                                     <a href="#" class="prodcatlink">{{$product->category}}</a>
                                 </div><!-- End .product-cat -->
                                 <h3 class="product-title"><a
-                                        href="{{ url('shop-product-detail/' . $product->id) }}">{{$product->name}}</a>
+                                        href="{{ url('shop-product-detail/' . $product->slug) }}">{{$product->name}}</a>
                                 </h3>
                                 <!-- End .product-title -->
                                 <div class="product-price">
