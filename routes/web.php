@@ -14,9 +14,28 @@ use App\Http\Controllers\TestController;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\Tags\Url;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Auth\CustomAuthenticatedSessionController;
 
 
 
+Route::middleware(['web'])->group(function () {
+    // Login page - only show if not logged in
+    Route::get('/login', [CustomAuthenticatedSessionController::class, 'create'])
+        ->middleware('guest')
+        ->name('login');
+
+    // Handle login submission
+    Route::post('/login', [CustomAuthenticatedSessionController::class, 'store']);
+
+    // Logout route
+    Route::post('/logout', [CustomAuthenticatedSessionController::class, 'destroy'])
+        ->middleware('auth')
+        ->name('logout');
+
+});
+Route::middleware(['web', 'auth'])->group(function () {
+    Route::post('/logout', [CustomAuthenticatedSessionController::class, 'destroy'])->name('logout');
+});
 
 Route::get('/sitemap.xml', function (Request $request) {
     $sitemap = Sitemap::create()

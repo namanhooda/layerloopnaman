@@ -78,12 +78,9 @@
 
           <div class="mb-4">
     <label for="login" class="form-label">Email or Mobile</label>
-    <input id="login" 
-           class="form-control" 
-           type="text" 
-           name="login" 
-           value="{{ old('login') }}" 
-           required autofocus autocomplete="username" />
+    <input id="login" name="login" type="text" class="form-control"
+       placeholder="Email or Mobile" required autofocus />
+
 </div>
 
           <div class="mb-4">

@@ -56,7 +56,7 @@
                 @foreach($featured as $product)
                 <div class="product product-11 text-center product-manual">
                     <figure class="product-media">
-                        <a href="{{url('shop-product-detail/'.$product->id)}}">
+                        <a href="{{url('shop-product-detail/'.$product->slug)}}">
                             <img src="{{ asset('storage/' . $product->featured_image) }}" alt="Product image"
                                 class="product-image product-image-manual">
                             <!-- <img src="{{asset('frontend/assets/images/demos/demo-2/products/product-1-2.jpg')}}"
@@ -90,7 +90,7 @@
 
                     <div class="product-body">
                         <h3 class="product-title"><a
-                                href="{{url('shop-product-detail/'.$product->id)}}">{{$product->name}}</a></h3>
+                                href="{{url('shop-product-detail/'.$product->slug)}}">{{$product->name}}</a></h3>
                         <!-- End .product-title -->
                         <div class="product-price">
                             ₹ {{$product->discounted_price}}
