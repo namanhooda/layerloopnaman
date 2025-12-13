@@ -9,5 +9,11 @@ class Prototype extends Model
 {
     use HasFactory;
     protected $fillable = ['name', 'slug','status'];
+
+    public function categories()
+    {
+        return $this->hasMany(ProductCategory::class, 'prototype_id');
+    }
+
     
 }

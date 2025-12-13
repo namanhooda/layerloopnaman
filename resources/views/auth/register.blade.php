@@ -76,6 +76,10 @@
             <label for="email" class="form-label">Email</label>
             <input id="email" class="form-control" type="email" name="email" value="{{ old('email') }}" required autocomplete="username" />
           </div>
+          <div class="mb-4">
+            <label for="email" class="form-label">Phone No.</label>
+            <input id="phone" class="form-control" type="text" name="phone" value="{{ old('phone') }}" required autocomplete="phone" />
+          </div>
 
           <div class="mb-4">
             <label for="password" class="form-label">Password</label>

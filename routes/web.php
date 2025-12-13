@@ -16,7 +16,8 @@ use Spatie\Sitemap\Tags\Url;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\CustomAuthenticatedSessionController;
 
-
+Route::get('/get-categories/{prototype}', [ProductController::class, 'getCategories'])
+    ->name('get.categories');
 
 Route::middleware(['web'])->group(function () {
     // Login page - only show if not logged in

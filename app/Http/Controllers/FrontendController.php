@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\ProductReview;
 use App\Models\Blog;
+use App\Models\ProductCategory;
 use Illuminate\Http\Request;
 use App\Mail\TestMail;
 use App\Mail\WelcomeMail;
+
 use Illuminate\Support\Facades\Mail;
 
 class FrontendController extends Controller
@@ -96,7 +98,10 @@ class FrontendController extends Controller
     }
     public function categoryProduct(Request $request, $category_name)
     {
-        $products = Product::where('category', $category_name)->get();
+
+        $categories = ProductCategory::where('slug', $category_name)
+            ->first();
+        $products = Product::where('category', $categories->id)->get();
 
         return view('frontend.category_product', compact('products','category_name'));
     }

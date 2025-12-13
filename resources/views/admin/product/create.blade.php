@@ -247,24 +247,22 @@
                         </div>
                         <div class="card-body">
                             <div class="mb-6">
-                                <label class="form-label">ProtoType</label>
-                                <select name="prototype" class="form-select select2" required>
-                                    <option value="">Select Proto ype</option>
-                                    <option value="clothing">Clothing</option>
-                                    <option value="object">Object</option>
-                                </select>
-                            </div>
+    <label class="form-label">ProtoType</label>
+    <select name="prototype" id="prototype" class="form-select select2" required>
+        <option value="">Select Proto Type</option>
+        @foreach($prototypes as $type)
+            <option value="{{ $type->id }}">{{ $type->name }}</option>
+        @endforeach
+    </select>
+</div>
+
                             <div class="mb-6">
-                                <label class="form-label">Category</label>
-                                <select name="category" class="form-select select2" required>
-                                    <option value="">Select Category</option>
-                                    <option value="Household">Household</option>
-                                    <option value="Management">Management</option>
-                                    <option value="Electronics">Electronics</option>
-                                    <option value="Office">Office</option>
-                                    <option value="Automotive">Automotive</option>
-                                </select>
-                            </div>
+    <label class="form-label">Category</label>
+    <select name="category" id="category" class="form-select select2" required>
+        <option value="">Select Category</option>
+    </select>
+</div>
+
 
                             <div class="mb-6">
                                 <label class="form-label">Status</label>
@@ -324,6 +322,8 @@
 <script src="{{ asset('backend/assets/vendor/libs/tagify/tagify.js') }}"></script>
 
 <script>
+
+
     // Initialize Quill
     const quill = new Quill('#ecommerce-category-description', {
         theme: 'snow'
@@ -341,6 +341,39 @@
 
     new Tagify(document.querySelector('#ecommerce-product-tags'));
 
+    
+
 </script>
+<script>
+$(document).ready(function () {
+
+    $('#prototype').on('change', function () {
+        let prototypeId = $(this).val();
+        let categorySelect = $('#category');
+
+        categorySelect.empty().append('<option value="">Loading...</option>');
+
+        if (prototypeId) {
+            $.ajax({
+                url: "{{ url('/get-categories') }}/" + prototypeId,
+                type: 'GET',
+                success: function (response) {
+                    categorySelect.empty().append('<option value="">Select Category</option>');
+                    
+                    $.each(response, function (key, category) {
+                        categorySelect.append(
+                            `<option value="${category.id}">${category.name}</option>`
+                        );
+                    });
+                }
+            });
+        } else {
+            categorySelect.empty().append('<option value="">Select Category</option>');
+        }
+    });
+
+});
+</script>
+
 
 @endsection

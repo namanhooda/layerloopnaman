@@ -15,7 +15,6 @@ class FortifyServiceProvider extends ServiceProvider
     public function boot(): void
     {
         // Disable Fortify default login routes
-        Fortify::ignoreRoutes();
 
         // Specify your custom login view
         Fortify::loginView(fn () => view('auth.login'));

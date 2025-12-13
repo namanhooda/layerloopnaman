@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
 use App\Models\Product;
+use App\Models\ProductCategory;
+use App\Models\Prototype;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -83,9 +86,17 @@ class ProductController extends Controller
      */
     public function create()
     {
-        // $categories = NewsCategory::latest()->get();
-        return view('admin.product.create');
+        $prototypes = Prototype::get();
+        return view('admin.product.create',compact('prototypes'));
     }
+    public function getCategories($prototypeId)
+{
+    $categories = ProductCategory::where('prototype_id', $prototypeId)
+        ->select('id', 'name')
+        ->get();
+
+    return response()->json($categories);
+}
 
     /**
      * Store a newly created resource in storage.
@@ -103,6 +114,7 @@ class ProductController extends Controller
                 'stock' => 'required|integer|min:0',
                 'featuredimage' => 'nullable|image|mimes:jpeg,png,webp,jpg|max:5000',
                 'images.*' => 'nullable|image|mimes:jpeg,webp,png,jpg|max:5000',
+                'prototype' => 'required|string',
                 'category' => 'required|string',
                 'status' => 'nullable|string',
                 'tags' => 'nullable|string',
@@ -128,6 +140,7 @@ class ProductController extends Controller
             $code = 'LL' . str_pad(mt_rand(0, 99999999), 8, '0', STR_PAD_LEFT);
 
             Product::create([
+                'slug' => Str::slug($request->productTitle),
                 'name' => $request->productTitle,
                 'sku' => $request->productSku,
                 'code' => $code,
@@ -141,6 +154,7 @@ class ProductController extends Controller
                 'in_stock' => $request->has('in_stock'),
                 'image_path' => !empty($imagePaths) ? json_encode($imagePaths) : null,
                 'featured_image' => $featuredImagePath,
+                'prototype' => $request->prototype,
                 'category' => $request->category,
                 'status' => $request->status ?? 'Draft',
                 'tags' => $request->tags,
