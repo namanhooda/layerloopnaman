@@ -34,4 +34,9 @@ class Product extends Model
     {
         return $this->belongsToMany(User::class, 'wishlists');
     }
+
+    public function variants()
+    {
+        return $this->hasMany(ProductVariant::class);
+    }
 }

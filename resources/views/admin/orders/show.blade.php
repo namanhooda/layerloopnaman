@@ -38,20 +38,74 @@
                                 <th>Total</th>
                             </tr>
                         </thead>
+                        @php
+    if ($order->itemsData && $order->itemsData->isNotEmpty()) {
+        // From order_items relation
+        $orderItems = $order->itemsData;
+        $isJson = false;
+    } else {
+        // From JSON stored in orders.items
+        $orderItems = collect(is_array($order->items)
+            ? $order->items
+            : json_decode($order->items, true));
+        $isJson = true;
+    }
+@endphp
+
                         <tbody>
-                            @foreach($orderItems as $key => $item)
-                            <tr>
-                                <td>{{ $key + 1 }}</td>
-                                <td class="w-50">{{ $item->product->name ?? 'N/A' }}</td>
-                                <td class="w-25">₹{{ number_format($item->price, 2) }}</td>
-                                <td class="w-25">{{ $item->quantity }}</td>
-                                <td>₹{{ number_format($item->price * $item->quantity, 2) }}</td>
-                            </tr>
-                            @php
-                            $subtotal = $order->items->sum(fn($item) => $item->product->price * $item->quantity);
-                            @endphp
-                            @endforeach
-                        </tbody>
+@foreach($orderItems as $key => $item)
+    <tr>
+        <td>{{ $key + 1 }}</td>
+
+        <td class="w-50">
+            {{ $isJson ? ($item['product_name'] ?? $item['name'] ?? 'N/A') : ($item->product->name ?? 'N/A') }}
+
+        </td>
+
+        <td class="w-25">
+            ₹{{ number_format(
+                $isJson
+                    ? ($item['product_price'] ??  $item['selling_price'] ?? $item['price'] ?? 0)
+                    : ($item->product->price ?? $item->price ?? 0),
+                2
+            ) }}
+        </td>
+
+        <td class="w-25">
+            {{ $isJson ? ($item['product_qty'] ??  $item['quantity'] ?? 1) : $item->quantity }}
+        </td>
+
+        <td>
+            ₹{{ number_format(
+                (
+                    $isJson
+                        ? ($item['product_price'] ??  $item['selling_price'] ?? $item['price'] ?? 0)
+                        : ($item->product->price ?? $item->price ?? 0)
+                ) * (
+                    $isJson
+                        ? ($item['product_qty'] ?? $item['quantity'] ?? 1)
+                        : $item->quantity
+                ),
+                2
+            ) }}
+        </td>
+    </tr>
+@endforeach
+</tbody>
+@php
+    $subtotal = $orderItems->sum(function ($item) use ($isJson) {
+        $price = $isJson
+            ? ($item['product_price'] ?? $item['selling_price'] ?? $item['price'] ?? 0)
+            : ($item->product->price ?? $item->price ?? 0);
+
+        $qty = $isJson
+            ? ($item['product_qty'] ?? $item['quantity'] ?? 1)
+            : $item->quantity;
+
+        return $price * $qty;
+    });
+@endphp
+
                     </table>
 
                     <div class="d-flex justify-content-end align-items-center m-6 mb-2">

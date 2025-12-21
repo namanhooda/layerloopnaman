@@ -19,65 +19,53 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            
-            $product = Product::orderBy('created_at', 'desc')->get();
 
+            $product = Product::query()->orderByDesc('id'); // or created_at
 
             return DataTables::of($product)
                 ->addIndexColumn()
-                ->addColumn('code', function ($product) {
-                    return $product->code ?? 'N/A';
-                })
+                ->addColumn('code', fn ($product) => $product->code ?? 'N/A')
                 ->addColumn('image', function ($product) {
                     $imageUrl = asset('storage/' . $product->featured_image);
-                    return '<img src="' . $imageUrl . '" alt="Product image" class="product-image product-image-manual" style="width: 100%;!important">';
+                    return '<img src="'.$imageUrl.'" class="product-image product-image-manual" style="width:100%">';
                 })
-                ->addColumn('name', function ($product) {
-                    return $product->name ?? 'N/A';
-                })
-                ->editColumn('category', function ($product) {
-                    return $product->category ?? 'N/A';
-                })
-                ->addColumn('stock', function ($product) {
-                    return $product->stock_quantity;
-                })
-                ->addColumn('price', function ($product) {
-                    return $product->price;
-                })
-                ->addColumn('status', function ($product) {
-                    return $product->status;
-                })
+                ->addColumn('name', fn ($product) => $product->name ?? 'N/A')
+                ->editColumn('category', fn ($product) => $product->category ?? 'N/A')
+                ->addColumn('stock', fn ($product) => $product->stock_quantity)
+                ->addColumn('price', fn ($product) => $product->price)
+                ->addColumn('status', fn ($product) => $product->status)
                 ->addColumn('actions', function ($product) {
                     $editUrl = route('admin.products.edit', $product->id);
                     $deleteUrl = route('admin.products.destroy', $product->id);
-                
+                    $variantUrl = route('admin.products.variant', $product->id);
+
                     $actions = '<div class="d-flex align-items-center">';
-                
-                    // Edit button (optional permission check)
+
                     if (auth()->user()->can('users edit')) {
-                        $actions .= '<a class="btn btn-icon me-1" href="' . $editUrl . '" title="Edit">
-                                        <i class="icon-base ti tabler-edit icon-22px"></i>
+                        $actions .= '<a class="btn btn-primary btn-sm" href="'.$variantUrl.'">
+                                        Add Variant
                                     </a>';
                     }
-                
-                    // Delete form/button (optional permission check)
+                    if (auth()->user()->can('users edit')) {
+                        $actions .= '<a class="btn btn-icon me-1" href="'.$editUrl.'">
+                                        <i class="icon-base ti tabler-edit"></i>
+                                    </a>';
+                    }
+
                     if (auth()->user()->can('users delete')) {
-                        $actions .= '<form action="' . $deleteUrl . '" method="POST" onsubmit="return confirm(\'Are you sure?\')" style="display:inline;">
-                                        ' . csrf_field() . method_field('DELETE') . '
-                                        <button class="btn btn-icon btn-sm btn-danger" type="submit" title="Delete">
-                                            <i class="icon-base ti tabler-trash icon-22px"></i>
+                        $actions .= '<form action="'.$deleteUrl.'" method="POST" style="display:inline;">
+                                        '.csrf_field().method_field('DELETE').'
+                                        <button class="btn btn-danger btn-icon btn-sm">
+                                            <i class="icon-base ti tabler-trash"></i>
                                         </button>
                                     </form>';
                     }
-                
-                    $actions .= '</div>';
-                
-                    return $actions;
+
+                    return $actions.'</div>';
                 })
-                ->rawColumns(['image','roles', 'actions'])
+                ->rawColumns(['image', 'actions'])
                 ->make(true);
         }
-
         return view('admin.product.index');
     }
 
@@ -89,14 +77,20 @@ class ProductController extends Controller
         $prototypes = Prototype::get();
         return view('admin.product.create',compact('prototypes'));
     }
+    public function variantCreate($id)
+    {
+        $product = Product::find($id);
+        $prototypes = Prototype::get();
+        return view('admin.product.create',compact('prototypes', 'product'));
+    }
     public function getCategories($prototypeId)
-{
-    $categories = ProductCategory::where('prototype_id', $prototypeId)
-        ->select('id', 'name')
-        ->get();
+    {
+        $categories = ProductCategory::where('prototype_id', $prototypeId)
+            ->select('id', 'name')
+            ->get();
 
-    return response()->json($categories);
-}
+        return response()->json($categories);
+    }
 
     /**
      * Store a newly created resource in storage.

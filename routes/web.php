@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\{RoleController, PermissionController, UserController, ProfileController, ProductController, ProductCategoryController, OrderController, CouponController, PrototypeController, InvoiceController};
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\{CartController, CheckoutController, FrontendController, AddressController, WishlistController};
+use App\Http\Controllers\{CartController,ShipmentsController, CheckoutController, FrontendController, AddressController, WishlistController};
 use Laravel\Fortify\Features;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
@@ -16,23 +16,25 @@ use Spatie\Sitemap\Tags\Url;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\CustomAuthenticatedSessionController;
 
-Route::get('/get-categories/{prototype}', [ProductController::class, 'getCategories'])
-    ->name('get.categories');
+
+Route::get('/admin/orders/{id}/create-shipment', [OrderController::class, 'createShipment'])->name('orders.createShipment');
+
+
+Route::get('/admin/orders/shipments/nimbuspost', [ShipmentsController::class, 'fetchShipmentsNimbus'])->name('orders.nimbusShipment');
+Route::get('/admin/orders/shipments/shiprocket', [ShipmentsController::class, 'fetchShipmentsShiorocket'])->name('orders.ShiprocketShipment');
+
+
+
+
+Route::get('/get-categories/{prototype}', [ProductController::class, 'getCategories'])->name('get.categories');
 
 Route::middleware(['web'])->group(function () {
     // Login page - only show if not logged in
-    Route::get('/login', [CustomAuthenticatedSessionController::class, 'create'])
-        ->middleware('guest')
-        ->name('login');
-
+    Route::get('/login', [CustomAuthenticatedSessionController::class, 'create'])->middleware('guest')->name('login');
     // Handle login submission
     Route::post('/login', [CustomAuthenticatedSessionController::class, 'store']);
-
     // Logout route
-    Route::post('/logout', [CustomAuthenticatedSessionController::class, 'destroy'])
-        ->middleware('auth')
-        ->name('logout');
-
+    Route::post('/logout', [CustomAuthenticatedSessionController::class, 'destroy'])->middleware('auth')->name('logout');
 });
 Route::middleware(['web', 'auth'])->group(function () {
     Route::post('/logout', [CustomAuthenticatedSessionController::class, 'destroy'])->name('logout');
@@ -46,7 +48,6 @@ Route::get('/sitemap.xml', function (Request $request) {
         ->add(Url::create('/faq'))
         ->add(Url::create('/blogs'))
         ->add(Url::create('/shop'));
-
     return $sitemap->toResponse($request); // <- Only works if Spatie version supports it
 });
 
@@ -62,7 +63,6 @@ Route::get('auth/google', function () {
 
 Route::get('auth/google/callback', function () {
     $googleUser = Socialite::driver('google')->stateless()->user();
-
     $user = User::updateOrCreate(
         ['email' => $googleUser->getEmail()],
         [
@@ -144,13 +144,14 @@ Route::middleware(['role:Admin'])->group(function () {
             Route::resource('blogs', App\Http\Controllers\Admin\BlogController::class);
             Route::resource('product-prototypes', PrototypeController::class) ->parameters(['product-prototypes' => 'prototype']);
             Route::resource('product-categories', ProductCategoryController::class);
-            Route::resource('news', ProductController::class);
             Route::resource('pages', PageController::class);
             Route::resource('products', ProductController::class);
             Route::resource('invoices', InvoiceController::class);
             Route::resource('coupons', CouponController::class);
             Route::resource('newsletters', NewsLetterController::class);
             Route::resource('banner', App\Http\Controllers\Admin\BannerController::class);
+
+            Route::get('variant/{id}', [App\Http\Controllers\Admin\ProductController::class, 'variantCreate'])->name('products.variant');
 
             Route::get('setting', [App\Http\Controllers\SettingController::class, 'index'])->name('setting.index');
             Route::post('setting-update', [App\Http\Controllers\SettingController::class, 'update'])->name('setting-update');

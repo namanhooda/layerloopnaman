@@ -65,22 +65,6 @@
                                 <input type="text" class="form-control" name="productTitle" placeholder="Product title"
                                     required />
                             </div>
-                            <div class="mb-6">
-                                <label class="form-label">ProtoType</label>
-                                <select name="prototype" id="prototype" class="form-select select2" required>
-                                    <option value="">Select Proto Type</option>
-                                    @foreach($prototypes as $type)
-                                    <option value="{{ $type->id }}">{{ $type->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div class="mb-6">
-                                <label class="form-label">Category</label>
-                                <select name="category" id="category" class="form-select select2" required>
-                                    <option value="">Select Category</option>
-                                </select>
-                            </div>
 
                             <div>
                                 <label class="mb-1">Description (Optional)</label>
@@ -113,6 +97,10 @@
                         <div class="card-body">
                             <input type="file" name="featuredimage" class="form-control" multiple>
                         </div>
+                    </div>
+
+                    <!-- Media -->
+                    <div class="card mb-6">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h5 class="mb-0 card-title">Product Images</h5>
                             <a href="javascript:void(0);" class="fw-medium">Add media from URL</a>
@@ -122,7 +110,7 @@
                         </div>
                     </div>
 
-                    <div class="card mb-6 d-none" id="variantCard">
+                    <div class="card mb-6">
                         <div class="card-header">
                             <h5 class="card-title mb-0">Variants</h5>
                         </div>
@@ -193,7 +181,17 @@
                         </div>
                     </div>
 
-                    
+                    <!-- Inventory -->
+                    <!-- <div class="card mb-6">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Inventory</h5>
+                        </div>
+                        <div class="card-body">
+                            <label class="form-label">Add to Stock</label>
+                            <input type="number" name="stock" class="form-control mb-4" placeholder="Quantity"
+                                required />
+                        </div>
+                    </div> -->
                 </div>
 
                 <!-- Right column -->
@@ -206,13 +204,17 @@
                         <div class="card-body">
                             <div class="mb-6">
                             <label class="form-label">Add to Stock</label>
-                            <input type="number" name="stock" value="{{$product->stock_quantity ?? ''}}" class="form-control mb-4" placeholder="Quantity" value="10"
+                            <input type="number" name="stock" class="form-control mb-4" placeholder="Quantity" value="10"
                                 required />
                             </div>
                             <div class="mb-6">
-                                <label class="form-label">Price</label>
-                                <input type="number" name="discount_price" value="{{$product->discounted_price ?? ''}}" class="form-control"
-                                    placeholder="Price" />
+                                <label class="form-label">Base Price</label>
+                                <input type="number" name="price" class="form-control" placeholder="Price" required />
+                            </div>
+                            <div class="mb-6">
+                                <label class="form-label">Discounted Price</label>
+                                <input type="number" name="discount_price" class="form-control"
+                                    placeholder="Discounted Price" />
                             </div>
                             <div class="form-check ms-2 mt-2 mb-4">
                                 <input class="form-check-input" type="checkbox" name="charge_tax" id="price-charge-tax"
@@ -228,11 +230,30 @@
                         </div>
                     </div>
 
+                    <!-- Organize -->
                     <div class="card mb-6">
                         <div class="card-header">
-                            <h5 class="card-title mb-0">Other Settings</h5>
+                            <h5 class="card-title mb-0">Organize</h5>
                         </div>
                         <div class="card-body">
+                            <div class="mb-6">
+                                <label class="form-label">ProtoType</label>
+                                <select name="prototype" id="prototype" class="form-select select2" required>
+                                    <option value="">Select Proto Type</option>
+                                    @foreach($prototypes as $type)
+                                    <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="mb-6">
+                                <label class="form-label">Category</label>
+                                <select name="category" id="category" class="form-select select2" required>
+                                    <option value="">Select Category</option>
+                                </select>
+                            </div>
+
+
                             <div class="mb-6">
                                 <label class="form-label">Status</label>
                                 <select name="status" class="form-select select2">
@@ -241,6 +262,14 @@
                                     <option value="Inactive">Inactive</option>
                                 </select>
                             </div>
+
+                        </div>
+                    </div>
+                    <div class="card mb-6">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Other Settings</h5>
+                        </div>
+                        <div class="card-body">
                             <div class="mb-6">
 
                                 <div class="d-flex justify-content-between align-items-center border-top pt-2">

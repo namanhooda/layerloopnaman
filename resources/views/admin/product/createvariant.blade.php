@@ -39,7 +39,7 @@
             <div
                 class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-6 row-gap-4">
                 <div class="d-flex flex-column justify-content-center">
-                    <h4 class="mb-1">Add a new Product</h4>
+                    <h4 class="mb-1">Add Variant of Product - {{$product->name}}</h4>
                     <p class="mb-0">Orders placed across your store</p>
                 </div>
                 <div class="d-flex align-content-center flex-wrap gap-4">
@@ -65,6 +65,7 @@
                                 <input type="text" class="form-control" name="productTitle" placeholder="Product title"
                                     required />
                             </div>
+
                             <div class="mb-6">
                                 <label class="form-label">ProtoType</label>
                                 <select name="prototype" id="prototype" class="form-select select2" required>
@@ -122,12 +123,15 @@
                         </div>
                     </div>
 
+                    <!-- Media -->
+                    <div class="card mb-6">
+                    </div>
+
                     <div class="card mb-6 d-none" id="variantCard">
                         <div class="card-header">
                             <h5 class="card-title mb-0">Variants</h5>
                         </div>
                         <div class="card-body">
-                            <form class="form-repeater">
                                 <div data-repeater-list="group-a">
                                     <div data-repeater-item>
                                         <div class="row g-sm-6 mb-6">
@@ -161,39 +165,11 @@
                                             </div>
 
                                         </div>
-                                        <div class="row g-sm-6 mb-6">
-                                            <div class="col-sm-4">
-                                                <label class="form-label" for="form-repeater-1-1">Options</label>
-                                                <select id="form-repeater-1-1" class="select2 form-select"
-                                                    data-placeholder="Size">
-                                                    <option value="">Size</option>
-                                                    <option value="size">Size</option>
-                                                    <option value="color">Color</option>
-                                                    <option value="weight">Weight</option>
-                                                    <option value="smell">Smell</option>
-                                                </select>
-                                            </div>
-
-                                            <div class="col-sm-8">
-                                                <label class="form-label invisible" for="form-repeater-1-2">Not
-                                                    visible</label>
-                                                <input type="number" id="form-repeater-1-2" class="form-control"
-                                                    placeholder="Enter size" />
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
-                                <div>
-                                    <button class="btn btn-primary" data-repeater-create>
-                                        <i class="icon-base ti tabler-plus icon-xs me-2"></i>
-                                        Add another option
-                                    </button>
-                                </div>
-                            </form>
                         </div>
                     </div>
 
-                    
                 </div>
 
                 <!-- Right column -->
@@ -206,13 +182,17 @@
                         <div class="card-body">
                             <div class="mb-6">
                             <label class="form-label">Add to Stock</label>
-                            <input type="number" name="stock" value="{{$product->stock_quantity ?? ''}}" class="form-control mb-4" placeholder="Quantity" value="10"
+                            <input type="number" name="stock" value="{{$product->stock_quantity}}" class="form-control mb-4" placeholder="Quantity"
                                 required />
                             </div>
                             <div class="mb-6">
-                                <label class="form-label">Price</label>
-                                <input type="number" name="discount_price" value="{{$product->discounted_price ?? ''}}" class="form-control"
-                                    placeholder="Price" />
+                                <label class="form-label">Base Price</label>
+                                <input type="number" name="price" value="{{$product->price}}" class="form-control" placeholder="Price" required />
+                            </div>
+                            <div class="mb-6">
+                                <label class="form-label">Discounted Price</label>
+                                <input type="number" name="discount_price" value="{{$product->discounted_price}}" class="form-control"
+                                    placeholder="Discounted Price" />
                             </div>
                             <div class="form-check ms-2 mt-2 mb-4">
                                 <input class="form-check-input" type="checkbox" name="charge_tax" id="price-charge-tax"
@@ -260,11 +240,6 @@
                             </div>
 
 
-                            <!-- <div>
-                                <label class="form-label">Tags</label>
-                                <input name="tags" id="ecommerce-product-tags" class="form-control"
-                                    value="Normal,Standard,Premium" />
-                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -301,7 +276,6 @@
     new Tagify(document.querySelector('#ecommerce-product-tags'));
 
 </script>
-
 <script>
  $(document).ready(function () {
 

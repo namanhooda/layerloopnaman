@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Services\ShiprocketService;
 use Yajra\DataTables\Facades\DataTables;
 use App\Models\Order;
 use App\Models\User;
@@ -32,7 +33,17 @@ class OrderController extends Controller
                     return $order->total ?? 'N/A';
                 })
                 ->editColumn('status', function ($order) {
-                    return $order->status ?? 'N/A';
+
+                    $status = trim($order->status ?? 'N/A');
+                    $normalized = strtoupper($status); // normalize casing
+
+                    $badgeClass = match (true) {
+                        in_array($normalized, ['CANCELLED', 'CANCELED']) => 'badge bg-danger',
+                        $normalized === 'DELIVERED'                       => 'badge bg-success',
+                        default                                           => 'badge bg-primary',
+                    };
+
+                    return '<span class="badge rounded-pill ' . $badgeClass . '">' . e($status) . '</span>';
                 })
                 ->editColumn('payment_mod', function ($order) {
                     return $order->payment_mod ?? 'N/A';
@@ -55,9 +66,16 @@ class OrderController extends Controller
                 
                     return $actions;
                 })
-                ->rawColumns(['roles', 'actions','order_code','payment_mod'])
+                ->rawColumns(['roles', 'actions','order_code','payment_mod','status'])
                 ->make(true);
         }
+        $totalOrders = Order::query();
+
+        $orderscount = [
+            'delivered' => (clone $totalOrders)->where('status', 'Delivered')->count(),
+            'cancelled' => (clone $totalOrders)->where('status', 'CANCELED')->count(),
+        ];
+
 
         return view('admin.orders.index');
     }
@@ -69,4 +87,89 @@ class OrderController extends Controller
         $address = Address::find($order->address_id); 
         return view('admin.orders.show', compact('order','orderItems','user','address'));
     }
+
+
+
+    public function createShipment(Order $order, $id)
+    {
+
+        $order = Order::find($id);
+
+        // if ($order->shiprocket_order_id) {
+        //     return response()->json([
+        //         'message' => 'Shipment already created'
+        //     ], 422);
+        // }
+
+
+        $page = 1;
+
+        $response = \App\Services\NimbusPostService::fetchNimbusOrders([
+            'page'      => 1,
+            'per_page'  => 50,
+            'from_date' => '2024-01-01',
+            'to_date'   => '2024-12-31',
+        ]);
+        dd($response);
+        // $result = ShiprocketService::fetchAndStoreOrders();
+
+        // Optional: allow only paid orders
+        // if ($order->payment_status !== 'paid') {
+        //     return response()->json([
+        //         'message' => 'Order payment not completed'
+        //     ], 422);
+        // }
+
+        $orderPayload = [
+            "customer_name"    => "John Doe",
+            "customer_email"   => "john@example.com",
+            "customer_phone"   => "9999999999",
+            "customer_address" => "123 Main Street",
+            "customer_city"    => "Delhi",
+            "customer_state"   => "Delhi",
+            "customer_country" => "IN",
+            "customer_zip"     => "110001",
+            "items" => [
+                [
+                    "name"     => "Product 1",
+                    "quantity" => 1,
+                    "price"    => 500
+                ]
+            ],
+            "payment_method" => "prepaid", // or cod
+            "courier" => "DHL"
+        ];
+
+        $response = \App\Services\NimbusPostService::createOrder($orderPayload);
+
+        dd($response);
+
+
+
+        $result = \App\Services\NimbusPostService::createOrder($order);
+
+
+
+        dd('nmn');
+
+        $response = ShiprocketService::createOrder($order);
+
+        if (!empty($response['order_id'])) {
+
+            $order->update([
+                'shiprocket_order_id'    => $response['order_id'],
+                'shiprocket_shipment_id' => $response['shipment_id'],
+                'status' => 'Shipped',
+            ]);
+
+            return response()->json([
+                'message' => 'Shipment created successfully'
+            ]);
+        }
+
+        return response()->json([
+            'message' => $response['message'] ?? 'Shiprocket error'
+        ], 500);
+    }
+
 }

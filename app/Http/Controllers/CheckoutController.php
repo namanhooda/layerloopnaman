@@ -170,7 +170,7 @@ class CheckoutController extends Controller
     }
  public function success($order_code)
 {
-    $order = Order::with(['items.product', 'user', 'address'])
+    $order = Order::with(['itemsData.product', 'user', 'address'])
         ->where('order_code', $order_code)
         ->first();
 

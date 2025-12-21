@@ -11,7 +11,7 @@
     <ul class="menu-inner py-1">
         <!-- Dashboards -->
         <li class="menu-item {{ request()->is('admin/dashboard') ? 'active open' : '' }}">
-            <a href="" class="menu-link">
+            <a href="{{route('dashboard')}}" class="menu-link">
                 <i class="menu-icon icon-base ti tabler-smart-home"></i>
                 <div data-i18n="Dashboards">Dashboards</div>
             </a>
@@ -23,13 +23,6 @@
                 <i class="menu-icon icon-base ti tabler-shopping-cart"></i>
                 <div data-i18n="eCommerce">eCommerce</div>
             </a>
-            <ul class="menu-sub">
-
-                <!-- Products -->
-                <li class="menu-item {{ request()->routeIs('admin.products.*') || request()->routeIs('admin.product-categories.*') || request()->routeIs('admin.coupons.*') ? 'active open' : '' }}">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle">
-                        <div data-i18n="Products">Products</div>
-                    </a>
                     <ul class="menu-sub">
                         <li class="menu-item {{ request()->routeIs('admin.products.index') ? 'active' : '' }}">
                             <a href="{{ route('admin.products.index') }}" class="menu-link">
@@ -57,23 +50,13 @@
                             </a>
                         </li>
                     </ul>
-                </li>
-
-                <!-- Orders -->
-                <li class="menu-item {{ request()->routeIs('admin.orders.*') ? 'active open' : '' }}">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle">
-                        <div data-i18n="Order">Order</div>
-                    </a>
-                    <ul class="menu-sub">
-                        <li class="menu-item {{ request()->routeIs('admin.orders.index') ? 'active' : '' }}">
-                            <a href="{{ route('admin.orders.index') }}" class="menu-link">
-                                <div data-i18n="Order List">Order List</div>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-            </ul>
+        </li>
+        <!-- Profile -->
+        <li class="menu-item  {{ request()->routeIs('admin.orders.index') ? 'active' : '' }}">
+            <a href="{{ route('admin.orders.index') }}" class="menu-link">
+                <i class="menu-icon icon-base ti tabler-user"></i>
+                <div data-i18n="Order List">Order List</div>
+            </a>
         </li>
 
         <!-- Users -->
@@ -169,6 +152,20 @@
                 <i class="menu-icon icon-base ti tabler-settings"></i>
 
                 <div data-i18n="Setting">Setting</div>
+            </a>
+        </li>
+        <li class="menu-item {{ request()->routeIs('profile.index') ? 'active' : '' }}">
+            <a href="{{ route('orders.nimbusShipment') }}" class="menu-link">
+                <i class="menu-icon icon-base ti tabler-settings"></i>
+
+                <div data-i18n="Fetch Nimbus Shipments">Fetch Nimbus Shipments</div>
+            </a>
+        </li>
+        <li class="menu-item {{ request()->routeIs('profile.index') ? 'active' : '' }}">
+            <a href="{{ route('orders.ShiprocketShipment') }}" class="menu-link">
+                <i class="menu-icon icon-base ti tabler-settings"></i>
+
+                <div data-i18n="Fetch Shiprocket Shipments">Fetch Shiprocket Shipments</div>
             </a>
         </li>
         <li class="menu-item {{ request()->routeIs('profile.index') ? 'active' : '' }}">

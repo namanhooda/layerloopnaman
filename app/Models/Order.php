@@ -9,11 +9,36 @@ class Order extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'order_code',
+        'shipment_id',
+        'shipment_from',
+        'shiprocket_order_id',
         'user_id',
         'address_id',
+        'total_quantity',
+        'sub_total',
         'total',
+        'payment_mod',
+        'shipping_type',
+        'shipping_charges',
+        'coupon_applied',
+        'coupon_code',
+        'coupon_discount',
+        'order_notes',
         'status',
+        'cancel_reason',
+        'cancel_note',
+        'razorpay_order_id',
+        'payment_id',
+        'payment_status',
+        'items',
+        'raw_response',
+        'raw_response',
+        'order_from',
+        'created_at',
+        'updated_at',
     ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -30,7 +55,7 @@ class Order extends Model
     }
 
     // Each order has many order items
-    public function items()
+    public function itemsData()
     {
         return $this->hasMany(OrderItem::class, 'order_id');
     }

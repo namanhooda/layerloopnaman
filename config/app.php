@@ -168,9 +168,19 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        App\Providers\FortifyServiceProvider::class,
         App\Providers\JetstreamServiceProvider::class,
-    ])->toArray(),
+        
+        /*
+        * Package Service Providers
+        */
+        Laravel\Fortify\FortifyServiceProvider::class,
+
+        /*
+        * Application Service Providers
+        */
+        App\Providers\AppServiceProvider::class,
+        App\Providers\FortifyServiceProvider::class,
+        ])->toArray(),
 
     /*
     |--------------------------------------------------------------------------

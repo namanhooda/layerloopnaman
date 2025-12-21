@@ -2,21 +2,24 @@
 
 namespace App\Providers;
 
-use Laravel\Fortify\Fortify;
+use App\Actions\Fortify\CreateNewUser;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Fortify\Contracts\CreatesNewUsers;
+use Laravel\Fortify\Fortify;
 
 class FortifyServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        //
+        // ✅ THIS IS WHAT FIXES YOUR ERROR
+        $this->app->singleton(
+            CreatesNewUsers::class,
+            CreateNewUser::class
+        );
     }
 
     public function boot(): void
     {
-        // Disable Fortify default login routes
-
-        // Specify your custom login view
         Fortify::loginView(fn () => view('auth.login'));
     }
 }

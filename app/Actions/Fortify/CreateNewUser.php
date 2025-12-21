@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Role;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
+use Illuminate\Validation\ValidationException;
+
+
 
 class CreateNewUser implements CreatesNewUsers
 {
@@ -22,48 +25,66 @@ class CreateNewUser implements CreatesNewUsers
      */
     public function create(array $input): User
     {
+        // ✅ Require at least one: email OR phone
+        if (empty($input['email']) && empty($input['phone'])) {
+            throw ValidationException::withMessages([
+                'email' => 'Email or mobile number is required.',
+                'phone' => 'Email or mobile number is required.',
+            ]);
+        }
+
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
+
+            // Email is optional but must be valid & unique if present
             'email' => [
-                'required',
-                'string',
+                'nullable',
                 'email',
                 'max:255',
-                Rule::unique(User::class),
+                Rule::unique(User::class, 'email'),
             ],
-            'password' => $this->passwordRules(),
+
+            // Phone is optional but must be valid & unique if present
+            'phone' => [
+                'nullable',
+                'digits_between:8,15',
+                Rule::unique(User::class, 'phone'),
+            ],
+
+            // ✅ Only one password field (NO confirmation)
+            'password' => ['required', 'string', 'min:8'],
         ])->validate();
 
         $user = User::create([
-            'name' => $input['name'],
-            'email' => $input['email'],
-            'phone' => $input['phone'],
+            'name'     => $input['name'],
+            'email'    => $input['email'] ?? null,
+            'phone'    => $input['phone'] ?? null,
             'password' => Hash::make($input['password']),
         ]);
 
-        // ✅ Assign default role ID 3 (safely)
-        $defaultRole = Role::find(2);
-        if ($defaultRole) {
-            $user->assignRole($defaultRole);
+        // ✅ Assign default role
+        if ($role = Role::find(2)) {
+            $user->assignRole($role);
         }
 
-        // Create wallet
-        $wallet = Wallet::create([
-            'user_id' => $user->id,
-            'amount' => 20,
-            'type' => 'credit',
-            'source' => 'new user discount',
+        // ✅ Create wallet
+        Wallet::create([
+            'user_id'     => $user->id,
+            'amount'      => 20,
+            'type'        => 'credit',
+            'source'      => 'new user discount',
             'description' => 'Wallet created with new user discount',
         ]);
 
-        // Create wallet transaction
+        // ✅ Create wallet transaction
         WalletTransaction::create([
-            'user_id' => $user->id,
-            'amount' => 20,
-            'type' => 'credit',
-            'source' => 'new user discount',
+            'user_id'     => $user->id,
+            'amount'      => 20,
+            'type'        => 'credit',
+            'source'      => 'new user discount',
             'description' => 'Initial credit from new user discount',
         ]);
+
         return $user;
     }
 }
