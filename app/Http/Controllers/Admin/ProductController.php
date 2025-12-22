@@ -132,6 +132,7 @@ class ProductController extends Controller
                 $size = json_encode($request->sizes); // convert array to JSON string
             }
             $code = 'LL' . str_pad(mt_rand(0, 99999999), 8, '0', STR_PAD_LEFT);
+            $discountedPrice = $request->discount_price;
 
             Product::create([
                 'slug' => Str::slug($request->productTitle),

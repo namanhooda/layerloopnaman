@@ -222,7 +222,7 @@
                             <div class="d-flex justify-content-between align-items-center border-top pt-2">
                                 <span class="mb-0">In stock</span>
                                 <div class="form-check form-switch">
-                                    <input type="checkbox" name="in_stock" class="form-check-input" checked />
+                                    <input type="checkbox" name="in_stock" value="10" class="form-check-input" checked />
                                 </div>
                             </div>
                         </div>
