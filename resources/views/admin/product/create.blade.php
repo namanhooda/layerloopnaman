@@ -206,7 +206,7 @@
                         <div class="card-body">
                             <div class="mb-6">
                             <label class="form-label">Add to Stock</label>
-                            <input type="number" name="stock" value="{{$product->stock_quantity ?? ''}}" class="form-control mb-4" placeholder="Quantity" value="10"
+                            <input type="number" name="stock" value="10" value="{{$product->stock_quantity ?? ''}}" class="form-control mb-4" placeholder="Quantity" value="10"
                                 required />
                             </div>
                             <div class="mb-6">
@@ -222,7 +222,7 @@
                             <div class="d-flex justify-content-between align-items-center border-top pt-2">
                                 <span class="mb-0">In stock</span>
                                 <div class="form-check form-switch">
-                                    <input type="checkbox" name="in_stock" value="10" class="form-check-input" checked />
+                                    <input type="checkbox" name="in_stock" class="form-check-input" checked />
                                 </div>
                             </div>
                         </div>
