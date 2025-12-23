@@ -92,7 +92,7 @@ class FrontendController extends Controller
         }
 
         $productsCount = $products->count();
-        $products = $products->get();
+        $products = $products->latest()->get();
 
         return view('frontend.shop', compact('products', 'query', 'filter', 'productsCount'));
     }
