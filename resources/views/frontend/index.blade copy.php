@@ -62,7 +62,7 @@
                     @foreach($featured as $products)
                     <div class="product product-11 text-center product-manual">
                         <figure class="product-media">
-                            <a href="product.html">
+                            <a href="#">
                                     <img src="{{ asset('storage/' . $products->featured_image) }}" alt="Product image" class="product-image product-image-manual">
                                 <!-- <img src="{{asset('frontend/assets/images/demos/demo-2/products/product-1-2.jpg')}}"
                                     alt="Product image" class="product-image-hover"> -->
@@ -74,7 +74,7 @@
                         </figure><!-- End .product-media -->
 
                         <div class="product-body">
-                            <h3 class="product-title"><a href="product.html">Butler Stool Ladder</a></h3>
+                            <h3 class="product-title"><a href="#">Butler Stool Ladder</a></h3>
                             <!-- End .product-title -->
                             <div class="product-price">
                                 $251,00
@@ -121,7 +121,7 @@
                     @foreach($sale as $products)
                     <div class="product product-11 text-center product-manual">
                         <figure class="product-media">
-                            <a href="product.html">
+                            <a href="#">
                                 
                             <img src="{{ asset('storage/' . $products->featured_image) }}" alt="Product image" class="product-image product-image-manual">
                                 <!-- <img src="{{asset('frontend/assets/images/demos/demo-2/products/product-5-2.jpg')}}"
@@ -135,7 +135,7 @@
                         </figure><!-- End .product-media -->
 
                         <div class="product-body">
-                            <h3 class="product-title"><a href="product.html">Petite Table Lamp</a></h3>
+                            <h3 class="product-title"><a href="#">Petite Table Lamp</a></h3>
                             <!-- End .product-title -->
                             <div class="product-price">
                                 $675,00
@@ -188,7 +188,7 @@
                     @foreach($rated as $products)
                     <div class="product product-11 text-center product-manual">
                         <figure class="product-media">
-                            <a href="product.html">
+                            <a href="#">
                             <img src="{{ asset('storage/' . $products->featured_image) }}" alt="Product image" class="product-image product-image-manual">
                                 <!-- <img src="{{asset('frontend/assets/images/demos/demo-2/products/product-2-2.jpg')}}"
                                     alt="Product image" class="product-image-hover"> -->
@@ -200,7 +200,7 @@
                         </figure><!-- End .product-media -->
 
                         <div class="product-body">
-                            <h3 class="product-title"><a href="product.html">Octo 4240</a></h3>
+                            <h3 class="product-title"><a href="#">Octo 4240</a></h3>
                             <!-- End .product-title -->
                             <div class="product-price">
                                 $746,00
