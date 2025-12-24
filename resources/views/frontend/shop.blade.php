@@ -113,7 +113,7 @@
 
                             <div class="product-body">
                                 <div class="product-cat">
-                                    <a href="#" class="prodcatlink">{{$product->category}}</a>
+                                    <a href="#" class="prodcatlink">{{$product->categoryData->name ?? ''}}</a>
                                 </div><!-- End .product-cat -->
                                 <h3 class="product-title"><a
                                         href="{{ url('shop-product-detail/' . $product->slug) }}">{{$product->name}}</a>

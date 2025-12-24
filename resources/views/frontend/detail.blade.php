@@ -194,7 +194,7 @@
                             <div class="product-details-footer">
                                 <div class="product-cat">
                                     <span>Category:</span>
-                                    <a href="#" class="prodcatlink">{{$product->category}}</a>
+                                    <a href="#" class="prodcatlink">{{$product->categoryData->name ?? ''}}</a>
                                 </div>
 
                                 <div class="social-icons social-icons-sm">

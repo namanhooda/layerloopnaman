@@ -141,7 +141,7 @@ class ProductController extends Controller
                 'code' => $code,
                 'barcode' => $request->productBarcode,
                 'description' => $request->description,
-                'price' => $mrp = $discountedPrice + ($discountedPrice * 0.20),
+                'price' => $request->discount_price,
                 'discounted_price' => $request->discount_price,
                 'size' => $size,
                 'stock_quantity' => $request->stock,
