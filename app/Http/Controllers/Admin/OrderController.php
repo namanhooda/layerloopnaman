@@ -40,7 +40,7 @@ public function index(Request $request)
             })
 
             ->addColumn('total', fn ($order) => $order->total ?? 'N/A')
-            ->addColumn('shipment_from', fn ($order) => $order->shipment_from ?? 'N/A')
+            ->addColumn('shipment_from', fn ($order) => $order->shipment_from ?? 'Website')
 
             ->editColumn('status', function ($order) {
                 $status = strtoupper(trim($order->status ?? ''));
