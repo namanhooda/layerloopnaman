@@ -23,8 +23,8 @@
                         <div
                             class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-4 pb-sm-0">
                             <div>
-                                <h4 class="mb-0">56</h4>
-                                <p class="mb-0">Pending Payment</p>
+                                <h4 class="mb-0">{{ $orderscount['pending']}}</h4>
+                                <p class="mb-0">Pending </p>
                             </div>
                             <span class="avatar me-sm-6">
                                 <span class="avatar-initial bg-label-secondary rounded text-heading">
@@ -38,8 +38,8 @@
                         <div
                             class="d-flex justify-content-between align-items-start card-widget-2 border-end pb-4 pb-sm-0">
                             <div>
-                                <h4 class="mb-0">12,689</h4>
-                                <p class="mb-0">Completed</p>
+                                <h4 class="mb-0">{{ $orderscount['delivered']}}</h4>
+                                <p class="mb-0">Delivered</p>
                             </div>
                             <span class="avatar p-2 me-lg-6">
                                 <span class="avatar-initial bg-label-secondary rounded"><i
@@ -52,8 +52,8 @@
                         <div
                             class="d-flex justify-content-between align-items-start border-end pb-4 pb-sm-0 card-widget-3">
                             <div>
-                                <h4 class="mb-0">124</h4>
-                                <p class="mb-0">Refunded</p>
+                                <h4 class="mb-0">{{ $orderscount['cancelled']}}</h4>
+                                <p class="mb-0">Cancelled</p>
                             </div>
                             <span class="avatar p-2 me-sm-6">
                                 <span class="avatar-initial bg-label-secondary rounded"><i
@@ -64,7 +64,7 @@
                     <div class="col-sm-6 col-lg-3">
                         <div class="d-flex justify-content-between align-items-start">
                             <div>
-                                <h4 class="mb-0">32</h4>
+                                <h4 class="mb-0">0</h4>
                                 <p class="mb-0">Failed</p>
                             </div>
                             <span class="avatar p-2">
@@ -90,12 +90,14 @@
                     <tr>
                         <th>#</th>
                         <th>Order Code</th>
-                        <th>Email</th>
                         <th>Mobile</th>
+                        <th>Email</th>
                         <th>Total</th>
                         <th>Status</th>
                         <th>Payment Mode</th>
-                        <th>Actions</th>
+                        <th>Shipment From</th>
+                        <th>Order Date</th>
+                        <!-- <th>Actions</th> -->
                     </tr>
                 </thead>
                 </thead>
@@ -175,11 +177,20 @@
                     name: 'payment_mod'
                 },
                 {
-                    data: 'actions',
-                    name: 'actions',
-                    orderable: false,
-                    searchable: false
+                    data: 'shipment_from',
+                    name: 'shipment_from'
+                },
+                {
+                    data: 'order_date',
+                    name: 'order_date'
                 }
+                // ,
+                // {
+                //     data: 'actions',
+                //     name: 'actions',
+                //     orderable: false,
+                //     searchable: false
+                // }
             ],
         });
     });

@@ -29,7 +29,6 @@ class ShipmentsController extends Controller
     }
     public function fetchShipmentsShiorocket(Order $order)
     {
-        
         $result = ShiprocketService::fetchAndStoreOrders();
 
             return redirect()->back()->with('success', 'Shipments fetch successfully!');

@@ -34,6 +34,7 @@
                     <div class="w-100">
                         <div class="row gy-3">
                             <div class="col-md-3 col-6">
+                                <a href="{{url('admin/orders')}}">
                                 <div class="d-flex align-items-center">
                                     <div class="badge rounded bg-label-primary me-4 p-2">
                                         <i class="icon-base ti tabler-chart-pie-2 icon-lg"></i>
@@ -43,8 +44,10 @@
                                         <small>Orders</small>
                                     </div>
                                 </div>
+                                </a>
                             </div>
                             <div class="col-md-3 col-6">
+                                <a href="{{url('admin/users')}}">
                                 <div class="d-flex align-items-center">
                                     <div class="badge rounded bg-label-info me-4 p-2">
                                         <i class="icon-base ti tabler-users icon-lg"></i>
@@ -54,8 +57,10 @@
                                         <small>Customers</small>
                                     </div>
                                 </div>
+                                </a>
                             </div>
                             <div class="col-md-3 col-6">
+                                <a href="{{url('admin/products')}}">
                                 <div class="d-flex align-items-center">
                                     <div class="badge rounded bg-label-danger me-4 p-2">
                                         <i class="icon-base ti tabler-shopping-cart icon-lg"></i>
@@ -65,6 +70,7 @@
                                         <small>Products</small>
                                     </div>
                                 </div>
+                                </a>
                             </div>
                             <div class="col-md-3 col-6">
                                 <div class="d-flex align-items-center">
@@ -100,14 +106,21 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($report as $row)
+                                @foreach($report as $row)
+                                    @php
+                                        $date = \Carbon\Carbon::createFromFormat(
+                                            'Ymd',
+                                            $row->getDimensionValues()[0]->getValue()
+                                        )->format('d F Y');
+                                    @endphp
                                     <tr>
-                                        <td>{{ $row->getDimensionValues()[0]->getValue() }}</td>
+                                        <td>{{ $date }}</td>
                                         <td>{{ $row->getMetricValues()[0]->getValue() }}</td>
                                         <td>{{ $row->getMetricValues()[1]->getValue() }}</td>
                                     </tr>
-                                    @endforeach
+                                @endforeach
                                 </tbody>
+
                             </table>
 
                         </div>

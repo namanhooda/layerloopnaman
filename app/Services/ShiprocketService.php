@@ -135,11 +135,41 @@ public static function fetchAndStoreOrders()
 
 private static function storeOrder(array $shipOrder)
 {
+
     $code = 'LLORD' . str_pad(mt_rand(0, 999999), 6, '0', STR_PAD_LEFT);
 
     $createdAt = !empty($shipOrder['created_at'])
         ? Carbon::createFromFormat('d M Y, h:i A', $shipOrder['created_at'])
         : now();
+
+    $order = Order::where('shipment_order_id', $shipOrder['channel_order_id'])->first();
+
+    $orderCode = $order?->order_code ?? $code;
+
+    $phone = null;
+
+    if (!empty($shipOrder['shipping_phone']) && $shipOrder['shipping_phone'] !== 'xxxxxxxxxx') {
+        $phone = $shipOrder['shipping_phone'];
+    } elseif (!empty($shipOrder['customer_phone']) && $shipOrder['customer_phone'] !== 'xxxxxxxxxx') {
+        $phone = $shipOrder['customer_phone'];
+    }
+
+    $email = !empty($shipOrder['customer_email']) ? $shipOrder['customer_email'] : null;
+
+    $user = null;
+
+    if ($phone || $email) {
+        $user = \App\Models\User::firstOrCreate(
+            [
+                'phone' => $phone,
+            ],
+            [
+                'name'     => $shipOrder['customer_name'] ?? 'Guest User',
+                'email'    => $email,
+                'password' => bcrypt(\Illuminate\Support\Str::random(12)),
+            ]
+        );
+    }
 
     // ✅ Find or create address
     $address = Address::firstOrCreate(
@@ -148,34 +178,35 @@ private static function storeOrder(array $shipOrder)
             'address_line1' => $shipOrder['customer_address'],
         ],
         [
-            'user_id' => null,
+            'user_id' => $user?->id,
             'country' => $shipOrder['customer_country'],
             'city'    => $shipOrder['customer_city'],
             'state'   => $shipOrder['customer_state'],
             'zip'     => $shipOrder['customer_pincode'],
-            'phone'   => $shipOrder['customer_phone'] !== 'xxxxxxxxxx'
-                ? $shipOrder['customer_phone']
-                : null,
+            'phone'   => $shipOrder['customer_phone'] !== 'xxxxxxxxxx' ? $shipOrder['customer_phone'] : null,
             'email'   => $shipOrder['customer_email'],
         ]
     );
 
     // ✅ Store / Update Order
     Order::updateOrCreate(
-        ['shipment_id' => $shipOrder['channel_order_id']],
+        ['shipment_id' => $shipOrder['id']],
         [
-            'order_code'           => $code,
-            'shipment_id'          => $shipOrder['channel_order_id'],
-            'shiprocket_order_id'  => $shipOrder['id'],
+            'order_code'           => $orderCode,
+            'shipment_id'          => $shipOrder['id'],
+            'shipment_order_id'  => $shipOrder['channel_order_id'],
             'status'               => $shipOrder['status'],
             'payment_mod'          => $shipOrder['payment_method'],
             'total'                => $shipOrder['total'],
-            'created_at'           => $createdAt,
+            'created_at'           => Carbon::parse($shipOrder['created_at'])->utc(),
+
+            'order_date'           => Carbon::parse($shipOrder['created_at'])->utc(),
             'address_id'           => $address->id,
             'shipping_charges'     => 0,
             'items'                => json_encode($shipOrder['products']),
             'raw_response'         => json_encode($shipOrder),
-            'order_from'     => 'Shiprocket',
+            'shipment_from'     => 'Shiprocket',
+            'user_id' => $user?->id,
         ]
     );
 }

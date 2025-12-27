@@ -13,72 +13,69 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    public function index(Request $request)
-    {
-        if ($request->ajax()) {
-            $order = Order::with('user')->get(); // eager load roles
+public function index(Request $request)
+{
+    if ($request->ajax()) {
 
-            return DataTables::of($order)
-                ->addIndexColumn()
-                ->addColumn('order_code', function ($order) {
-                    return $order->order_code ?? 'N/A';
-                })
-                ->addColumn('phone', function ($order) {
-                    return $order->user->phone ?? 'N/A';
-                })
-                ->addColumn('email', function ($order) {
-                    return $order->user->email ?? 'N/A';
-                })
-                ->addColumn('total', function ($order) {
-                    return $order->total ?? 'N/A';
-                })
-                ->editColumn('status', function ($order) {
+        $query = Order::with('user')
+            ->orderByDesc('order_date')
+            ->orderByDesc('created_at');
 
-                    $status = trim($order->status ?? 'N/A');
-                    $normalized = strtoupper($status); // normalize casing
+        return DataTables::eloquent($query)
+            ->addIndexColumn()
 
-                    $badgeClass = match (true) {
-                        in_array($normalized, ['CANCELLED', 'CANCELED']) => 'badge bg-danger',
-                        $normalized === 'DELIVERED'                       => 'badge bg-success',
-                        default                                           => 'badge bg-primary',
-                    };
+            ->addColumn('order_code', function ($order) {
+                return '<a href="'.route('admin.orders.show', $order->id).'">'
+                    .e($order->order_code ?? 'N/A').
+                '</a>';
+            })
 
-                    return '<span class="badge rounded-pill ' . $badgeClass . '">' . e($status) . '</span>';
-                })
-                ->editColumn('payment_mod', function ($order) {
-                    return $order->payment_mod ?? 'N/A';
-                })
-                ->addColumn('created_at', function ($user) {
-                    return $user->created_at;
-                })
-                ->addColumn('actions', function ($user) {
-                    $editUrl = route('admin.orders.show', $user->id);
-                
-                    $actions = '<div class="d-flex align-items-center">';
-                
-                    if (auth()->user()->can('users edit')) {
-                        $actions .= '<a class="btn btn-icon me-1 edit-user" href="' . $editUrl . '">
-                                        <i class="icon-base ti tabler-eye icon-22px"></i>
-                                    </a>';
-                    }
-                
-                    $actions .= '</div>';
-                
-                    return $actions;
-                })
-                ->rawColumns(['roles', 'actions','order_code','payment_mod','status'])
-                ->make(true);
-        }
-        $totalOrders = Order::query();
+            ->addColumn('phone', fn ($order) => $order->user?->phone ?? 'N/A')
+            ->addColumn('email', fn ($order) => $order->user?->email ?? 'N/A')
 
-        $orderscount = [
-            'delivered' => (clone $totalOrders)->where('status', 'Delivered')->count(),
-            'cancelled' => (clone $totalOrders)->where('status', 'CANCELED')->count(),
-        ];
+            ->addColumn('order_date', function ($order) {
+                return $order->order_date
+                    ? $order->order_date->format('d F Y')
+                    : 'N/A';
+            })
 
+            ->addColumn('total', fn ($order) => $order->total ?? 'N/A')
+            ->addColumn('shipment_from', fn ($order) => $order->shipment_from ?? 'N/A')
 
-        return view('admin.orders.index');
+            ->editColumn('status', function ($order) {
+                $status = strtoupper(trim($order->status ?? ''));
+                $class = match (true) {
+                    in_array($status, ['CANCELLED', 'CANCELED']) => 'bg-danger',
+                    $status === 'DELIVERED' => 'bg-success',
+                    default => 'bg-primary',
+                };
+                return '<span class="badge '.$class.'">'.$status.'</span>';
+            })
+
+            ->addColumn('actions', function ($order) {
+                if (!auth()->user()->can('orders.view')) {
+                    return '';
+                }
+                return '<a href="'.route('admin.orders.show', $order->id).'" class="btn btn-icon">
+                    <i class="icon-base ti tabler-eye"></i>
+                </a>';
+            })
+
+            ->rawColumns(['order_code','status','actions'])
+            ->make(true);
     }
+
+    $totalOrders = Order::query();
+
+    $orderscount = [
+        'delivered' => (clone $totalOrders)->where('status', 'Delivered')->count(),
+        'cancelled' => (clone $totalOrders)->where('status', 'cancelled')->count(),
+        'pending'   => (clone $totalOrders)->whereNotIn('status', ['rto','cancelled','delivered'])->count(),
+    ];
+
+    return view('admin.orders.index', compact('orderscount'));
+}
+
     public function show(Request $request, $id)
     {
         $order = Order::find($id); 

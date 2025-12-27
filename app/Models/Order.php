@@ -12,8 +12,9 @@ class Order extends Model
         'order_code',
         'shipment_id',
         'shipment_from',
-        'shiprocket_order_id',
+        'shipment_order_id',
         'user_id',
+        'order_date',
         'address_id',
         'total_quantity',
         'sub_total',
@@ -38,7 +39,9 @@ class Order extends Model
         'created_at',
         'updated_at',
     ];
-
+protected $casts = [
+    'order_date' => 'datetime',
+];
     public function user()
     {
         return $this->belongsTo(User::class);
