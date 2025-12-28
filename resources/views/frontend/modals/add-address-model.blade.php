@@ -44,27 +44,19 @@
                                 <form action="{{ route('addresses.store') }}" method="POST">
                                     @csrf
                                     <div class="row">
-                                        <div class="col-sm-6">
-                                            <label>First Name *</label>
+                                        <div class="col-sm-12">
+                                            <label>Name *</label>
                                             <input name="first_name" type="text" class="form-control" required>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label>Last Name *</label>
-                                            <input name="last_name" type="text" class="form-control" required>
                                         </div>
                                     </div>
 
-                                    <label>Company Name (Optional)</label>
-                                    <input name="company" type="text" class="form-control">
 
                                     <label>Country *</label>
-                                    <input name="country" type="text" class="form-control" required>
+                                    <input name="country" type="hidden" value="India" class="form-control" required>
 
-                                    <label>House / Flat / Block No *</label>
-                                    <input name="address_line1" type="text" class="form-control" required>
+                                    <label>Address *</label>
+                                    <textarea name="address_line1" type="text" class="form-control" required>Add Address</textarea>
 
-                                    <label>Appartment / Road / Area *</label>
-                                    <input name="address_line2" type="text" class="form-control" required>
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <label>City *</label>
@@ -87,8 +79,6 @@
                                         </div>
                                     </div>
 
-                                    <label>Email *</label>
-                                    <input name="email" type="email" class="form-control" required>
                             </div>
 
                             <div class="modal-footer">

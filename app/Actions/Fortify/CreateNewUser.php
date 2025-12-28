@@ -11,6 +11,8 @@ use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Role;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 use Illuminate\Validation\ValidationException;
+use App\Mail\UserCreatedNotification;
+use Illuminate\Support\Facades\Mail;
 
 
 
@@ -84,6 +86,11 @@ class CreateNewUser implements CreatesNewUsers
             'source'      => 'new user discount',
             'description' => 'Initial credit from new user discount',
         ]);
+        // ✅ Send email via queue (NON-BLOCKING)
+
+        Mail::to('namanhooda86@gmail.com')
+            ->queue(new UserCreatedNotification($user));
+
 
         return $user;
     }

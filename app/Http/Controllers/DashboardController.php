@@ -32,11 +32,12 @@ class DashboardController extends Controller
             'totalProduct'       => (clone $product)->count(),
             'totalSale'          => (clone $order)->where('status','DELIVERED')->sum('total'),
         ];
-$report = collect($analytics->getReport())
-    ->sortByDesc(function ($row) {
-        return $row->getDimensionValues()[0]->getValue(); // date
-    })
-    ->values();
+
+        
+        $report = collect($analytics->getReport())
+            ->sortByDesc(function ($row) {
+                return $row->getDimensionValues()[0]->getValue(); // date
+            })->values();
 
         return view('dashboard', compact('report', 'arrayData'));
     }

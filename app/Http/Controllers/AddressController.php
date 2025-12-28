@@ -15,8 +15,6 @@ class AddressController extends Controller
         // Define validation rules
         $rules = [
             'first_name'     => 'required|string|max:255',
-            'last_name'      => 'required|string|max:255',
-            'company'        => 'nullable|string|max:255',
             'country'        => 'required|string|max:255',
             'address_line1'  => 'required|string|max:255',
             'address_line2'  => 'nullable|string|max:255',
@@ -24,7 +22,6 @@ class AddressController extends Controller
             'state'          => 'required|string|max:255',
             'zip'            => 'required|string|max:20',
             'phone'          => 'required|string|max:20',
-            'email'          => 'required|email|max:255',
         ];
 
         // Create validator

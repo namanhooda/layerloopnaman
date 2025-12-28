@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Hash;
 use Razorpay\Api\Api; 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use App\Mail\OrderPlacedNotification;
+use Illuminate\Support\Facades\Mail;
+
 
 class CheckoutController extends Controller
 {
@@ -146,9 +149,14 @@ class CheckoutController extends Controller
             $query->when($userId, fn($q) => $q->where('user_id', $userId))
                   ->when(!$userId && $systemId, fn($q) => $q->where('system_id', $systemId));
         })->delete();
+
+
+        Mail::to('namanhooda86@gmail.com')
+            ->queue(new OrderPlacedNotification($order));
+
         return redirect()
-    ->route('order.success', ['code' => $order->order_code])
-    ->with('success', 'Order placed successfully!');
+        ->route('order.success', ['code' => $order->order_code])
+        ->with('success', 'Order placed successfully!');
     }
 
     public function verifyPayment(Request $request)

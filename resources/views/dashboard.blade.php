@@ -90,7 +90,7 @@
         </div>
 
         <!-- Website Analytics -->
-        <div class="col-xl-6 col">
+        <div class="col-xl-8 col">
             <div class="swiper-container swiper-container-horizontal swiper swiper-card-advance-bg"
                 id="swiper-with-pagination-cards">
                 <div class="swiper-wrapper">
@@ -130,6 +130,100 @@
             </div>
         </div>
         <!--/ Website Analytics -->
+
+
+                <div class="col-xxl-4 col-md-6">
+                  <div class="card h-100">
+                    <div class="card-header d-flex justify-content-between">
+                      <div class="card-title mb-0">
+                        <h5 class="mb-1">Earning Reports</h5>
+                        <p class="card-subtitle">Daily Earnings Overview</p>
+                      </div>
+                      <div class="dropdown">
+                        <button
+                          class="btn btn-text-secondary rounded-pill text-body-secondary border-0 p-2 me-n1"
+                          type="button"
+                          id="earningReports"
+                          data-bs-toggle="dropdown"
+                          aria-haspopup="true"
+                          aria-expanded="false">
+                          <i class="icon-base ti tabler-dots-vertical icon-md text-body-secondary"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="earningReports">
+                          <a class="dropdown-item" href="javascript:void(0);">Download</a>
+                          <a class="dropdown-item" href="javascript:void(0);">Refresh</a>
+                          <a class="dropdown-item" href="javascript:void(0);">Share</a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body pb-0">
+                      <ul class="p-0 m-0">
+                        <li class="d-flex align-items-center mb-5">
+                          <div class="me-4">
+                            <span class="badge bg-label-primary rounded p-1_5"
+                              ><i class="icon-base ti tabler-chart-pie-2 icon-md"></i
+                            ></span>
+                          </div>
+                          <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                            <div class="me-2">
+                              <h6 class="mb-0">Net Profit</h6>
+                              <small class="text-body">12.4k Sales</small>
+                            </div>
+                            <div class="user-progress d-flex align-items-center gap-4">
+                              <small>$1,619</small>
+                              <div class="d-flex align-items-center gap-1">
+                                <i class="icon-base ti tabler-chevron-up text-success"></i>
+                                <small class="text-body-secondary">18.6%</small>
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                        <li class="d-flex align-items-center mb-5">
+                          <div class="me-4">
+                            <span class="badge bg-label-success rounded p-1_5"
+                              ><i class="icon-base ti tabler-currency-dollar icon-md"></i
+                            ></span>
+                          </div>
+                          <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                            <div class="me-2">
+                              <h6 class="mb-0">Total Income</h6>
+                              <small class="text-body">Sales, Affiliation</small>
+                            </div>
+                            <div class="user-progress d-flex align-items-center gap-4">
+                              <small>$3,571</small>
+                              <div class="d-flex align-items-center gap-1">
+                                <i class="icon-base ti tabler-chevron-up text-success"></i>
+                                <small class="text-body-secondary">39.6%</small>
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                        <li class="d-flex align-items-center mb-5">
+                          <div class="me-4">
+                            <span class="badge bg-label-secondary text-body rounded p-1_5"
+                              ><i class="icon-base ti tabler-credit-card icon-md"></i
+                            ></span>
+                          </div>
+                          <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                            <div class="me-2">
+                              <h6 class="mb-0">Total Expenses</h6>
+                              <small class="text-body">ADVT, Marketing</small>
+                            </div>
+                            <div class="user-progress d-flex align-items-center gap-4">
+                              <small>$430</small>
+                              <div class="d-flex align-items-center gap-1">
+                                <i class="icon-base ti tabler-chevron-up text-success"></i>
+                                <small class="text-body-secondary">52.8%</small>
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                      <div id="reportBarChart"></div>
+                    </div>
+                  </div>
+                </div>
+
 
         <!-- Average Daily Sales -->
         <div class="col-xl-3 col-sm-6">

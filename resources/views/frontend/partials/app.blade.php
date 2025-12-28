@@ -225,9 +225,9 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="email">Email *</label>
-                                        <input type="email" class="form-control" name="email" value="{{ old('email') }}" required>
-                                        @error('email')
+                                        <label for="phone">Phone *</label>
+                                        <input type="text" class="form-control" name="phone" value="{{ old('phone') }}" required>
+                                        @error('phone')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
@@ -240,21 +240,16 @@
                                         @enderror
                                     </div>
 
-                                    <div class="form-group">
-                                        <label for="password_confirmation">Confirm Password *</label>
-                                        <input type="password" class="form-control" name="password_confirmation" required>
-                                    </div>
-
                                     <div class="form-footer">
                                         <button type="submit" class="btn btn-outline-primary-2">
                                             <span>SIGN UP</span>
                                             <i class="icon-long-arrow-right"></i>
                                         </button>
 
-                                        <div class="custom-control custom-checkbox">
+                                        <!-- <div class="custom-control custom-checkbox">
                                             <input type="checkbox" class="custom-control-input" id="register-policy" required>
                                             <label class="custom-control-label" for="register-policy">I agree to the <a href="#">privacy policy</a> *</label>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </form>
                             </div>
@@ -264,14 +259,9 @@
                         <div class="form-choice">
                             <p class="text-center">or sign in with</p>
                             <div class="row">
-                                <div class="col-sm-6">
+                                <div class="col-sm-12">
                                     <a href="" class="btn btn-login btn-g">
                                         <i class="icon-google"></i> Login With Google
-                                    </a>
-                                </div>
-                                <div class="col-sm-6">
-                                    <a href="" class="btn btn-login btn-f">
-                                        <i class="icon-facebook-f"></i> Login With Facebook
                                     </a>
                                 </div>
                             </div>

@@ -17,53 +17,56 @@ public function index(Request $request)
 {
     if ($request->ajax()) {
 
-        $query = Order::with('user')
-            ->orderByDesc('order_date')
-            ->orderByDesc('created_at');
+    $query = Order::with('user')
+        ->orderByDesc('order_date')
+        ->orderByDesc('created_at');
 
-        return DataTables::eloquent($query)
-            ->addIndexColumn()
+    return DataTables::eloquent($query)
+        ->addIndexColumn()
 
-            ->addColumn('order_code', function ($order) {
-                return '<a href="'.route('admin.orders.show', $order->id).'">'
-                    .e($order->order_code ?? 'N/A').
-                '</a>';
-            })
+        ->addColumn('order_code', fn ($o) =>
+            '<a href="'.route('admin.orders.show', $o->id).'">'.e($o->order_code).'</a>'
+        )
 
-            ->addColumn('phone', fn ($order) => $order->user?->phone ?? 'N/A')
-            ->addColumn('email', fn ($order) => $order->user?->email ?? 'N/A')
+        ->addColumn('phone', fn ($o) => $o->user?->phone ?? 'N/A')
+        ->addColumn('email', fn ($o) => $o->user?->email ?? 'N/A')
 
-            ->addColumn('order_date', function ($order) {
-                return $order->order_date
-                    ? $order->order_date->format('d F Y')
-                    : 'N/A';
-            })
+        ->addColumn('order_date', fn ($o) =>
+            $o->order_date?->format('d F Y') ?? 'N/A'
+        )
 
-            ->addColumn('total', fn ($order) => $order->total ?? 'N/A')
-            ->addColumn('shipment_from', fn ($order) => $order->shipment_from ?? 'Website')
+        ->editColumn('payment_mod', fn ($o) => $o->payment_mod ?? 'N/A')
+        ->addColumn('total', fn ($o) => $o->total ?? 'N/A')
+        ->addColumn('shipment_from', fn ($o) => $o->shipment_from ?? 'Website')
 
-            ->editColumn('status', function ($order) {
-                $status = strtoupper(trim($order->status ?? ''));
-                $class = match (true) {
-                    in_array($status, ['CANCELLED', 'CANCELED']) => 'bg-danger',
-                    $status === 'DELIVERED' => 'bg-success',
-                    default => 'bg-primary',
-                };
-                return '<span class="badge '.$class.'">'.$status.'</span>';
-            })
+        ->editColumn('status', function ($o) {
+            $s = strtoupper($o->status ?? '');
+            $c = match (true) {
+                in_array($s, ['CANCELLED','CANCELED']) => 'bg-danger',
+                $s === 'DELIVERED' => 'bg-success',
+                default => 'bg-primary'
+            };
+            return "<span class='badge {$c}'>{$s}</span>";
+        })
 
-            ->addColumn('actions', function ($order) {
-                if (!auth()->user()->can('orders.view')) {
-                    return '';
-                }
-                return '<a href="'.route('admin.orders.show', $order->id).'" class="btn btn-icon">
-                    <i class="icon-base ti tabler-eye"></i>
-                </a>';
-            })
+        // 🔍 SEARCH FIX
+        ->filterColumn('phone', fn ($q,$k) =>
+            $q->whereHas('user', fn ($uq) => $uq->where('phone','like',"%{$k}%"))
+        )
+        ->filterColumn('email', fn ($q,$k) =>
+            $q->whereHas('user', fn ($uq) => $uq->where('email','like',"%{$k}%"))
+        )
+        ->filterColumn('order_code', fn ($q,$k) =>
+            $q->where('order_code','like',"%{$k}%")
+        )
+        ->filterColumn('shipment_from', fn ($q,$k) =>
+            $q->where('shipment_from','like',"%{$k}%")
+        )
 
-            ->rawColumns(['order_code','status','actions'])
-            ->make(true);
-    }
+        ->rawColumns(['order_code','status'])
+        ->make(true);
+}
+
 
     $totalOrders = Order::query();
 
