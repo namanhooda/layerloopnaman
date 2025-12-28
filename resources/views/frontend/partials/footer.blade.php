@@ -167,10 +167,14 @@
 
             <div class="social-icons social-icons-color">
                 <span class="social-label">Social Media</span>
-                <a href="#" class="social-icon social-facebook" title="Facebook" target="_blank"><i
+                <a href="{{url('https://www.facebook.com/profile.php?id=61579088633589')}}" class="social-icon social-facebook" title="Facebook" target="_blank"><i
                         class="icon-facebook-f"></i></a>
-                <a href="#" class="social-icon social-twitter" title="Twitter" target="_blank"><i
-                        class="icon-twitter"></i></a>
+                <a href="https://wa.me/918059808185" 
+   class="social-icon social-whatsapp" 
+   title="WhatsApp" 
+   target="_blank">
+    <i class="icon-whatsapp"></i>
+</a>
                 <a href="{{url('https://www.instagram.com/layerloop.web/')}}" class="social-icon social-instagram" title="Instagram" target="_blank"><i
                         class="icon-instagram"></i></a>
                 <a href="#" class="social-icon social-youtube" title="Youtube" target="_blank"><i

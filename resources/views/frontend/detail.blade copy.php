@@ -200,15 +200,10 @@
                                 <div class="social-icons social-icons-sm">
                                     <span class="social-label">Share:</span>
 
-                                    <a href="{{url('https://www.facebook.com/profile.php?id=61579088633589')}}" class="social-icon social-facebook" title="Facebook" target="_blank"><i
+                                    <a href="#" class="social-icon social-facebook" title="Facebook" target="_blank"><i
                                             class="icon-facebook-f"></i></a>
-                                    <a href="https://wa.me/918059808185" 
-   class="social-icon social-whatsapp" 
-   title="WhatsApp" 
-   target="_blank">
-    <i class="icon-whatsapp"></i>
-</a>
-
+                                    <a href="#" class="social-icon social-twitter" title="Twitter" target="_blank"><i
+                                            class="icon-twitter"></i></a>
                                     <a href="{{url('https://www.instagram.com/layerloop.web/')}}"
                                         class="social-icon social-instagram" title="Instagram" target="_blank"><i
                                             class="icon-instagram"></i></a>
@@ -240,42 +235,37 @@
                                 <a class="nav-link" id="product-review-link" data-toggle="tab" href="#product-review-tab" role="tab" aria-controls="product-review-tab" aria-selected="false">Reviews (2)</a>
                             </li>
                         </ul>
-                        <div class="tab-content" style="@media (min-width: 1024px) {
-    .your-class-name {
-        margin-left: 126px;
-        margin-right: 125px;
-    }
-}
-">
+                        <div class="tab-content">
                             <div class="tab-pane fade show active" id="product-desc-tab" role="tabpanel" aria-labelledby="product-desc-link">
                                 <div class="product-desc-content">
                                     <h3>Product Information</h3>
-                                    <p>We are a specialized 3D printing business offering a wide range of high-quality 3D printed products crafted with precision and care. Our collection includes 3D model idols, decorative frames, lamps, customized models, and modern home décor items, designed to add a unique and elegant touch to your space.</p>
+                                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque felis. Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique cursus. </p>
                                     <ul>
-                                        <li>We are a specialized 3D printing business offering a wide range of high-quality 3D printed products crafted with precision and care. Our collection includes 3D model idols, decorative frames, lamps, customized models, and modern home décor items, designed to add a unique and elegant touch to your space. </li>
-                                        <li>Our designs combine creativity with functionality, making them suitable for home décor, gifting, office spaces, temples, and personal collections.</li>
-                                        <li>We focus on clean detailing, accurate dimensions, and premium aesthetics, ensuring every product meets high standards before dispatch.</li>
+                                        <li>Nunc nec porttitor turpis. In eu risus enim. In vitae mollis elit. </li>
+                                        <li>Vivamus finibus vel mauris ut vehicula.</li>
+                                        <li>Nullam a magna porttitor, dictum risus nec, faucibus sapien.</li>
                                     </ul>
 
-                                    <p>Whether you are looking for a spiritual idol, a decorative piece, or a customized 3D model, our products are designed to reflect craftsmanship and innovation.</p>
+                                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque felis. Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique cursus. </p>
                                 </div><!-- End .product-desc-content -->
                             </div><!-- .End .tab-pane -->
                             <div class="tab-pane fade" id="product-info-tab" role="tabpanel" aria-labelledby="product-info-link">
                                 <div class="product-desc-content">
                                     <h3>Information</h3>
+                                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. </p>
+
+                                    <h3>Fabric & care</h3>
                                     <ul>
-                                        <li>Material: High-quality 3D printing material (PLA / Resin / PETG – depending on product)</li>
-                                        <li>Manufacturing Process: Advanced 3D printing technology with precision detailing</li>
-                                        <li>Finish: Smooth matte or semi-gloss finish (may vary by design)</li>
-                                        <li>Color Options: Available in multiple colors (custom colors on request)</li>
-                                        <li>Customization: Custom sizes, colors, and designs available on request</li>
-                                        <li>Usage: Suitable for home décor, gifting, office décor, temples, and display purposes</li>
-                                        <li>Care Instructions: Clean gently with a dry or soft cloth; avoid water and direct heat</li>
-                                        <li>Care Instructions: Clean gently with a dry or soft cloth; avoid water and direct heat</li>
-                                        <li>Packaging: Securely packed to prevent damage during transit</li>
-                                        <li>Country of Origin: Made in India</li>
+                                        <li>Faux suede fabric</li>
+                                        <li>Gold tone metal hoop handles.</li>
+                                        <li>RI branding</li>
+                                        <li>Snake print trim interior </li>
+                                        <li>Adjustable cross body strap</li>
+                                        <li> Height: 31cm; Width: 32cm; Depth: 12cm; Handle Drop: 61cm</li>
                                     </ul>
-                                    <p>Note: Since these products are 3D printed, slight variations in texture, color, or layer lines may occur. These are natural characteristics of the 3D printing process and not considered defects.</p>
+
+                                    <h3>Size</h3>
+                                    <p>one size</p>
                                 </div><!-- End .product-desc-content -->
                             </div><!-- .End .tab-pane -->
                             <div class="tab-pane fade" id="product-shipping-tab" role="tabpanel" aria-labelledby="product-shipping-link">

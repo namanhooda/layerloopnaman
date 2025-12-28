@@ -59,6 +59,10 @@
     border-radius: 6px; /* optional for soft corners */
     background-color: #f8f8f8; /* fallback background */
 }
+
+.page-header {
+    padding: 1.5rem 0 1.5rem !important;
+}
 .product-manual{
     border: 1px solid #ddd !important;
     border-radius: 10px !important;

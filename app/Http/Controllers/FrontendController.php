@@ -119,7 +119,7 @@ class FrontendController extends Controller
     public function detail($slug)
     {
         $product = Product::where('slug', $slug)->first();
-        $related = Product::take(10)->get();
+        $related = Product::where('category', $product->category)->take(10)->get();
         return view('frontend.detail',compact('product','related'));
     }
 

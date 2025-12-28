@@ -151,7 +151,7 @@ class CheckoutController extends Controller
         })->delete();
 
 
-        Mail::to('namanhooda86@gmail.com')
+        Mail::to('shop.layerloop@gmail.com')
             ->queue(new OrderPlacedNotification($order));
 
         return redirect()

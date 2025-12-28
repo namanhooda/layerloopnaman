@@ -88,7 +88,7 @@ class CreateNewUser implements CreatesNewUsers
         ]);
         // ✅ Send email via queue (NON-BLOCKING)
 
-        Mail::to('namanhooda86@gmail.com')
+        Mail::to('shop.layerloop@gmail.com')
             ->queue(new UserCreatedNotification($user));
 
 
