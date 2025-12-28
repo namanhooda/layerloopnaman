@@ -47,6 +47,13 @@
         font-size: 16px;
         padding: 5px;
     }
+    @media (min-width: 1024px) {
+    .content-div-r {
+        margin-left: 126px;
+        margin-right: 125px;
+    }
+    }
+
 
 </style>
 <main class="main">
@@ -240,13 +247,7 @@
                                 <a class="nav-link" id="product-review-link" data-toggle="tab" href="#product-review-tab" role="tab" aria-controls="product-review-tab" aria-selected="false">Reviews (2)</a>
                             </li>
                         </ul>
-                        <div class="tab-content" style="@media (min-width: 1024px) {
-    .your-class-name {
-        margin-left: 126px;
-        margin-right: 125px;
-    }
-}
-">
+                        <div class="tab-content content-div-r">
                             <div class="tab-pane fade show active" id="product-desc-tab" role="tabpanel" aria-labelledby="product-desc-link">
                                 <div class="product-desc-content">
                                     <h3>Product Information</h3>

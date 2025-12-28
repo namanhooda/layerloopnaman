@@ -129,25 +129,26 @@
                             Home
                         </div>
                     </a>
+            <a href="{{url('shop')}}" title="My account">
+                        <div class="icon">
+                            <i class="icon-shopping-bag" style="margin-bottom:-15px;"></i>
+
+                            Shop
+                        </div>
+                    </a>
             <a href="{{ url('wishlist') }}" title="Wishlist">
-        <div class="icon position-relative">
-            <i class="icon-heart-o" style="margin-bottom: -15px;"></i>
-            Wishlist
-            <span class="badge bg-danger position-absolute" style="top: 0; right: 0; font-size: 10px;">
-                {{ \App\Helpers\CartHelper::getWishlistCount() }}
-            </span>
-        </div>
-    </a>
+                <div class="icon position-relative">
+                    <i class="icon-heart-o" style="margin-bottom: -15px;"></i>
+                    Wishlist
+                    <span class="badge bg-danger position-absolute" style="top: 0; right: 0; font-size: 10px;">
+                        {{ \App\Helpers\CartHelper::getWishlistCount() }}
+                    </span>
+                </div>
+            </a>
             <a href="{{url('cart')}}" title="My account">
                         <div class="icon">
                             <i class="icon-shopping-cart" style="    margin-bottom: -15px;"></i>
                             Cart
-                        </div>
-                    </a>
-            <a href="{{url('account')}}" title="My account">
-                        <div class="icon">
-                            <i class="icon-user" style="    margin-bottom: -15px;"></i>
-                            Account
                         </div>
                     </a>
         </div>
