@@ -374,6 +374,35 @@
         });
     });
 
+    
+
 </script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const mainImage = document.getElementById('product-zoom');
+
+    document.querySelectorAll('.product-gallery-item').forEach(item => {
+        item.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            const newImage = this.getAttribute('data-image');
+            const zoomImage = this.getAttribute('data-zoom-image');
+
+            // Change main image
+            mainImage.src = newImage;
+            mainImage.setAttribute('data-zoom-image', zoomImage);
+
+            // Active class toggle
+            document.querySelectorAll('.product-gallery-item').forEach(el => {
+                el.classList.remove('active');
+            });
+            this.classList.add('active');
+        });
+    });
+
+});
+</script>
+
 
 @endsection
