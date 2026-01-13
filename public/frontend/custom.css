@@ -61,3 +61,12 @@
     border-radius: 50%;
     border-color: #e63946 !important;
 }
+
+
+/* Mobile */
+@media (max-width: 575px) {
+    .intro-slider-container,
+    .intro-slide {
+        height: 250px !important;
+    }
+}
