@@ -1,4 +1,14 @@
-
+body {
+    padding-top: 80px; /* adjust header height */
+}
+.header.header-2.header-intro-clearance {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+    background: #fff;
+}
 .product-image-manual {
     width: 100%;
     height: 250px; /* Adjust this value for your desired square size */
@@ -68,5 +78,47 @@
     .intro-slider-container,
     .intro-slide {
         height: 250px !important;
+    }
+}
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Mobile search */
+.mobile-search {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 25px;
+    overflow: hidden;
+    background: #fff;
+}
+
+.mobile-search input {
+    border: none;
+    outline: none;
+    padding: 6px 12px;
+    width: 150px;
+    font-size: 13px;
+}
+
+.mobile-search button {
+    border-radius: 0;
+    padding: 6px 12px;
+}
+
+/* Hide search on desktop if needed */
+@media (min-width: 992px) {
+    .mobile-search {
+        display: none;
+    }
+}
+
+/* Smaller width on very small screens */
+@media (max-width: 575px) {
+    .mobile-search input {
+        width: 110px;
     }
 }

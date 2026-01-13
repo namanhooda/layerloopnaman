@@ -38,6 +38,23 @@
                 </div>
             </div>
             <div class="header-right">
+          
+    <form action="{{ url('search') }}" method="get" class="mobile-search">
+        <label for="mobile-search" class="sr-only">Search</label>
+        <input 
+            type="search" 
+            class="form-control" 
+            name="q" 
+            id="mobile-search"
+            placeholder="Search product..."
+            value="{{ request('q') }}"
+            required
+        >
+        <button class="btn btn-primary" type="submit">
+            <i class="icon-search"></i>
+        </button>
+    </form>
+                
     <!-- Account -->
     <div class="account {{ request()->is('account*') ? 'active' : '' }}">
         <a href="{{ url('account') }}" title="My account"  class="account {{ request()->is('account*') ? 'activate' : '' }}">
