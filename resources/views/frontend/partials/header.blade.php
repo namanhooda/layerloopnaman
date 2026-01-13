@@ -39,7 +39,7 @@
             </div>
             <div class="header-right">
           
-    <form action="{{ url('search') }}" method="get" class="mobile-search">
+    <form action="{{ url('shop') }}" method="get" class="mobile-search">
         <label for="mobile-search" class="sr-only">Search</label>
         <input 
             type="search" 
