@@ -266,6 +266,51 @@
 <script src="bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
+
+<script>
+const input = document.getElementById('product-search');
+const overlay = document.getElementById('search-overlay');
+const suggestionsBox = document.getElementById('search-suggestions');
+const productsBox = document.getElementById('search-products');
+
+input.addEventListener('focus', () => {
+    overlay.classList.remove('d-none');
+});
+
+document.querySelector('.search-close').onclick = () => {
+    overlay.classList.add('d-none');
+};
+
+input.addEventListener('keyup', function () {
+    let q = this.value.trim();
+    if (q.length < 2) return;
+
+    fetch(`/ajax-search?q=${q}`)
+        .then(res => res.json())
+        .then(data => {
+
+            // Suggestions
+            suggestionsBox.innerHTML = '';
+            data.suggestions.forEach(item => {
+                suggestionsBox.innerHTML += `<li>${item}</li>`;
+            });
+
+            // Products
+            productsBox.innerHTML = '';
+            data.products.forEach(p => {
+                productsBox.innerHTML += `
+                    <div class="search-product-card">
+                        <img src="${p.image}">
+                        ${p.discount ? `<span class="badge">SAVE ${p.discount}%</span>` : ''}
+                        <p>${p.name}</p>
+                        <strong>₹ ${p.price}</strong>
+                    </div>
+                `;
+            });
+        });
+});
+</script>
+
 <script>
     let customizeModalInstance = null;
 

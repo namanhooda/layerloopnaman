@@ -4,10 +4,7 @@
             <h2 class="title">Top Selling Products</h2><!-- End .title -->
 
             <ul class="nav nav-pills nav-border-anim justify-content-center" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active" id="top-all-link" data-toggle="tab" href="#top-all-tab" role="tab"
-                        aria-controls="top-all-tab" aria-selected="true">All</a>
-                </li>
+                
                 <!-- <li class="nav-item">
                     <a class="nav-link" id="top-fur-link" data-toggle="tab" href="#top-fur-tab" role="tab"
                         aria-controls="top-fur-tab" aria-selected="false">Furniture</a>
@@ -73,7 +70,6 @@
                                     </div><!-- End .product-price -->
                                 </div><!-- End .product-body -->
                                 
-                                @include('frontend.buttons.addtocart')
                             </div><!-- End .product -->
                         </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
                         @endforeach

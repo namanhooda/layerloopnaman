@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\{RoleController, PermissionController, UserController, ProfileController, ProductController, ProductCategoryController, OrderController, CouponController, PrototypeController, InvoiceController};
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\{CartController,ShipmentsController, CheckoutController, FrontendController, AddressController, WishlistController};
 use Laravel\Fortify\Features;
 use Laravel\Socialite\Facades\Socialite;
@@ -75,6 +76,9 @@ Route::get('auth/google/callback', function () {
     Auth::login($user);
     return redirect('/dashboard'); // change to your home/dashboard
 });
+
+Route::get('/ajax-search', [SearchController::class, 'ajax']);
+
 
 //// cart & Checkout
 Route::get('/send-mail', [FrontendController::class, 'sendMail']);

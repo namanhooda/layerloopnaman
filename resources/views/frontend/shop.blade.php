@@ -13,22 +13,23 @@
 
 </style>
 <main class="main">
-    <div class="page-header text-center" >
+    <div class="page-header text-center">
         <div class="container">
-            <h1 class="page-title">Shop<span>Home / Shop</span></h1>
+            <h1 class="page-title">Shop</h1>
         </div><!-- End .container -->
     </div><!-- End .page-header -->
-    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-2">
+    <!-- <nav aria-label="breadcrumb" class="breadcrumb-nav mb-2">
         <div class="container">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{('/')}}">Home</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Shop</li>
             </ol>
-        </div><!-- End .container -->
-    </nav><!-- End .breadcrumb-nav -->
-    <div class="container text-center">
+        </div>
+    </nav> -->
+    <div class="container text-center"  style="padding-top: 13px;">
         <a href="{{ route('shop') }}">
             <button
+                style="min-width: 0px !important;"
                 class="btn {{ request('filter') === null ? 'btn-primary' : 'btn-outline-primary' }} rounded-pill shadow mx-1">
                 All Products
             </button>
@@ -36,12 +37,14 @@
 
         <a href="{{ route('shop', ['filter' => 'clothing']) }}">
             <button
+                style="min-width: 0px !important;"
                 class="btn {{ request('filter') === 'clothing' ? 'btn-primary' : 'btn-outline-primary' }} rounded-pill shadow mx-1">
                 Cloths
             </button>
         </a>
         <a href="{{ route('shop', ['filter' => 'customize']) }}">
             <button
+                style="min-width: 0px !important;"
                 class="btn {{ request('filter') === 'customize' ? 'btn-primary' : 'btn-outline-primary' }} rounded-pill shadow mx-1">
                 Customize
             </button>
@@ -55,11 +58,11 @@
                     <a href="#" class="sidebar-toggler"><i class="icon-bars"></i>Filters</a>
                 </div><!-- End .toolbox-left -->
 
-                <div class="toolbox-center">
+                <!-- <div class="toolbox-center">
                     <div class="toolbox-info">
                         Showing <span>{{$productsCount}} of {{$productsCount}}</span> Products
-                    </div><!-- End .toolbox-info -->
-                </div><!-- End .toolbox-center -->
+                    </div>
+                </div> -->
 
                 <div class="toolbox-right">
                     <div class="toolbox-sort">
@@ -134,7 +137,6 @@
                                 </div><!-- End .product-nav -->
                             </div>
                                
-                            @include('frontend.buttons.addtocart')
 
                         </div><!-- End .product -->
                     </div>

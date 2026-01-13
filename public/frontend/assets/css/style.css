@@ -7763,7 +7763,7 @@ p {
 
 .product-body {
     position: relative;
-    padding: 1.6rem 2rem;
+    padding: 1rem 1rem;
     transition: all .35s ease;
     background-color: #fff
 }
@@ -9027,7 +9027,7 @@ p {
 }
 
 .product.product-11 .product-body {
-    padding-bottom: 7rem
+    padding-bottom: 0rem
 }
 
 .product.product-11 .product-action {
