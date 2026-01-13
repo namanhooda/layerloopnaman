@@ -2927,7 +2927,6 @@ blockquote.text-white cite span {
 }
 
 .mobile-search {
-    margin: 1rem 0 1.5rem;
     display: flex;
     align-items: center
 }
@@ -2938,7 +2937,8 @@ blockquote.text-white cite span {
     -webkit-appearance: none;
     font-size: 1.2rem;
     line-height: 1.5;
-    padding: .8rem 1.5rem;
+    /* background-color: #333; */
+    /* padding: .8rem 1.5rem; */
     max-width: calc(100% - 36px);
     border-color: rgba(255, 255, 255, 0.1);
     border-right-width: 0
