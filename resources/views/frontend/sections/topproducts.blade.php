@@ -32,7 +32,7 @@
                         <div class="col-6 col-md-4 col-lg-3 col-xl-5col">
                             <div class="product product-11 text-center product-manual">
                                 <figure class="product-media">
-                                    <a href="{{url('shop-product-detail/'.$product->id)}}">
+                                    <a href="{{url('shop-product-detail/'.$product->slug)}}">
                                     <img src="{{ asset('storage/' . $product->featured_image) }}" alt="Product image" class="product-image product-image-manual">
                                      
                                     </a>
@@ -66,7 +66,7 @@
                                     <div class="product-cat">
                                         <a href="#" class="prodcatlink">Lighting</a>
                                     </div>
-                                    <h3 class="product-title"><a href="{{url('shop-product-detail/'.$product->id)}}">{{$product->name}}</a></h3>
+                                    <h3 class="product-title"><a href="{{url('shop-product-detail/'.$product->slug)}}">{{$product->name}}</a></h3>
                                     <!-- End .product-title -->
                                     <div class="product-price">
                                         ₹ {{$product->discounted_price}}

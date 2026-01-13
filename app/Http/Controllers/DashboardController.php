@@ -22,7 +22,7 @@ class DashboardController extends Controller
             ->whereBetween('created_at', [
                 now()->startOfMonth(),
                 now()->endOfMonth()
-            ])->where('status','DELIVERED')
+            ])->where('status','delivered')
             ->sum('total');
 
         $arrayData = [
@@ -30,7 +30,7 @@ class DashboardController extends Controller
             'totalOrders'        => (clone $order)->count(),
             'totalUsers'         => (clone $user)->count(),
             'totalProduct'       => (clone $product)->count(),
-            'totalSale'          => (clone $order)->where('status','DELIVERED')->sum('total'),
+            'totalSale'          => (clone $order)->where('status','delivered')->sum('total'),
         ];
 
         
