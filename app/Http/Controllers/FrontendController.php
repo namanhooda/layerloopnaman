@@ -84,7 +84,10 @@ class FrontendController extends Controller
         }
 
         if ($filter === 'clothing') {
-            $products->where('prototype', 'clothing'); // adjust to match your DB field
+            $products->where(function ($q) {
+                $q->where('prototype', 'clothing')
+                ->orWhere('prototype', 1);
+            }); // adjust to match your DB field
         }elseif ($filter === 'customize') {
             $products->where('prototype', 'customize'); // adjust to match your DB field
         }else{
