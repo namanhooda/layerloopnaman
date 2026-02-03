@@ -15,11 +15,106 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Mail\OrderPlacedNotification;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Http;
+use App\Helpers\ShiprocketHelper;
 
 
 class CheckoutController extends Controller
 {
     //
+
+
+
+public function generateToken(Request $request)
+{
+
+
+        $userId = auth()->id();
+    
+        // Use the same method as in 'add()' for guest user tracking
+        $systemId = null;
+            $rawIdentifier = $request->userAgent() . '|' . $request->ip();
+            $systemId = hash('sha256', $rawIdentifier);
+        if ($userId && $systemId) {
+            // Migrate guest cart items to the logged-in user
+            Cart::where('system_id', $systemId)
+                ->whereNull('user_id') // only migrate unassigned
+                ->update([
+                    'user_id' => $userId,
+                    'system_id' => null
+                ]);
+        }
+    
+        $cartItems = Cart::with('product')
+            ->where(function ($query) use ($userId, $systemId) {
+                $query->when($userId, fn($q) => $q->where('user_id', $userId))
+                      ->when(!$userId && $systemId, fn($q) => $q->where('system_id', $systemId));
+            })
+            ->get();
+            
+        if ($cartItems->isEmpty()) {
+            return response()->json(['error' => 'Cart empty'], 400);
+        }
+
+
+
+
+    $items = [];
+
+    foreach ($cartItems as $cart) {
+        $items[] = [
+            "variant_id" => (string) $cart->product->shiprocket_variant_id,
+            "quantity" => $cart->quantity
+        ];
+    }
+
+    $body = [
+        "cart_data" => ["items" => $items],
+        "redirect_url" => route('checkout.success'),
+        "timestamp" => now()->toISOString()
+    ];
+
+    $payload = json_encode($body);
+
+    $hmac = base64_encode(
+        hash_hmac('sha256', $payload, config('services.shiprocket.secret'), true)
+    );
+
+    $response = Http::withHeaders([
+        'X-Api-Key' => config('services.shiprocket.key'),
+        'X-Api-HMAC-SHA256' => $hmac
+    ])->post('https://checkout-api.shiprocket.com/api/v1/access-token/checkout', $body);
+
+    return $response->json();
+}
+
+
+public function generateCheckoutToken(Request $request)
+{
+    $cart = $request->cart;
+
+    $body = [
+        "cart_data" => [
+            "items" => $cart
+        ],
+        "redirect_url" => route('checkout.success'),
+        "timestamp" => now()->toISOString()
+    ];
+
+    $payload = json_encode($body);
+
+    $hmac = ShiprocketHelper::hmac($payload);
+
+    $response = Http::withHeaders([
+        'X-Api-Key' => config('services.shiprocket.key'),
+        'X-Api-HMAC-SHA256' => $hmac
+    ])->post(config('services.shiprocket.base').'/api/v1/access-token/checkout', $body);
+
+    return $response->json();
+}
+
+
+
 
     public function checkout()
     {
@@ -87,6 +182,7 @@ class CheckoutController extends Controller
         $order->order_code = $code;
         $order->address_id = $request->billing_address;
         $order->shipping_type = $request->shipping_type;
+        $order->shipment_from = 'Website';
 
         // Check if coupon exists in session
         if (Session::has('coupon')) {
@@ -108,6 +204,7 @@ class CheckoutController extends Controller
             OrderItem::create([
                 'order_id'   => $order->id,
                 'product_id' => $item->product_id,
+                'size' => $item->size,
                 'quantity'   => $item->quantity,
                 'price'      => $item->product->price,
             ]);

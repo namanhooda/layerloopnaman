@@ -87,6 +87,7 @@
                             <th>Product</th>
                             <th>Qty</th>
                             <th>Price</th>
+                            <th>Size</th>
                             <th>Subtotal</th>
                         </tr>
                     </thead>
@@ -94,14 +95,15 @@
                         @foreach($order->itemsData as $item)
                         <tr>
                             <td>
-                                                <a href="{{ url('shop-product-detail/' . $item->product->id) }}">
+                                                <a href="{{ url('shop-product-detail/' . $item->product->slug) }}">
                                                     <img src="{{ asset('storage/' . $item->product->featured_image) }}"
                                                         alt="{{ $item->product->name }}" style="width: 80px;">
                                                 </a>
                                             </td>
-                            <td>{{ $item->product->name }}</td>
+                            <td><a href="{{ url('shop-product-detail/' . $item->product->slug) }}">{{ $item->product->name }}</a></td>
                             <td>{{ $item->quantity }}</td>
                             <td>₹{{ number_format($item->price, 2) }}</td>
+                                    <td class="price-col">{{ $item->size ?? 'Free' }}</td>
                             <td>₹{{ number_format($item->price * $item->quantity, 2) }}</td>
                         </tr>
                         @php

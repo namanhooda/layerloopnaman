@@ -29,6 +29,11 @@ return [
     'postmark' => [
         'token' => env('POSTMARK_TOKEN'),
     ],
+    'shiprocket' => [
+        'key' => env('SHIPROCKET_API_KEY'),
+        'secret' => env('SHIPROCKET_SECRET'),
+        'base' => env('SHIPROCKET_BASE_URL'),
+    ],
 
     'ses' => [
         'key' => env('AWS_ACCESS_KEY_ID'),

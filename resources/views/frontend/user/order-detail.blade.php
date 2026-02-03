@@ -93,7 +93,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($order->items as $item)
+                        @foreach($order->itemsData as $item)
                         <tr>
                             <td>
                                                 <a href="{{ url('shop-product-detail/' . $item->product->id) }}">
@@ -107,7 +107,7 @@
                             <td>₹{{ number_format($item->price * $item->quantity, 2) }}</td>
                         </tr>
                         @php
-                        $subtotal = $order->items->sum(fn($item) => $item->product->price * $item->quantity);
+                        $subtotal = $order->itemsData->sum(fn($item) => $item->product->price * $item->quantity);
                         @endphp
                         @endforeach
                     </tbody>

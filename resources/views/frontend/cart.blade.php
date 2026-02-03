@@ -208,6 +208,10 @@
                                     </tr>
                                 </tbody>
                             </table>
+<!-- <button id="buyNow" class="btn btn-primary btn-block">
+    Checkout with Shiprocket
+</button> -->
+
 
                             @if(auth()->check())
                             <a href="{{ url('checkout') }}" class="btn btn-outline-primary-2 btn-order btn-block">
@@ -231,6 +235,53 @@
 </main><!-- End .main -->
 
 @endsection
+
+
+<script src="https://checkout-ui.shiprocket.com/assets/js/channels/shopify.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const btn = document.getElementById('buyNow');
+
+    btn.addEventListener('click', async function (e) {
+
+        e.preventDefault(); // ⭐ required
+
+        try {
+
+            let res = await fetch("{{ route('shiprocket.token') }}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                },
+                body: JSON.stringify({})
+            });
+
+            let data = await res.json();
+
+            console.log("TOKEN RESPONSE:", data);
+
+            if (!data.result?.token) {
+                alert("Token not generated");
+                return;
+            }
+
+            HeadlessCheckout.addToCart(e, data.result.token);
+
+        } catch (err) {
+            console.error(err);
+            alert("Checkout failed");
+        }
+    });
+
+});
+</script>
+
+
+
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 

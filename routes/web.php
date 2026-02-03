@@ -10,6 +10,7 @@ use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\WhatsAppController;
+use App\Http\Controllers\ShiprocketWebhookController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\TestController;
 use Spatie\Sitemap\Sitemap;
@@ -19,6 +20,15 @@ use App\Http\Controllers\Auth\CustomAuthenticatedSessionController;
 
 
 Route::get('/admin/orders/{id}/create-shipment', [OrderController::class, 'createShipment'])->name('orders.createShipment');
+Route::post('/shiprocket/webhook/order', [ShiprocketWebhookController::class, 'handle']);
+Route::post('/shiprocket-token', [CheckoutController::class, 'generateToken'])
+    ->name('shiprocket.token');
+
+    Route::get('/checkout-success', function () {
+    return view('frontend.checkout-success');
+})->name('checkout.success');
+
+
 
 
 Route::get('/admin/orders/shipments/nimbuspost', [ShipmentsController::class, 'fetchShipmentsNimbus'])->name('orders.nimbusShipment');
