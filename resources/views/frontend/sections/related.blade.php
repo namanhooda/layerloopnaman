@@ -86,7 +86,6 @@
                                 </div><!-- End .product-nav -->
                             </div>
                             
-                                @include('frontend.buttons.addtocart')
                         </div>
                 @endforeach
 

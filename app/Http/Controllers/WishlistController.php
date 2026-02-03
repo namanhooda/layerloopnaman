@@ -61,16 +61,26 @@ class WishlistController extends Controller
      */
 public function store(Request $request)
 {
+    $product = \App\Models\Product::findOrFail($request->product_id);
+
+    $isClothing = in_array($product->prototype, ['clothing', 1]);
+
     $request->validate([
         'product_id' => 'required|exists:products,id',
+        'size'       => $isClothing ? 'required|string|max:10' : 'nullable|string|max:10',
     ]);
+
     $userId = auth()->id();
     $systemId = $userId ? null : hash('sha256', $request->userAgent() . '|' . $request->ip());
 
+    // ✅ include size in uniqueness check
     $exists = Wishlist::where(function ($query) use ($userId, $systemId) {
-        if ($userId) $query->where('user_id', $userId);
-        else $query->where('system_id', $systemId);
-    })->where('product_id', $request->product_id)->exists();
+            if ($userId) $query->where('user_id', $userId);
+            else $query->where('system_id', $systemId);
+        })
+        ->where('product_id', $request->product_id)
+        ->when($request->size, fn($q) => $q->where('size', $request->size))
+        ->exists();
 
     if ($exists) {
         return response()->json([
@@ -83,15 +93,17 @@ public function store(Request $request)
     Wishlist::create([
         'user_id'    => $userId,
         'system_id'  => $systemId,
-        'product_id' => $request->product_id
+        'product_id' => $request->product_id,
+        'size'       => $request->size, // ✅ save size
     ]);
 
     return response()->json([
-            'success' => true,
-            'message' => 'Product added to Wishlist!',
+        'success' => true,
+        'message' => 'Product added to Wishlist!',
         'count'   => \App\Helpers\CartHelper::getWishlistCount()
     ]);
 }
+
 
 
 

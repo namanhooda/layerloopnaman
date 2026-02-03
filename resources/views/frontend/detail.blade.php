@@ -142,33 +142,28 @@
                             </div>
                             @endif
 
-                            @if($product->size)
-                            @php
-                            $selectedSizes = $product->size ? json_decode($product->size) : [];
-                            @endphp
+                           @php
+    $isClothing = in_array($product->prototype, ['clothing', 1]);
+@endphp
 
-                            <div class="details-filter-row details-row-size">
-                                <label for="size">Size:</label>
-                                <div class="select-custom">
-                                    <select name="size" id="size" class="form-control">
-                                        <option value="#" {{ empty($selectedSizes) ? 'selected' : '' }}>Select a size
-                                        </option>
-                                        <option value="S" {{ in_array('S', $selectedSizes) ? 'selected' : '' }}>Small
-                                        </option>
-                                        <option value="M" {{ in_array('M', $selectedSizes) ? 'selected' : '' }}>Medium
-                                        </option>
-                                        <option value="L" {{ in_array('L', $selectedSizes) ? 'selected' : '' }}>Large
-                                        </option>
-                                        <option value="XL" {{ in_array('XL', $selectedSizes) ? 'selected' : '' }}>Extra
-                                            Large</option>
-                                        <option value="XXL" {{ in_array('XXL', $selectedSizes) ? 'selected' : '' }}>XXL
-                                        </option>
-                                    </select>
-                                </div>
+@if($product->size || $isClothing)
+    @php
+        $selectedSizes = $product->size ? json_decode($product->size, true) : [];
+    @endphp
 
-                                <a href="#" class="size-guide"><i class="icon-th-list"></i> size guide</a>
-                            </div>
-                            @endif
+    <div class="details-filter-row details-row-size">
+        <label for="size">Size:</label>
+        <div class="select-custom">
+            <select name="size" id="size-{{ $product->id }}" class="form-control" {{ $isClothing ? 'required' : '' }}>
+                <option value="">Select a size</option>
+                @foreach(['S','M','L','XL','XXL'] as $size)
+                    <option value="{{ $size }}">{{ $size }}</option>
+                @endforeach
+            </select>
+        </div>
+    </div>
+@endif
+
 
 
                             <div class="details-filter-row details-row-size">
@@ -210,11 +205,11 @@
                                     <a href="{{url('https://www.facebook.com/profile.php?id=61579088633589')}}" class="social-icon social-facebook" title="Facebook" target="_blank"><i
                                             class="icon-facebook-f"></i></a>
                                     <a href="https://wa.me/918059808185" 
-   class="social-icon social-whatsapp" 
-   title="WhatsApp" 
-   target="_blank">
-    <i class="icon-whatsapp"></i>
-</a>
+                                    class="social-icon social-whatsapp" 
+                                    title="WhatsApp" 
+                                    target="_blank">
+                                        <i class="icon-whatsapp"></i>
+                                    </a>
 
                                     <a href="{{url('https://www.instagram.com/layerloop.web/')}}"
                                         class="social-icon social-instagram" title="Instagram" target="_blank"><i

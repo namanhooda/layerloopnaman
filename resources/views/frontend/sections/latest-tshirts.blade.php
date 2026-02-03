@@ -76,6 +76,12 @@
                                 <!-- Assuming you have the original price stored -->
                             </span>
                         </div>
+                        <div class="ratings-container">
+                            <div class="ratings">
+                                <div class="ratings-val" style="width: 0%;"></div>
+                            </div>
+                            <span class="ratings-text">( 0 Reviews )</span>
+                        </div>
                     </div>
 
 

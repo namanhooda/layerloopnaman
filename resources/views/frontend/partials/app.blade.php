@@ -372,40 +372,55 @@ input.addEventListener('keyup', function () {
     }
 
     // Add normal product to cart
-    function addToCart(productId) {
-        let product_id = document.getElementById("product-id-" + productId).value;
-        let quantity = document.getElementById("quantity-" + productId).value;
+function addToCart(productId) {
+    let product_id = document.getElementById("product-id-" + productId).value;
+    let quantity   = document.getElementById("quantity-" + productId).value;
 
-        fetch("{{ route('cart.add') }}", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "X-CSRF-TOKEN": "{{ csrf_token() }}"
-            },
-            body: JSON.stringify({ product_id, quantity })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                document.querySelector(".cart-count").textContent = data.cart_count;
-                document.querySelector(".dropdown-menu").innerHTML = data.cart_html;
-                showToastr('success', data.message);
-            } else {
-                showToastr('error', data.message ?? "Something went wrong!");
-            }
-        })
-        .catch(error => {
-            console.error("Error:", error);
-            showToastr('error', "Unexpected error occurred!");
-        });
+    let sizeSelect = document.getElementById("size-" + productId);
+    let size = sizeSelect ? sizeSelect.value : null;
+
+    if (sizeSelect && !size) {
+        showToastr('error', 'Please select a size');
+        return;
     }
+
+    fetch("{{ route('cart.add') }}", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+        },
+        body: JSON.stringify({ product_id, quantity, size })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            document.querySelector(".cart-count").textContent = data.cart_count;
+            document.querySelector(".dropdown-menu").innerHTML = data.cart_html;
+            showToastr('success', data.message);
+        } else {
+            showToastr('error', data.message ?? "Something went wrong!");
+        }
+    });
+}
+
 </script>
 
 <script>
 document.querySelectorAll(".add-to-wishlist").forEach(button => {
     button.addEventListener("click", function () {
+
         let productId = this.dataset.productId;
-        let btn = this; // current button
+        let btn = this;
+
+        let sizeSelect = document.getElementById("size-" + productId);
+        let size = sizeSelect ? sizeSelect.value : null;
+
+        // ✅ require size if dropdown exists
+        if (sizeSelect && !size) {
+            showToastr('error', 'Please select a size');
+            return;
+        }
 
         fetch("{{ route('wishlist.store') }}", {
             method: "POST",
@@ -413,31 +428,28 @@ document.querySelectorAll(".add-to-wishlist").forEach(button => {
                 "X-CSRF-TOKEN": "{{ csrf_token() }}",
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ product_id: productId })
+            body: JSON.stringify({
+                product_id: productId,
+                size: size
+            })
         })
         .then(response => response.json())
         .then(data => {
-            
-        if (data.success) {
-            
+
+            if (data.success) {
                 document.querySelector(".wishlist-count").textContent = data.count;
 
-                // ✅ change button style (heart filled)
                 btn.classList.add("active");
                 btn.innerHTML = `<span>In wishlist</span>`;
 
-            showToastr('success', data.message);
-        } else {
-            // ✅ Show toastr error if backend sent failure
-            showToastr('error', data.message ?? "Something went wrong!");
-        }
-        })
-        .catch(err => {
-            console.error("Wishlist error:", err);
-            showToastr('error', "Unexpected error occurred!");
+                showToastr('success', data.message);
+            } else {
+                showToastr('error', data.message ?? "Something went wrong!");
+            }
         });
     });
 });
+
 </script>
 
 

@@ -13,6 +13,7 @@ class Wishlist extends Model
         'user_id',
         'product_id',
         'system_id',
+        'size',
     ];
     public function product()
     {

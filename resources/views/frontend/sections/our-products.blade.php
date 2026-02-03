@@ -17,10 +17,7 @@
                 aria-controls="products-top-tab" aria-selected="false">Top Rated</a>
         </li>
     </ul>
-</div><!-- End .container -->
-
-
-
+</div>
 <div class="container-fluid">
     <div class="tab-content tab-content-carousel">
         <div class="tab-pane p-0 fade show active" id="products-featured-tab" role="tabpanel"
@@ -85,24 +82,26 @@
                                 data-product-id="{{ $product->id }}">
                                 <span>{{ $isInWishlist ? 'Remove from wishlist' : 'Add to wishlist' }}</span>
                             </button>
-                        </div><!-- End .product-action-vertical -->
-                    </figure><!-- End .product-media -->
+                        </div>
+                    </figure>
 
                     <div class="product-body">
                         <h3 class="product-title"><a
                                 href="{{url('shop-product-detail/'.$product->slug)}}">{{$product->name}}</a></h3>
-                        <!-- End .product-title -->
                         <div class="product-price">
                             ₹ {{$product->discounted_price}}
-                        </div><!-- End .product-price -->
-                    </div><!-- End .product-body -->
-                    
-                                @include('frontend.buttons.addtocart')
-                </div><!-- End .product -->
+                        </div>
+                        <div class="ratings-container">
+                            <div class="ratings">
+                                <div class="ratings-val" style="width: 0%;"></div>
+                            </div>
+                            <span class="ratings-text">( 0 Reviews )</span>
+                        </div>
+                    </div>
+                </div>
                 @endforeach
-
-            </div><!-- End .owl-carousel -->
-        </div><!-- .End .tab-pane -->
+            </div>
+        </div>
         <div class="tab-pane p-0 fade" id="products-sale-tab" role="tabpanel" aria-labelledby="products-sale-link">
             <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl"
                 data-owl-options='{
@@ -142,9 +141,6 @@
                             <!-- <img src="{{asset('frontend/assets/images/demos/demo-2/products/product-1-2.jpg')}}"
                                     alt="Product image" class="product-image-hover"> -->
                         </a>
-
-
-
                         <div class="product-action-vertical">
                             @php
                             $isInWishlist = \App\Models\Wishlist::where(function ($query) use ($product) {
@@ -165,25 +161,25 @@
                                 data-product-id="{{ $product->id }}">
                                 <span>{{ $isInWishlist ? 'Remove from wishlist' : 'Add to wishlist' }}</span>
                             </button>
-                        </div><!-- End .product-action-vertical -->
-                    </figure><!-- End .product-media -->
-
+                        </div>
+                    </figure>
                     <div class="product-body">
                         <h3 class="product-title"><a
                                 href="{{url('shop-product-detail/'.$product->slug)}}">{{$product->name}}</a></h3>
-                        <!-- End .product-title -->
                         <div class="product-price">
                             ₹ {{$product->discounted_price}}
-                        </div><!-- End .product-price -->
-                    </div><!-- End .product-body -->
-                    
-                                @include('frontend.buttons.addtocart')
-                </div><!-- End .product -->
+                        </div>
+                        <div class="ratings-container">
+                            <div class="ratings">
+                                <div class="ratings-val" style="width: 0%;"></div>
+                            </div>
+                            <span class="ratings-text">( 0 Reviews )</span>
+                        </div>
+                    </div>
+                </div>
                 @endforeach
-
-
-            </div><!-- End .owl-carousel -->
-        </div><!-- .End .tab-pane -->
+            </div>
+        </div>
         <div class="tab-pane p-0 fade" id="products-top-tab" role="tabpanel" aria-labelledby="products-top-link">
             <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl"
                 data-owl-options='{
@@ -222,9 +218,6 @@
                             <!-- <img src="{{asset('frontend/assets/images/demos/demo-2/products/product-1-2.jpg')}}"
                                     alt="Product image" class="product-image-hover"> -->
                         </a>
-
-
-
                         <div class="product-action-vertical">
                             @php
                             $isInWishlist = \App\Models\Wishlist::where(function ($query) use ($product) {
@@ -245,23 +238,25 @@
                                 data-product-id="{{ $product->id }}">
                                 <span>{{ $isInWishlist ? 'Remove from wishlist' : 'Add to wishlist' }}</span>
                             </button>
-                        </div><!-- End .product-action-vertical -->
-                    </figure><!-- End .product-media -->
+                        </div>
+                    </figure>
 
                     <div class="product-body">
                         <h3 class="product-title"><a
                                 href="{{url('shop-product-detail/'.$product->slug)}}">{{$product->name}}</a></h3>
-                        <!-- End .product-title -->
                         <div class="product-price">
                             ₹ {{$product->discounted_price}}
-                        </div><!-- End .product-price -->
-                    </div><!-- End .product-body -->
-                    
-                                @include('frontend.buttons.addtocart')
-                </div><!-- End .product -->
+                        </div>
+                        <div class="ratings-container">
+                            <div class="ratings">
+                                <div class="ratings-val" style="width: 0%;"></div>
+                            </div>
+                            <span class="ratings-text">( 0 Reviews )</span>
+                        </div>
+                    </div>
+                </div>
                 @endforeach
-
-            </div><!-- End .owl-carousel -->
-        </div><!-- .End .tab-pane -->
-    </div><!-- End .tab-content -->
-</div><!-- End .container-fluid -->
+            </div>
+        </div>
+    </div>
+</div>

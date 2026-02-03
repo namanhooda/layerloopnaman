@@ -27,6 +27,7 @@ class FrontendController extends Controller
     {   
 
 
+
         if (!session()->has('visitor_tracked')) {
             session()->put('visitor_tracked', true);
         
@@ -41,7 +42,7 @@ class FrontendController extends Controller
         }
         $featured = Product::latest()->take(10)->get(); // Latest 10 products
         $sale     = Product::inRandomOrder()->take(10)->get(); // 10 random products
-        $clothes     = Product::where('category','tshirts')->inRandomOrder()->take(10)->get(); // 10 random products
+        $clothes     = Product::where('category',2)->inRandomOrder()->take(10)->get(); // 10 random products
         $rated    = Product::take(10)->get();    
 
         $blogs    = Blog::get();
@@ -85,10 +86,14 @@ class FrontendController extends Controller
 
         if ($filter === 'clothing') {
             $products->where('prototype', 'clothing'); // adjust to match your DB field
-        }
-
-        if ($filter === 'customize') {
+        }elseif ($filter === 'customize') {
             $products->where('prototype', 'customize'); // adjust to match your DB field
+        }else{
+            $products->where(function ($q) {
+                $q->where('prototype', 'object')
+                ->orWhere('prototype', 2);
+            });
+
         }
 
         $productsCount = $products->count();

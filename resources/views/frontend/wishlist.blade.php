@@ -9,6 +9,7 @@
         </div>
     </div>
 
+
     <nav aria-label="breadcrumb" class="breadcrumb-nav">
         <div class="container">
             <ol class="breadcrumb">
@@ -26,6 +27,7 @@
                     <tr>
                         <th>Product</th>
                         <th>Price</th>
+                        <th>Size</th>
                         <th>Stock Status</th>
                         <th>Add to Cart</th>
                         <th>Remove</th>
@@ -47,6 +49,7 @@
                                 </div>
                             </td>
                             <td class="price-col">₹{{ number_format($item->product->discounted_price, 2) }}</td>
+                                    <td class="price-col">{{ $item->size ?? 'Free' }}</td>
                             <td class="stock-col">
                                 @if($item->product->stock_quantity > 0)
                                     <span class="in-stock">In stock</span>
