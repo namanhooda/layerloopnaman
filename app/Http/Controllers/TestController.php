@@ -8,15 +8,62 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use Illuminate\Support\Facades\Storage;
 
+
 class TestController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        //
+public function index()
+{
+    $files = Storage::disk('public')->files('tshirtdesign');
+
+    $products = [];
+
+    foreach ($files as $file) {
+
+        $filename = basename($file);
+
+        $nameWithoutExt = pathinfo($filename, PATHINFO_FILENAME);
+
+        $nameafter = 'round neck '.$nameWithoutExt.' dtf printed tshirt';
+
+        $slug = Str::slug($nameafter);
+
+        // ✅ skip if already exists
+        if (Product::where('slug', $slug)->exists()) {
+            continue;
+        }
+
+        $products[] = [
+            'name' => Str::title(str_replace('-', ' ', $nameafter)),
+            'slug' => $slug.'-'.Str::lower(Str::random(4)), // extra safe
+            'code' => 'LL'.str_pad(mt_rand(0,99999999),8,'0',STR_PAD_LEFT),
+
+            'prototype' => 1,
+            'category' => 2,
+            'status' => 'Published',
+
+            'featured_image' => 'product_featured/'.$filename,
+
+            'price' => 499,
+            'discounted_price' => 499,
+
+            'charge_tax' => 1,
+            'stock_quantity' => 100,
+            'in_stock' => 1,
+
+            'created_at' => now(),
+            'updated_at' => now(),
+        ];
     }
+
+    // ✅ single query insert (10x faster)
+    Product::insert($products);
+
+    dd(count($products).' products imported successfully ✅');
+}
+
     public function form()
     {
         return view('test.form');

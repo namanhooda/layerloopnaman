@@ -38,15 +38,14 @@ class FrontendController extends Controller
                 'url'        => $request->fullUrl(),
                 'visited_at' => now(),
             ]);
-        
         }
         $featured = Product::latest()->take(10)->get(); // Latest 10 products
         $sale     = Product::inRandomOrder()->take(10)->get(); // 10 random products
         $clothes     = Product::where('category',2)->inRandomOrder()->take(10)->get(); // 10 random products
-        $rated    = Product::take(10)->get();    
+        $rated    = Product::take(20)->get();    
 
         $blogs    = Blog::get();
-        return view('frontend.index',compact('featured','sale','rated','clothes','blogs'));
+        return view('frontend.index', compact('featured','sale','rated','clothes','blogs'));
     }
     public function about()
     {

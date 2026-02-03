@@ -19,6 +19,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\CustomAuthenticatedSessionController;
 
 
+
+Route::get('/testdatanmn', [TestController::class, 'index']);
+
+
 Route::get('/admin/orders/{id}/create-shipment', [OrderController::class, 'createShipment'])->name('orders.createShipment');
 Route::post('/shiprocket/webhook/order', [ShiprocketWebhookController::class, 'handle']);
 Route::post('/shiprocket-token', [CheckoutController::class, 'generateToken'])
