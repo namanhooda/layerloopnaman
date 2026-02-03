@@ -10,6 +10,40 @@
         box-shadow: none;
         /* Optional if you want to remove any shadow */
     }
+    .toolbox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+.toolbox-left,
+.toolbox-right {
+    display: flex;
+    align-items: center;
+}
+
+/* Mobile fix */
+@media (max-width: 768px) {
+    .toolbox {
+        flex-direction: row;
+        gap: 8px;
+    }
+
+    .toolbox-left,
+    .toolbox-right {
+        width: auto;
+    }
+
+    .toolbox-sort label {
+        display: none; /* optional: hide label to save space */
+    }
+
+    #sortby {
+        min-width: 120px;
+    }
+}
+
 
 </style>
 <main class="main">
@@ -53,31 +87,7 @@
     <br>
     <div class="page-content">
         <div class="container">
-            <div class="toolbox">
-                <div class="toolbox-left">
-                    <a href="#" class="sidebar-toggler"><i class="icon-bars"></i>Filters</a>
-                </div><!-- End .toolbox-left -->
-
-                <!-- <div class="toolbox-center">
-                    <div class="toolbox-info">
-                        Showing <span>{{$productsCount}} of {{$productsCount}}</span> Products
-                    </div>
-                </div> -->
-
-                <div class="toolbox-right">
-                    <div class="toolbox-sort">
-                        <label for="sortby">Sort by:</label>
-                        <div class="select-custom">
-                            <select name="sortby" id="sortby" class="form-control">
-                                <option value="popularity" selected="selected">Most Popular</option>
-                                <option value="rating">Most Rated</option>
-                                <option value="date">Date</option>
-                            </select>
-                        </div>
-                    </div><!-- End .toolbox-sort -->
-                </div><!-- End .toolbox-right -->
-            </div><!-- End .toolbox -->
-
+           
             <div class="products">
                 <div class="row">
                     @foreach($products as $product)

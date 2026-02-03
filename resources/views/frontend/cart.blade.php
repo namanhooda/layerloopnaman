@@ -46,13 +46,13 @@
                                     <td class="product-col">
                                         <div class="product">
                                             <figure class="product-media">
-                                                <a href="{{ url('shop-product-detail/' . $item->product->id) }}">
+                                                <a href="{{ url('shop-product-detail/' . $item->product->slug) }}">
                                                     <img src="{{ asset('storage/' . $item->product->featured_image) }}"
                                                         alt="{{ $item->product->name }}" style="width: 80px;">
                                                 </a>
                                             </figure>
                                             <h3 class="product-title">
-                                                <a href="{{ url('shop-product-detail/' . $item->product->id) }}">{{ $item->product->name }}</a>
+                                                <a href="{{ url('shop-product-detail/' . $item->product->slug) }}">{{ $item->product->name }}</a>
                                             </h3>
                                         </div>
                                     </td>

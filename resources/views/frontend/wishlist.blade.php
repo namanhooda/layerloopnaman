@@ -63,6 +63,7 @@
                                         @csrf
                                         <input type="hidden" name="product_id" value="{{ $item->product->id }}">
                                         <input type="hidden" name="quantity" value="1">
+                                        <input type="hidden" name="size" value="{{ $item->size }}">
                                         <input type="hidden" name="wishlist_id" value="{{ $item->id }}">
                                         <button type="submit" class="btn btn-outline-primary-2 btn-block">
                                             <i class="icon-cart-plus"></i> Add to Cart

@@ -170,7 +170,7 @@
                             <div class="product">
                                 <div class="product-cart-details">
                                     <h4 class="product-title">
-                                        <a href="{{ url('product/' . $item['product']->slug) }}">
+                                        <a href="{{ url('shop-product-detail/' . $item['product']->slug) }}">
                                             {{ $item['name'] ?? $item['product']->name }}
                                         </a>
                                     </h4>
@@ -180,7 +180,7 @@
                                     </span>
                                 </div>
                                 <figure class="product-image-container">
-                                    <a href="{{ url('shop-product-detail/' . $item['product']->id) }}" class="product-image">
+                                    <a href="{{ url('shop-product-detail/' . $item['product']->slug) }}" class="product-image">
                                         <img src="{{ asset('storage/' . $item['product']->featured_image) }}"
                                             alt="product" style="width: 60px; height: auto;">
                                     </a>

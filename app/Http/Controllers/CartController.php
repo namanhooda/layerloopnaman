@@ -98,7 +98,8 @@ public function add(Request $request)
     {
         $request->validate([
             'product_id' => 'required|exists:products,id',
-            'quantity'   => 'required|integer|min:1'
+            'quantity'   => 'required|integer|min:1',
+            'size'       => 'nullable|string|max:10',
         ]);
 
         $userId = auth()->id();
@@ -131,7 +132,8 @@ public function add(Request $request)
             $match,
             [
                 'quantity' => $request->quantity,
-                'cart_id' => $cartId
+                'cart_id' => $cartId,
+                'size' => $request->size
             ]
         );
 
