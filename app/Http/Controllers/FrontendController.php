@@ -39,10 +39,10 @@ class FrontendController extends Controller
                 'visited_at' => now(),
             ]);
         }
-        $featured = Product::latest()->take(10)->get(); // Latest 10 products
-        $sale     = Product::inRandomOrder()->take(10)->get(); // 10 random products
+        $featured = Product::where('category',2)->latest()->take(10)->get(); // Latest 10 products
+        $sale     = Product::where('category',2)->inRandomOrder()->take(10)->get(); // 10 random products
         $clothes     = Product::where('category',2)->inRandomOrder()->take(10)->get(); // 10 random products
-        $rated    = Product::take(20)->get();    
+        $rated    = Product::where('category',2)->take(20)->get();    
 
         $blogs    = Blog::get();
         return view('frontend.index', compact('featured','sale','rated','clothes','blogs'));

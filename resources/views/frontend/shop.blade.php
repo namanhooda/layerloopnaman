@@ -137,10 +137,10 @@
                                 </div><!-- End .product-price -->
                                 <div class="ratings-container">
                                     <div class="ratings">
-                                        <div class="ratings-val" style="width: 0%;"></div><!-- End .ratings-val -->
-                                    </div><!-- End .ratings -->
+                                        <div class="ratings-val" style="width: 0%;"></div><
+                                    </div>
                                     <span class="ratings-text">( 0 Reviews )</span>
-                                </div><!-- End .rating-container -->
+                                </div>
 
                                 <div class="product-nav product-nav-dots"></a>
 
