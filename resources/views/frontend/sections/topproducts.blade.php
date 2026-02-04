@@ -67,7 +67,21 @@
                                     <!-- End .product-title -->
                                     <div class="product-price">
                                         ₹ {{$product->discounted_price}}
-                                    </div><!-- End .product-price -->
+                                    </div>
+                                
+                                @php
+                                    $ratingPercent = rand(70, 100);   // 70% to 100%
+                                    $reviewsCount = rand(5, 20);      // 5 to 20 reviews
+                                @endphp
+
+                                <div class="ratings-container">
+                                    <div class="ratings">
+                                        <div class="ratings-val" style="width: {{ $ratingPercent }}%;"></div>
+                                    </div>
+                                    <span class="ratings-text">
+                                        ( {{ $reviewsCount }} Reviews )
+                                    </span>
+                                </div>
                                 </div><!-- End .product-body -->
                                 
                             </div><!-- End .product -->
