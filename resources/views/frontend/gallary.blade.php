@@ -11,9 +11,10 @@
                 </div><!-- End .container -->
             </nav><!-- End .breadcrumb-nav -->
             <div class="container">
-	        	<div class="page-header page-header-big text-center" style="background-image: url('frontend/assets/images/about-header-bg.jpg')">
-        			<h1 class="page-title text-white">About us<span class="text-white">Who we are</span></h1>
-	        	</div><!-- End .page-header -->
+	        	<iframe 
+    src="https://drive.google.com/embeddedfolderview?id=1BxQrimR_CrKMutrdgKCZUG7W5qqQfqjF#grid"
+    style="width:100%; height:600px; border:0;">
+</iframe>
             </div><!-- End .container -->
 
             <div class="page-content pb-0">
