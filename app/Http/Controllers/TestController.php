@@ -58,7 +58,6 @@ public function index()
             'updated_at' => now(),
         ];
     }   
-    dd('nmn');
     // ✅ single query insert (10x faster)
     Product::insert($products);
 
