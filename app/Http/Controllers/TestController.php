@@ -58,6 +58,7 @@ public function index()
             'updated_at' => now(),
         ];
     }   
+    dd('nmn');
     // ✅ single query insert (10x faster)
     Product::insert($products);
 
@@ -116,10 +117,14 @@ public function bulkUpload(Request $request)
 public function downloadPdf()
 {
 
-    $products = Product::latest()->take(4)->get();
+    $products = Product::where('category', 12)
+    ->inRandomOrder()
+    ->take(4)
+    ->get();
     // dd($products);
 
     $pdf = Pdf::loadView('pdf.products', compact('products'));
+    return $pdf->download('products.pdf');
 
     return $pdf->stream('products.pdf');
 
