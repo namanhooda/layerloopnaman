@@ -119,7 +119,7 @@ public function downloadPdf()
     $products = Product::whereIn('category', [12, 13])
     ->inRandomOrder()
     ->get();
-    dd($products);
+    // dd($products);
 
     $pdf = Pdf::loadView('pdf.products', compact('products'));
     return $pdf->download('products.pdf');
