@@ -116,6 +116,7 @@
 
                         <ul class="widget-list">
                             <li><a href="{{url('about')}}">About Layerloop</a></li>
+                            <li><a href="{{url('gallary')}}">Our Work</a></li>
                             <!-- <li><a href="#">How to shop on Molla</a></li> -->
                             <li><a href="{{url('faq')}}">FAQ</a></li>
                             <li><a href="{{url('contact_us')}}">Contact us</a></li>

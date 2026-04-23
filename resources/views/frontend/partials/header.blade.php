@@ -299,6 +299,9 @@
                                     <a href="{{ url('about') }}" class="{{ request()->is('about') ? 'active' : '' }}">About</a>
                                 </li>
                                 <li>
+                                    <a href="{{ url('gallary') }}" class="{{ request()->is('gallary') ? 'active' : '' }}">Our Work</a>
+                                </li>
+                                <li>
                                     <a href="{{ url('contact_us') }}" class="{{ request()->is('contact_us') ? 'active' : '' }}">Contact</a>
                                 </li>
                                 <li>

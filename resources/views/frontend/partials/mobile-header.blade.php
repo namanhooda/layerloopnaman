@@ -46,6 +46,9 @@
                                         <a href="{{url('about')}}">About</a>
                                     </li>
                                     <li>
+                                        <a href="{{url('gallary')}}">Our Work</a>
+                                    </li>
+                                    <li>
                                         <a href="{{url('contact_us')}}">Contact</a>
                                     </li>
                                     <li><a href="{{url('login')}}">Login</a></li>
