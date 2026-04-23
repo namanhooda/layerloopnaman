@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use Illuminate\Support\Facades\Storage;
 
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class TestController extends Controller
 {
@@ -16,7 +17,7 @@ class TestController extends Controller
      */
 public function index()
 {
-    $files = Storage::disk('public')->files('tshirtdesign');
+    $files = Storage::disk('public')->files('Uploadsdata');
 
     $products = [];
 
@@ -26,7 +27,7 @@ public function index()
 
         $nameWithoutExt = pathinfo($filename, PATHINFO_FILENAME);
 
-        $nameafter = 'round neck '.$nameWithoutExt.' dtf printed tshirt';
+        $nameafter = $nameWithoutExt.' (5 inch)';
 
         $slug = Str::slug($nameafter);
 
@@ -40,14 +41,14 @@ public function index()
             'slug' => $slug.'-'.Str::lower(Str::random(4)), // extra safe
             'code' => 'LL'.str_pad(mt_rand(0,99999999),8,'0',STR_PAD_LEFT),
 
-            'prototype' => 1,
-            'category' => 2,
+            'prototype' => 2,
+            'category' => 12,
             'status' => 'Published',
 
             'featured_image' => 'product_featured/'.$filename,
 
-            'price' => 499,
-            'discounted_price' => 499,
+            'price' => 599,
+            'discounted_price' => 599,
 
             'charge_tax' => 1,
             'stock_quantity' => 100,
@@ -56,8 +57,7 @@ public function index()
             'created_at' => now(),
             'updated_at' => now(),
         ];
-    }
-
+    }   
     // ✅ single query insert (10x faster)
     Product::insert($products);
 
@@ -111,51 +111,21 @@ public function bulkUpload(Request $request)
     }
 }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Test $test)
-    {
-        //
-    }
+public function downloadPdf()
+{
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Test $test)
-    {
-        //
-    }
+    $products = Product::latest()->take(4)->get();
+    // dd($products);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Test $test)
-    {
-        //
-    }
+    $pdf = Pdf::loadView('pdf.products', compact('products'));
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Test $test)
-    {
-        //
-    }
+    return $pdf->stream('products.pdf');
+
+
+    $pdf = Pdf::loadView('pdf.products');
+
+    return $pdf->download('products.pdf');
+}
 }

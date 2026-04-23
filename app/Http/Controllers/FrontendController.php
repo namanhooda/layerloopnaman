@@ -51,6 +51,10 @@ class FrontendController extends Controller
     {
         return view('frontend.about');
     }
+    public function gallary()
+    {
+        return view('frontend.gallary');
+    }
     public function contactUs()
     {
         return view('frontend.contactUs');

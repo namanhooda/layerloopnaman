@@ -137,7 +137,7 @@
                     <div class="card-header d-flex justify-content-between">
                       <div class="card-title mb-0">
                         <h5 class="mb-1">Earning Reports</h5>
-                        <p class="card-subtitle">Daily Earnings Overview</p>
+                        <p class="card-subtitle">Earnings Overview</p>
                       </div>
                       <div class="dropdown">
                         <button

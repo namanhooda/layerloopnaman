@@ -21,6 +21,7 @@ use App\Http\Controllers\Auth\CustomAuthenticatedSessionController;
 
 
 Route::get('/testdatanmn', [TestController::class, 'index']);
+Route::get('/download-pdf', [TestController::class, 'downloadPdf']);
 
 
 Route::get('/admin/orders/{id}/create-shipment', [OrderController::class, 'createShipment'])->name('orders.createShipment');
@@ -98,6 +99,7 @@ Route::get('/ajax-search', [SearchController::class, 'ajax']);
 Route::get('/send-mail', [FrontendController::class, 'sendMail']);
 Route::get('/', [FrontendController::class, 'index'])->name('index');
 Route::get('about', [FrontendController::class, 'about'])->name('about');
+Route::get('gallary', [FrontendController::class, 'gallary'])->name('gallary');
 Route::get('contact_us', [FrontendController::class, 'contactUs'])->name('contact_us');
 Route::get('faq', [FrontendController::class, 'faq'])->name('faq');
 Route::get('blogs', [FrontendController::class, 'blogs'])->name('blogs');
