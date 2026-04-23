@@ -116,9 +116,8 @@ public function bulkUpload(Request $request)
 public function downloadPdf()
 {
 
-    $products = Product::where('category', 12)
+    $products = Product::whereIn('category', [12, 13])
     ->inRandomOrder()
-    ->take(4)
     ->get();
     // dd($products);
 

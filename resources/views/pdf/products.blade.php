@@ -71,9 +71,22 @@ body {
 </head>
 
 <body>
+    @php
+    $bgPath = public_path('images/pdfbackground.png'); // put your image here
+@endphp
+<div style="
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+">
+    <img src="{{ $bgPath }}" style="width: 100%; height: 100%;">
+</div>
 
 <div class="header">
-    <div class="logo">LAYERLOOP</div>
+    <div class="logo"><img src="{{ public_path('images/layerloop-logo.jpeg') }}" width="200"></div>
     <div class="tagline">WE PRINT FOR YOU</div>
 </div>
 
