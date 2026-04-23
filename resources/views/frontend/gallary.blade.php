@@ -1,5 +1,30 @@
 @extends('frontend.partials.app')
 @section('content')
+<style>
+    .drive-container {
+    position: relative;
+    width: 100%;
+    height: 80vh; /* responsive height */
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.ccc{
+    width: 105%;
+    height: 100%;
+
+}
+.drive-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+@media (max-width: 768px) {
+    .drive-container {
+        height: 90vh;
+    }
+}
+    </style>
 
 <main class="main"><div class="page-header text-center" style="background-image: url('frontend/assets/images/page-header-bg.jpg')">
         <div class="container">
@@ -15,10 +40,13 @@
                 </div><!-- End .container -->
             </nav><!-- End .breadcrumb-nav -->
             <div class="container">
-	        	<iframe 
-    src="https://drive.google.com/embeddedfolderview?id=1BxQrimR_CrKMutrdgKCZUG7W5qqQfqjF#grid"
-    style="width:100%; height:600px; border:0;">
-</iframe>
+	        <div class="drive-container ">
+                <div class=" ccc">
+    <iframe 
+        src="https://drive.google.com/embeddedfolderview?id=1BxQrimR_CrKMutrdgKCZUG7W5qqQfqjF#grid">
+    </iframe>
+</div>
+</div>
             </div><!-- End .container -->
 
             <div class="page-content pb-0">
