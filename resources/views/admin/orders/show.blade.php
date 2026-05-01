@@ -1,25 +1,57 @@
 @extends('admin.partial.app')
 @section('content')
 
-
-
 <div class="container-xxl flex-grow-1 container-p-y">
-    <div
-        class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-6 row-gap-4">
-        <div class="d-flex flex-column justify-content-center">
-            <div class="mb-1">
-                <span class="h5">Order: {{$order->order_code}} </span><br>
-                <span class="h6">Status: </span><span class="badge bg-label-success me-1 ms-2">{{$order->status}}</span><br>
-                <span class="h6">Payment Status: </span><span class="badge bg-label-info">{{$order->payment_mod}}</span>
+    <div class="card shadow-sm p-3 mb-4">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3">
+
+        <!-- LEFT SECTION -->
+        <div>
+            <h5 class="mb-1 fw-bold">
+                Order Code: <span class="text-primary">{{ $order->order_code }}</span>
+            </h5>
+            <h5 class="mb-1 fw-bold">
+                Order From: <span class="text-primary">{{ $order->shipment_from }}</span>
+            </h5>
+
+            <div class="d-flex flex-wrap gap-2 mt-2">
+
+                <!-- Status -->
+                <span class="badge px-3 py-2 
+                    {{ $order->status == 'pending' ? 'bg-warning' : 
+                       ($order->status == 'delivered' ? 'bg-success' : 'bg-secondary') }}">
+                    {{ ucfirst($order->status) }}
+                </span>
+
+                <!-- Payment Mode -->
+                <span class="badge bg-info px-3 py-2 text-dark">
+                    {{ strtoupper($order->payment_mod) }}
+                </span>
+
+                <!-- Payment Status -->
+                 @if($order->payment_status)
+                <span class="badge px-3 py-2 
+                    {{ $order->payment_status == 'paid' ? 'bg-success' : 'bg-danger' }}">
+                    {{ ucfirst($order->payment_status) }}
+                </span>@endif
+
             </div>
-            <p class="mb-0">
-                {{ $order->created_at->timezone('Asia/Kolkata')->format('M d, Y, g:i A') }} (IST)
-            </p>
+
+            <!-- Date -->
+            <div class="mt-2 text-muted small">
+                {{ $order->created_at->timezone('Asia/Kolkata')->format('M d, Y • g:i A') }} (IST)
+            </div>
         </div>
-        <div class="d-flex align-content-center flex-wrap gap-2">
+
+        <!-- RIGHT SECTION -->
+        <div class="d-flex gap-2">
+            
             <button class="btn btn-label-danger delete-order">Delete Order</button>
+            <button class="btn btn-label-primary">Update Status</button>
         </div>
+
     </div>
+</div>
 
     <!-- Order Details Table -->
 
@@ -39,72 +71,78 @@
                             </tr>
                         </thead>
                         @php
-    if ($order->itemsData && $order->itemsData->isNotEmpty()) {
-        // From order_items relation
-        $orderItems = $order->itemsData;
-        $isJson = false;
-    } else {
-        // From JSON stored in orders.items
-        $orderItems = collect(is_array($order->items)
-            ? $order->items
-            : json_decode($order->items, true));
-        $isJson = true;
-    }
-@endphp
+                        if ($order->itemsData && $order->itemsData->isNotEmpty()) {
+                        // From order_items relation
+                        $orderItems = $order->itemsData;
+                        $isJson = false;
+                        } else {
+                        // From JSON stored in orders.items
+                        $orderItems = collect(is_array($order->items)
+                        ? $order->items
+                        : json_decode($order->items, true));
+                        $isJson = true;
+                        }
+                        @endphp
 
                         <tbody>
-@foreach($orderItems as $key => $item)
-    <tr>
-        <td>{{ $key + 1 }}</td>
+                            @if(isset($orderItems) && count($orderItems))
+                            @foreach($orderItems as $key => $item)
+                            <tr>
+                                <td>{{ $key + 1 }}</td>
 
-        <td class="w-50">
-            {{ $isJson ? ($item['product_name'] ?? $item['name'] ?? 'N/A') : ($item->product->name ?? 'N/A') }}
+                                <td class="w-50">
+                                    {{ $isJson ? ($item['product_name'] ?? $item['name'] ?? 'N/A') : ($item->product->name ?? 'N/A') }}
 
-        </td>
+                                </td>
 
-        <td class="w-25">
-            ₹{{ number_format(
-                $isJson
-                    ? ($item['product_price'] ??  $item['selling_price'] ?? $item['price'] ?? 0)
-                    : ($item->product->price ?? $item->price ?? 0),
-                2
-            ) }}
-        </td>
+                                <td class="w-25">
+                                    ₹{{ number_format(
+                                        $isJson
+                                                ? ($item['product_price'] ??  $item['selling_price'] ?? $item['price'] ?? 0)
+                                                : ($item->product->price ?? $item->price ?? 0),
+                                            2
+                                        ) }}
+                                </td>
 
-        <td class="w-25">
-            {{ $isJson ? ($item['product_qty'] ??  $item['quantity'] ?? 1) : $item->quantity }}
-        </td>
+                                <td class="w-25">
+                                    {{ $isJson ? ($item['product_qty'] ??  $item['quantity'] ?? 1) : $item->quantity }}
+                                </td>
 
-        <td>
-            ₹{{ number_format(
-                (
-                    $isJson
-                        ? ($item['product_price'] ??  $item['selling_price'] ?? $item['price'] ?? 0)
-                        : ($item->product->price ?? $item->price ?? 0)
-                ) * (
-                    $isJson
+                                <td>
+                                    ₹{{ number_format(
+                                        (
+                                            $isJson
+                                                ? ($item['product_price'] ??  $item['selling_price'] ?? $item['price'] ?? 0)
+                                                : ($item->product->price ?? $item->price ?? 0)
+                                        ) * (
+                                            $isJson
+                                                ? ($item['product_qty'] ?? $item['quantity'] ?? 1)
+                                                : $item->quantity
+                                        ),
+                                        2
+                                    ) }}
+                                </td>
+                            </tr>
+                            @endforeach
+                            @else
+                            <tr>
+                                <td colspan="5" class="text-center">No Items in list</td>
+                            </tr>
+                            @endif
+                        </tbody>
+                        @php
+                        $subtotal = $orderItems->sum(function ($item) use ($isJson) {
+                        $price = $isJson
+                        ? ($item['product_price'] ?? $item['selling_price'] ?? $item['price'] ?? 0)
+                        : ($item->product->price ?? $item->price ?? 0);
+
+                        $qty = $isJson
                         ? ($item['product_qty'] ?? $item['quantity'] ?? 1)
-                        : $item->quantity
-                ),
-                2
-            ) }}
-        </td>
-    </tr>
-@endforeach
-</tbody>
-@php
-    $subtotal = $orderItems->sum(function ($item) use ($isJson) {
-        $price = $isJson
-            ? ($item['product_price'] ?? $item['selling_price'] ?? $item['price'] ?? 0)
-            : ($item->product->price ?? $item->price ?? 0);
+                        : $item->quantity;
 
-        $qty = $isJson
-            ? ($item['product_qty'] ?? $item['quantity'] ?? 1)
-            : $item->quantity;
-
-        return $price * $qty;
-    });
-@endphp
+                        return $price * $qty;
+                        });
+                        @endphp
 
                     </table>
 
@@ -112,29 +150,32 @@
                         <div class="order-calculations">
                             <div class="d-flex justify-content-start mb-2">
                                 <span class="w-px-100 text-heading">Subtotal:</span>
-                                <h6 class="mb-0">₹{{ number_format($subtotal ?? 0, 2) }}</h6>
+                                <h6 class="mb-0">₹{{ number_format($order->total ?? 0, 2) }}</h6>
                             </div>
                             @php
-                            $total = $subtotal;
+                            $total = $order->total;
                             $discount = 0;
 
-                            $total = $subtotal + $order->shipping_charges;
+                            $total = $order->total + $order->shipping_charges;
                             if ($order->coupon_discount != null) {
                             $total -= $order->coupon_discount;
                             }
                             @endphp
                             <div class="d-flex justify-content-start mb-2">
                                 <span class="w-px-100 text-heading">Shipping:</span>
-                                <h6 class="mb-0">+ ₹{{ number_format($order->shipping_charges, 2) }}
+                                <h6 class="mb-0">₹{{ number_format($order->shipping_charges, 2) }}
+                                    @if($order->shipping_type)
                                     <br>({{$order->shipping_type}})
+                                    @endif
                                 </h6>
                             </div>
                             @if($order->coupon_discount != null)
                             <div class="d-flex justify-content-start mb-2">
                                 <span class="w-px-100 text-heading">Discount:</span>
-                                <h6 class="mb-0">- ₹{{ number_format($order->coupon_discount, 2) }}</h6>
+                                <h6 class="mb-0">₹{{ number_format($order->coupon_discount, 2) }}</h6>
                             </div>
                             @endif
+                            <hr>
                             <div class="d-flex justify-content-start">
                                 <h6 class="w-px-100 mb-0">Total:</h6>
                                 <h6 class="mb-0">₹{{ number_format($total ?? 0, 2) }}</h6>
@@ -153,42 +194,85 @@
                             <span class="timeline-point timeline-point-primary"></span>
                             <div class="timeline-event">
                                 <div class="timeline-header">
-                                    <h6 class="mb-0">Order was placed (Order ID: #32543)</h6>
-                                    <small class="text-body-secondary">Tuesday 11:29 AM</small>
+                                    <h6 class="mb-0">Order was placed (Order ID: {{$order->order_code}})</h6>
+                                    <small class="text-body-secondary">{{$order->created_at}}</small>
                                 </div>
                                 <p class="mt-3">Your order has been placed successfully</p>
                             </div>
                         </li>
+                        @if($order->status == 'pending')
                         <li class="timeline-item timeline-item-transparent border-primary">
                             <span class="timeline-point timeline-point-primary"></span>
                             <div class="timeline-event">
                                 <div class="timeline-header">
-                                    <h6 class="mb-0">Pick-up</h6>
+                                    <h6 class="mb-0">PENDING</h6>
                                     <small class="text-body-secondary">Wednesday 11:29 AM</small>
                                 </div>
                                 <p class="mt-3 mb-3">Pick-up scheduled with courier</p>
                             </div>
                         </li>
+                        @endif
+                        @if($order->status == 'pending pickup')
                         <li class="timeline-item timeline-item-transparent border-primary">
                             <span class="timeline-point timeline-point-primary"></span>
                             <div class="timeline-event">
                                 <div class="timeline-header">
-                                    <h6 class="mb-0">Dispatched</h6>
+                                    <h6 class="mb-0">PENDING PICKUP</h6>
+                                    <small class="text-body-secondary">Wednesday 11:29 AM</small>
+                                </div>
+                                <p class="mt-3 mb-3">Pick-up scheduled with courier</p>
+                            </div>
+                        </li>
+                        @endif
+                        @if($order->status == 'out for delivery')
+                        <li class="timeline-item timeline-item-transparent border-primary">
+                            <span class="timeline-point timeline-point-primary"></span>
+                            <div class="timeline-event">
+                                <div class="timeline-header">
+                                    <h6 class="mb-0">OUT FOR DELIVERY</h6>
                                     <small class="text-body-secondary">Thursday 11:29 AM</small>
                                 </div>
                                 <p class="mt-3 mb-3">Item has been picked up by courier</p>
                             </div>
                         </li>
+                        @endif
+                        @if($order->status == 'in transit')
                         <li class="timeline-item timeline-item-transparent border-primary">
                             <span class="timeline-point timeline-point-primary"></span>
                             <div class="timeline-event">
                                 <div class="timeline-header">
-                                    <h6 class="mb-0">Package arrived</h6>
+                                    <h6 class="mb-0">in transit</h6>
+                                    <small class="text-body-secondary">Thursday 11:29 AM</small>
+                                </div>
+                                <p class="mt-3 mb-3">Item has been picked up by courier</p>
+                            </div>
+                        </li>
+                        @endif
+                        @if($order->status == 'cancelled')
+                        <li class="timeline-item timeline-item-transparent border-primary">
+                            <span class="timeline-point timeline-point-primary"></span>
+                            <div class="timeline-event">
+                                <div class="timeline-header">
+                                    <h6 class="mb-0">CANCELLED</h6>
+                                    <small class="text-body-secondary">Thursday 11:29 AM</small>
+                                </div>
+                                <p class="mt-3 mb-3">Item has been picked up by courier</p>
+                            </div>
+                        </li>
+                        @endif
+                        @if($order->status == 'rto')
+                        <li class="timeline-item timeline-item-transparent border-primary">
+                            <span class="timeline-point timeline-point-primary"></span>
+                            <div class="timeline-event">
+                                <div class="timeline-header">
+                                    <h6 class="mb-0">RTO</h6>
                                     <small class="text-body-secondary">Saturday 15:20 AM</small>
                                 </div>
                                 <p class="mt-3 mb-3">Package arrived at an Amazon facility, NY</p>
                             </div>
                         </li>
+                        @endif
+                        @if($order->status == 'dispatched for delivery')
                         <li class="timeline-item timeline-item-transparent border-dashed">
                             <span class="timeline-point timeline-point-primary"></span>
                             <div class="timeline-event">
@@ -199,15 +283,18 @@
                                 <p class="mt-3 mb-3">Package has left an Amazon facility, NY</p>
                             </div>
                         </li>
+                        @endif
+                        @if($order->status == 'delivered')
                         <li class="timeline-item timeline-item-transparent border-transparent pb-0">
                             <span class="timeline-point timeline-point-secondary"></span>
                             <div class="timeline-event pb-0">
                                 <div class="timeline-header">
-                                    <h6 class="mb-0">Delivery</h6>
+                                    <h6 class="mb-0">Delivered</h6>
                                 </div>
                                 <p class="mt-1 mb-0">Package will be delivered by tomorrow</p>
                             </div>
                         </li>
+                        @endif
                     </ul>
                 </div>
             </div>
@@ -251,6 +338,7 @@
                         <!-- <a href=" javascript:void(0)" data-bs-toggle="modal" data-bs-target="#addNewAddress">Edit</a> -->
                     </h6>
                 </div>
+                @if($address)
                 <div class="card-body">
                     <p class="mb-0">{{$address->first_name}} {{$address->last_name}} <br />
                         {{$address->address_line1}}<br />
@@ -258,6 +346,7 @@
                         {{$address->city}}, {{$address->state}}, {{$address->zip}}<br />
                         {{$address->phone}} {{$address->email}}</p>
                 </div>
+                @endif
             </div>
             <div class="card mb-6">
                 <div class="card-header d-flex justify-content-between">
@@ -266,6 +355,7 @@
                         <!-- <a href=" javascript:void(0)" data-bs-toggle="modal" data-bs-target="#addNewAddress">Edit</a> -->
                     </h6>
                 </div>
+                @if($address)
                 <div class="card-body">
                     <p class="mb-0">{{$address->first_name}} {{$address->last_name}} <br />
                         {{$address->address_line1}}<br />
@@ -273,6 +363,7 @@
                         {{$address->city}}, {{$address->state}}, {{$address->zip}}<br />
                         {{$address->phone}} {{$address->email}}</p>
                 </div>
+                @endif
             </div>
         </div>
     </div>

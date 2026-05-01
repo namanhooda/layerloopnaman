@@ -22,6 +22,7 @@ use App\Http\Controllers\Auth\CustomAuthenticatedSessionController;
 
 Route::get('/testdatanmn', [TestController::class, 'index']);
 Route::get('/download-pdf', [TestController::class, 'downloadPdf']);
+Route::get('/download-pdf-work', [TestController::class, 'downloadPdfwork']);
 
 
 Route::get('/admin/orders/{id}/create-shipment', [OrderController::class, 'createShipment'])->name('orders.createShipment');
@@ -159,6 +160,11 @@ Route::middleware(['role:Admin'])->group(function () {
             Route::get('/ecom-dashboard', [DashboardController::class, 'ecomDashboard'])->name('ecom.dashboard');
             Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
             Route::get('order-detail/{id}', [OrderController::class, 'show'])->name('orders.show');
+            Route::get('order-create/', [OrderController::class, 'create'])->name('orders.create');
+            Route::post('order-store/', [OrderController::class, 'store'])->name('orders.store');
+            Route::get('/admin/users/search', [OrderController::class, 'search'])->name('users.search');
+            Route::post('/admin/address/store/order', [OrderController::class, 'addressStore'])->name('address.store');
+            Route::get('/admin/products/search', [OrderController::class, 'searchProdct'])->name('products.search');
 
             Route::resource('blog-categories', App\Http\Controllers\Admin\BlogCategoryController::class);
             Route::resource('blogs', App\Http\Controllers\Admin\BlogController::class);

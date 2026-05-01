@@ -6,10 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Services\ShiprocketService;
 use Yajra\DataTables\Facades\DataTables;
 use App\Models\Order;
+use App\Models\Product;
 use App\Models\User;
 use App\Models\Address;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class OrderController extends Controller
 {
@@ -74,6 +77,7 @@ public function index(Request $request)
         'delivered' => (clone $totalOrders)->where('status', 'Delivered')->count(),
         'cancelled' => (clone $totalOrders)->where('status', 'cancelled')->count(),
         'pending'   => (clone $totalOrders)->whereNotIn('status', ['rto','cancelled','delivered'])->count(),
+        'rto' => (clone $totalOrders)->where('status', 'like', '%rto%')->count(),
     ];
 
     return view('admin.orders.index', compact('orderscount'));
@@ -87,6 +91,47 @@ public function index(Request $request)
         $address = Address::find($order->address_id); 
         return view('admin.orders.show', compact('order','orderItems','user','address'));
     }
+
+    public function create(Request $request)
+    {
+        return view('admin.orders.create');
+    }
+
+    public function store(Request $request)
+{
+
+    $request->validate([
+        'shipment_from'    => 'required|string|max:255',
+        'sub_total'        => 'required|numeric|min:0',
+        'shipping_charges' => 'required|numeric|min:0',
+        'total'            => 'required|numeric|min:0',
+        'status'           => 'required',
+        'order_date'       => 'required|date',
+        'payment_status'   => 'required',
+        'payment_mode'     => 'required',
+    ]);
+
+        $code = 'LLORD' . str_pad(mt_rand(0, 999999), 6, '0', STR_PAD_LEFT);
+    $address = Address::find($request->address_id);
+    $user = User::find($address->user_id);
+    $user_id = $user->id ?? null;
+
+    Order::create([
+        'order_code'    => $code,
+        'shipment_from'    => $request->shipment_from,
+        'sub_total'        => $request->sub_total,
+        'shipping_charges' => $request->shipping_charges,
+        'total'            => $request->total,
+        'status'           => $request->status,
+        'order_date'       => $request->order_date,
+        'payment_status'   => $request->payment_status,
+        'payment_mode'     => $request->payment_mode,
+        'address_id'       => $request->address_id,
+    ]);
+
+    return redirect()->route('admin.orders.index')
+        ->with('success', 'Order created successfully');
+}
 
 
 
@@ -171,5 +216,86 @@ public function index(Request $request)
             'message' => $response['message'] ?? 'Shiprocket error'
         ], 500);
     }
+  
+public function search(Request $request)
+{
+    $search = $request->search;
+
+    $addresses = Address::query()
+        ->when($search, function ($query) use ($search) {
+            $query->where('first_name', 'like', "%$search%")
+                  ->orWhere('last_name', 'like', "%$search%")
+                  ->orWhere('email', 'like', "%$search%")
+                  ->orWhere('phone', 'like', "%$search%");
+        })
+        ->limit(20)
+        ->get(['id', 'first_name', 'last_name', 'email', 'phone']);
+
+    return response()->json($addresses);
+}
+
+
+
+public function addressStore(Request $request)
+{
+    $request->validate([
+        'first_name'     => 'required',
+        'last_name'      => 'nullable',
+        'country'        => 'required',
+        'address_line1'  => 'required',
+        'city'           => 'required',
+        'state'          => 'required',
+        'zip'            => 'required',
+        'email'          => 'nullable|email',
+        'phone'          => 'nullable'
+    ]);
+
+    // ❗ Ensure at least one exists
+    if (!$request->email && !$request->phone) {
+        return response()->json([
+            'status' => false,
+            'message' => 'Email or Phone is required'
+        ], 422);
+    }
+
+    // 🔍 Find user
+    $user = User::query()
+        ->when($request->email, function ($q) use ($request) {
+            $q->where('email', $request->email);
+        })
+        ->when($request->phone, function ($q) use ($request) {
+            $q->orWhere('phone', $request->phone);
+        })
+        ->first();
+
+    // ✅ If user not found → create new user
+    if (!$user) {
+
+        $user = User::create([
+            'name'     => $request->first_name . ' ' . $request->last_name,
+            'email'    => $request->email,
+            'phone'    => $request->phone,
+            'password' => Hash::make(Str::random(8)), // random password
+        ]);
+    }
+
+    // ✅ Create Address with user_id
+    $data = $request->all();
+    $data['user_id'] = $user->id;
+
+    $address = Address::create($data);
+
+
+    return response()->json($address);
+}
+
+public function searchProdct(Request $request)
+{
+    $products = Product::where('name', 'like', "%{$request->search}%")
+        ->limit(20)
+        ->get(['id', 'name', 'price', 'featured_image']);
+
+    return response()->json($products);
+}
 
 }

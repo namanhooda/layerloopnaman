@@ -7,6 +7,9 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
+use Illuminate\Support\Facades\File;
 
 use Barryvdh\DomPDF\Facade\Pdf;
 
@@ -131,4 +134,67 @@ public function downloadPdf()
 
     return $pdf->download('products.pdf');
 }
+
+
+
+public function downloadPdfwork()
+{
+    
+set_time_limit(120); // 2 minutes
+ini_set('max_execution_time', 120);
+    ini_set('memory_limit', '512M');
+
+    $files = collect(Storage::disk('public')->files('Ourwork'))
+        ->filter(fn($f) => preg_match('/\.(jpg|jpeg|png)$/i', $f))
+        ->take(248);
+
+    $processed = [];
+
+    foreach ($files as $file) {
+
+        $originalPath = storage_path('app/public/' . $file);
+        if (!file_exists($originalPath)) continue;
+
+        // create temp folder
+        $tempDir = storage_path('app/public/temp');
+        if (!File::exists($tempDir)) {
+            File::makeDirectory($tempDir, 0755, true);
+        }
+
+        $tempPath = $tempDir . '/temp_' . uniqid() . '.jpg';
+
+        // 🔥 resize using native GD
+        $image = imagecreatefromstring(file_get_contents($originalPath));
+
+        if (!$image) continue;
+
+        $width = imagesx($image);
+        $height = imagesy($image);
+
+        $newWidth = 800;
+        $newHeight = ($height / $width) * $newWidth;
+
+        $tmp = imagecreatetruecolor($newWidth, $newHeight);
+
+        imagecopyresampled(
+            $tmp, $image,
+            0, 0, 0, 0,
+            $newWidth, $newHeight,
+            $width, $height
+        );
+
+        // save compressed
+        imagejpeg($tmp, $tempPath, 70);
+
+        imagedestroy($image);
+        imagedestroy($tmp);
+
+        $processed[] = $tempPath;
+    }
+
+    $pdf = Pdf::loadView('pdf.work', ['files' => $processed]);
+
+    return $pdf->stream('our-work.pdf');
+}
+
 }

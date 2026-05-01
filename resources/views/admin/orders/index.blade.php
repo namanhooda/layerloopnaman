@@ -64,8 +64,8 @@
                     <div class="col-sm-6 col-lg-3">
                         <div class="d-flex justify-content-between align-items-start">
                             <div>
-                                <h4 class="mb-0">0</h4>
-                                <p class="mb-0">Failed</p>
+                                <h4 class="mb-0">{{ $orderscount['rto']}}</h4>
+                                <p class="mb-0">Rto</p>
                             </div>
                             <span class="avatar p-2">
                                 <span class="avatar-initial bg-label-secondary rounded"><i
@@ -79,10 +79,11 @@
     </div>
     <!-- Permission Table -->
     <div class="card">
-        <h5 class="card-header d-flex justify-content-between align-items-center">
-            <span>Orders</span>
+       <h5 class="card-header d-flex justify-content-between align-items-center">
+    <span>Orders</span>
 
-        </h5>
+    <a href="{{ route('admin.orders.create') }}" class="btn btn-primary btn-sm">Create Order</a>
+</h5>
         @can("users read")
         <div class="card-datatable table-responsive">
             <table class="datatables-permissions table border-top">
