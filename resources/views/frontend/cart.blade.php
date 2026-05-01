@@ -52,7 +52,8 @@
                                                 </a>
                                             </figure>
                                             <h3 class="product-title">
-                                                <a href="{{ url('shop-product-detail/' . $item->product->slug) }}">{{ $item->product->name }}</a>
+                                                <a
+                                                    href="{{ url('shop-product-detail/' . $item->product->slug) }}">{{ $item->product->name }}</a>
                                             </h3>
                                         </div>
                                     </td>
@@ -208,9 +209,10 @@
                                     </tr>
                                 </tbody>
                             </table>
-<!-- <button id="buyNow" class="btn btn-primary btn-block">
-    Checkout with Shiprocket
-</button> -->
+                            <!-- <button onclick="openShiprocketCheckout()">Checkout</button> -->
+                            <!-- <button id="buyNow" class="btn btn-primary btn-block">
+                                Checkout with Shiprocket
+                            </button> -->
 
 
                             @if(auth()->check())
@@ -235,56 +237,36 @@
 </main><!-- End .main -->
 
 @endsection
+<!-- <button id="buyNow">Buy Now</button> -->
 
-
-<script src="https://checkout-ui.shiprocket.com/assets/js/channels/shopify.js"></script>
+<script src="https://checkout-api.shiprocket.com/checkout.js"></script>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+document.getElementById('buyNow').addEventListener('click', async function(e) {
 
-    const btn = document.getElementById('buyNow');
+    let res = await fetch("{{ route('shiprocket.checkout.token') }}");
+    let data = await res.json();
 
-    btn.addEventListener('click', async function (e) {
+    console.log("CHECKOUT TOKEN:", data);
 
-        e.preventDefault(); // ⭐ required
+    if (!data.token) {
+        alert("Token not generated");
+        return;
+    }
 
-        try {
-
-            let res = await fetch("{{ route('shiprocket.token') }}", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                },
-                body: JSON.stringify({})
-            });
-
-            let data = await res.json();
-
-            console.log("TOKEN RESPONSE:", data);
-
-            if (!data.result?.token) {
-                alert("Token not generated");
-                return;
-            }
-
-            HeadlessCheckout.addToCart(e, data.result.token);
-
-        } catch (err) {
-            console.error(err);
-            alert("Checkout failed");
-        }
+    HeadlessCheckout.addToCart(e, data.token, {
+        fallbackUrl: "{{ route('cart') }}"
     });
-
 });
 </script>
 
+@push('scripts')
 
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
+<!-- ✅ FIRST load SDK -->
 <script>
     $(document).on('change', '.shipping-option', function () {
         let shippingType = $(this).attr('id'); // free-shipping, standart-shipping, express-shipping
@@ -306,6 +288,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     });
+
 </script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -336,3 +319,4 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 </script>
+@endpush

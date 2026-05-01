@@ -484,6 +484,8 @@ document.querySelectorAll(".add-to-wishlist").forEach(button => {
         @endforeach
     @endif
 </script>
+
+@stack('scripts')
 </body>
 
 

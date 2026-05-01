@@ -34,6 +34,10 @@ return [
         'secret' => env('SHIPROCKET_SECRET'),
         'base' => env('SHIPROCKET_BASE_URL'),
     ],
+    'shiprocket_checkout' => [
+    'key' => env('SHIPROCKET_CHECKOUT_KEY'),
+    'secret' => env('SHIPROCKET_CHECKOUT_SECRET'),
+],
 
     'ses' => [
         'key' => env('AWS_ACCESS_KEY_ID'),

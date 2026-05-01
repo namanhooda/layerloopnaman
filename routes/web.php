@@ -25,6 +25,7 @@ Route::get('/download-pdf', [TestController::class, 'downloadPdf']);
 Route::get('/download-pdf-work', [TestController::class, 'downloadPdfwork']);
 
 
+
 Route::get('/admin/orders/{id}/create-shipment', [OrderController::class, 'createShipment'])->name('orders.createShipment');
 Route::post('/shiprocket/webhook/order', [ShiprocketWebhookController::class, 'handle']);
 Route::post('/shiprocket-token', [CheckoutController::class, 'generateToken'])
@@ -34,6 +35,11 @@ Route::post('/shiprocket-token', [CheckoutController::class, 'generateToken'])
     return view('frontend.checkout-success');
 })->name('checkout.success');
 
+Route::get('/shiprocket/checkout-token', [CheckoutController::class, 'getCheckoutToken'])
+    ->name('shiprocket.checkout.token');
+
+    Route::get('/api/shiprocket/products', [CheckoutController::class, 'shiprocketProducts']);
+    Route::get('/api/shiprocket/collections', [CheckoutController::class, 'shiprocketCollections']);
 
 
 

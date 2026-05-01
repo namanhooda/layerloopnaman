@@ -118,7 +118,7 @@
                         width="105" height="25" class="desktop-logo">
                 </a>
             </div>
-            <div class="header-center">
+            <!-- <div class="header-center">
                 <div
                     class="header-search header-search-extended header-search-visible header-search-no-radius d-none d-lg-block">
                     <a href="#" class="search-toggle" role="button"><i class="icon-search"></i></a>
@@ -133,7 +133,7 @@
                         </div>
                     </form>
                 </div>
-            </div>
+            </div> -->
             <div class="header-right">
                 <!-- SEARCH ICON (RIGHT SIDE) -->
         <div class="account">
