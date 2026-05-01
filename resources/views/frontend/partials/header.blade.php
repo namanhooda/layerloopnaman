@@ -1,5 +1,25 @@
 <header class="header header-2 header-intro-clearance">
 <style>
+
+@media (max-width: 991px) {
+    .search-results {
+        height: calc(100vh - 120px);
+        overflow-y: auto;
+        grid-template-columns: 1fr;
+    }
+}
+
+    .search-results {
+        height: calc(100vh - 120px) !important;
+        overflow-y: auto !important;
+}
+    .search-resultsss {
+        height: calc(100vh - 120px) !important;
+        overflow-y: auto !important;
+}
+
+
+
     @media screen and (min-width: 768px) {
         .desktop-logo {
             width: 24% !important;
@@ -116,9 +136,11 @@
             </div>
             <div class="header-right">
                 <!-- SEARCH ICON (RIGHT SIDE) -->
+        <div class="account">
 <a href="javascript:void(0)" id="open-search">
     <i class="icon-search"></i>
 </a>
+</div>
 
 
                 
@@ -235,7 +257,7 @@
     </div>
 
     <!-- Results -->
-    <div class="search-results">
+    <div class="search-results search-resultsss">
 
         <!-- Suggestions -->
         <div class="search-suggestions" style="display:none">

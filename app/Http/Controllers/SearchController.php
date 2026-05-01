@@ -21,7 +21,7 @@ public function ajax(Request $request)
     }
 
     $products = Product::where('name', 'LIKE', "%{$q}%")
-        ->limit(8)
+        ->limit(50)
         ->get();
 
     return response()->json([
