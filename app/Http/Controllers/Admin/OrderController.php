@@ -162,7 +162,7 @@ if ($validator->fails()) {
             'status'            => $request->status,
             'order_date'        => $request->order_date,
             'payment_status'    => $request->payment_status,
-            'payment_mode'      => $request->payment_mode,
+            'payment_mod'      => $request->payment_mode,
             'address_id'        => $request->address_id,
             'user_id'           => $user_id,
 

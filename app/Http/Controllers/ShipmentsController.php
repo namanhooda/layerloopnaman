@@ -16,17 +16,23 @@ class ShipmentsController extends Controller
     //
 
 
-    public function fetchShipmentsNimbus(Order $order)
-    {
-        $response = \App\Services\NimbusPostService::fetchNimbusOrders([
-            'page'      => 1,
-            'per_page'  => 200,
-            'from_date' => '2024-01-01',
-            'to_date'   => '2024-12-31',
-        ]);
+public function fetchShipmentsNimbus(Order $order)
+{
+    // Remove dd
+    // dd('nmn');
 
-            return redirect()->back()->with('success', 'Shipments fetch successfully!');
-    }
+    $fromDate = Carbon::now()->subDays(45)->format('Y-m-d');
+    $toDate   = Carbon::now()->format('Y-m-d');
+
+    $response = \App\Services\NimbusPostService::fetchNimbusOrders([
+        'page'      => 1,
+        'per_page'  => 200,
+        'from_date' => $fromDate,
+        'to_date'   => $toDate,
+    ]);
+
+    return redirect()->back()->with('success', 'Last 45 days shipments fetched successfully!');
+}
     public function fetchShipmentsShiorocket(Order $order)
     {
         $result = ShiprocketService::fetchAndStoreOrders();
