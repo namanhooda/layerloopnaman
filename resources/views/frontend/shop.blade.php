@@ -149,6 +149,12 @@
                                         ( {{ $reviewsCount }} Reviews )
                                     </span>
                                 </div>
+                                @if($product->prototype == 2)
+                                <div class="ratings-container">
+                                    
+                                @include('frontend.buttons.addtocart')
+                                </div>
+                                @endif
 
                                 <div class="product-nav product-nav-dots"></a>
 

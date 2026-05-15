@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Services\ShiprocketService;
 use Yajra\DataTables\Facades\DataTables;
+use App\Jobs\FetchNimbusShipmentsJob;
 use App\Models\Order;
 use App\Models\User;
 use App\Models\Address;
@@ -18,20 +19,22 @@ class ShipmentsController extends Controller
 
 public function fetchShipmentsNimbus(Order $order)
 {
-    // Remove dd
-    // dd('nmn');
+    // $fromDate = Carbon::now()->subDays(10)->format('Y-m-d');
+    // $toDate   = Carbon::now()->format('Y-m-d');
 
-    $fromDate = Carbon::now()->subDays(45)->format('Y-m-d');
-    $toDate   = Carbon::now()->format('Y-m-d');
+    // $response = \App\Services\NimbusPostService::fetchNimbusOrders([
+    //     'page'      => 1,
+    //     'per_page'  => 200,
+    //     'from_date' => $fromDate,
+    //     'to_date'   => $toDate,
+    // ]);
 
-    $response = \App\Services\NimbusPostService::fetchNimbusOrders([
-        'page'      => 1,
-        'per_page'  => 200,
-        'from_date' => $fromDate,
-        'to_date'   => $toDate,
-    ]);
+    // return redirect()->back()->with('success', 'Last 45 days shipments fetched successfully!');
 
-    return redirect()->back()->with('success', 'Last 45 days shipments fetched successfully!');
+
+    FetchNimbusShipmentsJob::dispatch();
+
+    return back()->with('success', 'Shipments sync started in background!');
 }
     public function fetchShipmentsShiorocket(Order $order)
     {

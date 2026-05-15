@@ -31,8 +31,27 @@ class NimbusPostService
         ->get('https://ship.nimbuspost.com/api/shipments', $params);
 
         $dataShipments = $shipments->json();
+        
+        // Safety check
+        if (!isset($dataShipments['data'])) {
+            return [];
+        }
 
-        foreach ($dataShipments['data'] as $shipmentOrder) {
+        $fromDate = Carbon::now()->subDays(30)->startOfDay(); // 20 days ago
+        $toDate   = Carbon::now()->endOfDay(); // today
+
+        $filtered = collect($dataShipments['data'])->filter(function ($shipment) use ($fromDate, $toDate) {
+            if (!isset($shipment['created'])) {
+                return false;
+            }
+
+            $createdDate = Carbon::parse($shipment['created']);
+
+            return $createdDate->between($fromDate, $toDate);
+        })->values(); // reset keys
+
+
+        foreach ($filtered as $shipmentOrder) {
 
             $code = 'LLORD' . str_pad(mt_rand(0, 999999), 6, '0', STR_PAD_LEFT);
 
