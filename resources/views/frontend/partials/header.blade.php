@@ -315,7 +315,7 @@
                             <a href="{{ url('shop') }}" style="font-size: 20px !important;">Shop</a>
                         </li>
                         <li class="{{ request()->is('about') || request()->is('contact_us') || request()->is('faq') ? 'active' : '' }}">
-                            <a href="#" class="sf-with-ul" style="font-size: 20px !important;">Pages</a>
+                            <a href="#" class="sf-with-ul" style="font-size: 20px !important;">Pagesss</a>
                             <ul>
                                 <li>
                                     <a href="{{ url('about') }}" class="{{ request()->is('about') ? 'active' : '' }}">About</a>
