@@ -19,7 +19,6 @@ class ShipmentsController extends Controller
 
 public function fetchShipmentsNimbus(Order $order)
 {
-    dd('nmn');
     // $fromDate = Carbon::now()->subDays(10)->format('Y-m-d');
     // $toDate   = Carbon::now()->format('Y-m-d');
 

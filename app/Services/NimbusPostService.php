@@ -50,7 +50,6 @@ class NimbusPostService
             return $createdDate->between($fromDate, $toDate);
         })->values(); // reset keys
 
-
         foreach ($filtered as $shipmentOrder) {
 
             $code = 'LLORD' . str_pad(mt_rand(0, 999999), 6, '0', STR_PAD_LEFT);
