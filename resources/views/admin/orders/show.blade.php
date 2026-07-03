@@ -45,8 +45,14 @@
 
         <!-- RIGHT SECTION -->
         <div class="d-flex gap-2">
-            
-            <button class="btn btn-label-danger delete-order">Delete Order</button>
+            <form action="{{ route('orders.destroy', $order->id) }}" method="POST" onsubmit="return confirmDelete(event)">
+    @csrf
+    @method('DELETE')
+
+    <button type="submit" class="btn btn-label-danger">
+        Delete Order
+    </button>
+</form>
             <button class="btn btn-label-primary">Update Status</button>
         </div>
 
@@ -638,5 +644,13 @@
     </div>
     <!--/ Add New Address Modal -->
 </div>
-
+<script>
+function confirmDelete(event) {
+    if (!confirm('Are you sure you want to delete this order?')) {
+        event.preventDefault();
+        return false;
+    }
+    return true;
+}
+</script>
 @endsection

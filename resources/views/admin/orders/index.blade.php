@@ -92,7 +92,7 @@
                         <th>#</th>
                         <th>Order Code</th>
                         <th>Mobile</th>
-                        <th>Email</th>
+                        <th>Name</th>
                         <th>Total</th>
                         <th>Status</th>
                         <th>Payment Mode</th>
@@ -162,8 +162,8 @@
                     name: 'phone'
                 },
                 {
-                    data: 'email',
-                    name: 'email'
+                    data: 'name',
+                    name: 'name'
                 },
                 {
                     data: 'total',

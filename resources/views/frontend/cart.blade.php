@@ -143,7 +143,7 @@
                                     $coupon = session('coupon');
 
                                     if ($coupon && $total >= $coupon['min_cart_value']) {
-                                    $discount = $coupon['type'] === 'percent'
+                                    $discount = $coupon['type'] === 'percentage'
                                     ? ($total * $coupon['value'] / 100)
                                     : $coupon['value'];
                                     $total -= $discount;

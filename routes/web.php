@@ -25,7 +25,8 @@ Route::get('/download-pdf', [TestController::class, 'downloadPdf']);
 Route::get('/download-pdf-work', [TestController::class, 'downloadPdfwork']);
 
 
-
+Route::delete('/orders/delete/{id}', [OrderController::class, 'destroy'])
+    ->name('orders.destroy');
 Route::get('/admin/orders/{id}/create-shipment', [OrderController::class, 'createShipment'])->name('orders.createShipment');
 Route::post('/shiprocket/webhook/order', [ShiprocketWebhookController::class, 'handle']);
 Route::post('/shiprocket-token', [CheckoutController::class, 'generateToken'])

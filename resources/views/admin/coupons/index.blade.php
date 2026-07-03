@@ -31,6 +31,8 @@
                     <tr>
                         <th>#</th>
                         <th>Code</th>
+                        <th>Type</th>
+                        <th>Value</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -88,6 +90,14 @@
                 {
                     data: 'coupon_code',
                     name: 'coupon_code'
+                },
+                {
+                    data: 'type',
+                    name: 'type'
+                },
+                {
+                    data: 'value',
+                    name: 'value'
                 },
                 {
                     data: 'actions',

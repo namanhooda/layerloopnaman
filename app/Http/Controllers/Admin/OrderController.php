@@ -34,7 +34,7 @@ public function index(Request $request)
 )
 
         ->addColumn('phone', fn ($o) => $o->user?->phone ?? 'N/A')
-        ->addColumn('email', fn ($o) => $o->user?->email ?? 'N/A')
+        ->addColumn('name', fn ($o) => $o->user?->name ?? 'N/A')
 
         ->addColumn('order_date', fn ($o) =>
             $o->order_date?->format('d F Y') ?? 'N/A'
@@ -80,8 +80,8 @@ public function index(Request $request)
         ->filterColumn('phone', fn ($q,$k) =>
             $q->whereHas('user', fn ($uq) => $uq->where('phone','like',"%{$k}%"))
         )
-        ->filterColumn('email', fn ($q,$k) =>
-            $q->whereHas('user', fn ($uq) => $uq->where('email','like',"%{$k}%"))
+        ->filterColumn('name', fn ($q,$k) =>
+            $q->whereHas('user', fn ($uq) => $uq->where('name','like',"%{$k}%"))
         )
         ->filterColumn('order_code', fn ($q,$k) =>
             $q->where('order_code','like',"%{$k}%")
@@ -360,6 +360,18 @@ public function searchProdct(Request $request)
         ->get(['id', 'name', 'price', 'featured_image']);
 
     return response()->json($products);
+}
+public function destroy($id)
+{
+    $order = Order::findOrFail($id);
+
+    // Delete all order items
+    OrderItem::where('order_id', $order->id)->delete();
+
+    // Delete the order
+    $order->delete();
+
+    return redirect()->route('admin.orders.index')->with('success', 'Order deleted successfully.');
 }
 
 }

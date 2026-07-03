@@ -6,305 +6,455 @@
 <link rel="stylesheet" href="{{ asset('backend/assets/vendor/libs/quill/katex.css') }}" />
 <link rel="stylesheet" href="{{ asset('backend/assets/vendor/libs/quill/editor.css') }}" />
 <link rel="stylesheet" href="{{ asset('backend/assets/vendor/libs/select2/select2.css') }}" />
-<link rel="stylesheet" href="{{ asset('backend/assets/vendor/libs/dropzone/dropzone.css') }}" />
-<link rel="stylesheet" href="{{ asset('backend/assets/vendor/libs/flatpickr/flatpickr.css') }}" />
 <link rel="stylesheet" href="{{ asset('backend/assets/vendor/libs/tagify/tagify.css') }}" />
 
 <div class="container-xxl flex-grow-1 container-p-y">
     <div class="app-ecommerce">
-        <!-- Success Message -->
+
+        {{-- Success Message --}}
         @if(session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <div class="alert alert-success alert-dismissible fade show">
                 {{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         @endif
 
-        <!-- Error Messages -->
+        {{-- Error Messages --}}
         @if ($errors->any())
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <strong>Whoops!</strong> There were some problems with your input:
+            <div class="alert alert-danger alert-dismissible fade show">
+                <strong>Whoops!</strong>
                 <ul class="mt-2 mb-0">
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
                     @endforeach
                 </ul>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         @endif
-        <!-- Add Product -->
-        <form method="POST" action="{{ route('admin.products.update', $product->id) }}" enctype="multipart/form-data">
-    @csrf
-    @method('PUT')
-            <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-6 row-gap-4">
-                <div class="d-flex flex-column justify-content-center">
-                    <h4 class="mb-1">Edit Product #{{$product->code}}</h4>
-                    <p class="mb-0">Orders placed across your store</p>
+
+        <form method="POST"
+              action="{{ route('admin.products.update',$product->id) }}"
+              enctype="multipart/form-data">
+
+            @csrf
+            @method('PUT')
+
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4 row-gap-4">
+                <div>
+                    <h4 class="mb-1">Edit Product</h4>
+                    <p class="mb-0">Update your product details</p>
                 </div>
-                <div class="d-flex align-content-center flex-wrap gap-4">
-                    
-                    <button type="submit" class="btn btn-primary">Update product</button>
+
+                <div class="d-flex gap-3">
+                    <a href="{{ route('admin.products.index') }}"
+                       class="btn btn-label-secondary">
+                        Cancel
+                    </a>
+
+                    <button type="submit" class="btn btn-primary">
+                        Update Product
+                    </button>
                 </div>
             </div>
 
             <div class="row">
-                <!-- Left column -->
-                <div class="col-12 col-lg-8">
-                    <!-- Product Information -->
-                    <div class="card mb-6">
+
+                <!-- LEFT SIDE -->
+                <div class="col-lg-8">
+
+                    <!-- PRODUCT INFO -->
+                    <div class="card mb-4">
                         <div class="card-header">
-                            <h5 class="card-tile mb-0">Product information</h5>
+                            <h5 class="mb-0">Product Information</h5>
                         </div>
+
                         <div class="card-body">
-                            <div class="mb-6">
-                                <label class="form-label">Name</label>
-                                <input type="text" class="form-control" name="productTitle" placeholder="Product title" value="{{$product->name}}" required />
+
+                            <!-- NAME -->
+                            <div class="mb-4">
+                                <label class="form-label">Product Name</label>
+
+                                <input type="text"
+                                       name="productTitle"
+                                       class="form-control"
+                                       value="{{ old('productTitle',$product->name) }}"
+                                       required>
                             </div>
 
-                            <div class="row mb-6">
-                                <div class="col">
-                                    <label class="form-label">SKU</label>
-                                    <input type="text" class="form-control" name="productSku" value="{{$product->sku}}" placeholder="SKU" required />
-                                </div>
-                                <div class="col">
-                                    <label class="form-label">Barcode</label>
-                                    <input type="text" class="form-control" name="productBarcode" value="{{$product->barcode}}" placeholder="0123-4567" />
-                                </div>
-                            </div>
+                            <!-- PROTOTYPE -->
+                            <div class="mb-4">
+                                <label class="form-label">Prototype</label>
 
-                            <div>
-    <label class="mb-1">Description (Optional)</label>
-    <div class="form-control p-0">
-        <div class="comment-toolbar border-0 border-bottom">
-            <div class="d-flex justify-content-start">
-                <span class="ql-formats me-0">
-                    <button class="ql-bold"></button>
-                    <button class="ql-italic"></button>
-                    <button class="ql-underline"></button>
-                    <button class="ql-list" value="ordered"></button>
-                    <button class="ql-list" value="bullet"></button>
-                    <button class="ql-link"></button>
-                    <button class="ql-image"></button>
-                </span>
-            </div>
-        </div>
-        <div class="comment-editor border-0 pb-6" id="ecommerce-category-description"></div>
-    </div>
-    <input type="hidden" name="description" id="descriptionInput" value="{{ $product->description }}">
-</div>
+                                <select name="prototype"
+                                        id="prototype"
+                                        class="form-select select2"
+                                        required>
 
-                        </div>
-                    </div>
-                    <!-- Media -->
-                    <div class="card mb-6">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <h5 class="mb-0 card-title">Featured Image</h5>
-                            <a href="javascript:void(0);" class="fw-medium">Add media from URL</a>
-                        </div>
-                        <div class="card-body">
-                            <input type="file" name="featuredimage" class="form-control mb-3">
+                                    <option value="">Select Prototype</option>
 
-                            @if(!empty($product->featured_image))
-                                <div class="mt-2">
-                                    <label class="form-label">Current Featured Image:</label><br>
-                                    <img src="{{ asset('storage/' . $product->featured_image) }}" alt="Featured Image" style="max-width: 200px; height: auto;" class="img-thumbnail">
-                                </div>
-                            @endif
-                        </div>
-                    </div>
+                                    @foreach($prototypes as $type)
 
-                    <!-- Media -->
-                    <div class="card mb-6">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <h5 class="mb-0 card-title">Product Images</h5>
-                            <a href="javascript:void(0);" class="fw-medium">Add media from URL</a>
-                        </div>
-                        <div class="card-body">
-                            <input type="file" name="images[]" class="form-control mb-3" multiple>
+                                        <option value="{{ $type->id }}"
+                                            {{ old('prototype',$product->prototype) == $type->id ? 'selected' : '' }}>
+                                            {{ $type->name }}
+                                        </option>
 
-                            @if(!empty($product->image_path))
-                                <div class="row mt-3">
-                                    @foreach(json_decode($product->image_path, true) as $img)
-                                        <div class="col-md-3 mb-3">
-                                            <img src="{{ asset('storage/' . $img) }}" alt="Product Image" style="max-width: 100%; height: auto;" class="img-thumbnail">
-                                        </div>
                                     @endforeach
-                                </div>
-                            @endif
-                        </div>
-                    </div>
 
-                    <div class="card mb-6">
-                        <div class="card-header">
-                            <h5 class="card-title mb-0">Variants</h5>
-                        </div>
-                        <div class="card-body">
-                            <form class="form-repeater">
-                                <div data-repeater-list="group-a">
-                                    <div data-repeater-item>
-                                        <div class="row g-sm-6 mb-6">
-                                           @php
-    $selectedSizes = $product->size ? json_decode($product->size) : [];
-@endphp
+                                </select>
+                            </div>
 
-<div class="col-sm-12">
-    <label class="form-label">Sizes</label>
-    @foreach(['S','M','L','XL','XXL'] as $size)
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" name="sizes[]" value="{{ $size }}" id="size{{ $size }}"
-                {{ in_array($size, $selectedSizes) ? 'checked' : '' }}>
-            <label class="form-check-label" for="size{{ $size }}">{{ $size }}</label>
-        </div>
-    @endforeach
-</div>
+                            <!-- CATEGORY -->
+                            <div class="mb-4">
+                                <label class="form-label">Category</label>
 
+                                <select name="category"
+                                        id="category"
+                                        class="form-select select2"
+                                        required>
 
-                                        </div>
-                                        <div class="row g-sm-6 mb-6">
-                                            <div class="col-sm-4">
-                                                <label class="form-label" for="form-repeater-1-1">Options</label>
-                                                <select id="form-repeater-1-1" class="select2 form-select"
-                                                    data-placeholder="Size">
-                                                    <option value="">Size</option>
-                                                    <option value="size">Size</option>
-                                                    <option value="color">Color</option>
-                                                    <option value="weight">Weight</option>
-                                                    <option value="smell">Smell</option>
-                                                </select>
-                                            </div>
+                                    <option value="{{ $product->category }}" selected>
+                                        {{ $product->category }}
+                                    </option>
 
-                                            <div class="col-sm-8">
-                                                <label class="form-label invisible" for="form-repeater-1-2">Not
-                                                    visible</label>
-                                                <input type="number" id="form-repeater-1-2" class="form-control"
-                                                    placeholder="Enter size" />
-                                            </div>
-                                        </div>
+                                </select>
+                            </div>
+
+                            <!-- DESCRIPTION -->
+                            <div class="mb-4">
+
+                                <label class="form-label">Description</label>
+
+                                <div class="form-control p-0">
+
+                                    <div class="comment-toolbar border-bottom">
+                                        <span class="ql-formats">
+                                            <button class="ql-bold"></button>
+                                            <button class="ql-italic"></button>
+                                            <button class="ql-underline"></button>
+                                            <button class="ql-list" value="ordered"></button>
+                                            <button class="ql-list" value="bullet"></button>
+                                        </span>
                                     </div>
+
+                                    <div class="comment-editor border-0 pb-4"
+                                         id="editor">
+                                        {!! old('description',$product->description) !!}
+                                    </div>
+
                                 </div>
-                                <div>
-                                    <button class="btn btn-primary" data-repeater-create>
-                                        <i class="icon-base ti tabler-plus icon-xs me-2"></i>
-                                        Add another option
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <!-- Inventory -->
-                    <div class="card mb-6">
-                        <div class="card-header">
-                            <h5 class="card-title mb-0">Inventory</h5>
-                        </div>
-                        <div class="card-body">
-                            <label class="form-label">Add to Stock</label>
-                            <input type="number" name="stock" class="form-control mb-4" placeholder="Quantity" value="{{$product->stock_quantity}}" required />
-                            <div>
-                                <h6 class="mb-2 fw-normal">Product in stock now: 0</h6>
-                                <h6 class="mb-2 fw-normal">Last updated: {{ now()->format('d M, Y') }}</h6>
+
+                                <input type="hidden"
+                                       name="description"
+                                       id="descriptionInput">
                             </div>
+
                         </div>
                     </div>
+
+                    <!-- FEATURED IMAGE -->
+                    <div class="card mb-4">
+
+                        <div class="card-header">
+                            <h5 class="mb-0">Featured Image</h5>
+                        </div>
+
+                        <div class="card-body">
+
+                            @if($product->featured_image)
+
+                                <div class="mb-3">
+                                    <img src="{{ asset('storage/'.$product->featured_image) }}"
+                                         width="150"
+                                         class="rounded border">
+                                </div>
+
+                            @endif
+
+                            <input type="file"
+                                   name="featuredimage"
+                                   class="form-control">
+
+                        </div>
+                    </div>
+
+                    <!-- PRODUCT IMAGES -->
+                    <div class="card mb-4">
+
+                        <div class="card-header">
+                            <h5 class="mb-0">Product Images</h5>
+                        </div>
+
+                        <div class="card-body">
+
+                            @if($product->image_path)
+
+                                <div class="d-flex flex-wrap gap-2 mb-3">
+
+                                    @foreach(json_decode($product->image_path,true) as $img)
+
+                                        <img src="{{ asset('storage/'.$img) }}"
+                                             width="100"
+                                             class="rounded border">
+
+                                    @endforeach
+
+                                </div>
+
+                            @endif
+
+                            <input type="file"
+                                   name="images[]"
+                                   class="form-control"
+                                   multiple>
+
+                        </div>
+                    </div>
+
+                    <!-- VARIANT -->
+                    @php
+                        $sizes = json_decode($product->size,true) ?? [];
+                    @endphp
+
+                    <div class="card mb-4 {{ $product->prototype == 1 ? '' : 'd-none' }}"
+                         id="variantCard">
+
+                        <div class="card-header">
+                            <h5 class="mb-0">Sizes</h5>
+                        </div>
+
+                        <div class="card-body">
+
+                            @foreach(['S','M','L','XL','XXL'] as $size)
+
+                                <div class="form-check mb-2">
+
+                                    <input class="form-check-input"
+                                           type="checkbox"
+                                           name="sizes[]"
+                                           value="{{ $size }}"
+                                           id="size{{ $size }}"
+                                           {{ in_array($size,$sizes) ? 'checked' : '' }}>
+
+                                    <label class="form-check-label"
+                                           for="size{{ $size }}">
+                                        {{ $size }}
+                                    </label>
+
+                                </div>
+
+                            @endforeach
+
+                        </div>
+                    </div>
+
                 </div>
 
-                <!-- Right column -->
-                <div class="col-12 col-lg-4">
-                    <!-- Pricing -->
-                    <div class="card mb-6">
+                <!-- RIGHT SIDE -->
+                <div class="col-lg-4">
+
+                    <!-- PRICING -->
+                    <div class="card mb-4">
+
                         <div class="card-header">
-                            <h5 class="card-title mb-0">Pricing</h5>
+                            <h5 class="mb-0">Pricing & Inventory</h5>
                         </div>
+
                         <div class="card-body">
-                            <div class="mb-6">
-                                <label class="form-label">Base Price</label>
-                                <input type="number" name="price" class="form-control" value="{{$product->price}}" placeholder="Price" required />
-                            </div>
-                            <div class="mb-6">
-                                <label class="form-label">Discounted Price</label>
-                                <input type="number" name="discount_price" class="form-control" value="{{$product->discounted_price}}" placeholder="Discounted Price" />
-                            </div>
-                            <div class="form-check ms-2 mt-2 mb-4">
-                                <input class="form-check-input" type="checkbox" name="charge_tax" id="price-charge-tax"
-                                    {{ isset($product) && $product->charge_tax ? 'checked' : '' }} />
-                                <label class="switch-label" for="price-charge-tax">Charge tax on this product</label>
+
+                            <div class="mb-4">
+                                <label class="form-label">Stock</label>
+
+                                <input type="number"
+                                       name="stock"
+                                       class="form-control"
+                                       value="{{ old('stock',$product->stock_quantity) }}">
                             </div>
 
-                            {{-- In Stock Toggle --}}
-                            <div class="d-flex justify-content-between align-items-center border-top pt-2">
-                                <span class="mb-0">In stock</span>
-                                <div class="form-check form-switch">
-                                    <input type="checkbox" name="in_stock" id="in_stock" class="form-check-input"
-                                        {{ isset($product) && $product->in_stock ? 'checked' : '' }} />
-                                </div>
+                            <div class="mb-4">
+                                <label class="form-label">Price</label>
+
+                                <input type="number"
+                                       name="discount_price"
+                                       class="form-control"
+                                       value="{{ old('discount_price',$product->discounted_price) }}">
                             </div>
+
+                            <div class="form-check mb-4">
+
+                                <input class="form-check-input"
+                                       type="checkbox"
+                                       name="charge_tax"
+                                       id="charge_tax"
+                                       {{ $product->charge_tax ? 'checked' : '' }}>
+
+                                <label class="form-check-label"
+                                       for="charge_tax">
+                                    Charge tax on this product
+                                </label>
+
+                            </div>
+
+                            <div class="form-check form-switch">
+
+                                <input class="form-check-input"
+                                       type="checkbox"
+                                       name="in_stock"
+                                       {{ $product->in_stock ? 'checked' : '' }}>
+
+                                <label class="form-check-label">
+                                    In Stock
+                                </label>
+
+                            </div>
+
                         </div>
                     </div>
 
-                    <!-- Organize -->
-                    <div class="card mb-6">
+                    <!-- OTHER SETTINGS -->
+                    <div class="card mb-4">
+
                         <div class="card-header">
-                            <h5 class="card-title mb-0">Organize</h5>
+                            <h5 class="mb-0">Other Settings</h5>
                         </div>
+
                         <div class="card-body">
-                        <div class="mb-6">
-    <label class="form-label">Category</label>
-    <select name="category" class="form-select select2" required>
-        <option value="">Select Category</option>
-        <option value="Household" {{ $product->category == 'Household' ? 'selected' : '' }}>Household</option>
-        <option value="Management" {{ $product->category == 'Management' ? 'selected' : '' }}>Management</option>
-        <option value="Electronics" {{ $product->category == 'Electronics' ? 'selected' : '' }}>Electronics</option>
-        <option value="Office" {{ $product->category == 'Office' ? 'selected' : '' }}>Office</option>
-        <option value="Automotive" {{ $product->category == 'Automotive' ? 'selected' : '' }}>Automotive</option>
-    </select>
-</div>
 
-<div class="mb-6">
-    <label class="form-label">Status</label>
-    <select name="status" class="form-select select2">
-        <option value="Published" {{ $product->status == 'Published' ? 'selected' : '' }}>Published</option>
-        <option value="Scheduled" {{ $product->status == 'Scheduled' ? 'selected' : '' }}>Scheduled</option>
-        <option value="Inactive" {{ $product->status == 'Inactive' ? 'selected' : '' }}>Inactive</option>
-    </select>
-</div>
+                            <!-- STATUS -->
+                            <div class="mb-4">
 
-                            <div>
+                                <label class="form-label">Status</label>
+
+                                <select name="status"
+                                        class="form-select select2">
+
+                                    <option value="Published"
+                                        {{ $product->status == 'Published' ? 'selected' : '' }}>
+                                        Published
+                                    </option>
+
+                                    <option value="Scheduled"
+                                        {{ $product->status == 'Scheduled' ? 'selected' : '' }}>
+                                        Scheduled
+                                    </option>
+
+                                    <option value="Inactive"
+                                        {{ $product->status == 'Inactive' ? 'selected' : '' }}>
+                                        Inactive
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <!-- TAGS -->
+                            <div class="mb-4">
+
                                 <label class="form-label">Tags</label>
-                                <input name="tags" id="ecommerce-product-tags" class="form-control" value="{{$product->tags}}" />
+
+                                <input type="text"
+                                       name="tags"
+                                       id="ecommerce-product-tags"
+                                       class="form-control"
+                                       value="{{ old('tags',$product->tags) }}">
+
                             </div>
+
                         </div>
                     </div>
+
                 </div>
+
             </div>
+
         </form>
 
     </div>
 </div>
 
-<script src="{{ asset('backend/assets/vendor/libs/quill/katex.js') }}"></script>
 <script src="{{ asset('backend/assets/vendor/libs/quill/quill.js') }}"></script>
 <script src="{{ asset('backend/assets/vendor/libs/select2/select2.js') }}"></script>
-<script src="{{ asset('backend/assets/vendor/libs/dropzone/dropzone.js') }}"></script>
-<script src="{{ asset('backend/assets/vendor/libs/jquery-repeater/jquery-repeater.js') }}"></script>
-<script src="{{ asset('backend/assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
 <script src="{{ asset('backend/assets/vendor/libs/tagify/tagify.js') }}"></script>
 
 <script>
-    // Initialize Quill
-    const quill = new Quill('#ecommerce-category-description', {
+
+    // QUILL EDITOR
+    const quill = new Quill('#editor', {
         theme: 'snow'
     });
 
-    // On form submit, set hidden input
+    // FORM SUBMIT
     document.querySelector('form').addEventListener('submit', function () {
-        document.querySelector('#descriptionInput').value = quill.root.innerHTML;
+
+        document.querySelector('#descriptionInput').value =
+            quill.root.innerHTML;
+
     });
 
-    // Init Select2 and Tagify
+    // SELECT2
     $(document).ready(function () {
+
         $('.select2').select2();
+
+        // TAGIFY
+        new Tagify(document.querySelector('#ecommerce-product-tags'));
+
     });
 
-    new Tagify(document.querySelector('#ecommerce-product-tags'));
+</script>
+
+<script>
+
+$(document).ready(function () {
+
+    $('#prototype').on('change', function () {
+
+        let prototypeId = $(this).val();
+
+        // SHOW/HIDE SIZE CARD
+        if (prototypeId == 1) {
+
+            $('#variantCard').removeClass('d-none');
+
+        } else {
+
+            $('#variantCard').addClass('d-none');
+
+        }
+
+        // CATEGORY AJAX
+        $.ajax({
+
+            url: "{{ url('/get-categories') }}/" + prototypeId,
+            type: "GET",
+
+            success: function (response) {
+
+                $('#category').empty();
+
+                $('#category').append(
+                    '<option value="">Select Category</option>'
+                );
+
+                $.each(response, function (key, category) {
+
+                    $('#category').append(
+                        `<option value="${category.id}">
+                            ${category.name}
+                        </option>`
+                    );
+
+                });
+
+            }
+
+        });
+
+    });
+
+});
+
 </script>
 
 @endsection

@@ -176,68 +176,138 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Product $product)
-    {
-        return view('admin.product.edit',compact('product'));
+public function edit($id)
+{
+    try {
+
+        $product = Product::findOrFail($id);
+
+        $prototypes = Prototype::get();
+
+        return view('admin.product.edit', compact('product', 'prototypes'));
+
+    } catch (\Exception $e) {
+
+        return redirect()
+            ->route('admin.products.index')
+            ->with('error', 'Product not found.');
     }
+}
+
+public function update(Request $request, $id)
+{
+    try {
+
+        $product = Product::findOrFail($id);
+
+        $request->validate([
+            'productTitle' => 'required|string|max:255',
+            'productSku' => 'nullable|string|max:255',
+            'productBarcode' => 'nullable|string|max:255',
+            'description' => 'nullable|string',
+            'price' => 'nullable|numeric',
+            'discount_price' => 'required|numeric',
+            'stock' => 'required|integer|min:0',
+            'featuredimage' => 'nullable|image|mimes:jpeg,png,webp,jpg|max:5000',
+            'images.*' => 'nullable|image|mimes:jpeg,webp,png,jpg|max:5000',
+            'prototype' => 'required|string',
+            'category' => 'required|string',
+            'status' => 'nullable|string',
+            'tags' => 'nullable|string',
+        ]);
+
+        /* FEATURED IMAGE */
+        $featuredImagePath = $product->featured_image;
+
+        if ($request->hasFile('featuredimage')) {
+
+            // Delete old image
+            if ($product->featured_image && Storage::disk('public')->exists($product->featured_image)) {
+                Storage::disk('public')->delete($product->featured_image);
+            }
+
+            $featuredImagePath = $request->file('featuredimage')
+                ->store('product_featured', 'public');
+        }
+
+        /* MULTIPLE IMAGES */
+        $imagePaths = $product->image_path
+            ? json_decode($product->image_path, true)
+            : [];
+
+        if ($request->hasFile('images')) {
+
+            // Delete old images
+            if (!empty($imagePaths)) {
+                foreach ($imagePaths as $oldImage) {
+                    if (Storage::disk('public')->exists($oldImage)) {
+                        Storage::disk('public')->delete($oldImage);
+                    }
+                }
+            }
+
+            $imagePaths = [];
+
+            foreach ($request->file('images') as $image) {
+                $imagePaths[] = $image->store('product_images', 'public');
+            }
+        }
+
+        /* SIZE */
+        $size = null;
+
+        if ($request->prototype == 1 && $request->has('sizes')) {
+            $size = json_encode($request->sizes);
+        }
+
+        $product->update([
+            'slug' => Str::slug($request->productTitle),
+            'name' => $request->productTitle,
+            'sku' => $request->productSku,
+            'barcode' => $request->productBarcode,
+            'description' => $request->description,
+            'price' => $request->discount_price,
+            'discounted_price' => $request->discount_price,
+            'size' => $size,
+            'stock_quantity' => $request->stock,
+            'charge_tax' => $request->has('charge_tax'),
+            'in_stock' => $request->has('in_stock'),
+            'image_path' => !empty($imagePaths)
+                ? json_encode($imagePaths)
+                : null,
+            'featured_image' => $featuredImagePath,
+            'prototype' => $request->prototype,
+            'category' => $request->category,
+            'status' => $request->status ?? 'Draft',
+            'tags' => $request->tags,
+            'is_draft' => $request->has('draft'),
+        ]);
+
+        return redirect()
+            ->route('admin.products.index')
+            ->with('success', 'Product updated successfully!');
+
+    } catch (\Illuminate\Validation\ValidationException $e) {
+
+        return redirect()
+            ->back()
+            ->withErrors($e->validator)
+            ->withInput();
+
+    } catch (\Exception $e) {
+
+        return redirect()
+            ->back()
+            ->withInput()
+            ->with('error', 'Failed to update product. Error: ' . $e->getMessage());
+    }
+}
 
     /**
      * Update the specified resource in storage.
      */
 
-    public function update(Request $request, $id)
-{
-    $request->validate([
-        'productTitle' => 'required|string|max:255',
-        'productSku' => 'nullable|string|max:255',
-        'productBarcode' => 'nullable|string|max:255',
-        'description' => 'nullable|string',
-        'price' => 'required|numeric',
-        'discount_price' => 'nullable|numeric',
-        'stock' => 'required|integer|min:0',
-        'featuredimage' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-        'images.*' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-        'category' => 'required|string',
-        'status' => 'nullable|string',
-        'tags' => 'nullable|string',
-    ]);
 
-    $product = Product::findOrFail($id);
-
-    // Handle featured image update
-    $featuredImagePath = $product->featured_image;
-    if ($request->hasFile('featuredimage')) {
-        $featuredImagePath = $request->file('featuredimage')->store('product_featured', 'public');
-    }
-
-    // Handle new image uploads (optional append or replace logic)
-    $imagePaths = $product->image_path ? json_decode($product->image_path, true) : [];
-    if ($request->hasFile('images')) {
-        foreach ($request->file('images') as $image) {
-            $imagePaths[] = $image->store('product_images', 'public');
-        }
-    }
-
-    $product->update([
-        'name' => $request->productTitle,
-        'sku' => $request->productSku,
-        'barcode' => $request->productBarcode,
-        'description' => $request->description,
-        'price' => $request->price,
-        'discounted_price' => $request->discount_price,
-        'stock_quantity' => $request->stock,
-        'charge_tax' => $request->has('charge_tax'),
-        'in_stock' => $request->has('in_stock'),
-        'image_path' => !empty($imagePaths) ? json_encode($imagePaths) : null,
-        'featured_image' => $featuredImagePath,
-        'category' => $request->category,
-        'status' => $request->status ?? 'Draft',
-        'tags' => $request->tags,
-        'is_draft' => $request->has('draft'),
-    ]);
-
-    return redirect()->route('admin.products.index')->with('success', 'Product updated successfully!');
-}
 
     /**
      * Remove the specified resource from storage.
