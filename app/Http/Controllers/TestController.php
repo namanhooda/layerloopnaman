@@ -30,6 +30,7 @@ public function index()
 
         $nameWithoutExt = pathinfo($filename, PATHINFO_FILENAME);
 
+
         $nameafter = $nameWithoutExt.' (5 inch)';
 
         $slug = Str::slug($nameafter);
@@ -45,7 +46,7 @@ public function index()
             'code' => 'LL'.str_pad(mt_rand(0,99999999),8,'0',STR_PAD_LEFT),
 
             'prototype' => 2,
-            'category' => 12,
+            'category' => 13,
             'status' => 'Published',
 
             'featured_image' => 'product_featured/'.$filename,

@@ -118,22 +118,13 @@
                         width="105" height="25" class="desktop-logo">
                 </a>
             </div>
-            <!-- <div class="header-center">
-                <div
-                    class="header-search header-search-extended header-search-visible header-search-no-radius d-none d-lg-block">
-                    <a href="#" class="search-toggle" role="button"><i class="icon-search"></i></a>
-                    <form action="{{ route('shop') }}" method="get" autocomplete="off">
-                        <div class="header-search-wrapper search-wrapper-wide position-relative">
-                            <label for="q" class="sr-only">Search</label>
-                            <input type="search" class="form-control" name="q" id="product-searchss" placeholder="Search product ..."
-                                value="{{ request('q') }}" required>
-                            <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
-
-                            <ul id="search-results" class="list-group position-absolute w-100 mt-1" style="z-index: 1000; display: none;"></ul>
-                        </div>
-                    </form>
-                </div>
-            </div> -->
+            <div class="header-center">
+                
+                <a href="{{url('/')}}" class="logo">
+                    <img src="{{asset('images/WhatsApp Image 2025-07-22 at 19.56.01.jpeg')}}" alt="Molla Logo"
+                        width="105" height="25" class="desktop-logo">
+                </a>
+            </div>
             <div class="header-right">
                 <!-- SEARCH ICON (RIGHT SIDE) -->
         <div class="account">
