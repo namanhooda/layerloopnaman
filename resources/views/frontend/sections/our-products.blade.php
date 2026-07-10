@@ -1,271 +1,189 @@
+<style>
+    .ll-carousel .item {
+        padding: 8px;
+    }
+
+    .ll-carousel .owl-stage {
+        display: flex;
+    }
+
+    .ll-carousel .owl-item {
+        display: flex;
+    }
+
+    .ll-carousel .ll-card {
+        width: 100%;
+    }
+
+    .ll-carousel .owl-nav {
+        margin-top: 25px;
+    }
+
+    .ll-carousel .owl-nav button {
+        width: 44px;
+        height: 44px;
+        border-radius: 50% !important;
+        background: #fff !important;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, .12);
+    }
+
+    .ll-carousel .owl-nav button:hover {
+        background: #4CAF50 !important;
+        color: #fff !important;
+    }
+
+    .ll-carousel .owl-stage-outer {
+        padding: 10px 5px 20px;
+    }
+
+</style>
 <div class="container text-center">
-    <h3>Our Products</h3>
+
+
+
+    <div class="heading d-flex justify-content-between align-items-center mb-3">
+        <h2 class="title mb-0">Trending Now</h2>
+
+        <a href="{{ url('shop') }}" class="view-all">
+            View All <i class="icon-long-arrow-right"></i>
+        </a>
+
+    </div>
 </div>
 
-<div class="container">
-    <ul class="nav nav-pills nav-border-anim nav-big justify-content-center mb-3" role="tablist">
-        <li class="nav-item">
-            <a class="nav-link active" id="products-featured-link" data-toggle="tab" href="#products-featured-tab"
-                role="tab" aria-controls="products-featured-tab" aria-selected="true">Featured</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="products-sale-link" data-toggle="tab" href="#products-sale-tab" role="tab"
-                aria-controls="products-sale-tab" aria-selected="false">On Sale</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="products-top-link" data-toggle="tab" href="#products-top-tab" role="tab"
-                aria-controls="products-top-tab" aria-selected="false">Top Rated</a>
-        </li>
-    </ul>
-</div>
+
 <div class="container-fluid">
     <div class="tab-content tab-content-carousel">
         <div class="tab-pane p-0 fade show active" id="products-featured-tab" role="tabpanel"
             aria-labelledby="products-featured-link">
-            <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl"
-                data-owl-options='{
-                                "nav": false, 
-                                "dots": true,
-                                "margin": 20,
-                                "loop": false,
-                                "responsive": {
-                                    "0": {
-                                        "items":2
-                                    },
-                                    "480": {
-                                        "items":2
-                                    },
-                                    "768": {
-                                        "items":3
-                                    },
-                                    "992": {
-                                        "items":4
-                                    },
-                                    "1200": {
-                                        "items":5
-                                    },
-                                    "1600": {
-                                        "items":6,
-                                        "nav": true
-                                    }
-                                }
-                            }'>
+            <div class="owl-carousel ll-carousel" data-toggle="owl" data-owl-options='{
+        "nav": false,
+        "dots": false,
+        "margin":20,
+        "loop":false,
+        "responsive":{
+            "0":{"items":2},
+            "480":{"items":2},
+            "768":{"items":3},
+            "992":{"items":4},
+            "1200":{"items":5},
+            "1600":{"items":6}
+        }
+    }'>
+
                 @foreach($featured as $product)
-                <div class="product product-11 text-center product-manual">
-                    <figure class="product-media">
-                        <a href="{{url('shop-product-detail/'.$product->slug)}}">
-                            <img src="{{ asset('storage/' . $product->featured_image) }}" alt="Product image"
-                                class="product-image product-image-manual">
-                            <!-- <img src="{{asset('frontend/assets/images/demos/demo-2/products/product-1-2.jpg')}}"
-                                    alt="Product image" class="product-image-hover"> -->
-                        </a>
 
+                @php
+                $price = $product->price ?? $product->discounted_price;
+                $salePrice = $product->discounted_price;
 
+                $discount = 0;
+                if($price > $salePrice){
+                $discount = round((($price-$salePrice)/$price)*100);
+                }
 
-                        <div class="product-action-vertical">
-                            @php
-                            $isInWishlist = \App\Models\Wishlist::where(function ($query) use ($product) {
-                            $userId = auth()->id();
-                            $systemId = $userId ? null : hash('sha256', request()->userAgent() . '|' . request()->ip());
+                $isInWishlist = \App\Models\Wishlist::where(function ($query) {
+                if(auth()->check()){
+                $query->where('user_id',auth()->id());
+                }else{
+                $query->where('system_id',hash('sha256',request()->userAgent().'|'.request()->ip()));
+                }
+                })
+                ->where('product_id',$product->id)
+                ->exists();
+                @endphp
 
-                            if ($userId) {
-                            $query->where('user_id', $userId);
-                            } else {
-                            $query->where('system_id', $systemId);
-                            }
-                            })->where('product_id', $product->id)->exists();
-                            @endphp
+                <div class="item">
 
-                            <!-- Wishlist Button -->
-                            <button type="button"
-                                class="btn-product-icon btn-wishlist {{ $isInWishlist ? 'active' : '' }} btn-expandable add-to-wishlist {{ $isInWishlist ? 'wishlist-active' : '' }}"
+                    <div class="ll-card">
+
+                        <div class="ll-image">
+
+                            @if($discount>0)
+                            <span class="ll-badge">
+                                {{ $discount }}% OFF
+                            </span>
+                            @else
+                            <span class="ll-badge green">
+                                NEW
+                            </span>
+                            @endif
+
+                            <button
+                                class="ll-wishlist add-to-wishlist {{ $isInWishlist ? 'active wishlist-active' : '' }}"
                                 data-product-id="{{ $product->id }}">
-                                <span>{{ $isInWishlist ? 'Remove from wishlist' : 'Add to wishlist' }}</span>
+
+                                <i class="{{ $isInWishlist ? 'fas':'far' }} fa-heart"></i>
+
                             </button>
-                        </div>
-                    </figure>
 
-                    <div class="product-body">
-                        <h3 class="product-title"><a
-                                href="{{url('shop-product-detail/'.$product->slug)}}">{{$product->name}}</a></h3>
-                        <div class="product-price">
-                            ₹ {{$product->discounted_price}}
-                        </div>
-                        
-                                
-                                @php
-                                    $ratingPercent = rand(70, 100);   // 70% to 100%
-                                    $reviewsCount = rand(5, 20);      // 5 to 20 reviews
-                                @endphp
+                            <a href="{{ url('shop-product-detail/'.$product->slug) }}">
 
-                                <div class="ratings-container">
-                                    <div class="ratings">
-                                        <div class="ratings-val" style="width: {{ $ratingPercent }}%;"></div>
-                                    </div>
-                                    <span class="ratings-text">
-                                        ( {{ $reviewsCount }} Reviews )
-                                    </span>
+                                <div class="ll-image-box">
+
+                                    <img src="{{ asset('storage/'.$product->featured_image) }}" loading="lazy"
+                                        alt="{{ $product->name }}"
+                                        onerror="this.src='{{ asset('assets/images/no-image.png') }}';">
+
                                 </div>
-                    </div>
-                </div>
-                @endforeach
-            </div>
-        </div>
-        <div class="tab-pane p-0 fade" id="products-sale-tab" role="tabpanel" aria-labelledby="products-sale-link">
-            <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl"
-                data-owl-options='{
-                                "nav": false, 
-                                "dots": true,
-                                "margin": 20,
-                                "loop": false,
-                                "responsive": {
-                                    "0": {
-                                        "items":2
-                                    },
-                                    "480": {
-                                        "items":2
-                                    },
-                                    "768": {
-                                        "items":3
-                                    },
-                                    "992": {
-                                        "items":4
-                                    },
-                                    "1200": {
-                                        "items":5
-                                    },
-                                    "1600": {
-                                        "items":6,
-                                        "nav": true
-                                    }
-                                }
-                            }'>
 
-                @foreach($sale as $product)
-                <div class="product product-11 text-center product-manual">
-                    <figure class="product-media">
-                        <a href="{{url('shop-product-detail/'.$product->slug)}}">
-                            <img src="{{ asset('storage/' . $product->featured_image) }}" alt="Product image"
-                                class="product-image product-image-manual">
-                            <!-- <img src="{{asset('frontend/assets/images/demos/demo-2/products/product-1-2.jpg')}}"
-                                    alt="Product image" class="product-image-hover"> -->
-                        </a>
-                        <div class="product-action-vertical">
-                            @php
-                            $isInWishlist = \App\Models\Wishlist::where(function ($query) use ($product) {
-                            $userId = auth()->id();
-                            $systemId = $userId ? null : hash('sha256', request()->userAgent() . '|' . request()->ip());
+                            </a>
 
-                            if ($userId) {
-                            $query->where('user_id', $userId);
-                            } else {
-                            $query->where('system_id', $systemId);
-                            }
-                            })->where('product_id', $product->id)->exists();
-                            @endphp
-
-                            <!-- Wishlist Button -->
-                            <button type="button"
-                                class="btn-product-icon btn-wishlist {{ $isInWishlist ? 'active' : '' }} btn-expandable add-to-wishlist {{ $isInWishlist ? 'wishlist-active' : '' }}"
-                                data-product-id="{{ $product->id }}">
-                                <span>{{ $isInWishlist ? 'Remove from wishlist' : 'Add to wishlist' }}</span>
-                            </button>
                         </div>
-                    </figure>
-                    <div class="product-body">
-                        <h3 class="product-title"><a
-                                href="{{url('shop-product-detail/'.$product->slug)}}">{{$product->name}}</a></h3>
-                        <div class="product-price">
-                            ₹ {{$product->discounted_price}}
-                        </div>
-                        <div class="ratings-container">
-                            <div class="ratings">
-                                <div class="ratings-val" style="width: 0%;"></div>
+
+                        <div class="ll-body">
+
+                            <h3>
+                                <a href="{{ url('shop-product-detail/'.$product->slug) }}">
+                                    {{ $product->name }}
+                                </a>
+                            </h3>
+
+                            <div class="ll-rating">
+                                <i class="fas fa-star"></i>
+                                <span>4.8</span>
+                                <small>(205)</small>
                             </div>
-                            <span class="ratings-text">( 0 Reviews )</span>
-                        </div>
-                    </div>
-                </div>
-                @endforeach
-            </div>
-        </div>
-        <div class="tab-pane p-0 fade" id="products-top-tab" role="tabpanel" aria-labelledby="products-top-link">
-            <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl"
-                data-owl-options='{
-                                "nav": false, 
-                                "dots": true,
-                                "margin": 20,
-                                "loop": false,
-                                "responsive": {
-                                    "0": {
-                                        "items":2
-                                    },
-                                    "480": {
-                                        "items":2
-                                    },
-                                    "768": {
-                                        "items":3
-                                    },
-                                    "992": {
-                                        "items":4
-                                    },
-                                    "1200": {
-                                        "items":5
-                                    },
-                                    "1600": {
-                                        "items":6,
-                                        "nav": true
-                                    }
-                                }
-                            }'>
-                @foreach($rated as $product)
-                <div class="product product-11 text-center product-manual">
-                    <figure class="product-media">
-                        <a href="{{url('shop-product-detail/'.$product->slug)}}">
-                            <img src="{{ asset('storage/' . $product->featured_image) }}" alt="Product image"
-                                class="product-image product-image-manual">
-                            <!-- <img src="{{asset('frontend/assets/images/demos/demo-2/products/product-1-2.jpg')}}"
-                                    alt="Product image" class="product-image-hover"> -->
-                        </a>
-                        <div class="product-action-vertical">
-                            @php
-                            $isInWishlist = \App\Models\Wishlist::where(function ($query) use ($product) {
-                            $userId = auth()->id();
-                            $systemId = $userId ? null : hash('sha256', request()->userAgent() . '|' . request()->ip());
 
-                            if ($userId) {
-                            $query->where('user_id', $userId);
-                            } else {
-                            $query->where('system_id', $systemId);
-                            }
-                            })->where('product_id', $product->id)->exists();
-                            @endphp
+                            <div class="ll-price">
 
-                            <!-- Wishlist Button -->
-                            <button type="button"
-                                class="btn-product-icon btn-wishlist {{ $isInWishlist ? 'active' : '' }} btn-expandable add-to-wishlist {{ $isInWishlist ? 'wishlist-active' : '' }}"
-                                data-product-id="{{ $product->id }}">
-                                <span>{{ $isInWishlist ? 'Remove from wishlist' : 'Add to wishlist' }}</span>
-                            </button>
-                        </div>
-                    </figure>
+                                <span class="sale">
+                                    ₹{{ number_format($salePrice,2) }}
+                                </span>
 
-                    <div class="product-body">
-                        <h3 class="product-title"><a
-                                href="{{url('shop-product-detail/'.$product->slug)}}">{{$product->name}}</a></h3>
-                        <div class="product-price">
-                            ₹ {{$product->discounted_price}}
-                        </div>
-                        <div class="ratings-container">
-                            <div class="ratings">
-                                <div class="ratings-val" style="width: 0%;"></div>
+                                @if($price>$salePrice)
+
+                                <span class="old">
+                                    ₹{{ number_format($price,2) }}
+                                </span>
+
+                                @endif
+
                             </div>
-                            <span class="ratings-text">( 0 Reviews )</span>
+
+                            <div class="ll-footer">
+
+                                <div class="delivery">
+                                    <i class="fas fa-check-circle"></i>
+                                    Delivery in 2 Days
+                                </div>
+
+                                <a href="#" class="cart">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </a>
+
+                            </div>
+
                         </div>
+
                     </div>
+
                 </div>
+
                 @endforeach
+
             </div>
         </div>
+
     </div>
 </div>

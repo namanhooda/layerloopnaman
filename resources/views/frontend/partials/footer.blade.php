@@ -1,188 +1,653 @@
-<footer class="footer footer-2">
-    <div class="icon-boxes-container">
+<footer class="footer ftr-footer">
+
+    {{-- Newsletter --}}
+    @include('frontend.sections.subscribe')
+
+    <style> 
+        /*==================================================
+        LayerLoop Premium Footer
+            ==================================================*/
+
+        .ftr-footer {
+            background: #0f1317;
+            color: #fff;
+            margin-top: 0;
+        }
+
+        .ftr-footer-main {
+            padding: 70px 0 50px;
+            background: linear-gradient(180deg, #14191d, #0f1317);
+            border-top: 1px solid rgba(255, 255, 255, .05);
+        }
+
+        /* Logo */
+
+        .ftr-footer-logo {
+            max-width: 220px;
+            margin-bottom: 25px;
+        }
+
+        .ftr-footer-desc {
+            color: #b8bec6;
+            line-height: 1.9;
+            font-size: 15px;
+            margin-bottom: 28px;
+        }
+
+        /*==========================
+        Widgets
+        ==========================*/
+
+        .ftr-footer-widget {
+            margin-bottom: 30px;
+        }
+
+        .ftr-footer-widget h4 {
+            color: #fff;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .ftr-footer-widget h4:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 40px;
+            height: 3px;
+            border-radius: 30px;
+            background: #49c96d;
+        }
+
+        .ftr-footer-widget ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .ftr-footer-widget ul li {
+            margin-bottom: 14px;
+        }
+
+        .ftr-footer-widget ul li:last-child {
+            margin-bottom: 0;
+        }
+
+        .ftr-footer-widget ul li a {
+            color: #b9c0c7;
+            text-decoration: none;
+            transition: .35s;
+            position: relative;
+            padding-left: 0;
+            font-size: 15px;
+        }
+
+        .ftr-footer-widget ul li a:hover {
+            color: #4ed36d;
+            padding-left: 10px;
+        }
+
+        .ftr-footer-widget ul li a:before {
+            content: "›";
+            opacity: 0;
+            position: absolute;
+            left: -12px;
+            transition: .35s;
+        }
+
+        .ftr-footer-widget ul li a:hover:before {
+            opacity: 1;
+        }
+
+        /*==========================
+      Contact Widget
+            ==========================*/
+
+        .ftr-contact-list li {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 18px;
+            color: #bfc5ca;
+            line-height: 1.7;
+        }
+
+        .ftr-contact-list i {
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            background: #1d2328;
+            color: #49c96d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-size: 15px;
+        }
+
+        .ftr-contact-list a {
+            color: #bfc5ca;
+        }
+
+        .ftr-contact-list a:hover {
+            color: #4fd56f;
+        }
+
+        /*==========================
+      Payments
+        ==========================*/
+
+        .ftr-payment {
+            margin-top: 25px;
+        }
+
+        .ftr-payment img {
+            max-width: 220px;
+            background: #fff;
+            border-radius: 8px;
+            padding: 8px;
+        }
+
+        /*==========================
+       Social Icons
+        ==========================*/
+
+        .ftr-social {
+            display: flex;
+            gap: 12px;
+        }
+
+        .ftr-social a {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: #fff;
+            transition: .35s;
+            text-decoration: none;
+        }
+
+        .ftr-social a:hover {
+            transform: translateY(-4px);
+        }
+
+        .ftr-social-instagram {
+            background: linear-gradient(45deg, #fd5949, #d6249f, #285AEB);
+        }
+
+        .ftr-social-facebook {
+            background: #1877F2;
+        }
+
+        .ftr-social-youtube {
+            background: #ff0000;
+        }
+
+        .ftr-social-pinterest {
+            background: #E60023;
+        }
+
+        /*==========================
+      Bottom Footer
+        ==========================*/
+
+        .ftr-footer-bottom {
+            background: #0b0f12;
+            border-top: 1px solid rgba(255, 255, 255, .06);
+        }
+
+        .ftr-footer-bottom .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 0;
+        }
+
+        .ftr-bottom-left {
+            color: #c1c7cd;
+            font-size: 14px;
+        }
+
+        .ftr-bottom-center {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .ftr-bottom-center span {
+            color: #555;
+        }
+
+        .ftr-bottom-center a {
+            color: #c2c8ce;
+            text-decoration: none;
+            transition: .3s;
+        }
+
+        .ftr-bottom-center a:hover {
+            color: #49c96d;
+        }
+
+        .ftr-bottom-right {
+            color: #b8c0c5;
+            font-size: 14px;
+        }
+
+        /*==========================
+       Hover Effects
+==========================*/
+
+        .ftr-footer-widget ul li {
+            transition: .3s;
+        }
+
+        .ftr-footer-widget ul li:hover {
+            transform: translateX(3px);
+        }
+
+        /*==========================
+       Responsive
+==========================*/
+
+        @media(max-width:1199px) {
+
+            .ftr-footer-main {
+                padding: 60px 0;
+            }
+
+        }
+
+        @media(max-width:991px) {
+
+            .ftr-footer-main {
+                text-align: center;
+            }
+
+            .ftr-footer-widget h4:after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .ftr-social {
+                justify-content: center;
+                margin-bottom: 25px;
+            }
+
+            .ftr-contact-list li {
+                justify-content: center;
+                text-align: left;
+            }
+
+            .ftr-payment {
+                text-align: center;
+            }
+
+            .ftr-footer-bottom .container {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+        }
+
+        @media(max-width:767px) {
+
+            .ftr-footer-main {
+                padding: 45px 0;
+            }
+
+            .ftr-footer-widget {
+                margin-bottom: 35px;
+            }
+
+            .ftr-footer-logo {
+                max-width: 180px;
+            }
+
+            .ftr-footer-desc {
+                font-size: 14px;
+            }
+
+            .ftr-footer-widget h4 {
+                font-size: 18px;
+            }
+
+            .ftr-contact-list li {
+                font-size: 14px;
+            }
+
+            .ftr-payment img {
+                max-width: 180px;
+            }
+
+            .ftr-bottom-center {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+        }
+
+        @media(max-width:575px) {
+
+            .ftr-social {
+                gap: 10px;
+            }
+
+            .ftr-social a {
+                width: 38px;
+                height: 38px;
+            }
+
+            .ftr-bottom-left,
+            .ftr-bottom-center,
+            .ftr-bottom-right {
+                font-size: 13px;
+                text-align: center;
+            }
+
+        }
+
+    </style>
+
+    <div class="ftr-footer-main">
         <div class="container">
+
             <div class="row">
-                <div class="col-sm-6 col-lg-3">
-                    <div class="icon-box icon-box-side">
-                        <span class="icon-box-icon text-dark">
-                            <i class="icon-rocket"></i>
-                        </span>
-                        <div class="icon-box-content">
-                            <h3 class="icon-box-title">Free Shipping</h3>
-                            <p>Orders ₹ 1000 or more</p>
+
+                <!-- =======================================
+                    ABOUT
+                ========================================-->
+
+                <div class="col-lg-4 col-md-12">
+
+                    <div class="ftr-footer-about">
+
+                        <img src="{{ asset('images/WhatsApp Image 2025-07-22 at 19.56.01.jpeg') }}"
+                            class="ftr-footer-logo" alt="LayerLoop">
+
+                        <p class="ftr-footer-desc">
+                            We create premium 3D printed products with precision,
+                            passion and innovation. From Murti, Lithophanes,
+                            Moon Lamps, Anime Figures to DTF Printed T-Shirts,
+                            every creation is crafted with perfection.
+                        </p>
+
+                        <div class="ftr-social">
+
+                            <a href="https://www.instagram.com/layerloop.web/" target="_blank"
+                                class="ftr-social-instagram">
+                                <i class="icon-instagram"></i>
+                            </a>
+
+                            <a href="https://www.facebook.com/profile.php?id=61579088633589" target="_blank"
+                                class="ftr-social-facebook">
+                                <i class="icon-facebook-f"></i>
+                            </a>
+
+                            <a href="#" target="_blank" class="ftr-social-youtube">
+                                <i class="icon-youtube"></i>
+                            </a>
+
+                            <a href="#" target="_blank" class="ftr-social-pinterest">
+                                <i class="icon-pinterest"></i>
+                            </a>
+
                         </div>
+
                     </div>
+
                 </div>
 
-                <div class="col-sm-6 col-lg-3">
-                    <div class="icon-box icon-box-side">
-                        <span class="icon-box-icon text-dark">
-                            <i class="icon-rotate-left"></i>
-                        </span>
 
-                        <div class="icon-box-content">
-                            <h3 class="icon-box-title">Free Returns</h3>
-                            <p>Within 7 days</p>
-                        </div>
+                <!-- =======================================
+                    SHOP
+                ========================================-->
+
+                <div class="col-lg-2 col-md-4 col-6">
+
+                    <div class="ftr-footer-widget">
+
+                        <h4>Shop</h4>
+
+                        <ul>
+
+                            <li>
+                                <a href="{{ url('shop') }}">
+                                    Aftr Products
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{{ url('shop?category=murti') }}">
+                                    Murti
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{{ url('shop?category=lithophane') }}">
+                                    Lithophane
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{{ url('shop?category=moon-lamp') }}">
+                                    Moon Lamps
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{{ url('shop?category=anime') }}">
+                                    Anime Figures
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{{ url('shop?category=tshirt') }}">
+                                    T-Shirts
+                                </a>
+                            </li>
+
+                        </ul>
+
                     </div>
+
                 </div>
 
-                <div class="col-sm-6 col-lg-3">
-                    <div class="icon-box icon-box-side">
-                        <span class="icon-box-icon text-dark">
-                            <i class="icon-info-circle"></i>
-                        </span>
 
-                        <div class="icon-box-content">
-                            <h3 class="icon-box-title">Get 20% Off 1 Item</h3>
-                            <p>When you sign up</p>
-                        </div>
+                <!-- =======================================
+                    CUSTOMER SERVICE
+                ========================================-->
+
+                <div class="col-lg-2 col-md-4 col-6">
+
+                    <div class="ftr-footer-widget">
+
+                        <h4>Customer Service</h4>
+
+                        <ul>
+
+                            <li>
+                                <a href="{{ url('orders') }}">
+                                    Track Order
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#">
+                                    Shipping Policy
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#">
+                                    Return & Refund
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{{ url('faq') }}">
+                                    FAQs
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{{ url('contact_us') }}">
+                                    Contact Us
+                                </a>
+                            </li>
+
+                        </ul>
+
                     </div>
+
                 </div>
 
-                <div class="col-sm-6 col-lg-3">
-                    <div class="icon-box icon-box-side">
-                        <span class="icon-box-icon text-dark">
-                            <i class="icon-life-ring"></i>
-                        </span>
 
-                        <div class="icon-box-content">
-                            <h3 class="icon-box-title">We Support</h3>
-                            <p>24/7 amazing services</p>
-                        </div>
+                <!-- =======================================
+                    INFORMATION
+                ========================================-->
+
+                <div class="col-lg-2 col-md-4 col-6">
+
+                    <div class="ftr-footer-widget">
+
+                        <h4>Information</h4>
+
+                        <ul>
+
+                            <li>
+                                <a href="{{ url('about') }}">
+                                    About Us
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#">
+                                    Our Process
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#">
+                                    Blog
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#">
+                                    Privacy Policy
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#">
+                                    Terms & Conditions
+                                </a>
+                            </li>
+
+                        </ul>
+
                     </div>
+
                 </div>
+
+
+                <!-- =======================================
+                    CONTACT
+                ========================================-->
+
+                <div class="col-lg-2 col-md-12">
+
+                    <div class="ftr-footer-widget ftr-contact-widget">
+
+                        <h4>Need Help?</h4>
+
+                        <ul class="ftr-contact-list">
+
+                            <li>
+                                <i class="icon-phone"></i>
+
+                                <a href="tel:+918059808185">
+                                    +91 80598 08185
+                                </a>
+                            </li>
+
+                            <li>
+
+                                <i class="icon-envelope"></i>
+
+                                <a href="mailto:support@layerloop.in">
+                                    support@layerloop.in
+                                </a>
+
+                            </li>
+
+                            <li>
+
+                                <i class="icon-clock-o"></i>
+
+                                Mon - Sat : 10 AM - 7 PM
+
+                            </li>
+
+                        </ul>
+
+
+                        <div class="ftr-payment">
+
+                            <img src="{{ asset('frontend/assets/images/payments.png') }}" alt="Payments">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
             </div>
+
         </div>
     </div>
-    <div class="footer-newsletter bg-image" style="background-image: url(frontend/assets/images/backgrounds/bg-2.jpg)">
+
+
+    <!--============================
+        Bottom Footer
+    =============================-->
+
+    <div class="ftr-footer-bottom">
+
         <div class="container">
-            <div class="heading text-center">
-                <h3 class="title">Get The Latest Deals</h3><!-- End .title -->
-                <p class="title-desc">and receive <span>₹200 coupon</span> for first shopping</p><!-- End .title-desc -->
-            </div><!-- End .heading -->
 
-            <div class="row">
-                <div class="col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
-                    <form action="#">
-                        <div class="input-group">
-                            <input type="email" class="form-control" placeholder="Enter your Email Address"
-                                aria-label="Email Adress" aria-describedby="newsletter-btn" required>
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="submit"
-                                    id="newsletter-btn"><span>Subscribe</span><i
-                                        class="icon-long-arrow-right"></i></button>
-                            </div><!-- .End .input-group-append -->
-                        </div><!-- .End .input-group -->
-                    </form>
-                </div><!-- End .col-sm-10 offset-sm-1 col-lg-6 offset-lg-3 -->
-            </div><!-- End .row -->
-        </div><!-- End .container -->
-    </div><!-- End .footer-newsletter bg-image -->
+            <div class="ftr-bottom-left">
 
-    <div class="footer-middle">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12 col-lg-6">
-                    <div class="widget widget-about">
-                        <img src="{{asset('images/WhatsApp Image 2025-07-22 at 19.56.01.jpeg')}}" class="footer-logo"
-                            alt="Footer Logo" width="105" height="25" style="width: 40%;">
-                        <p>Discover the Art of Precision with LayerLoop — At LayerLoop, we craft premium 3D-printed
-                            products that blend innovation, design, and durability. Every layer is engineered for
-                            excellence, delivering unmatched quality and detail. From concept to creation, experience
-                            the future of manufacturing—one flawless loop at a time.</p>
+                © {{ date('Y') }} LayerLoop. Aftr Rights Reserved.
 
-                        <div class="widget-about-info">
-                            <div class="row">
-                                <div class="col-sm-6 col-md-4">
-                                    <span class="widget-about-title">Got Question? Call us 24/7</span>
-                                    <a href="tel:8059808185">+91 8059808185</a>
-                                </div><!-- End .col-sm-6 -->
-                                <div class="col-sm-6 col-md-8">
-                                    <span class="widget-about-title">Payment Method</span>
-                                    <figure class="footer-payments">
-                                        <img src="{{asset('frontend/assets/images/payments.png')}}"
-                                            alt="Payment methods" width="272" height="20">
-                                    </figure><!-- End .footer-payments -->
-                                </div><!-- End .col-sm-6 -->
-                            </div><!-- End .row -->
-                        </div><!-- End .widget-about-info -->
-                    </div><!-- End .widget about-widget -->
-                </div><!-- End .col-sm-12 col-lg-3 -->
+            </div>
 
-                <div class="col-sm-4 col-lg-2">
-                    <div class="widget">
-                        <h4 class="widget-title">Information</h4><!-- End .widget-title -->
+            <div class="ftr-bottom-center">
 
-                        <ul class="widget-list">
-                            <li><a href="{{url('about')}}">About Layerloop</a></li>
-                            <li><a href="{{url('gallary')}}">Our Work</a></li>
-                            <!-- <li><a href="#">How to shop on Molla</a></li> -->
-                            <li><a href="{{url('faq')}}">FAQ</a></li>
-                            <li><a href="{{url('contact_us')}}">Contact us</a></li>
-                            <li><a href="{{url('login')}}">Log in</a></li>
-                        </ul><!-- End .widget-list -->
-                    </div><!-- End .widget -->
-                </div><!-- End .col-sm-4 col-lg-3 -->
+                <a href="#">
+                    Privacy Policy
+                </a>
 
-                <div class="col-sm-4 col-lg-2">
-                    <div class="widget">
-                        <h4 class="widget-title">Customer Service</h4><!-- End .widget-title -->
+                <span>|</span>
 
-                        <ul class="widget-list">
-                            <li><a href="#">Payment Methods</a></li>
-                            <li><a href="#">Money-back guarantee!</a></li>
-                            <li><a href="#">Returns</a></li>
-                            <li><a href="#">Shipping</a></li>
-                            <li><a href="#">Terms and conditions</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
-                        </ul><!-- End .widget-list -->
-                    </div><!-- End .widget -->
-                </div><!-- End .col-sm-4 col-lg-3 -->
+                <a href="#">
+                    Terms & Conditions
+                </a>
 
-                <div class="col-sm-4 col-lg-2">
-                    <div class="widget">
-                        <h4 class="widget-title">My Account</h4><!-- End .widget-title -->
+            </div>
 
-                        <ul class="widget-list">
-                            <li><a href="{{url('login')}}">Sign In</a></li>
-                            <li><a href="{{url('cart')}}">View Cart</a></li>
-                            <li><a href="{{url('wishlist')}}">My Wishlist</a></li>
-                            <li><a href="{{url('orders')}}">Track My Order</a></li>
-                            <li><a href="{{url('help')}}">Help</a></li>
-                        </ul><!-- End .widget-list -->
-                    </div><!-- End .widget -->
-                </div><!-- End .col-sm-64 col-lg-3 -->
-            </div><!-- End .row -->
-        </div><!-- End .container -->
-    </div><!-- End .footer-middle -->
+            <div class="ftr-bottom-right">
 
-    <div class="footer-bottom">
-        <div class="container">
-            <p class="footer-copyright">Copyright © 2025 Layerloop Store. All Rights Reserved.</p>
-            <!-- End .footer-copyright -->
-            <ul class="footer-menu">
-                <li><a href="#">Terms Of Use</a></li>
-                <li><a href="#">Privacy Policy</a></li>
-            </ul><!-- End .footer-menu -->
+                Made with ❤️ in India
 
-            <div class="social-icons social-icons-color">
-                <span class="social-label">Social Media</span>
-                <a href="{{url('https://www.facebook.com/profile.php?id=61579088633589')}}" class="social-icon social-facebook" title="Facebook" target="_blank"><i
-                        class="icon-facebook-f"></i></a>
-                <a href="https://wa.me/918059808185" 
-   class="social-icon social-whatsapp" 
-   title="WhatsApp" 
-   target="_blank">
-    <i class="icon-whatsapp"></i>
-</a>
-                <a href="{{url('https://www.instagram.com/layerloop.web/')}}" class="social-icon social-instagram" title="Instagram" target="_blank"><i
-                        class="icon-instagram"></i></a>
-                <a href="#" class="social-icon social-youtube" title="Youtube" target="_blank"><i
-                        class="icon-youtube"></i></a>
-                <a href="#" class="social-icon social-pinterest" title="Pinterest" target="_blank"><i
-                        class="icon-pinterest"></i></a>
-            </div><!-- End .soial-icons -->
-        </div><!-- End .container -->
-    </div><!-- End .footer-bottom -->
+            </div>
+
+        </div>
+
+    </div>
+
 </footer>

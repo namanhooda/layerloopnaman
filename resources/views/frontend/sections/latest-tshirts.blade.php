@@ -1,104 +1,187 @@
-<div class="container text-center">
-    <h3>Latest Tshirts</h3>
-</div>
+<style>
+    .ll-carousel .item {
+        padding: 8px;
+    }
 
+    .ll-carousel .owl-stage {
+        display: flex;
+    }
+
+    .ll-carousel .owl-item {
+        display: flex;
+    }
+
+    .ll-carousel .ll-card {
+        width: 100%;
+    }
+
+    .ll-carousel .owl-nav {
+        margin-top: 25px;
+    }
+
+    .ll-carousel .owl-nav button {
+        width: 44px;
+        height: 44px;
+        border-radius: 50% !important;
+        background: #fff !important;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, .12);
+    }
+
+    .ll-carousel .owl-nav button:hover {
+        background: #4CAF50 !important;
+        color: #fff !important;
+    }
+
+    .ll-carousel .owl-stage-outer {
+        padding: 10px 5px 20px;
+    }
+
+</style>
+<div class="container text-center" style="margin-top: 20px;">
+
+
+
+    <div class="heading d-flex justify-content-between align-items-center mb-3">
+        <h2 class="title mb-0">Latest Tshirts</h2>
+
+        <a href="{{ url('shop') }}" class="view-all">
+            View All <i class="icon-long-arrow-right"></i>
+        </a>
+
+    </div>
+</div>
 <div class="container-fluid">
     <div class="tab-content tab-content-carousel">
-        <div class="tab-pane p-0 fade show active" id="products-tab" role="tabpanel"
+        <div class="tab-pane p-0 fade show active" id="products-featured-tab" role="tabpanel"
             aria-labelledby="products-featured-link">
-            <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl"
-                data-owl-options='{
-                                "nav": false, 
-                                "dots": true,
-                                "margin": 20,
-                                "loop": false,
-                                "responsive": {
-                                    "0": {
-                                        "items":2
-                                    },
-                                    "480": {
-                                        "items":2
-                                    },
-                                    "768": {
-                                        "items":3
-                                    },
-                                    "992": {
-                                        "items":4
-                                    },
-                                    "1200": {
-                                        "items":5
-                                    },
-                                    "1600": {
-                                        "items":6,
-                                        "nav": true
-                                    }
-                                }
-                            }'>
-                @foreach($clothes as $product)
-                <div class="product product-11 text-center product-manual">
-                    <figure class="product-media">
-                        <a href="{{ url('shop-product-detail/' . $product->slug) }}">
-                            <img src="{{ asset('storage/' . $product->featured_image) }}" alt="Product image"
-                                class="product-image product-image-manual">
-                        </a>
+            <div class="owl-carousel ll-carousel" data-toggle="owl" data-owl-options='{
+        "nav": false,
+        "dots": false,
+        "margin":20,
+        "loop":false,
+        "responsive":{
+            "0":{"items":2},
+            "480":{"items":2},
+            "768":{"items":3},
+            "992":{"items":4},
+            "1200":{"items":5},
+            "1600":{"items":6}
+        }
+    }'>
 
-                        <div class="product-action-vertical">
-                            @php
-                            $isInWishlist = \App\Models\Wishlist::where(function ($query) use ($product) {
-                            $userId = auth()->id();
-                            $systemId = $userId ? null : hash('sha256', request()->userAgent() . '|' . request()->ip());
+                @foreach($featured as $product)
 
-                            if ($userId) {
-                            $query->where('user_id', $userId);
-                            } else {
-                            $query->where('system_id', $systemId);
-                            }
-                            })->where('product_id', $product->id)->exists();
-                            @endphp
+                @php
+                $price = $product->price ?? $product->discounted_price;
+                $salePrice = $product->discounted_price;
 
-                            <!-- Wishlist Button -->
-                            <button type="button"
-                                class="btn-product-icon btn-wishlist {{ $isInWishlist ? 'active' : '' }} btn-expandable add-to-wishlist {{ $isInWishlist ? 'wishlist-active' : '' }}"
-                                data-product-id="{{ $product->id }}">
-                                <span>{{ $isInWishlist ? 'Remove from wishlist' : 'Add to wishlist' }}</span>
-                            </button>
-                        </div>
-                    </figure>
+                $discount = 0;
+                if($price > $salePrice){
+                $discount = round((($price-$salePrice)/$price)*100);
+                }
 
-                    <div class="product-body">
-                        <h3 class="product-title">
-                            <a href="{{ url('shop-product-detail/' . $product->slug) }}">{{ $product->name }}</a>
-                        </h3>
-                        <div class="product-price">
-                            ₹{{ $product->discounted_price }}
-                            <span style="font-size: 12px;">
-                                <del>{{ $product->original_price }}</del>
-                                <!-- Assuming you have the original price stored -->
+                $isInWishlist = \App\Models\Wishlist::where(function ($query) {
+                if(auth()->check()){
+                $query->where('user_id',auth()->id());
+                }else{
+                $query->where('system_id',hash('sha256',request()->userAgent().'|'.request()->ip()));
+                }
+                })
+                ->where('product_id',$product->id)
+                ->exists();
+                @endphp
+
+                <div class="item">
+
+                    <div class="ll-card">
+
+                        <div class="ll-image">
+
+                            @if($discount>0)
+                            <span class="ll-badge">
+                                {{ $discount }}% OFF
                             </span>
-                        </div>
-                        
-                                
-                                @php
-                                    $ratingPercent = rand(70, 100);   // 70% to 100%
-                                    $reviewsCount = rand(5, 20);      // 5 to 20 reviews
-                                @endphp
+                            @else
+                            <span class="ll-badge green">
+                                NEW
+                            </span>
+                            @endif
 
-                                <div class="ratings-container">
-                                    <div class="ratings">
-                                        <div class="ratings-val" style="width: {{ $ratingPercent }}%;"></div>
-                                    </div>
-                                    <span class="ratings-text">
-                                        ( {{ $reviewsCount }} Reviews )
-                                    </span>
+                            <button
+                                class="ll-wishlist add-to-wishlist {{ $isInWishlist ? 'active wishlist-active' : '' }}"
+                                data-product-id="{{ $product->id }}">
+
+                                <i class="{{ $isInWishlist ? 'fas':'far' }} fa-heart"></i>
+
+                            </button>
+
+                            <a href="{{ url('shop-product-detail/'.$product->slug) }}">
+
+                                <div class="ll-image-box">
+
+                                    <img src="{{ asset('storage/'.$product->featured_image) }}" loading="lazy"
+                                        alt="{{ $product->name }}"
+                                        onerror="this.src='{{ asset('assets/images/no-image.png') }}';">
+
                                 </div>
+
+                            </a>
+
+                        </div>
+
+                        <div class="ll-body">
+
+                            <h3>
+                                <a href="{{ url('shop-product-detail/'.$product->slug) }}">
+                                    {{ $product->name }}
+                                </a>
+                            </h3>
+
+                            <div class="ll-rating">
+                                <i class="fas fa-star"></i>
+                                <span>4.8</span>
+                                <small>(205)</small>
+                            </div>
+
+                            <div class="ll-price">
+
+                                <span class="sale">
+                                    ₹{{ number_format($salePrice,2) }}
+                                </span>
+
+                                @if($price>$salePrice)
+
+                                <span class="old">
+                                    ₹{{ number_format($price,2) }}
+                                </span>
+
+                                @endif
+
+                            </div>
+
+                            <div class="ll-footer">
+
+                                <div class="delivery">
+                                    <i class="fas fa-check-circle"></i>
+                                    Delivery in 2 Days
+                                </div>
+
+                                <a href="#" class="cart">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </a>
+
+                            </div>
+
+                        </div>
+
                     </div>
 
-
                 </div>
-                @endforeach
 
+                @endforeach
 
             </div>
         </div>
+
     </div>
 </div>

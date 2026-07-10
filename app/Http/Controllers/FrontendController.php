@@ -25,13 +25,8 @@ class FrontendController extends Controller
     }
     public function index()
     {   
-
-
-
         if (!session()->has('visitor_tracked')) {
             session()->put('visitor_tracked', true);
-        
-            // Save visitor info
             Visitor::create([
                 'ip_address' => $request->ip(),
                 'user_agent' => $request->userAgent(),
@@ -39,13 +34,21 @@ class FrontendController extends Controller
                 'visited_at' => now(),
             ]);
         }
-        $featured = Product::where('prototype',2)->latest()->take(10)->get(); // Latest 10 products
-        $sale     = Product::where('prototype',2)->inRandomOrder()->take(10)->get(); // 10 random products
+
+        $categories = ProductCategory::whereIn('id', [13, 14, 12, 8, 1, 2])
+            ->orderByRaw('FIELD(id, 13, 14, 12, 8, 1, 2)')
+            ->get(); 
+        $trending = Product::where('prototype',2)->latest()->take(10)->get(); // Latest 10 products
+        $collection = Product::where('prototype',2)->latest()->take(10)->get(); // Latest 10 products
+
+        $featured = Product::where('prototype',2)->latest()->take(10)->get(); // Latest 10 products trending
         $clothes     = Product::where('category',2)->inRandomOrder()->take(10)->get(); // 10 random products
+
+        $sale     = Product::where('prototype',2)->inRandomOrder()->take(10)->get(); // 10 random products
         $rated    = Product::where('prototype',2)->take(20)->get();    
 
         $blogs    = Blog::get();
-        return view('frontend.index', compact('featured','sale','rated','clothes','blogs'));
+        return view('frontend.index', compact('featured','sale','rated','clothes','blogs','categories','collection'));
     }
     public function about()
     {
@@ -101,11 +104,11 @@ class FrontendController extends Controller
             });
 
         }
+$products = $products->latest()->paginate(12);
 
-        $productsCount = $products->count();
-        $products = $products->latest()->get();
-
-        return view('frontend.shop', compact('products', 'query', 'filter', 'productsCount'));
+$productsCount = $products->total();
+$categories = ProductCategory::all();
+        return view('frontend.shop', compact('products', 'query', 'filter', 'productsCount','categories'));
     }
     public function categoryProduct(Request $request, $category_name)
     {

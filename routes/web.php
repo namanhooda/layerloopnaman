@@ -20,6 +20,8 @@ use App\Http\Controllers\Auth\CustomAuthenticatedSessionController;
 
 
 
+Route::get('/home', [TestController::class, 'home']);
+
 Route::get('/testdatanmn', [TestController::class, 'index']);
 Route::get('/download-pdf', [TestController::class, 'downloadPdf']);
 Route::get('/download-pdf-work', [TestController::class, 'downloadPdfwork']);

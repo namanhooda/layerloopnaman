@@ -705,7 +705,7 @@ blockquote.text-white cite span {
     bottom: -1px;
     left: 10px;
     right: 10px;
-    background-color: #ebebeb
+    background-color: #222
 }
 
 .header-top .top-menu li+li {
@@ -2333,16 +2333,27 @@ blockquote.text-white cite span {
     position: relative;
     display: flex;
     align-items: center;
-    align-self: stretch;
-    color: #333333;
-    font-weight: 500;
-    font-size: 1.4rem;
-    line-height: 1.5;
-    letter-spacing: -.01em;
+    justify-content: space-between;
+
+    color: #333;
+    font-weight: 600;
+    font-size: 15px;
     text-transform: uppercase;
-    padding: 1rem 1.9rem 1rem 2rem;
-    min-width: 270px;
-    transition: background .4s, color .1s
+
+    min-width: 240px;      /* Change width */
+    height: 52px;          /* Button height */
+    padding: 0 22px;       /* Left & right spacing */
+
+    border: 1px solid #e5e5e5;
+    border-radius: 12px;   /* Rounded corners */
+
+    transition: all 0.3s ease;
+}
+
+.category-dropdown .dropdown-toggle:hover {
+    background: #22c55e;
+    color: #fff;
+    border-color: #22c55e;
 }
 
 .category-dropdown .dropdown-toggle:after {
@@ -3489,7 +3500,8 @@ p {
 
 .header-4 .header-middle {
     border-bottom: none;
-    margin-bottom: .1rem
+    margin-top: -1.9rem;
+    margin-bottom: -1.9rem;
 }
 
 .header-4 .header-search-extended {
@@ -3507,7 +3519,7 @@ p {
 
 .header-4 .cart-dropdown,
 .header-4 .compare-dropdown {
-    padding-left: 3rem
+    padding-left: 0rem
 }
 
 .header-4 .cart-dropdown:not(:hover):not(.show) .dropdown-toggle,
@@ -3539,7 +3551,7 @@ p {
 }
 
 .header-4 .dropdown.category-dropdown {
-    background-color: #f8f8f8
+    /* background-color: #f8f8f8 */
 }
 
 .header-4 .dropdown.category-dropdown .dropdown-toggle:not(:hover):not(:focus) {
