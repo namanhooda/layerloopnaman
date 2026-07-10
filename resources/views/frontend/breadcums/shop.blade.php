@@ -23,7 +23,7 @@ SHOP HEADER
 
     align-items:center;
 
-    gap:40px;
+    gap:10px;
 
 }
 
@@ -151,7 +151,7 @@ width:100%;
 
 display:grid;
 
-grid-template-columns:repeat(3,1fr);
+/* grid-template-columns:repeat(3,1fr); */
 
 gap:18px;
 
@@ -169,7 +169,7 @@ MOBILE
 
 background:#fff;
 
-padding:20px 0;
+padding:0px 0;
 
 margin-bottom:20px;
 
@@ -195,7 +195,6 @@ color:#111;
 
 font-size:14px;
 
-margin-bottom:20px;
 
 }
 
@@ -211,7 +210,6 @@ border-top:1px solid #eee;
 
 border-bottom:1px solid #eee;
 
-padding:20px 0;
 
 }
 
@@ -281,7 +279,7 @@ font-size:30px;
 
 .ll-features{
 
-grid-template-columns:repeat(2,1fr);
+grid-template-columns:repeat(3,1fr);
 
 }
 

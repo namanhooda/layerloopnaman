@@ -577,7 +577,7 @@ MOBILE
 
         .ll-category-section {
 
-            padding: 15px 0;
+            padding: 0px 0;
 
         }
 
@@ -695,7 +695,6 @@ MOBILE
         </div>
 
     </div>
-    <br>
     <div class="page-content">
         <div class="container">
 
