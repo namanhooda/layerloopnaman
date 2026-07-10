@@ -115,7 +115,7 @@
     <div class="header-top" style="background-color: #222">
         <div class="container">
             <div class="header-left">
-                <a href="tel:#"><i class="icon-phone"></i>Call: +0123 456 789</a>
+                <a href="tel:#"><i class="icon-phone"></i>Call: +91 8059808185</a>
             </div><!-- End .header-left -->
 
             <div class="header-right">

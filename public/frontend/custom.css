@@ -6,14 +6,14 @@ body {
 /* Tablet */
 @media (max-width: 991px) {
     body {
-        /* padding-top: 120px; */
+        padding-top: 0px;
     }
 }
 
 /* Mobile */
 @media (max-width: 575px) {
     body {
-        /* padding-top: 80px; */
+        padding-top: 0px;
     }
 }
 
