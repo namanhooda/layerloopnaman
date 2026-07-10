@@ -71,7 +71,10 @@
         .btn {
             width: 100%;
         }
-    }
+    }.text-green{
+    color:#39d353; /* Green */
+    font-weight:700;
+}
 
     /* Default desktop images */
     .slide-1 {
@@ -106,17 +109,27 @@
         }
     }
 
+    @media (max-width: 768px) {
+    .btn-banner {
+        width: 32%;
+    }
+    .sub-hed{
+        font-size: 1.3rem !important;
+        color: white !important; 
+    }
+}
+
 </style>
 <div class="intro-slider-container">
     <div class="owl-carousel owl-simple owl-light owl-nav-inside" data-toggle="owl" data-owl-options='{"nav": false}'>
         <div class="intro-slide slide-1">
             <div class="container intro-content">
                 <h3 class="intro-subtitle">CRAFTED WITH PRECISION</h3>
-                <h1 class="intro-title">PRINTED WITH <br>PERFECTION.</h1>
-                <h6>premium 3d printed idols, lithophanes, lamps, miniatures<br>and custom creations made with passion
+                <h1 class="intro-title"><span class="text-green">PRINTED WITH</span><br>PERFECTION.</h1>
+                <h6 class="sub-hed">premium 3d printed idols, lithophanes, lamps, miniatures and custom creations made with passion
                 </h6>
-                <h6>
-                    <div class="row text-center g-3 mb-2 onlyweb" style="margin-left: -62px;">
+                
+                    <div class="row text-center g-3 mb-2 onlyweb  d-none d-md-flex" style="margin-left: -62px;" >
                         <div class="col- col-md-8">
                             <div class="bnr-feature-item">
                                 <i class="fas fa-shield-alt"></i>
@@ -138,12 +151,12 @@
 
 
                     </div>
-                </h6>
-                <a href="category.html" class="btn btn-primary btnshopnow">
+                
+                <a href="category.html" class="btn btn-primary btnshopnow btn-banner">
                     <span>Shop Now</span>
                     <i class="icon-long-arrow-right"></i>
                 </a>
-                <div class="row text-center bnr-stats-section onlyweb" style="margin-left: -55px;">
+                <div class="row text-center bnr-stats-section onlyweb  d-none d-md-flex" style="margin-left: -55px;">
                     <div class="col-6 col-md-2">
                         <h3>3000+</h3>
                         <p>Products</p>
