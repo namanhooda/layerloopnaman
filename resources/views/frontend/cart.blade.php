@@ -225,10 +225,14 @@
                                 <i class="icon-user"></i> Login to Checkout
                             </a>
                             @endif
+                            <button id="shiprocket-checkout-btn" class="btn btn-primary btn-block">
+    Pay with Shiprocket
+</button>
                         </div><!-- End .summary -->
 
                         <a href="{{url('shop')}}" class="btn btn-outline-dark-2 btn-block mb-3"><span>CONTINUE
                                 SHOPPING</span><i class="icon-refresh"></i></a>
+                                
                     </aside><!-- End .col-lg-3 -->
                 </div><!-- End .row -->
             </div><!-- End .container -->
@@ -239,9 +243,76 @@
 @endsection
 <!-- <button id="buyNow">Buy Now</button> -->
 
-<script src="https://checkout-api.shiprocket.com/checkout.js"></script>
+<script src="https://checkout.shiprocket.com/js/sdk.js"></script>
 
 <script>
+    document.getElementById('place-order-btn').addEventListener('click', function () {
+
+    fetch('/shiprocket/token', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+        },
+        body: JSON.stringify({
+            amount: 2500,
+            order_id: 'ORD12345'
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+
+        ShiprocketCheckout.open({
+            token: data.token
+        });
+
+    });
+
+});
+
+fetch('/shiprocket/token',{
+
+    method:'POST',
+
+    headers:{
+        'Content-Type':'application/json',
+        'X-CSRF-TOKEN':document
+            .querySelector('meta[name=csrf-token]')
+            .content
+    },
+
+    body:JSON.stringify({
+
+        amount:2500,
+
+        order_id:'ORD12345'
+
+    })
+
+})
+.then(res=>res.json())
+.then(data=>{
+
+    ShiprocketCheckout.open({
+
+        token:data.token,
+
+        onSuccess:function(response){
+
+            console.log(response);
+
+        },
+
+        onFailure:function(error){
+
+            console.log(error);
+
+        }
+
+    });
+
+});
+
 document.getElementById('buyNow').addEventListener('click', async function(e) {
 
     let res = await fetch("{{ route('shiprocket.checkout.token') }}");

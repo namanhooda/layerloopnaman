@@ -18,7 +18,8 @@ use Spatie\Sitemap\Tags\Url;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\CustomAuthenticatedSessionController;
 
-
+Route::post('/shiprocket/token', [ShiprocketController::class, 'generateToken']);
+Route::post('/shiprocket/webhook',[ShiprocketController::class,'webhook']);
 
 Route::get('/home', [TestController::class, 'home']);
 
@@ -41,8 +42,8 @@ Route::post('/shiprocket-token', [CheckoutController::class, 'generateToken'])
 Route::get('/shiprocket/checkout-token', [CheckoutController::class, 'getCheckoutToken'])
     ->name('shiprocket.checkout.token');
 
-    Route::get('/api/shiprocket/products', [CheckoutController::class, 'shiprocketProducts']);
-    Route::get('/api/shiprocket/collections', [CheckoutController::class, 'shiprocketCollections']);
+    // Route::get('/api/shiprocket/products', [CheckoutController::class, 'shiprocketProducts']);
+    // Route::get('/api/shiprocket/collections', [CheckoutController::class, 'shiprocketCollections']);
 
 
 
