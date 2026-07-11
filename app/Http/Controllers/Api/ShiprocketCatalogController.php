@@ -105,54 +105,55 @@ class ShiprocketCatalogController extends Controller
         ]);
     }
     public function collections(Request $request)
-{
-    $page = max((int)$request->page, 1);
-    $limit = max((int)$request->limit, 100);
+    {
+        $page = max((int)$request->page, 1);
+        $limit = max((int)$request->limit, 100);
 
-    $query = ProductCategory::where('status', 'active');
+        $query = ProductCategory::where('status', 'active');
 
-    $total = $query->count();
+        $total = $query->count();
 
-    $collections = $query
-        ->skip(($page - 1) * $limit)
-        ->take($limit)
-        ->get();
+        $collections = $query
+            ->skip(($page - 1) * $limit)
+            ->take($limit)
+            ->get();
 
-    $data = [];
+        $data = [];
 
-    foreach ($collections as $category) {
+        foreach ($collections as $category) {
 
-        $image = '';
+            $image = '';
 
-        if (!empty($category->featured_image)) {
-            $image = asset('storage/' . $category->featured_image);
+            if (!empty($category->featured_image)) {
+                $image = asset('storage/' . $category->featured_image);
+            }
+
+            $data[] = [
+
+                "id" => (int)$category->id,
+
+                "updated_at" => optional($category->updated_at)->toIso8601String(),
+
+                "body_html" => 'Layerloop 3d printed ' .$category->name ?? "",
+
+                "handle" => $category->slug,
+
+                "image" => [
+                    "src" => $image
+                ],
+
+                "title" => $category->name,
+
+                "created_at" => optional($category->created_at)->toIso8601String(),
+            ];
         }
 
-        $data[] = [
-
-            "id" => (int)$category->id,
-
-            "updated_at" => optional($category->updated_at)->toIso8601String(),
-
-            "body_html" => 'Layerloop 3d printed ' .$category->name ?? "",
-
-            "handle" => $category->slug,
-
-            "image" => [
-                "src" => $image
-            ],
-
-            "title" => $category->name,
-
-            "created_at" => optional($category->created_at)->toIso8601String(),
-        ];
+        return response()->json([
+            "data" => [
+                "total" => $total,
+                "collections" => $data
+            ]
+        ]);
     }
 
-    return response()->json([
-        "data" => [
-            "total" => $total,
-            "collections" => $data
-        ]
-    ]);
-}
 }
