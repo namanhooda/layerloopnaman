@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\ProductCategory;
 use App\Models\Product;
 
 class ShiprocketCatalogController extends Controller
@@ -103,4 +104,56 @@ class ShiprocketCatalogController extends Controller
             ]
         ]);
     }
+    public function collections(Request $request)
+{
+    $page = max((int)$request->page, 1);
+    $limit = max((int)$request->limit, 100);
+
+    $query = ProductCategory::where('status', 'active');
+
+    $total = $query->count();
+
+    $collections = $query
+        ->skip(($page - 1) * $limit)
+        ->take($limit)
+        ->get();
+
+    $data = [];
+
+    foreach ($collections as $category) {
+
+        $image = '';
+
+        if (!empty($category->featured_image)) {
+            $image = asset('storage/' . $category->featured_image);
+        }
+
+        $data[] = [
+
+            "id" => (int)$category->id,
+
+            "updated_at" => optional($category->updated_at)->toIso8601String(),
+
+            "body_html" => 'Layerloop 3d printed ' .$category->name ?? "",
+
+            "handle" => $category->slug,
+
+            "image" => [
+                "src" => $image
+            ],
+
+            "title" => $category->name,
+
+            "created_at" => optional($category->created_at)->toIso8601String(),
+        ];
+    }
+    dd($data);
+
+    return response()->json([
+        "data" => [
+            "total" => $total,
+            "collections" => $data
+        ]
+    ]);
+}
 }

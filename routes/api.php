@@ -20,6 +20,9 @@ use App\Http\Controllers\Api\ShiprocketCatalogController;
 
 
 Route::get('/shiprocket/products', [ShiprocketCatalogController::class, 'products']);
+Route::get('/shiprocket/collections', [ShiprocketCatalogController::class, 'collections']);
+
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
