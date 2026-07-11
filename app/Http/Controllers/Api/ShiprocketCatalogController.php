@@ -147,7 +147,6 @@ class ShiprocketCatalogController extends Controller
             "created_at" => optional($category->created_at)->toIso8601String(),
         ];
     }
-    dd($data);
 
     return response()->json([
         "data" => [
