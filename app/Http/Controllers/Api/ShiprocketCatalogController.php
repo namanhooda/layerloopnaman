@@ -13,8 +13,15 @@ class ShiprocketCatalogController extends Controller
     {
         $page = max((int)$request->get('page', 1), 1);
         $limit = max((int)$request->get('limit', 100), 1);
+        $collectionId = $request->get('collection_id');
 
         $query = Product::where('status', 'Published');
+
+        // Filter by collection/category
+        if (!empty($collectionId)) {
+            $query->whereRaw("FIND_IN_SET(?, category)", [$collectionId]);
+        }
+
 
         $total = $query->count();
 
