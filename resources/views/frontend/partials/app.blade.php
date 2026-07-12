@@ -2,7 +2,6 @@
 <html lang="en">
 
 
-<!-- molla/index-1.html  22 Nov 2019 09:55:06 GMT -->
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -492,5 +491,4 @@ document.querySelectorAll(".add-to-wishlist").forEach(button => {
 
 
 
-<!-- molla/index-1.html  22 Nov 2019 09:55:32 GMT -->
 </html>

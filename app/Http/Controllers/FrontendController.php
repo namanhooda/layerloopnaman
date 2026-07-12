@@ -104,9 +104,9 @@ class FrontendController extends Controller
             });
 
         }
-$products = $products->latest()->paginate(12);
+$products = $products->latest()->get();
 
-$productsCount = $products->total();
+$productsCount = $products->count();
 $categories = ProductCategory::all();
         return view('frontend.shop', compact('products', 'query', 'filter', 'productsCount','categories'));
     }
