@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\ProductReview;
 use App\Models\Blog;
+use App\Models\Team;
 use App\Models\ProductCategory;
 use Illuminate\Http\Request;
 use App\Mail\TestMail;
@@ -52,7 +53,8 @@ class FrontendController extends Controller
     }
     public function about()
     {
-        return view('frontend.about');
+        $team = Team::get();
+        return view('frontend.about', compact('team'));
     }
     public function gallary()
     {

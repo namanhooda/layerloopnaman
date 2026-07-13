@@ -349,7 +349,27 @@
             }
 
         }
+        
+        .modal-body ul {
+    list-style: disc !important;
+    padding-left: 20px !important;
+    margin-bottom: 1rem;
+}
 
+.modal-body ol {
+    list-style: decimal !important;
+    padding-left: 20px !important;
+    margin-bottom: 1rem;
+}
+
+.modal-body li {
+    display: list-item !important;
+    margin-bottom: 8px;
+    color: #333;
+}
+.modal-body{
+    margin: 20px;
+}
     </style>
 
     <div class="ftr-footer-main">
@@ -475,23 +495,33 @@
                                 </a>
                             </li>
 
-                            <li>
-                                <a href="#">
-                                    Shipping Policy
-                                </a>
-                            </li>
+                           
 
-                            <li>
-                                <a href="#">
-                                    Return & Refund
-                                </a>
-                            </li>
 
-                            <li>
+
+<li>
+    <a href="#" data-bs-toggle="modal" data-bs-target="#shippingModal">
+        Shipping Policy
+    </a>
+</li>
+
+<li>
+    <a href="#" data-bs-toggle="modal" data-bs-target="#refundModal">
+        Return & Refund Policy
+    </a>
+</li>
+
+<li>
+    <a href="#" data-bs-toggle="modal" data-bs-target="#codModal">
+        Cash on Delivery
+    </a>
+</li>
+
+                            <!-- <li>
                                 <a href="{{ url('faq') }}">
                                     FAQs
                                 </a>
-                            </li>
+                            </li> -->
 
                             <li>
                                 <a href="{{ url('contact_us') }}">
@@ -537,16 +567,16 @@
                             </li>
 
                             <li>
-                                <a href="#">
-                                    Privacy Policy
-                                </a>
-                            </li>
+    <a href="#" data-bs-toggle="modal" data-bs-target="#privacyPolicyModal">
+        Privacy Policy
+    </a>
+</li>
 
-                            <li>
-                                <a href="#">
-                                    Terms & Conditions
-                                </a>
-                            </li>
+<li>
+    <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">
+        Terms & Conditions
+    </a>
+</li>
 
                         </ul>
 
@@ -650,4 +680,277 @@
 
     </div>
 
+
+
+<!-- Privacy Policy Modal -->
+<div class="modal fade" id="privacyPolicyModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Privacy Policy</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+
+                <p>
+                    At <strong>LayerLoop</strong>, we respect your privacy and are committed to protecting your personal information.
+                </p>
+
+                <h6>Information We Collect</h6>
+
+                <ul>
+                    <li>Name</li>
+                    <li>Email Address</li>
+                    <li>Phone Number</li>
+                    <li>Shipping & Billing Address</li>
+                    <li>Order Details</li>
+                    <li>Payment Information (processed securely through payment gateways)</li>
+                </ul>
+
+                <h6>How We Use Your Information</h6>
+
+                <ul>
+                    <li>To process your orders</li>
+                    <li>To ship products</li>
+                    <li>To provide customer support</li>
+                    <li>To send order updates</li>
+                    <li>To improve our website and services</li>
+                </ul>
+
+                <h6>Data Security</h6>
+
+                <p>
+                    Your information is stored securely and is never sold or shared with third parties except trusted payment and shipping partners.
+                </p>
+
+                <h6>Cookies</h6>
+
+                <p>
+                    Our website may use cookies to improve browsing experience and website performance.
+                </p>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="termsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Terms & Conditions</h5>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+
+                <p>
+                    By purchasing from LayerLoop, you agree to the following terms.
+                </p>
+
+                <h6>Products</h6>
+
+                <p>
+                    We manufacture premium 3D printed products including idols, miniatures, lamps, home decor, custom models, figurines and personalized gifts.
+                </p>
+
+                <h6>3D Printing Characteristics</h6>
+
+                <ul>
+                    <li>Minor layer lines are natural.</li>
+                    <li>Small color differences may occur.</li>
+                    <li>Dimensions may vary slightly (±2-3 mm).</li>
+                </ul>
+
+                <h6>Customized Products</h6>
+
+                <p>
+                    Customized products are manufactured specifically for you and cannot be cancelled or returned once production begins.
+                </p>
+
+                <h6>Pricing</h6>
+
+                <p>
+                    Prices may change without prior notice. Applicable taxes and shipping charges will be calculated during checkout.
+                </p>
+
+                <h6>Copyright</h6>
+
+                <p>
+                    All product designs, images and website content belong to LayerLoop.
+                </p>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="shippingModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Shipping Policy</h5>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+
+                <h6>Order Processing</h6>
+
+                <p>
+                    Every LayerLoop product is manufactured using premium 3D printing technology. Orders are generally prepared within <strong>2-4 business days</strong>.
+                </p>
+
+                <h6>Delivery Time</h6>
+
+                <p>
+                    Standard delivery takes approximately <strong>5-7 business days</strong> after dispatch depending on your location.
+                </p>
+
+                <h6>Courier Partners</h6>
+
+                <ul>
+                    <li>Delhivery</li>
+                    <li>Blue Dart</li>
+                    <li>DTDC</li>
+                    <li>Xpressbees</li>
+                    <li>Ekart</li>
+                </ul>
+
+                <h6>Tracking</h6>
+
+                <p>
+                    Tracking details will be sent via Email, SMS or WhatsApp once your order is dispatched.
+                </p>
+
+                <h6>Delays</h6>
+
+                <p>
+                    Shipping may be delayed due to weather conditions, public holidays, courier delays or unforeseen circumstances.
+                </p>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="refundModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Return & Refund Policy</h5>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+
+                <h6>Returns</h6>
+
+                <p>
+                    Returns are accepted only if:
+                </p>
+
+                <ul>
+                    <li>Product arrives damaged.</li>
+                    <li>Wrong product is delivered.</li>
+                    <li>Major manufacturing defect.</li>
+                </ul>
+
+                <h6>Report Within</h6>
+
+                <p>
+                    Please report any issue within <strong>48 hours</strong> of delivery with an unboxing video and product photos.
+                </p>
+
+                <h6>Non-Returnable Items</h6>
+
+                <ul>
+                    <li>Customized Products</li>
+                    <li>Personalized Models</li>
+                    <li>Made-to-order Items</li>
+                    <li>Products damaged after delivery</li>
+                </ul>
+
+                <h6>Refund</h6>
+
+                <p>
+                    Approved refunds are processed within <strong>5-7 business days</strong> through the original payment method.
+                </p>
+
+                <h6>Replacement</h6>
+
+                <p>
+                    Depending on the issue, we may provide a replacement instead of a refund.
+                </p>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="codModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Cash on Delivery (COD)</h5>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+
+                <p>
+                    LayerLoop offers Cash on Delivery on selected products and eligible PIN codes.
+                </p>
+
+                <h6>Availability</h6>
+
+                <p>
+                    COD is available only for serviceable locations.
+                </p>
+
+                <h6>Verification</h6>
+
+                <p>
+                    Our team may contact you via phone or WhatsApp to verify COD orders before dispatch.
+                </p>
+
+                <h6>Customized Products</h6>
+
+                <p>
+                    Customized and personalized products require full advance payment before production begins.
+                </p>
+
+                <h6>Cancellation</h6>
+
+                <p>
+                    Repeated cancellation or refusal of COD orders may result in COD being disabled for future purchases.
+                </p>
+
+                <h6>Inspection</h6>
+
+                <p>
+                    Please inspect the package upon delivery. If you notice visible damage, refuse the package and contact our support immediately.
+                </p>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
 </footer>
+
+
