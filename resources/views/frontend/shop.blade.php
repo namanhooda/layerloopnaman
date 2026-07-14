@@ -769,7 +769,7 @@ MOBILE
 
                                     <div class="ll-image-box">
 
-                                        <img loading="eager" fetchpriority="high" decoding="async"
+                                        <img 
                                             src="{{ asset('storage/'.$product->featured_image) }}"
                                             alt="{{ $product->name }}" loading="lazy"
                                             onerror="this.src='{{ asset('assets/images/no-image.png') }}';">
