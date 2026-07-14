@@ -12,14 +12,27 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\WhatsAppController;
 use App\Http\Controllers\ShiprocketWebhookController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ShiprocketController;
 use App\Http\Controllers\TestController;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\Tags\Url;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\CustomAuthenticatedSessionController;
 
-Route::post('/shiprocket/token', [ShiprocketController::class, 'generateToken']);
+Route::get('shp-checkout', [ShiprocketController::class, 'checkout'])->name('checkout');
+Route::post('/shiprocket/token', [ShiprocketController::class, 'generateToken'])->name('shiprocket.token');
+
+Route::post('/shiprocket/cart-token', [CheckoutController::class, 'generateCartToken'])
+    ->name('shiprocket.cart.token');
+
 Route::post('/shiprocket/webhook',[ShiprocketController::class,'webhook']);
+
+Route::post('/shiprocket/checkout-token', [CheckoutController::class, 'generateToken']);
+
+Route::get('/checkout/success', function () {
+    return "Payment Successful";
+})->name('checkout.success');
+
 
 Route::get('/home', [TestController::class, 'home']);
 
@@ -33,7 +46,7 @@ Route::delete('/orders/delete/{id}', [OrderController::class, 'destroy'])
 Route::get('/admin/orders/{id}/create-shipment', [OrderController::class, 'createShipment'])->name('orders.createShipment');
 Route::post('/shiprocket/webhook/order', [ShiprocketWebhookController::class, 'handle']);
 Route::post('/shiprocket-token', [CheckoutController::class, 'generateToken'])
-    ->name('shiprocket.token');
+    ->name('shiprocket.tokens');
 
     Route::get('/checkout-success', function () {
     return view('frontend.checkout-success');

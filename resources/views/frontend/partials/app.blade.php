@@ -11,6 +11,7 @@
     <meta name="description" content="Layerloop - 3d pronted Store">
     <meta name="google-site-verification" content="SA4k7tR0Adq975MTs1RDqcRfGaIvdiJ7OLnqR2A4qrg" />
     <meta name="author" content="p-themes">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Favicon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -33,6 +34,11 @@
     <link rel="stylesheet" href="{{asset('frontend/assets/css/plugins/owl-carousel/owl.carousel.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/assets/css/plugins/magnific-popup/magnific-popup.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/assets/css/plugins/jquery.countdown.css')}}">
+
+<link rel="stylesheet"
+      href="https://checkout-ui.shiprocket.com/assets/styles/shopify.css">
+
+
     <!-- Main CSS File -->
     <link rel="stylesheet" href="{{asset('frontend/assets/css/style.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/custom.css')}}">
@@ -41,6 +47,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-T8NR051ED9"></script>
+
+    
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
@@ -247,6 +255,7 @@
     </script>
     @endif -->
     <!-- Plugins JS File -->
+
     <script src="{{asset('frontend/assets/js/jquery.min.js')}}"></script>
     <script src="{{asset('frontend/assets/js/bootstrap.bundle.min.js')}}"></script>
     <script src="{{asset('frontend/assets/js/jquery.hoverIntent.min.js')}}"></script>
@@ -487,6 +496,8 @@ document.querySelectorAll(".add-to-wishlist").forEach(button => {
 </script>
 
 @stack('scripts')
+
+<script src="https://checkout-ui.shiprocket.com/assets/js/channels/shopify.js"></script>
 </body>
 
 

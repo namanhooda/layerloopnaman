@@ -3,12 +3,12 @@
    LayerLoop Newsletter
 ==========================================*/
 
-    .ll-newsletter-wrap {
+    .sbs-newsletter-wrap {
         padding: 35px 0;
         background: #fff;
     }
 
-    .ll-newsletter-box {
+    .sbs-newsletter-box {
         background: linear-gradient(90deg, #07140f, #0f2b1d, #13361f);
         border-radius: 18px;
         padding: 28px 35px;
@@ -21,7 +21,7 @@
         border: 1px solid rgba(76, 175, 80, .15);
     }
 
-    .ll-newsletter-box::before {
+    .sbs-newsletter-box::before {
         content: '';
         position: absolute;
         inset: 0;
@@ -31,7 +31,7 @@
         pointer-events: none;
     }
 
-    .ll-newsletter-left {
+    .sbs-newsletter-left {
         display: flex;
         align-items: center;
         gap: 22px;
@@ -39,7 +39,7 @@
         flex: 1;
     }
 
-    .ll-newsletter-icon {
+    .sbs-newsletter-icon {
         width: 78px;
         height: 78px;
         min-width: 78px;
@@ -51,52 +51,52 @@
         border: 1px solid rgba(76, 175, 80, .25);
     }
 
-    .ll-newsletter-icon i {
+    .sbs-newsletter-icon i {
         font-size: 34px;
         color: #48d26d;
     }
 
-    .ll-newsletter-content h3 {
+    .sbs-newsletter-content h3 {
         color: #fff;
         font-size: 32px;
         font-weight: 700;
         margin-bottom: 8px;
     }
 
-    .ll-newsletter-content p {
+    .sbs-newsletter-content p {
         color: #cfd7d3;
         margin: 0;
         font-size: 15px;
         line-height: 1.7;
     }
 
-    .ll-newsletter-tags {
+    .sbs-newsletter-tags {
         margin-top: 18px;
         display: flex;
         flex-wrap: wrap;
         gap: 25px;
     }
 
-    .ll-newsletter-tags span {
+    .sbs-newsletter-tags span {
         color: #e4e4e4;
         font-size: 14px;
         display: flex;
         align-items: center;
     }
 
-    .ll-newsletter-tags i {
+    .sbs-newsletter-tags i {
         color: #4ade80;
         margin-right: 8px;
         font-size: 15px;
     }
 
-    .ll-newsletter-right {
+    .sbs-newsletter-right {
         width: 520px;
         position: relative;
         z-index: 2;
     }
 
-    .ll-newsletter-form {
+    .sbs-newsletter-form {
         display: flex;
         background: #fff;
         border-radius: 12px;
@@ -104,7 +104,7 @@
         box-shadow: 0 10px 30px rgba(0, 0, 0, .25);
     }
 
-    .ll-newsletter-form input {
+    .sbs-newsletter-form input {
         flex: 1;
         border: none;
         height: 62px;
@@ -113,11 +113,11 @@
         background: #fff;
     }
 
-    .ll-newsletter-form input:focus {
+    .sbs-newsletter-form input:focus {
         outline: none;
     }
 
-    .ll-newsletter-form button {
+    .sbs-newsletter-form button {
         border: none;
         width: 185px;
         background: linear-gradient(135deg, #46d66f, #29b856);
@@ -127,7 +127,7 @@
         transition: .3s;
     }
 
-    .ll-newsletter-form button:hover {
+    .sbs-newsletter-form button:hover {
         background: linear-gradient(135deg, #29b856, #1f9a46);
     }
 
@@ -135,7 +135,7 @@
 
  @media(max-width:768px){
 
-.ll-newsletter-box{
+.sbs-newsletter-box{
 
     display:grid;
 
@@ -151,16 +151,16 @@
 
 }
 
-.ll-newsletter-left{
+.sbs-newsletter-left{
     grid-area:left;
 }
 
-.ll-newsletter-right{
+.sbs-newsletter-right{
     grid-area:right;
     width:100%;
 }
 
-.ll-newsletter-tags{
+.sbs-newsletter-tags{
     grid-area:tags;
 
     display:flex;
@@ -170,7 +170,7 @@
     margin-top:0;
 }
 
-.ll-newsletter-form{
+.sbs-newsletter-form{
 
     display:flex;
     flex-direction:column;
@@ -182,14 +182,14 @@
 
 }
 
-.ll-newsletter-form input{
+.sbs-newsletter-form input{
 
     height:40px;
     border-radius:8px;
 
 }
 
-.ll-newsletter-form button{
+.sbs-newsletter-form button{
 
     height:40px;
     width:100%;
@@ -197,26 +197,26 @@
 
 }
 
-.ll-newsletter-icon{
+.sbs-newsletter-icon{
 
     display:none;
 
 }
 
-.ll-newsletter-content h3{
+.sbs-newsletter-content h3{
 
     font-size:18px;
     margin-bottom:8px;
 
 }
 
-.ll-newsletter-content p{
+.sbs-newsletter-content p{
 
     font-size:13px;
 
 }
 
-.ll-newsletter-tags span{
+.sbs-newsletter-tags span{
 
     font-size:12px;
 
@@ -225,13 +225,13 @@
 }
 
 </style>
-<div class="ll-newsletter-wrap">
+<div class="sbs-newsletter-wrap">
     <div class="container">
-        <div class="ll-newsletter-box">
+        <div class="sbs-newsletter-box">
 
-    <div class="ll-newsletter-left">
+    <div class="sbs-newsletter-left">
 
-        <div class="ll-newsletter-content">
+        <div class="sbs-newsletter-content">
 
             <h3>Get 10% Off On Your First Order!</h3>
 
@@ -245,11 +245,11 @@
     </div>
 
 
-    <div class="ll-newsletter-right">
+    <div class="sbs-newsletter-right">
 
         <form>
 
-            <div class="ll-newsletter-form">
+            <div class="sbs-newsletter-form">
 
                 <input type="email"
                     placeholder="Enter your email address">
@@ -266,7 +266,7 @@
 
 
     <!-- MOVE THIS OUTSIDE -->
-    <div class="ll-newsletter-tags">
+    <div class="sbs-newsletter-tags">
 
         <span><i class="icon-check-circle"></i> No Spam</span>
 

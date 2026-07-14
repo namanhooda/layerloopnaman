@@ -25,7 +25,101 @@ class CheckoutController extends Controller
 {
     //
 
+public function generateCartToken(Request $request)
+{
+    $userId = auth()->id();
 
+    $systemId = null;
+
+    if (!$userId) {
+        $rawIdentifier = $request->userAgent() . '|' . $request->ip();
+        $systemId = hash('sha256', $rawIdentifier);
+    }
+
+    $cartItems = Cart::with('product')
+        ->where(function ($query) use ($userId, $systemId) {
+
+            if ($userId) {
+                $query->where('user_id', $userId);
+            } else {
+                $query->where('system_id', $systemId);
+            }
+
+        })
+        ->get();
+
+    if ($cartItems->isEmpty()) {
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Cart is empty.'
+        ]);
+
+    }
+
+    $items = [];
+
+    foreach ($cartItems as $cart) {
+
+        $items[] = [
+            "variant_id" => "808185" . $cart->product_id,
+            "quantity"   => $cart->quantity
+        ];
+
+    }
+
+    $apiKey = env('SHIPROCKET_CHECKOUT_KEY');
+    $apiSecret = env('SHIPROCKET_CHECKOUT_SECRET');
+
+    $payload = [
+        "cart_data" => [
+            "items" => $items,
+            "mobile_app" => false
+        ],
+        "redirect_url" => url('/checkout'),
+        "timestamp" => now()->toIso8601ZuluString()
+    ];
+
+    $jsonPayload = json_encode($payload);
+
+    $signature = base64_encode(
+        hash_hmac(
+            'sha256',
+            $jsonPayload,
+            $apiSecret,
+            true
+        )
+    );
+
+    $response = Http::withoutVerifying()
+        ->withHeaders([
+            'X-Api-Key' => $apiKey,
+            'X-Api-HMAC-SHA256' => $signature,
+            'Content-Type' => 'application/json',
+        ])
+        ->post(
+            'https://checkout-api.shiprocket.com/api/v1/access-token/checkout',
+            $payload
+        );
+
+    if (!$response->successful()) {
+
+        return response()->json([
+            'success' => false,
+            'message' => $response->body()
+        ], $response->status());
+
+    }
+
+    $result = $response->json();
+
+    return response()->json([
+        'success' => true,
+        'access_token' => $result['result']['token'],
+        'order_id' => $result['result']['data']['order_id'],
+        'expires_at' => $result['result']['expires_at'],
+    ]);
+}
 
 
 public function generateToken()

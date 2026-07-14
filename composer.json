@@ -9,7 +9,7 @@
         "barryvdh/laravel-dompdf": "^3.1",
         "google/apiclient": "^2.12",
         "guzzlehttp/guzzle": "^7.2",
-        "intervention/image": "^4.0",
+        "intervention/image": "^4.2",
         "laravel/fortify": "^1.31",
         "laravel/framework": "^10.10",
         "laravel/jetstream": "^4.3",
