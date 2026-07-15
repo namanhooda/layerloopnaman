@@ -564,6 +564,11 @@ TABLET
 
             font-size: 14px;
 
+
+        }
+
+        .shop {
+            min-width: 100px !important;
         }
 
     }
@@ -578,6 +583,10 @@ MOBILE
 
             padding: 0px 0;
 
+        }
+
+        .shop {
+            min-width: 100px !important;
         }
 
         .ll-category-scroll {
@@ -769,8 +778,7 @@ MOBILE
 
                                     <div class="ll-image-box">
 
-                                        <img 
-                                            src="{{ asset('storage/'.$product->featured_image) }}"
+                                        <img src="{{ asset('storage/'.$product->featured_image) }}"
                                             alt="{{ $product->name }}" loading="lazy"
                                             onerror="this.src='{{ asset('assets/images/no-image.png') }}';">
 
@@ -831,12 +839,10 @@ MOBILE
                                         Delivery in 2 Days
 
                                     </div> -->
-                                    <button
-    type="button"
-    class="shop btn btn-primary buyNow"
-    data-product-id="{{ $product->id }}">
-    Buy Now
-</button>
+                                    <button type="button" class="shop btn btn-primary buyNow"
+                                        data-product-id="{{ $product->id }}">
+                                        Buy Now
+                                    </button>
 
                                     <a href="#" class="cart">
 
@@ -857,7 +863,7 @@ MOBILE
                 </div>
             </div>
             <div class="sidebar-filter-overlay"></div><!-- End .sidebar-filter-overlay -->
-            
+
         </div>
     </div>
 </main>
@@ -867,72 +873,72 @@ MOBILE
 <script src="https://checkout-ui.shiprocket.com/assets/js/channels/shopify.js"></script>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function () {
 
-    document.querySelectorAll(".buyNow").forEach(function(button){
+        document.querySelectorAll(".buyNow").forEach(function (button) {
 
-        button.addEventListener("click", async function(event){
+            button.addEventListener("click", async function (event) {
 
-            event.preventDefault();
+                event.preventDefault();
 
-            const productId = this.dataset.productId;
+                const productId = this.dataset.productId;
 
-            console.log("Product:", productId);
+                console.log("Product:", productId);
 
-            try{
+                try {
 
-                const response = await fetch("{{ route('shiprocket.token') }}", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Accept": "application/json",
-                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                    },
-                    body: JSON.stringify({
-                        product_id: productId
-                    })
-                });
+                    const response = await fetch("{{ route('shiprocket.token') }}", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Accept": "application/json",
+                            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                        },
+                        body: JSON.stringify({
+                            product_id: productId
+                        })
+                    });
 
-                const data = await response.json();
+                    const data = await response.json();
 
-                console.log(data);
+                    console.log(data);
 
-                if(!data.success){
+                    if (!data.success) {
 
-                    alert("Unable to generate Shiprocket token.");
+                        alert("Unable to generate Shiprocket token.");
 
-                    return;
-                }
-
-                if(typeof HeadlessCheckout === "undefined"){
-
-                    alert("Shiprocket Checkout JS not loaded.");
-
-                    return;
-                }
-
-                HeadlessCheckout.addToCart(
-                    event,
-                    data.access_token,
-                    {
-                        fallbackUrl: "{{ url('/checkout') }}",
-                        isInitiatedFromApp:false
+                        return;
                     }
-                );
 
-            }catch(error){
+                    if (typeof HeadlessCheckout === "undefined") {
 
-                console.error(error);
+                        alert("Shiprocket Checkout JS not loaded.");
 
-                alert("Something went wrong.");
+                        return;
+                    }
 
-            }
+                    HeadlessCheckout.addToCart(
+                        event,
+                        data.access_token, {
+                            fallbackUrl: "{{ url('/checkout') }}",
+                            isInitiatedFromApp: false
+                        }
+                    );
+
+                } catch (error) {
+
+                    console.error(error);
+
+                    alert("Something went wrong.");
+
+                }
+
+            });
 
         });
 
     });
 
-});
 </script>
 
 @endpush
