@@ -69,7 +69,7 @@
         }
     }'>
 
-                @foreach($featured as $product)
+                @foreach($clothes as $product)
 
                 @php
                 $price = $product->price ?? $product->discounted_price;
@@ -159,12 +159,19 @@
 
                             </div>
 
-                            <div class="ll-footer">
+                            <div class="ll-footer" style="gap: 10px;">
 
-                                <div class="delivery">
-                                    <i class="fas fa-check-circle"></i>
-                                    Delivery in 2 Days
-                                </div>
+                                    <!-- <div class="delivery">
+
+                                        <i class="fas fa-check-circle"></i>
+
+                                        Delivery in 2 Days
+
+                                    </div> -->
+                                    <button type="button" class="shop btn btn-primary buyNow"
+                                        data-product-id="{{ $product->id }}">
+                                        Buy Now
+                                    </button>
 
                                 <a href="#" class="cart">
                                     <i class="fas fa-shopping-cart"></i>

@@ -517,13 +517,17 @@
 
                                 <div class="ll-footer">
 
-                                    <div class="delivery">
+                                    <!-- <div class="delivery">
 
                                         <i class="fas fa-check-circle"></i>
 
                                         Delivery in 2 Days
 
-                                    </div>
+                                    </div> -->
+                                    <button type="button" class="shop btn btn-primary buyNow"
+                                        data-product-id="{{ $product->id }}">
+                                        Buy Now
+                                    </button>
 
                                     <a href="#" class="cart">
 

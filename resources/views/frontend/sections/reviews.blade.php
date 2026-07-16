@@ -241,7 +241,7 @@ LayerLoop Reviews
 
                 <div class="rv-image">
 
-                    <img src="{{ asset('images/reviews/review1.jpg') }}">
+                    <img src="{{ asset('storage/reviews/dummy.jpg') }}">
 
                 </div>
 
@@ -274,7 +274,7 @@ LayerLoop Reviews
 
                 <div class="rv-image">
 
-                    <img src="{{ asset('images/reviews/review2.jpg') }}">
+                    <img src="{{ asset('storage/reviews/dummy.jpg') }}">
 
                 </div>
 
@@ -307,7 +307,7 @@ LayerLoop Reviews
 
                 <div class="rv-image">
 
-                    <img src="{{ asset('images/reviews/review3.jpg') }}">
+                    <img src="{{ asset('storage/reviews/dummy.jpg') }}">
 
                 </div>
 
@@ -340,7 +340,7 @@ LayerLoop Reviews
 
                 <div class="rv-image">
 
-                    <img src="{{ asset('images/reviews/review4.jpg') }}">
+                    <img src="{{ asset('storage/reviews/dummy.jpg') }}">
 
                 </div>
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\ProductReview;
 use App\Models\Blog;
+use App\Models\Instagram;
 use App\Models\Team;
 use App\Models\ProductCategory;
 use Illuminate\Http\Request;
@@ -46,10 +47,11 @@ class FrontendController extends Controller
         $clothes     = Product::where('category',2)->inRandomOrder()->take(10)->get(); // 10 random products
 
         $sale     = Product::where('prototype',2)->inRandomOrder()->take(10)->get(); // 10 random products
-        $rated    = Product::where('prototype',2)->take(20)->get();    
+        $rated    = Product::where('prototype',2)->take(20)->get();  
+        $instagrams = Instagram::get();  
 
         $blogs    = Blog::get();
-        return view('frontend.index', compact('featured','sale','rated','clothes','blogs','categories','collection'));
+        return view('frontend.index', compact('featured','sale','rated','clothes','blogs','categories','collection','instagrams'));
     }
     public function about()
     {

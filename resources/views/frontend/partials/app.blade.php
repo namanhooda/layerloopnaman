@@ -35,8 +35,9 @@
     <link rel="stylesheet" href="{{asset('frontend/assets/css/plugins/magnific-popup/magnific-popup.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/assets/css/plugins/jquery.countdown.css')}}">
 
-<link rel="stylesheet"
-      href="https://checkout-ui.shiprocket.com/assets/styles/shopify.css">
+
+
+<link rel="stylesheet" href="https://checkout-ui.shiprocket.com/assets/styles/shopify.css">
 
 
     <!-- Main CSS File -->
@@ -48,7 +49,33 @@
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-T8NR051ED9"></script>
 
-    
+    <style>
+
+
+    .shop {
+        width: 46px;
+        height: 46px;
+        border-radius: 14px;
+        background: #4CAF50;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        transition: .3s;
+        text-decoration: none;
+
+    }
+
+     @media(max-width:767px) {
+
+     
+
+        .shops {
+            min-width: 100px !important;
+        }
+}
+    </style>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
@@ -275,6 +302,76 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script src="bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://checkout-ui.shiprocket.com/assets/js/channels/shopify.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        document.querySelectorAll(".buyNow").forEach(function (button) {
+
+            button.addEventListener("click", async function (event) {
+
+                event.preventDefault();
+
+                const productId = this.dataset.productId;
+
+                console.log("Product:", productId);
+
+                try {
+
+                    const response = await fetch("{{ route('shiprocket.token') }}", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Accept": "application/json",
+                            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                        },
+                        body: JSON.stringify({
+                            product_id: productId
+                        })
+                    });
+
+                    const data = await response.json();
+
+                    console.log(data);
+
+                    if (!data.success) {
+
+                        alert("Unable to generate Shiprocket token.");
+
+                        return;
+                    }
+
+                    if (typeof HeadlessCheckout === "undefined") {
+
+                        alert("Shiprocket Checkout JS not loaded.");
+
+                        return;
+                    }
+
+                    HeadlessCheckout.addToCart(
+                        event,
+                        data.access_token, {
+                            fallbackUrl: "{{ url('/checkout') }}",
+                            isInitiatedFromApp: false
+                        }
+                    );
+
+                } catch (error) {
+
+                    console.error(error);
+
+                    alert("Something went wrong.");
+
+                }
+
+            });
+
+        });
+
+    });
+
+</script>
 
 
 <script>

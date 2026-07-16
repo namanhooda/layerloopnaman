@@ -231,15 +231,13 @@ Instagram
 
         <div class="row gx-3">
 
-            @foreach($clothes->take(6) as $image)
+            @foreach($instagrams->take(6) as $image)
 
             <div class="col">
 
-                <a href="https://instagram.com/layerloop.in"
-                   target="_blank"
-                   class="ig-card">
+                <a href="{{ $image->link }}" target="_blank" class="ig-card">
 
-                    <img src="{{ asset('storage/'.$image->featured_image) }}">
+                    <img src="{{ asset('storage/'.$image->image) }}">
 
                     <div class="ig-overlay">
 
@@ -255,7 +253,7 @@ Instagram
 
             <div class="col-auto">
 
-                <a href="https://instagram.com/layerloop.in"
+                <a href="https://www.instagram.com/layerloop.web/"
                    target="_blank"
                    class="ig-view-card">
 
@@ -290,14 +288,14 @@ Instagram
 
         <div class="row g-2">
 
-            @foreach($clothes->take(9) as $image)
+            @foreach($instagrams->take(6) as $image)
 
             <div class="col-4">
 
-                <a href="https://instagram.com/layerloop.in"
+                <a href="{{ $image->link }}"
                    class="ig-mobile-card">
 
-                    <img src="{{ asset('storage/'.$image->featured_image) }}">
+                    <img src="{{ asset('storage/'.$image->image) }}">
 
                 </a>
 
@@ -307,7 +305,7 @@ Instagram
 
         </div>
 
-        <a href="https://instagram.com/layerloop.in"
+        <a href="https://www.instagram.com/layerloop.web/"
            class="ig-follow-btn">
 
             <i class="icon-instagram"></i>

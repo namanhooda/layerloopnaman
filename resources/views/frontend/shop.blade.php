@@ -662,7 +662,6 @@ MOBILE
 
 </style>
 
-<link rel="stylesheet" href="https://checkout-ui.shiprocket.com/assets/styles/shopify.css">
 <main class="main">
     @include('frontend.breadcums.shop', ['pageTitle' => 'Shop'])
     <div class="ll-category-section">
@@ -870,76 +869,7 @@ MOBILE
 
 @push('scripts')
 
-<script src="https://checkout-ui.shiprocket.com/assets/js/channels/shopify.js"></script>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-
-        document.querySelectorAll(".buyNow").forEach(function (button) {
-
-            button.addEventListener("click", async function (event) {
-
-                event.preventDefault();
-
-                const productId = this.dataset.productId;
-
-                console.log("Product:", productId);
-
-                try {
-
-                    const response = await fetch("{{ route('shiprocket.token') }}", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                            "Accept": "application/json",
-                            "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                        },
-                        body: JSON.stringify({
-                            product_id: productId
-                        })
-                    });
-
-                    const data = await response.json();
-
-                    console.log(data);
-
-                    if (!data.success) {
-
-                        alert("Unable to generate Shiprocket token.");
-
-                        return;
-                    }
-
-                    if (typeof HeadlessCheckout === "undefined") {
-
-                        alert("Shiprocket Checkout JS not loaded.");
-
-                        return;
-                    }
-
-                    HeadlessCheckout.addToCart(
-                        event,
-                        data.access_token, {
-                            fallbackUrl: "{{ url('/checkout') }}",
-                            isInitiatedFromApp: false
-                        }
-                    );
-
-                } catch (error) {
-
-                    console.error(error);
-
-                    alert("Something went wrong.");
-
-                }
-
-            });
-
-        });
-
-    });
-
-</script>
 
 @endpush
 @endsection
