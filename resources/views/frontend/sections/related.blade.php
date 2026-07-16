@@ -16,7 +16,6 @@
 
 .product-media{
     position:relative;
-    padding:12px;
     background:#f5f6f8;
 }
 
@@ -63,10 +62,10 @@
 }
 
 .ll-title{
-    font-size:22px;
+    font-size:15px;
     line-height:1.4;
-    font-weight:600;
-    height:58px;
+    font-weight:550;
+    height:41px;
     overflow:hidden;
 }
 
@@ -78,7 +77,6 @@
 .ll-rating{
     color:#ff9b21;
     font-weight:600;
-    margin:12px 0;
 }
 
 .ll-rating span{
@@ -87,10 +85,9 @@
 }
 
 .ll-price{
-    font-size:38px;
+    font-size:23px;
     font-weight:700;
     color:#1e1e1e;
-    margin-bottom:18px;
 }
 
 .ll-bottom{
@@ -189,10 +186,17 @@
 
         <div class="ll-bottom">
 
-            <div class="ll-delivery">
-                <i class="icon-check-circle"></i>
-                Delivery in 2 Days
-            </div>
+                                    <!-- <div class="delivery">
+
+                                        <i class="fas fa-check-circle"></i>
+
+                                        Delivery in 2 Days
+
+                                    </div> -->
+                                    <button type="button" class="shop btn btn-primary buyNow"
+                                        data-product-id="{{ $product->id }}">
+                                        Buy Now
+                                    </button>
 
             <button class="ll-cart">
                 <i class="icon-shopping-cart"></i>
