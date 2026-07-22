@@ -253,11 +253,11 @@ body{
     </a>
 
     <!-- Account -->
-    <a href="{{ url('account') }}"
-       class="ll-nav-item {{ request()->is('account*') ? 'll-active' : '' }}">
+    <a href="{{ url('cart') }}"
+       class="ll-nav-item {{ request()->is('cart*') ? 'll-active' : '' }}">
 
-        <i class="fa-regular fa-user"></i>
-        <span>Account</span>
+        <i class="fa fa-shopping-cart"></i>
+        <span>Cart</span>
 
     </a>
 
