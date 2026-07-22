@@ -237,7 +237,7 @@
 
 
     <div class="heading d-flex justify-content-between align-items-center mb-3">
-        <h2 class="title mb-0">Latest Tshirts</h2>
+        <h2 class="title mb-0">{{$title}}</h2>
 
         <a href="{{ url('shop') }}" class="view-all">
             View All <i class="icon-long-arrow-right"></i>

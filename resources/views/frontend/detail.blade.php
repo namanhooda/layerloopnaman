@@ -379,7 +379,7 @@
 
                             <span><i class="icon-check"></i> Premium Quality</span>
 
-                            <span><i class="icon-shield"></i> Secure Checkout</span>
+                            <span><i class="fa fa-shield"  aria-hidden="true"></i> Secure Checkout</span>
 
                             <span><i class="icon-truck"></i> Fast Delivery</span>
 
@@ -625,12 +625,14 @@
         </div><!-- End .tab-content -->
     </div><!-- End .product-details-tab -->
 
-    @include('frontend.sections.related')
+
+    @include('frontend.sections.owl-products', ['products' => $related, 'title' => 'You May Also Like'])
 
     </div><!-- End .page-content -->
 </main><!-- End .main -->
 
 @include('frontend.modals.addReview')
+
 <script>
     document.addEventListener("DOMContentLoaded", function () {
 
