@@ -46,7 +46,7 @@ class FrontendController extends Controller
         $featured = Product::where('prototype',2)->latest()->take(10)->get(); // Latest 10 products trending
         $clothes     = Product::where('category',2)->inRandomOrder()->take(10)->get(); // 10 random products
 
-        $sale     = Product::where('prototype',2)->inRandomOrder()->take(10)->get(); // 10 random products
+        $sale     = Product::where('prototype',2)->inRandomOrder()->take(12)->get(); // 10 random products
         $rated    = Product::where('prototype',2)->take(20)->get();  
         $instagrams = Instagram::get();  
 

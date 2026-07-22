@@ -663,7 +663,7 @@ MOBILE
 </style>
 
 <main class="main">
-    @include('frontend.breadcums.shop', ['pageTitle' => 'Shop'])
+    @include('frontend.breadcums.shop', ['pageDescription' => 'Products','pageTitle' => null])
     <div class="ll-category-section">
 
         <div class="container">
@@ -778,8 +778,7 @@ MOBILE
                                     <div class="ll-image-box">
 
                                         <img src="{{ asset('storage/'.$product->featured_image) }}"
-                                            alt="{{ $product->name }}" loading="lazy"
-                                            onerror="this.src='{{ asset('assets/images/no-image.png') }}';">
+                                            alt="{{ $product->name }}" >
 
                                     </div>
 
@@ -843,11 +842,7 @@ MOBILE
                                         Buy Now
                                     </button>
 
-                                    <a href="#" class="cart">
-
-                                        <i class="fas fa-shopping-cart"></i>
-
-                                    </a>
+                                    @include('frontend.buttons.addtocart', ['product' => $product])
 
                                 </div>
 

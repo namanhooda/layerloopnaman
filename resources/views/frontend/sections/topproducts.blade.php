@@ -2,7 +2,9 @@
     /*=============================
     LayerLoop Product Card
   ==============================*/
-
+    .shop {
+        min-width: 100px !important;
+    }
     .ll-card {
         position: relative;
         background: #fff;
@@ -529,11 +531,8 @@
                                         Buy Now
                                     </button>
 
-                                    <a href="#" class="cart">
-
-                                        <i class="fas fa-shopping-cart"></i>
-
-                                    </a>
+                                    
+                                    @include('frontend.buttons.addtocart', ['product' => $product])
 
                                 </div>
 
@@ -548,110 +547,6 @@
                 </div>
             </div>
         </div><!-- .End .tab-pane -->
-        <div class="tab-pane p-0 fade" id="top-fur-tab" role="tabpanel" aria-labelledby="top-fur-link">
-            <div class="products">
-                <div class="row justify-content-center">
-                    <div class="col-6 col-md-4 col-lg-3 col-xl-5col">
-                        <div class="product product-11 text-center">
-                            <figure class="product-media">
-                                <span class="product-label label-circle label-sale">Sale</span>
-                                <a href="#">
-                                    <img src="{{asset('frontend/assets/images/demos/demo-2/products/product-9-1.jpg')}}"
-                                        alt="Product image" class="product-image">
-                                    <img src="{{asset('frontend/assets/images/demos/demo-2/products/product-9-2.jpg')}}"
-                                        alt="Product image" class="product-image-hover">
-                                </a>
 
-                                <div class="product-action-vertical">
-                                    <a href="#" class="btn-product-icon btn-wishlist "><span>add to
-                                            wishlist</span></a>
-                                </div><!-- End .product-action-vertical -->
-                            </figure><!-- End .product-media -->
-
-                            <div class="product-body">
-                                <div class="product-cat">
-                                    <a href="#" class="prodcatlink">Furniture</a>
-                                </div>
-                                <h3 class="product-title"><a href="#">Garden Armchair</a></h3>
-                                <!-- End .product-title -->
-                                <div class="product-price">
-                                    <span class="new-price">$94,00</span>
-                                    <span class="old-price">Was $94,00</span>
-                                </div><!-- End .product-price -->
-                            </div><!-- End .product-body -->
-                            <div class="product-action">
-                                <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                            </div><!-- End .product-action -->
-                        </div><!-- End .product -->
-                    </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
-
-                    <div class="col-6 col-md-4 col-lg-3 col-xl-5col">
-                        <div class="product product-11 text-center">
-                            <figure class="product-media">
-                                <span class="product-label label-circle label-new">New</span>
-                                <a href="#">
-                                    <img src="{{asset('frontend/assets/images/demos/demo-2/products/product-12-1.jpg')}}"
-                                        alt="Product image" class="product-image">
-                                    <img src="{{asset('frontend/assets/images/demos/demo-2/products/product-12-2.jpg')}}"
-                                        alt="Product image" class="product-image-hover">
-                                </a>
-
-                                <div class="product-action-vertical">
-                                    <a href="#" class="btn-product-icon btn-wishlist "><span>add to
-                                            wishlist</span></a>
-                                </div><!-- End .product-action-vertical -->
-                            </figure><!-- End .product-media -->
-
-                            <div class="product-body">
-                                <div class="product-cat">
-                                    <a href="#" class="prodcatlink">Furniture</a>
-                                </div>
-                                <h3 class="product-title"><a href="#">2-Seater</a></h3>
-                                <!-- End .product-title -->
-                                <div class="product-price">
-                                    $3.107,00
-                                </div><!-- End .product-price -->
-                            </div><!-- End .product-body -->
-                            <div class="product-action">
-                                <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                            </div><!-- End .product-action -->
-                        </div><!-- End .product -->
-                    </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
-
-                    <div class="col-6 col-md-4 col-lg-3 col-xl-5col">
-                        <div class="product product-11 text-center">
-                            <figure class="product-media">
-                                <a href="#">
-                                    <img src="{{asset('frontend/assets/images/demos/demo-2/products/product-13-1.jpg')}}"
-                                        alt="Product image" class="product-image">
-                                    <img src="{{asset('frontend/assets/images/demos/demo-2/products/product-13-2.jpg')}}"
-                                        alt="Product image" class="product-image-hover">
-                                </a>
-
-                                <div class="product-action-vertical">
-                                    <a href="#" class="btn-product-icon btn-wishlist "><span>add to
-                                            wishlist</span></a>
-                                </div><!-- End .product-action-vertical -->
-                            </figure><!-- End .product-media -->
-
-                            <div class="product-body">
-                                <div class="product-cat">
-                                    <a href="#" class="prodcatlink">Furniture</a>
-                                </div>
-                                <h3 class="product-title"><a href="#">Wingback Chair</a></h3>
-                                <!-- End .product-title -->
-                                <div class="product-price">
-                                    $2.486,00
-                                </div><!-- End .product-price -->
-                            </div><!-- End .product-body -->
-                            <div class="product-action">
-                                <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                            </div><!-- End .product-action -->
-                        </div><!-- End .product -->
-                    </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
-                </div><!-- End .row -->
-            </div><!-- End .products -->
-        </div><!-- .End .tab-pane -->
-        
     </div><!-- End .tab-content -->
 </div><!-- End .container -->

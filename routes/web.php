@@ -13,11 +13,16 @@ use App\Http\Controllers\WhatsAppController;
 use App\Http\Controllers\ShiprocketWebhookController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ShiprocketController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TestController;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\Tags\Url;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\CustomAuthenticatedSessionController;
+
+Route::post('/send-otp', [AuthController::class,'sendOtp'])->name('send-otp');
+Route::get('/send-otpindex', [AuthController::class,'sendOtpindex']);
+Route::post('/verify-otp', [AuthController::class,'verifyOtp']);
 
 Route::get('shp-checkout', [ShiprocketController::class, 'checkout'])->name('checkout');
 Route::post('/shiprocket/token', [ShiprocketController::class, 'generateToken'])->name('shiprocket.token');

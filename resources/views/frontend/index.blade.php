@@ -8,11 +8,13 @@
 
    @include('frontend.sections.topcategories')
     @include('frontend.sections.smlbanner')
-    @include('frontend.sections.our-products')
+
+
+    @include('frontend.sections.owl-products', ['products' => $featured, 'title' => 'Trending Now'])
 
 
     @include('frontend.sections.deals')
-    @include('frontend.sections.latest-tshirts')
+    @include('frontend.sections.owl-products', ['products' => $clothes, 'title' => 'Trending Now'])
     @include('frontend.sections.howitwork')
     @include('frontend.sections.collections')
     @include('frontend.sections.reviews')

@@ -1159,7 +1159,7 @@ blockquote.text-white cite span {
 
 .dropdown-cart-action .btn {
     font-size: 1.3rem;
-    min-width: 110px;
+    min-width: 100%;
     padding-top: .75rem;
     padding-bottom: .75rem
 }

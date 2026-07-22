@@ -25,6 +25,63 @@ class CheckoutController extends Controller
 {
     //
 
+public function checkout(Request $request)
+{
+    $orderId = $request->oid;
+
+    if (!$orderId) {
+        abort(404);
+    }
+
+    $apiKey = env('SHIPROCKET_CHECKOUT_KEY');
+    $apiSecret = env('SHIPROCKET_CHECKOUT_SECRET');
+
+    $payload = [
+        'order_id' => $orderId,
+        'timestamp' => now()->toIso8601ZuluString(), // e.g. 2026-07-16T08:30:25Z
+    ];
+
+    // IMPORTANT: Sign the JSON payload
+    $jsonPayload = json_encode($payload, JSON_UNESCAPED_SLASHES);
+
+    $signature = base64_encode(
+        hash_hmac(
+            'sha256',
+            $jsonPayload,
+            $apiSecret,
+            true
+        )
+    );
+
+    $response = Http::withoutVerifying()
+        ->withHeaders([
+            'X-Api-Key' => $apiKey,
+            'X-Api-HMAC-SHA256' => $signature,
+            'Content-Type' => 'application/json',
+        ])
+        ->post(
+            'https://checkout-api.shiprocket.com/api/v1/custom-platform-order/details',
+            $payload
+        );
+
+    if (!$response->successful()) {
+        return response()->json([
+            'status' => false,
+            'http_status' => $response->status(),
+            'payload' => $payload,
+            'json_payload' => $jsonPayload,
+            'signature' => $signature,
+            'response' => $response->json(),
+            'raw' => $response->body(),
+        ]);
+    }
+
+    $order = $response->json();
+    dd($order); // Debugging: Inspect the order details
+
+    return view('checkout.success', compact('order'));
+}
+
 public function generateCartToken(Request $request)
 {
     $userId = auth()->id();
@@ -176,7 +233,7 @@ public function generateCheckoutToken(Request $request)
 
 
 
-    public function checkout()
+    public function checkouts()
     {
         $userId = auth()->id();
         $systemId = session('system_id');

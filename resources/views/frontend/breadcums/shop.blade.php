@@ -300,7 +300,8 @@ padding:15px 8px;
             <div class="ll-title-area">
 
                 <h2>
-                    Our <span>Products</span>
+                    
+                     Our <span>{{ $pageDescription }}</span>
                 </h2>
 
                 <div class="ll-breadcrumb">
@@ -309,7 +310,7 @@ padding:15px 8px;
 
                     <i class="fas fa-chevron-right"></i>
 
-                    <span>Shop</span>
+                    <span>@if($pageTitle) {{ $pageTitle }} / @endif {{ $pageDescription }}</span>
 
                 </div>
 

@@ -480,8 +480,11 @@ input.addEventListener('keyup', function () {
 
     // Add normal product to cart
 function addToCart(productId) {
-    let product_id = document.getElementById("product-id-" + productId).value;
-    let quantity   = document.getElementById("quantity-" + productId).value;
+
+    let product_id = productId;
+
+    let quantityInput = document.getElementById("quantity-" + productId);
+    let quantity = quantityInput ? quantityInput.value : 1;
 
     let sizeSelect = document.getElementById("size-" + productId);
     let size = sizeSelect ? sizeSelect.value : null;
@@ -497,20 +500,23 @@ function addToCart(productId) {
             "Content-Type": "application/json",
             "X-CSRF-TOKEN": "{{ csrf_token() }}"
         },
-        body: JSON.stringify({ product_id, quantity, size })
+        body: JSON.stringify({
+            product_id,
+            quantity,
+            size
+        })
     })
-    .then(response => response.json())
+    .then(res => res.json())
     .then(data => {
         if (data.success) {
             document.querySelector(".cart-count").textContent = data.cart_count;
             document.querySelector(".dropdown-menu").innerHTML = data.cart_html;
             showToastr('success', data.message);
         } else {
-            showToastr('error', data.message ?? "Something went wrong!");
+            showToastr('error', data.message || "Something went wrong!");
         }
     });
 }
-
 </script>
 
 <script>
