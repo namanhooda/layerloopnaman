@@ -35,7 +35,7 @@ public function generateToken(Request $request)
             ],
             "mobile_app" => false
         ],
-        "redirect_url" => url('/checkout'),
+        "redirect_url" => url('/order/success'),
         "timestamp" => now()->toIso8601ZuluString()
     ];
 

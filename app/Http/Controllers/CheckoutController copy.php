@@ -148,7 +148,7 @@ try {
     |--------------------------------------------------------------------------
     */
 
-        $code = 'LLORD' . str_pad(mt_rand(0, 999999), 6, '0', STR_PAD_LEFT);
+    $code = 'LLORD' . now()->format('YmdHis') . rand(100, 999);
 
     $newOrder = new Order();
 
@@ -221,14 +221,16 @@ try {
     session()->forget('coupon');
     $order = $newOrder;
 
-
     DB::commit();
-        Mail::to('shop.layerloop@gmail.com')
-            ->queue(new OrderPlacedNotification($order));
-        return redirect()
-        ->route('order.success', ['code' => $order->order_code])
-        ->with('success', 'Order placed successfully!');
+    dd($order);
+    return view('checkout.success', compact('order'));
 
+    return response()->json([
+        'status' => true,
+        'message' => 'Order placed successfully.',
+        'order_id' => $newOrder->id,
+        'order_code' => $newOrder->order_code,
+    ]);
 
 } catch (\Throwable $e) {
 
@@ -564,9 +566,8 @@ public function generateCheckoutToken(Request $request)
 
         return redirect()->route('order.success')->with('success', 'Payment successful and order placed!');
     }
- public function success(Request $request)
+ public function success($order_code)
 {
-    $order_code = $request->code;
     $order = Order::with(['itemsData.product', 'user', 'address'])
         ->where('order_code', $order_code)
         ->first();

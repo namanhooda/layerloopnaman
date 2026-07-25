@@ -133,149 +133,148 @@
 
     /* Mobile */
 
- @media(max-width:768px){
+    @media(max-width:768px) {
 
-.sbs-newsletter-box{
+        .sbs-newsletter-box {
 
-    display:grid;
+            display: grid;
 
-    grid-template-columns:1fr 170px;
+            grid-template-columns: 1fr 170px;
 
-    grid-template-areas:
-    "left right"
-    "tags tags";
+            grid-template-areas:
+                "left right"
+                "tags tags";
 
-    gap:15px;
+            gap: 15px;
 
-    padding:18px;
+            padding: 18px;
 
-}
+        }
 
-.sbs-newsletter-left{
-    grid-area:left;
-}
+        .sbs-newsletter-left {
+            grid-area: left;
+        }
 
-.sbs-newsletter-right{
-    grid-area:right;
-    width:100%;
-}
+        .sbs-newsletter-right {
+            grid-area: right;
+            width: 100%;
+        }
 
-.sbs-newsletter-tags{
-    grid-area:tags;
+        .sbs-newsletter-tags {
+            grid-area: tags;
 
-    display:flex;
+            display: flex;
 
-    justify-content:space-between;
+            justify-content: space-between;
 
-    margin-top:0;
-}
+            margin-top: 0;
+        }
 
-.sbs-newsletter-form{
+        .sbs-newsletter-form {
 
-    display:flex;
-    flex-direction:column;
-    gap:8px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
 
-    background:none;
+            background: none;
 
-    box-shadow:none;
+            box-shadow: none;
 
-}
+        }
 
-.sbs-newsletter-form input{
+        .sbs-newsletter-form input {
 
-    height:40px;
-    border-radius:8px;
+            height: 40px;
+            border-radius: 8px;
 
-}
+        }
 
-.sbs-newsletter-form button{
+        .sbs-newsletter-form button {
 
-    height:40px;
-    width:100%;
-    border-radius:8px;
+            height: 40px;
+            width: 100%;
+            border-radius: 8px;
 
-}
+        }
 
-.sbs-newsletter-icon{
+        .sbs-newsletter-icon {
 
-    display:none;
+            display: none;
 
-}
+        }
 
-.sbs-newsletter-content h3{
+        .sbs-newsletter-content h3 {
 
-    font-size:18px;
-    margin-bottom:8px;
+            font-size: 18px;
+            margin-bottom: 8px;
 
-}
+        }
 
-.sbs-newsletter-content p{
+        .sbs-newsletter-content p {
 
-    font-size:13px;
+            font-size: 13px;
 
-}
+        }
 
-.sbs-newsletter-tags span{
+        .sbs-newsletter-tags span {
 
-    font-size:12px;
+            font-size: 12px;
 
-}
+        }
 
-}
+    }
 
 </style>
 <div class="sbs-newsletter-wrap">
     <div class="container">
         <div class="sbs-newsletter-box">
 
-    <div class="sbs-newsletter-left">
+            <div class="sbs-newsletter-left">
 
-        <div class="sbs-newsletter-content">
+                <div class="sbs-newsletter-content">
 
-            <h3>Get 10% Off On Your First Order!</h3>
+                    <h3>Get 10% Off On Your First Order!</h3>
 
-            <p>
-                Subscribe to our newsletter and get exclusive offers,
-                new arrivals and exciting updates.
-            </p>
+                    <p>
+                        Subscribe to our newsletter and get exclusive offers,
+                        new arrivals and exciting updates.
+                    </p>
 
-        </div>
-
-    </div>
-
-
-    <div class="sbs-newsletter-right">
-
-        <form>
-
-            <div class="sbs-newsletter-form">
-
-                <input type="email"
-                    placeholder="Enter your email address">
-
-                <button>
-                    Subscribe Now
-                </button>
+                </div>
 
             </div>
 
-        </form>
 
-    </div>
+            <div class="sbs-newsletter-right">
+
+                <form>
+
+                    <div class="sbs-newsletter-form">
+
+                        <input type="email" placeholder="Enter your email address">
+
+                        <button>
+                            Subscribe Now
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
 
 
-    <!-- MOVE THIS OUTSIDE -->
-    <div class="sbs-newsletter-tags">
+            <!-- MOVE THIS OUTSIDE -->
+            <!-- <div class="sbs-newsletter-tags">
 
-        <span><i class="icon-check-circle"></i> No Spam</span>
+                <span><i class="icon-check-circle"></i> No Spam</span>
 
-        <span><i class="icon-check-circle"></i> Unsubscribe Anytime</span>
+                <span><i class="icon-check-circle"></i> Unsubscribe Anytime</span>
 
-        <span><i class="icon-check-circle"></i> Exclusive Offers</span>
+                <span><i class="icon-check-circle"></i> Exclusive Offers</span>
 
-    </div>
+            </div> -->
 
-</div>
+        </div>
     </div>
 </div>

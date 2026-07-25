@@ -34,6 +34,10 @@ Route::post('/shiprocket/webhook',[ShiprocketController::class,'webhook']);
 
 Route::post('/shiprocket/checkout-token', [CheckoutController::class, 'generateToken']);
 
+
+    Route::get('checkout', [CheckoutController::class, 'checkout'])->name('checkout');
+    Route::get('/order/success', [CheckoutController::class, 'success'])->name('order.success');
+
 Route::get('/checkout/success', function () {
     return "Payment Successful";
 })->name('checkout.success');
@@ -154,10 +158,8 @@ Route::post('/remove-coupon', [CartController::class, 'removeCoupon'])->name('re
 Route::resource('wishlist', WishlistController::class)->only(['index', 'store', 'destroy']);
 
 Route::middleware('auth')->group(function () {
-    Route::get('checkout', [CheckoutController::class, 'checkout'])->name('checkout');
     Route::post('/checkout/place-order', [CheckoutController::class, 'placeOrder'])->name('checkout.placeOrder');
     Route::get('/checkout/verify-order', [CheckoutController::class, 'verifyPayment'])->name('order.payment.verify');
-    Route::get('/order/success/{code}', [CheckoutController::class, 'success'])->name('order.success');
     Route::post('ads', [AddressController::class, 'store'])->name('addresses.store');
 
     Route::get('account', [App\Http\Controllers\AuthUserController::class, 'account'])->name('account');
