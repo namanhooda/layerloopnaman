@@ -16,7 +16,6 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->job(new FetchNimbusShipmentsJob)->everySixHours();
-        $schedule->command('cron:test')->everyMinute();
     }
 
     /**
