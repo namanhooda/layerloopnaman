@@ -241,37 +241,9 @@ public static function createB2COrder(Order $order): array
 
     public static function createOrder(Order $order): array
     {
-        $fromDate = Carbon::now()->subDays(7)->startOfDay();
-        $toDate   = Carbon::now()->endOfDay();
+        dd('nmn');
 
-        $responseOrders = Http::withHeaders(self::getHeaders())
-            ->get('https://ship.nimbuspost.com/api/orders', [
-                'from_date' => $fromDate->format('Y-m-d'),
-                'to_date'   => $toDate->format('Y-m-d'),
-                'per_page'  => 100,
-        ]);
-
-        if ($responseOrders->successful()) {
-
-            $orders = collect($responseOrders['data'])
-            ->where('order_number', $order->order_code)
-            ->where('status', '!=', 'cancelled')
-            ->values()
-            ->first();
-
-            if($orders){
-                
-                $order->update([
-                    'shipment_id' => $orders['id'],
-                    'status'      => $orders['status'],
-                    'shipment_order_id' => $orders['order_number'],
-                ]);
-                return [
-                    'success' => true,
-                    'message' => 'Order already exists in NimbusPost',
-                    'data'    => $orders,
-                ];
-            }
+        
 
         $token = Cache::get('nimbus_token') ?? self::loginAndStoreToken();
 
@@ -281,27 +253,24 @@ public static function createB2COrder(Order $order): array
             "discount"         => $order->discount ?? 0,
             "cod_charges"      => $order->cod_charges ?? 0,
 
-            "payment_type" => in_array(
-                strtolower($order->payment_mod),
-                ['cod', 'partial_paid', 'cash_on_delivery']
-            ) ? 'cod' : 'prepaid',
+            "payment_type" => strtolower($order->payment_mod) === 'cod'
+                ? 'cod'
+                : 'prepaid',
 
-            "order_amount" => strtolower($order->payment_mod) === 'partial_paid'
-                ? ($order->total - ($order->total * 0.30))
-                : ($order->total ?? 0),
+            "order_amount"   => $order->total ?? 0,
             "package_weight" => $order->package_weight ?? 300,
-            "package_length" => $order->package_length ?? 15,
-            "package_breadth" => $order->package_breadth ?? 15,
-            "package_height" => $order->package_height ?? 15,
+            "package_length" => $order->package_length ?? 10,
+            "package_breadth" => $order->package_breadth ?? 10,
+            "package_height" => $order->package_height ?? 10,
 
             "consignee" => [
-                "name"      => $order->address->first_name ?? 'Layerloop',
-                "address"   => $order->address->address_line1 ?? 'pana chulyan',
-                "address_2" => $order->address->address_line2 ?? "ramhani ganj",
-                "city"      => $order->address->city ?? 'Beri',
-                "state"     => $order->address->state ?? 'Haryana',
-                "pincode"   => $order->address->zip ?? '124201',
-                "phone"     => $order->address->phone ?? '8059808185',
+                "name"      => $order->customer_name ?? 'John nmn',
+                "address"   => $order->customer_address ?? '123 Main Street',
+                "address_2" => $order->customer_address2 ?? "asd",
+                "city"      => $order->customer_city ?? 'rfsadf',
+                "state"     => $order->customer_state ?? 'faef',
+                "pincode"   => $order->customer_zip ?? '124201',
+                "phone"     => $order->customer_phone ?? '8059808185',
             ],
 
             "pickup" => [
@@ -325,51 +294,14 @@ public static function createB2COrder(Order $order): array
             })->values()->toArray(),
         ];
 
-
-            Http::withHeaders([
-                'Authorization' => 'Bearer '.$token,
-                'Accept'        => 'application/json',
-                'Content-Type'  => 'application/json',
-            ])->post(
-                'https://api.nimbuspost.com/v1/shipments',
-                $payload
-            )->json();
-
-        $today = now()->format('Y-m-d');
-
-        $responseOrdersGet = Http::withHeaders(self::getHeaders())
-            ->get('https://ship.nimbuspost.com/api/orders', [
-                'from_date' => $today,
-                'to_date'   => $today,
-                'per_page'  => 100,
-            ]);
-
-        if ($responseOrdersGet->successful()) {
-
-            $matchingOrdersData = collect($responseOrdersGet->json('data', []))
-                ->where('order_number', $order->order_code)
-                ->where('status', '!=', 'cancelled')
-                ->values()
-                ->first();
-
-            if ($matchingOrdersData) {
-                    $order->update([
-                        'shipment_id' => $matchingOrdersData['id'],
-                        'status'      => $matchingOrdersData['status'],
-                        'shipment_order_id' => $matchingOrdersData['order_number'],
-                    ]);
-                }
-            }
-
-                return [
-                    'success' => true,
-                    'message' => 'Order added in NimbusPost',
-                    'data'    => $orders,
-                ];
-
-        }
-
-
+        return Http::withHeaders([
+            'Authorization' => 'Bearer '.$token,
+            'Accept'        => 'application/json',
+            'Content-Type'  => 'application/json',
+        ])->post(
+            'https://api.nimbuspost.com/v1/shipments',
+            $payload
+        )->json();
     }
 
     private static function authHeaders(): array

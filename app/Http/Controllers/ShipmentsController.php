@@ -17,39 +17,31 @@ class ShipmentsController extends Controller
     //
 
 
-public function fetchShipmentsNimbus(Order $order)
-{
-    // $fromDate = Carbon::now()->subDays(10)->format('Y-m-d');
-    // $toDate   = Carbon::now()->format('Y-m-d');
+    public function fetchShipmentsNimbus(Order $order)
+    {
+        // $fromDate = Carbon::now()->subDays(10)->format('Y-m-d');
+        // $toDate   = Carbon::now()->format('Y-m-d');
+        // $response = \App\Services\NimbusPostService::fetchNimbusOrders([
+        //     'page'      => 1,
+        //     'per_page'  => 200,
+        //     'from_date' => $fromDate,
+        //     'to_date'   => $toDate,
+        // ]);
+        // return redirect()->back()->with('success', 'Last 45 days shipments fetched successfully!');
+        FetchNimbusShipmentsJob::dispatch();
 
-    // $response = \App\Services\NimbusPostService::fetchNimbusOrders([
-    //     'page'      => 1,
-    //     'per_page'  => 200,
-    //     'from_date' => $fromDate,
-    //     'to_date'   => $toDate,
-    // ]);
+        return back()->with('success', 'Shipments sync started in background!');
+    }
 
-    // return redirect()->back()->with('success', 'Last 45 days shipments fetched successfully!');
-
-
-    FetchNimbusShipmentsJob::dispatch();
-
-    return back()->with('success', 'Shipments sync started in background!');
-}
     public function fetchShipmentsShiorocket(Order $order)
     {
         $result = ShiprocketService::fetchAndStoreOrders();
-
-            return redirect()->back()->with('success', 'Shipments fetch successfully!');
+        return redirect()->back()->with('success', 'Shipments fetch successfully!');
     }
-
-
-
-
-
 
     public function createShipment(Order $order, $id)
     {
+        dd('nmn');
 
         $order = Order::find($id);
 

@@ -3,61 +3,65 @@
 
 <div class="container-xxl flex-grow-1 container-p-y">
     <div class="card shadow-sm p-3 mb-4">
-    <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3">
+        <div
+            class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3">
 
-        <!-- LEFT SECTION -->
-        <div>
-            <h5 class="mb-1 fw-bold">
-                Order Code: <span class="text-primary">{{ $order->order_code }}</span>
-            </h5>
-            <h5 class="mb-1 fw-bold">
-                Order From: <span class="text-primary">{{ $order->shipment_from }}</span>
-            </h5>
+            <!-- LEFT SECTION -->
+            <div>
+                <h5 class="mb-1 fw-bold">
+                    Order Code: <span class="text-primary">{{ $order->order_code }}</span>
+                </h5>
+                <h5 class="mb-1 fw-bold">
+                    Order From: <span class="text-primary">{{ $order->shipment_from }}</span>
+                </h5>
 
-            <div class="d-flex flex-wrap gap-2 mt-2">
+                <div class="d-flex flex-wrap gap-2 mt-2">
 
-                <!-- Status -->
-                <span class="badge px-3 py-2 
+                    <!-- Status -->
+                    <span class="badge px-3 py-2 
                     {{ $order->status == 'pending' ? 'bg-warning' : 
                        ($order->status == 'delivered' ? 'bg-success' : 'bg-secondary') }}">
-                    {{ ucfirst($order->status) }}
-                </span>
+                        {{ ucfirst($order->status) }}
+                    </span>
 
-                <!-- Payment Mode -->
-                <span class="badge bg-info px-3 py-2 text-dark">
-                    {{ strtoupper($order->payment_mod) }}
-                </span>
+                    <!-- Payment Mode -->
+                    <span class="badge bg-info px-3 py-2 text-dark">
+                        {{ strtoupper($order->payment_mod) }}
+                    </span>
 
-                <!-- Payment Status -->
-                 @if($order->payment_status)
-                <span class="badge px-3 py-2 
+                    <!-- Payment Status -->
+                    @if($order->payment_status)
+                    <span class="badge px-3 py-2 
                     {{ $order->payment_status == 'paid' ? 'bg-success' : 'bg-danger' }}">
-                    {{ ucfirst($order->payment_status) }}
-                </span>@endif
+                        {{ ucfirst($order->payment_status) }}
+                    </span>@endif
 
+                </div>
+
+                <!-- Date -->
+                <div class="mt-2 text-muted small">
+                    {{ $order->created_at->timezone('Asia/Kolkata')->format('M d, Y • g:i A') }} (IST)
+                </div>
             </div>
 
-            <!-- Date -->
-            <div class="mt-2 text-muted small">
-                {{ $order->created_at->timezone('Asia/Kolkata')->format('M d, Y • g:i A') }} (IST)
+            <!-- RIGHT SECTION -->
+            <div class="d-flex gap-2">
+                <form action="{{ route('orders.destroy', $order->id) }}" method="POST"
+                    onsubmit="return confirmDelete(event)">
+                    @csrf
+                    @method('DELETE')
+
+                    <button type="submit" class="btn btn-label-danger">
+                        Delete Order
+                    </button>
+                </form>
+                <button class="btn btn-label-primary">Update Status</button>
+                <a href="{{ route('orders.createShipment', $order->id) }}" class="btn btn-label-secondary">Create
+                    Shipment</a>
             </div>
+
         </div>
-
-        <!-- RIGHT SECTION -->
-        <div class="d-flex gap-2">
-            <form action="{{ route('orders.destroy', $order->id) }}" method="POST" onsubmit="return confirmDelete(event)">
-    @csrf
-    @method('DELETE')
-
-    <button type="submit" class="btn btn-label-danger">
-        Delete Order
-    </button>
-</form>
-            <button class="btn btn-label-primary">Update Status</button>
-        </div>
-
     </div>
-</div>
 
     <!-- Order Details Table -->
 
@@ -70,6 +74,7 @@
                         <thead>
                             <tr>
                                 <th>#</th>
+                                <th class="w-50">Image</th>
                                 <th class="w-50">Product</th>
                                 <th class="w-25">Price</th>
                                 <th class="w-25">Qty</th>
@@ -97,8 +102,38 @@
                                 <td>{{ $key + 1 }}</td>
 
                                 <td class="w-50">
-                                    {{ $isJson ? ($item['product_name'] ?? $item['name'] ?? 'N/A') : ($item->product->name ?? 'N/A') }}
+                                    @if($isJson)
+                                    @if(!empty($item['featured_image']))
+                                    <img src="{{ asset('storage/' . $item['featured_image']) }}"
+                                        class="product-image product-image-manual" style="width:100%">
+                                    @endif
+                                    @else
+                                    @if($item->product && $item->product->featured_image)
+                                    <img src="{{ asset('storage/' . $item->product->featured_image) }}"
+                                        class="product-image product-image-manual" style="width:100%">
+                                    @endif
+                                    @endif
+                                </td>
 
+                                <td class="w-50">
+                                    @if(
+    ($isJson && !empty($item['slug'])) ||
+    (!$isJson && !empty($item->product?->slug))
+)
+    <a href="{{ url('shop-product-detail', $isJson ? $item['slug'] : $item->product->slug) }}">
+        {{ $isJson
+            ? ($item['product_name'] ?? $item['name'] ?? 'N/A')
+            : ($item->product?->name ?? 'N/A')
+        }}
+    </a>
+@else
+    <a href="#">
+        {{ $isJson
+            ? ($item['product_name'] ?? $item['name'] ?? 'N/A')
+            : ($item->product?->name ?? 'N/A')
+        }}
+    </a>
+@endif
                                 </td>
 
                                 <td class="w-25">
@@ -192,7 +227,7 @@
             </div>
             <div class="card mb-6">
                 <div class="card-header">
-                    <h5 class="card-title m-0">Shipping activity</h5>
+                    <h5 class="card-title m-0">Shipping activity @if($order->shipment_id )({{ $order->shipment_id }})@endif</h5>
                 </div>
                 <div class="card-body pt-1">
                     <ul class="timeline pb-0 mb-0">
@@ -645,12 +680,13 @@
     <!--/ Add New Address Modal -->
 </div>
 <script>
-function confirmDelete(event) {
-    if (!confirm('Are you sure you want to delete this order?')) {
-        event.preventDefault();
-        return false;
+    function confirmDelete(event) {
+        if (!confirm('Are you sure you want to delete this order?')) {
+            event.preventDefault();
+            return false;
+        }
+        return true;
     }
-    return true;
-}
+
 </script>
 @endsection

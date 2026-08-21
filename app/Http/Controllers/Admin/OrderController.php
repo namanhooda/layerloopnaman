@@ -201,177 +201,109 @@ if ($validator->fails()) {
 
     public function createShipment(Order $order, $id)
     {
+        $order = Order::with('itemsData')->findOrFail($id);
+        $response = \App\Services\NimbusPostService::createOrder($order);
+        if($response['message'] === 'Order already exists in NimbusPost') {
+            return redirect()->back()->with('error', 'Order already exists in NimbusPost');
+        }else{
+            
+            return redirect()->back()->with('success', 'Order created in NimbusPost successfully');
+        }
 
-        $order = Order::find($id);
+    }
+  
+    public function search(Request $request)
+    {
+        $search = $request->search;
 
-        // if ($order->shiprocket_order_id) {
-        //     return response()->json([
-        //         'message' => 'Shipment already created'
-        //     ], 422);
-        // }
+        $addresses = Address::query()
+            ->when($search, function ($query) use ($search) {
+                $query->where('first_name', 'like', "%$search%")
+                    ->orWhere('last_name', 'like', "%$search%")
+                    ->orWhere('email', 'like', "%$search%")
+                    ->orWhere('phone', 'like', "%$search%");
+            })
+            ->limit(20)
+            ->get(['id', 'first_name', 'last_name', 'email', 'phone']);
+
+        return response()->json($addresses);
+    }
 
 
-        $page = 1;
 
-        $response = \App\Services\NimbusPostService::fetchNimbusOrders([
-            'page'      => 1,
-            'per_page'  => 50,
-            'from_date' => '2024-01-01',
-            'to_date'   => '2024-12-31',
+    public function addressStore(Request $request)
+    {
+        $request->validate([
+            'first_name'     => 'required',
+            'last_name'      => 'nullable',
+            'country'        => 'required',
+            'address_line1'  => 'required',
+            'city'           => 'required',
+            'state'          => 'required',
+            'zip'            => 'required',
+            'email'          => 'nullable|email',
+            'phone'          => 'nullable'
         ]);
-        dd($response);
-        // $result = ShiprocketService::fetchAndStoreOrders();
 
-        // Optional: allow only paid orders
-        // if ($order->payment_status !== 'paid') {
-        //     return response()->json([
-        //         'message' => 'Order payment not completed'
-        //     ], 422);
-        // }
-
-        $orderPayload = [
-            "customer_name"    => "John Doe",
-            "customer_email"   => "john@example.com",
-            "customer_phone"   => "9999999999",
-            "customer_address" => "123 Main Street",
-            "customer_city"    => "Delhi",
-            "customer_state"   => "Delhi",
-            "customer_country" => "IN",
-            "customer_zip"     => "110001",
-            "items" => [
-                [
-                    "name"     => "Product 1",
-                    "quantity" => 1,
-                    "price"    => 500
-                ]
-            ],
-            "payment_method" => "prepaid", // or cod
-            "courier" => "DHL"
-        ];
-
-        $response = \App\Services\NimbusPostService::createOrder($orderPayload);
-
-        dd($response);
-
-
-
-        $result = \App\Services\NimbusPostService::createOrder($order);
-
-
-
-        dd('nmn');
-
-        $response = ShiprocketService::createOrder($order);
-
-        if (!empty($response['order_id'])) {
-
-            $order->update([
-                'shiprocket_order_id'    => $response['order_id'],
-                'shiprocket_shipment_id' => $response['shipment_id'],
-                'status' => 'Shipped',
-            ]);
-
+        // ❗ Ensure at least one exists
+        if (!$request->email && !$request->phone) {
             return response()->json([
-                'message' => 'Shipment created successfully'
+                'status' => false,
+                'message' => 'Email or Phone is required'
+            ], 422);
+        }
+
+        // 🔍 Find user
+        $user = User::query()
+            ->when($request->email, function ($q) use ($request) {
+                $q->where('email', $request->email);
+            })
+            ->when($request->phone, function ($q) use ($request) {
+                $q->orWhere('phone', $request->phone);
+            })
+            ->first();
+
+        // ✅ If user not found → create new user
+        if (!$user) {
+
+            $user = User::create([
+                'name'     => $request->first_name . ' ' . $request->last_name,
+                'email'    => $request->email,
+                'phone'    => $request->phone,
+                'password' => Hash::make(Str::random(8)), // random password
             ]);
         }
 
-        return response()->json([
-            'message' => $response['message'] ?? 'Shiprocket error'
-        ], 500);
-    }
-  
-public function search(Request $request)
-{
-    $search = $request->search;
+        // ✅ Create Address with user_id
+        $data = $request->all();
+        $data['user_id'] = $user->id;
 
-    $addresses = Address::query()
-        ->when($search, function ($query) use ($search) {
-            $query->where('first_name', 'like', "%$search%")
-                  ->orWhere('last_name', 'like', "%$search%")
-                  ->orWhere('email', 'like', "%$search%")
-                  ->orWhere('phone', 'like', "%$search%");
-        })
-        ->limit(20)
-        ->get(['id', 'first_name', 'last_name', 'email', 'phone']);
-
-    return response()->json($addresses);
-}
+        $address = Address::create($data);
 
 
-
-public function addressStore(Request $request)
-{
-    $request->validate([
-        'first_name'     => 'required',
-        'last_name'      => 'nullable',
-        'country'        => 'required',
-        'address_line1'  => 'required',
-        'city'           => 'required',
-        'state'          => 'required',
-        'zip'            => 'required',
-        'email'          => 'nullable|email',
-        'phone'          => 'nullable'
-    ]);
-
-    // ❗ Ensure at least one exists
-    if (!$request->email && !$request->phone) {
-        return response()->json([
-            'status' => false,
-            'message' => 'Email or Phone is required'
-        ], 422);
+        return response()->json($address);
     }
 
-    // 🔍 Find user
-    $user = User::query()
-        ->when($request->email, function ($q) use ($request) {
-            $q->where('email', $request->email);
-        })
-        ->when($request->phone, function ($q) use ($request) {
-            $q->orWhere('phone', $request->phone);
-        })
-        ->first();
+    public function searchProdct(Request $request)
+    {
+        $products = Product::where('name', 'like', "%{$request->search}%")
+            ->limit(20)
+            ->get(['id', 'name', 'price', 'featured_image']);
 
-    // ✅ If user not found → create new user
-    if (!$user) {
-
-        $user = User::create([
-            'name'     => $request->first_name . ' ' . $request->last_name,
-            'email'    => $request->email,
-            'phone'    => $request->phone,
-            'password' => Hash::make(Str::random(8)), // random password
-        ]);
+        return response()->json($products);
     }
+    
+    public function destroy($id)
+    {
+        $order = Order::findOrFail($id);
 
-    // ✅ Create Address with user_id
-    $data = $request->all();
-    $data['user_id'] = $user->id;
+        // Delete all order items
+        OrderItem::where('order_id', $order->id)->delete();
 
-    $address = Address::create($data);
+        // Delete the order
+        $order->delete();
 
-
-    return response()->json($address);
-}
-
-public function searchProdct(Request $request)
-{
-    $products = Product::where('name', 'like', "%{$request->search}%")
-        ->limit(20)
-        ->get(['id', 'name', 'price', 'featured_image']);
-
-    return response()->json($products);
-}
-public function destroy($id)
-{
-    $order = Order::findOrFail($id);
-
-    // Delete all order items
-    OrderItem::where('order_id', $order->id)->delete();
-
-    // Delete the order
-    $order->delete();
-
-    return redirect()->route('admin.orders.index')->with('success', 'Order deleted successfully.');
-}
+        return redirect()->route('admin.orders.index')->with('success', 'Order deleted successfully.');
+    }
 
 }
