@@ -334,7 +334,6 @@ public static function createB2COrder(Order $order): array
                 'https://api.nimbuspost.com/v1/shipments',
                 $payload
             )->json();
-            dd($abc);
 
         $today = now()->format('Y-m-d');
 
