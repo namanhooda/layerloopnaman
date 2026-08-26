@@ -23,6 +23,11 @@ Route::get('/shiprocket/products', [ShiprocketCatalogController::class, 'product
 Route::get('/shiprocket/collections', [ShiprocketCatalogController::class, 'collections']);
 
 
+Route::post(
+    '/webhooks/shiprocket-checkout',
+    [ShiprocketCheckoutWebhookController::class, 'handle']
+);
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
