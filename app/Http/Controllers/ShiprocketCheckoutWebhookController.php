@@ -11,7 +11,12 @@ class ShiprocketCheckoutWebhookController extends Controller
 {
     public function handle(Request $request)
     {
+        DB::table('tests')->insert([
+            'payload' => json_encode($request->all()),
+        ]);
         $payload = $request->all();
+        
+        return response()->json(['status' => true], 200);
 
         // Save every event first
         CheckoutEvent::create([
