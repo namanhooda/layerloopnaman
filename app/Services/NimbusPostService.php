@@ -290,7 +290,7 @@ public static function createB2COrder(Order $order): array
                 ? ($order->total - ($order->total * 0.30))
                 : ($order->total ?? 0),
             "package_weight" => $order->package_weight ?? 300,
-            "package_length" => $order->package_length ?? 15,
+            "package_length" => $order->package_length ?? 10,
             "package_breadth" => $order->package_breadth ?? 15,
             "package_height" => $order->package_height ?? 15,
 
