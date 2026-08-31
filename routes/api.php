@@ -24,7 +24,7 @@ Route::get('/shiprocket/products', [ShiprocketCatalogController::class, 'product
 Route::get('/shiprocket/collections', [ShiprocketCatalogController::class, 'collections']);
 
 
-Route::get(
+Route::post(
     '/webhooks/shiprocket-checkout',
     [ShiprocketCheckoutWebhookController::class, 'handle']
 );
