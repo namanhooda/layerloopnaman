@@ -78,7 +78,7 @@
     <!-- SHIPPING -->
     <div class="col-md-4 mb-3">
         <label class="form-label">Shipping Charges</label>
-        <input type="number" step="0.01" id="shipping" name="shipping" class="form-control" placeholder="Enter shipping">
+        <input type="number" step="0.01" id="shipping" name="shipping" class="form-control" placeholder="Enter shipping" value="0">
     </div>
 
     <!-- TOTAL -->
@@ -168,7 +168,7 @@
 
     <div class="col-md-6 mb-3">
         <label>Country *</label>
-        <input type="text" name="country" class="form-control" required>
+        <input type="text" name="country" class="form-control" value="India" required>
     </div>
 
     <div class="col-md-12 mb-3">
@@ -362,10 +362,10 @@ $('#product_select').on('select2:select', function (e) {
                 <input type="hidden" name="products[${rowIndex}][product_id]" value="${data.id}">
             </td>
             <td>
-                <input type="number" class="form-control price" value="${data.price}" readonly>
+                <input type="number" name="products[${rowIndex}][price]"  class="form-control price" value="${data.price}" readonly>
             </td>
             <td>
-                <input type="number" class="form-control qty" value="1" min="1">
+                <input type="number" name="products[${rowIndex}][quantity]" class="form-control qty" value="1" min="1">
             </td>
             <td class="row-total">${data.price}</td>
             <td>

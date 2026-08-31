@@ -29,9 +29,9 @@ public function index(Request $request)
 
     return DataTables::eloquent($query)
         ->addIndexColumn()
-->addColumn('order_code', fn ($o) =>
-    '<a href="'.route('admin.orders.show', $o->id).'" class="text-success fw-bold">'.e($o->order_code).'</a>'
-)
+        ->addColumn('order_code', fn ($o) =>
+            '<a href="'.route('admin.orders.show', $o->id).'" class="text-success fw-bold">'.e($o->order_code).'</a>'
+        )
 
         ->addColumn('phone', fn ($o) => $o->user?->phone ?? 'N/A')
         ->addColumn('name', fn ($o) => $o->user?->name ?? 'N/A')
@@ -126,6 +126,7 @@ public function store(Request $request)
 {
     try {
 
+
   $validator = \Validator::make($request->all(), [
     'shipment_from'    => 'required|string|max:255',
     'subtotal'        => 'required|numeric|min:0',
@@ -153,7 +154,7 @@ if ($validator->fails()) {
         $user_id = $user->id ?? null;
 
         // ✅ CREATE ORDER
-        Order::create([
+        $orderarray = Order::create([
             'order_code'        => $code,
             'shipment_from'     => $request->shipment_from,
             'sub_total'         => $request->subtotal,
@@ -170,6 +171,17 @@ if ($validator->fails()) {
             'created_at'        => Carbon::parse($request->order_date),
             'updated_at'        => Carbon::parse($request->order_date),
         ]);
+
+        foreach ($request->products as $product) {
+            OrderItem::create([
+                'order_id' => $orderarray->id,
+                'product_id' => $product['product_id'],
+                'quantity'   => $product['quantity'],
+                'price'      => $product['price'],
+            ]);
+        }
+
+
 
         DB::commit();
 
