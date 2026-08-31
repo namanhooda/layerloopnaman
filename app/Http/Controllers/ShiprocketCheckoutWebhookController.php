@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\CheckoutEvent;
 use App\Models\AbandonedCart;
 use App\Models\Order;
+use DB;
 
 class ShiprocketCheckoutWebhookController extends Controller
 {
