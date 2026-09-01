@@ -20,16 +20,29 @@ use Illuminate\Support\Facades\DB;
 
 class ShiprocketCheckoutWebhookController extends Controller
 {
-    public function handle(Request $request)
-    {
-        $response = json_encode($request->all());
-        $orderId = $response['cart_id'];
-        DB::table('tests')->insert([
-            'payload' => $orderId,
-        ]);
-        $this->order($request, $orderId);
-        return response()->json(['status' => true], 200);
+  public function handle(Request $request)
+{
+    // Get cart_id directly from the webhook JSON
+    $orderId = $request->input('cart_id');
+
+    // Store complete webhook payload for debugging
+    DB::table('tests')->insert([
+        'payload' => json_encode($request->all()),
+    ]);
+
+    if (!$orderId) {
+        return response()->json([
+            'status' => false,
+            'message' => 'cart_id not found in Shiprocket webhook',
+        ], 400);
     }
+
+    // $this->order($request, $orderId);
+
+    return response()->json([
+        'status' => true
+    ], 200);
+}
 
     public function order(Request $request, $OrderId)
     {
