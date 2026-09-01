@@ -21,35 +21,29 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\CustomAuthenticatedSessionController;
 
 
-
+////////////////////////////  Shiprocket Product Sync  ////////////////////////////
 Route::get('/update-products-shiprocket', [ShiprocketProductController::class,'products']);
-
-
-Route::post('/send-otp', [AuthController::class,'sendOtp'])->name('send-otp');
-Route::get('/send-otpindex', [AuthController::class,'sendOtpindex']);
-Route::post('/verify-otp', [AuthController::class,'verifyOtp']);
-
 Route::get('shp-checkout', [ShiprocketController::class, 'checkout'])->name('checkout');
 Route::post('/shiprocket/token', [ShiprocketController::class, 'generateToken'])->name('shiprocket.token');
-
 Route::post('/shiprocket/cart-token', [CheckoutController::class, 'generateCartToken'])
     ->name('shiprocket.cart.token');
 
+
 Route::post('/shiprocket/webhook',[ShiprocketController::class,'webhook']);
-
 Route::post('/shiprocket/checkout-token', [CheckoutController::class, 'generateToken']);
-
-
-    Route::get('checkout', [CheckoutController::class, 'checkout'])->name('checkout');
-    Route::get('/order/success', [CheckoutController::class, 'success'])->name('order.success');
-
+Route::get('checkout', [CheckoutController::class, 'checkout'])->name('checkout');
+Route::get('/order/success', [CheckoutController::class, 'success'])->name('order.success');
 Route::get('/checkout/success', function () {
     return "Payment Successful";
 })->name('checkout.success');
 
+////////////////////////////  Otp Mobile ////////////////////////////
+Route::post('/send-otp', [AuthController::class,'sendOtp'])->name('send-otp');
+Route::get('/send-otpindex', [AuthController::class,'sendOtpindex']);
+Route::post('/verify-otp', [AuthController::class,'verifyOtp']);
 
+////////////////////////////  Test Routes ////////////////////////////
 Route::get('/home', [TestController::class, 'home']);
-
 Route::get('/testdatanmn', [TestController::class, 'index']);
 Route::get('/download-pdf', [TestController::class, 'downloadPdf']);
 Route::get('/download-pdf-work', [TestController::class, 'downloadPdfwork']);
@@ -166,7 +160,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/checkout/place-order', [CheckoutController::class, 'placeOrder'])->name('checkout.placeOrder');
     Route::get('/checkout/verify-order', [CheckoutController::class, 'verifyPayment'])->name('order.payment.verify');
     Route::post('ads', [AddressController::class, 'store'])->name('addresses.store');
-
     Route::get('account', [App\Http\Controllers\AuthUserController::class, 'account'])->name('account');
     Route::get('orders', [App\Http\Controllers\AuthUserController::class, 'orders'])->name('orders');
     Route::post('orders-cancel/{id}', [App\Http\Controllers\AuthUserController::class, 'cancelOrder'])->name('orders.cancel');
