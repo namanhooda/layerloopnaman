@@ -26,27 +26,13 @@ class ShiprocketCheckoutWebhookController extends Controller
     $orderId = $request->input('cart_id');
 
     // Store complete webhook payload for debugging
-    DB::table('tests')->insert([
-        'payload' => $orderId,
-    ]);
+    
+        if (!$orderId) {
+            DB::table('tests')->insert([
+            'payload' => "id not found in webhook payload.",
+            ]);
+        }
 
-    if (!$orderId) {
-        return response()->json([
-            'status' => false,
-            'message' => 'cart_id not found in Shiprocket webhook',
-        ], 400);
-    }
-
-    $this->order($request, $orderId);
-
-    return response()->json([
-        'status' => true
-    ], 200);
-}
-
-    public function order(Request $request, $OrderId)
-    {
-        $orderId = $OrderId;
 
         $timestamp = now()->utc()->toIso8601ZuluString();
 
@@ -207,6 +193,10 @@ class ShiprocketCheckoutWebhookController extends Controller
         } catch (\Throwable $e) {
 
             DB::rollBack();
+
+            DB::table('tests')->insert([
+            'payload' => $e,
+            ]);
 
             \Log::error('Checkout Error', [
 
