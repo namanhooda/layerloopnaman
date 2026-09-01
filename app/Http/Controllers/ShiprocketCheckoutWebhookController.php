@@ -27,6 +27,9 @@ class ShiprocketCheckoutWebhookController extends Controller
 
     // Store complete webhook payload for debugging
     
+            DB::table('tests')->insert([
+            'payload' => $orderId,
+            ]);
         if (!$orderId) {
             DB::table('tests')->insert([
             'payload' => "id not found in webhook payload.",
@@ -75,7 +78,7 @@ class ShiprocketCheckoutWebhookController extends Controller
             $orderData = $response->json()['result'] ?? [];
 
             DB::table('tests')->insert([
-            'payload' => "$orderData",
+            'payload' => $orderData,
             ]);
 
         DB::beginTransaction();
