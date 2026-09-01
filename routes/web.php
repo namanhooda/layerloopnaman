@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\{RoleController, PermissionController, UserController, ProfileController, ProductController, ProductCategoryController, OrderController, CouponController, PrototypeController, InvoiceController};
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SearchController;
-use App\Http\Controllers\{CartController,ShipmentsController, CheckoutController, FrontendController, AddressController, WishlistController};
+use App\Http\Controllers\{ShiprocketProductController,CartController,ShipmentsController, CheckoutController, FrontendController, AddressController, WishlistController};
 use Laravel\Fortify\Features;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
@@ -19,6 +19,11 @@ use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\Tags\Url;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\CustomAuthenticatedSessionController;
+
+
+
+Route::get('/update-products-shiprocket', [ShiprocketProductController::class,'products']);
+
 
 Route::post('/send-otp', [AuthController::class,'sendOtp'])->name('send-otp');
 Route::get('/send-otpindex', [AuthController::class,'sendOtpindex']);

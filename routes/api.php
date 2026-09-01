@@ -28,6 +28,10 @@ Route::post(
     '/webhooks/shiprocket-checkout',
     [ShiprocketCheckoutWebhookController::class, 'handle']
 );
+Route::get(
+    '/webhooks/shiprocket-cart',
+    [ShiprocketCheckoutWebhookController::class, 'cart']
+);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

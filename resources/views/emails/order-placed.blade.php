@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
 </head>
+
 <body>
 
     <h2>New Order Placed</h2>
@@ -19,8 +21,12 @@
     <p><strong>Email:</strong> {{ optional($order->user)->email ?? 'N/A' }}</p>
     <p><strong>Phone:</strong> {{ optional($order->user)->phone ?? 'N/A' }}</p>
 
-    <br>
+    <h4>Order Items</h4>
+    @foreach ($order->itemsData as $item)
+        <p><a href="https://layerloop.in/">abc</a>{{ $item->product->name ?? 'Product not found' }} - Quantity: {{ $item->quantity }} - Price: ₹{{ number_format($item->price, 2) }}</p>
+    @endforeach
     <p>— LayerLoop Orders System</p>
 
 </body>
+
 </html>
