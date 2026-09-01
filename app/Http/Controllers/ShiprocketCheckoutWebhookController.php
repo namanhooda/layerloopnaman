@@ -36,9 +36,13 @@ class ShiprocketCheckoutWebhookController extends Controller
         $orderId = $OrderId;
 
 
-        $newOrder =  Order::where('shiprocket_checkout_id', $orderId)->first();
+        $checkOrder =  Order::where('shiprocket_checkout_id', $orderId)->first();
 
-        if($newOrder){
+        if($checkOrder){
+            
+            DB::table('tests')->insert([
+                'payload' => "Order already exists.",
+            ]);
             return response()->json([
                 'status' => false,
                 'message' => 'Order already exists.',
@@ -196,7 +200,9 @@ class ShiprocketCheckoutWebhookController extends Controller
 
 
             DB::commit();
-
+            DB::table('tests')->insert([
+                            'payload' => "Order created",
+                        ]);
                 Mail::to('shop.layerloop@gmail.com')
                     ->queue(new OrderPlacedNotification($order));
                     dd('Email sent to shop.layerloop@gmail.com');
