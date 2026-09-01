@@ -23,7 +23,7 @@ class ShiprocketCheckoutWebhookController extends Controller
     public function handle(Request $request)
     {
         $response = json_encode($request->all());
-        $orderId = $response->cart_id;
+        $orderId = $response['cart_id'];
         DB::table('tests')->insert([
             'payload' => json_encode($request->all()),
         ]);
