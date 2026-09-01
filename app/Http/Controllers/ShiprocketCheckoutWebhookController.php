@@ -27,7 +27,7 @@ class ShiprocketCheckoutWebhookController extends Controller
 
     // Store complete webhook payload for debugging
     DB::table('tests')->insert([
-        'payload' => json_encode($request->all()),
+        'payload' => $orderId,
     ]);
 
     if (!$orderId) {
@@ -37,7 +37,7 @@ class ShiprocketCheckoutWebhookController extends Controller
         ], 400);
     }
 
-    // $this->order($request, $orderId);
+    $this->order($request, $orderId);
 
     return response()->json([
         'status' => true
@@ -46,7 +46,7 @@ class ShiprocketCheckoutWebhookController extends Controller
 
     public function order(Request $request, $OrderId)
     {
-        $orderId = "6a95a08b53128e4bd571fed1";
+        $orderId = $OrderId;
 
         $timestamp = now()->utc()->toIso8601ZuluString();
 
