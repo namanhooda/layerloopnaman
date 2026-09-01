@@ -23,7 +23,7 @@ class ShiprocketCheckoutWebhookController extends Controller
     public function handle(Request $request)
     {
         $response = json_encode($request->all());
-        $orderId = $request->input('order_id');
+        $orderId = $response->cart_id;
         DB::table('tests')->insert([
             'payload' => json_encode($request->all()),
         ]);
@@ -33,7 +33,18 @@ class ShiprocketCheckoutWebhookController extends Controller
 
     public function order(Request $request, $OrderId)
     {
-        $orderId = "6a95a08b53128e4bd571fed1";
+        $orderId = $OrderId;
+
+
+        $newOrder =  Order::where('shiprocket_checkout_id', $orderId)->first();
+
+        if($newOrder){
+            return response()->json([
+                'status' => false,
+                'message' => 'Order already exists.',
+            ], 400);
+        }
+
 
         $timestamp = now()->utc()->toIso8601ZuluString();
 
