@@ -74,6 +74,10 @@ class ShiprocketCheckoutWebhookController extends Controller
 
             $orderData = $response->json()['result'] ?? [];
 
+            DB::table('tests')->insert([
+            'payload' => "$orderData",
+            ]);
+
         DB::beginTransaction();
 
         try {
