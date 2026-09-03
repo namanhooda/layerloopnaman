@@ -26,33 +26,7 @@ class ShiprocketCheckoutWebhookController extends Controller
     }
     public function handle(Request $request)
     {
-        $response = json_encode($request->all());
-        $orderId = $response['cart_id'];
-        DB::table('tests')->insert([
-            'payload' => json_encode($request->all()),
-        ]);
-        $this->order($request, $orderId);
-        return response()->json(['status' => true], 200);
-    }
-
-    public function order(Request $request, $OrderId)
-    {
-        $orderId = $OrderId;
-
-
-        $checkOrder =  Order::where('shiprocket_checkout_id', $orderId)->first();
-
-        if($checkOrder){
-            
-            DB::table('tests')->insert([
-                'payload' => "Order already exists.",
-            ]);
-            return response()->json([
-                'status' => false,
-                'message' => 'Order already exists.',
-            ], 400);
-        }
-
+        $orderId = $request->input('cart_id');
 
         $timestamp = now()->utc()->toIso8601ZuluString();
 
@@ -60,9 +34,9 @@ class ShiprocketCheckoutWebhookController extends Controller
         $apiSecret = env('SHIPROCKET_CHECKOUT_SECRET');
 
         $payload = [
-            'order_id'  => $orderId,
-            'timestamp' => $timestamp,
-        ];
+                'order_id'  => $orderId,
+                'timestamp' => $timestamp,
+            ];
 
         // Convert the exact payload to JSON
         $jsonPayload = json_encode(
@@ -91,9 +65,8 @@ class ShiprocketCheckoutWebhookController extends Controller
             ->post(
                 'https://checkout-api.shiprocket.com/api/v1/custom-platform-order/details'
             );
-
             $orderData = $response->json()['result'] ?? [];
-
+            
         DB::beginTransaction();
 
         try {
@@ -204,9 +177,7 @@ class ShiprocketCheckoutWebhookController extends Controller
 
 
             DB::commit();
-            DB::table('tests')->insert([
-                            'payload' => "Order created",
-                        ]);
+
                 Mail::to('shop.layerloop@gmail.com')
                     ->queue(new OrderPlacedNotification($order));
                     dd('Email sent to shop.layerloop@gmail.com');
@@ -215,6 +186,10 @@ class ShiprocketCheckoutWebhookController extends Controller
         } catch (\Throwable $e) {
 
             DB::rollBack();
+
+            DB::table('tests')->insert([
+            'payload' => $e,
+            ]);
 
             \Log::error('Checkout Error', [
 
