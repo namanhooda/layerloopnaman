@@ -9,6 +9,8 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class ProcessFastrrOrder implements ShouldQueue
 {
@@ -233,30 +235,21 @@ $user = User::where('phone', $phone)->first();
                         ]);
                 Mail::to('shop.layerloop@gmail.com')
                     ->queue(new OrderPlacedNotification($order));
-                    dd('Email sent to shop.layerloop@gmail.com');
 
 
         } catch (\Throwable $e) {
 
             DB::rollBack();
 
-            \Log::error('Checkout Error', [
-
+            Log::error('Checkout Error', [
                 'message' => $e->getMessage(),
-
                 'line' => $e->getLine(),
-
                 'file' => $e->getFile(),
-
                 'trace' => $e->getTraceAsString(),
-
+                'cart_id' => $this->cartId,
             ]);
 
-            return response()->json([
-                'status' => false,
-                'message' => 'Order creation failed.',
-                'error' => $e->getMessage()
-            ], 500);
+            throw $e;
         }
 
     }
