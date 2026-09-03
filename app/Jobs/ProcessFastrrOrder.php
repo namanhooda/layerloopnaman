@@ -77,8 +77,17 @@ class ProcessFastrrOrder implements ShouldQueue
         ]);
 
         if (!$response->successful()) {
+
+            $body = $response->json();
+
+            Log::warning('Fastrr details API failed', [
+                'cart_id' => $orderId,
+                'status' => $response->status(),
+                'response' => $body,
+            ]);
+
             throw new \Exception(
-                'Fastrr details API error: ' . $response->body()
+                'Fastrr API error: ' . $response->body()
             );
         }
 
