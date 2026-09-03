@@ -28,23 +28,21 @@ class ShiprocketCheckoutWebhookController extends Controller
     {
         $orderId = $request->input('cart_id');
 
-        $timestamp = now()->utc()->toIso8601ZuluString();
+        if (!$orderId) {
+            abort(404);
+        }
 
         $apiKey = env('SHIPROCKET_CHECKOUT_KEY');
         $apiSecret = env('SHIPROCKET_CHECKOUT_SECRET');
 
         $payload = [
-                'order_id'  => $orderId,
-                'timestamp' => $timestamp,
-            ];
+            'order_id' => $orderId,
+            'timestamp' => now()->toIso8601ZuluString(), // e.g. 2026-07-16T08:30:25Z
+        ];
 
-        // Convert the exact payload to JSON
-        $jsonPayload = json_encode(
-            $payload,
-            JSON_UNESCAPED_SLASHES
-        );
+        // IMPORTANT: Sign the JSON payload
+        $jsonPayload = json_encode($payload, JSON_UNESCAPED_SLASHES);
 
-        // Generate HMAC
         $signature = base64_encode(
             hash_hmac(
                 'sha256',
@@ -54,19 +52,46 @@ class ShiprocketCheckoutWebhookController extends Controller
             )
         );
 
-        // Send EXACTLY the same JSON that was signed
+
         $response = Http::withoutVerifying()
             ->withHeaders([
-                'X-Api-Key'         => $apiKey,
+                'X-Api-Key' => $apiKey,
                 'X-Api-HMAC-SHA256' => $signature,
-                'Content-Type'      => 'application/json',
+                'Content-Type' => 'application/json',
             ])
-            ->withBody($jsonPayload, 'application/json')
             ->post(
-                'https://checkout-api.shiprocket.com/api/v1/custom-platform-order/details'
+                'https://checkout-api.shiprocket.com/api/v1/custom-platform-order/details',
+                $payload
             );
-            $orderData = $response->json()['result'];
-            
+
+        dd($response);
+
+        if (!$response->successful()) {
+            return response()->json([
+                'status' => false,
+                'http_status' => $response->status(),
+                'payload' => $payload,
+                'json_payload' => $jsonPayload,
+                'signature' => $signature,
+                'response' => $response->json(),
+                'raw' => $response->body(),
+            ]);
+        }
+
+
+        $data = $response->json();
+
+        if (!isset($data['ok']) || !$data['ok']) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Unable to create order.',
+                'response' => $data
+            ], 422);
+        }
+
+        $orderData = $data['result'];
+        dd($orderData);
+
         DB::beginTransaction();
 
         try {
@@ -173,23 +198,22 @@ class ShiprocketCheckoutWebhookController extends Controller
             | Remove Coupon
             |--------------------------------------------------------------------------
             */
+
+            session()->forget('coupon');
             $order = $newOrder;
 
 
             DB::commit();
-
                 Mail::to('shop.layerloop@gmail.com')
                     ->queue(new OrderPlacedNotification($order));
-                    dd('Email sent to shop.layerloop@gmail.com');
+                return redirect()
+                ->route('order.success', ['code' => $order->order_code])
+                ->with('success', 'Order placed successfully!');
 
 
         } catch (\Throwable $e) {
 
             DB::rollBack();
-
-            DB::table('tests')->insert([
-            'payload' => $e,
-            ]);
 
             \Log::error('Checkout Error', [
 
@@ -209,10 +233,6 @@ class ShiprocketCheckoutWebhookController extends Controller
                 'error' => $e->getMessage()
             ], 500);
         }
-
-
-        dd($dataship['result']);
-
 
     }
 }
