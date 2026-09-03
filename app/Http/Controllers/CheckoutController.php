@@ -67,7 +67,6 @@ class CheckoutController extends Controller
                 $payload
             );
 
-        dd($response);
 
         if (!$response->successful()) {
             return response()->json([
@@ -93,7 +92,6 @@ class CheckoutController extends Controller
         }
 
         $orderData = $data['result'];
-        dd($orderData);
 
         DB::beginTransaction();
 
