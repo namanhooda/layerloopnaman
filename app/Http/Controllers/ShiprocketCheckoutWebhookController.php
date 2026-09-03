@@ -180,7 +180,6 @@ class ShiprocketCheckoutWebhookController extends Controller
 
                 Mail::to('shop.layerloop@gmail.com')
                     ->queue(new OrderPlacedNotification($order));
-                    dd('Email sent to shop.layerloop@gmail.com');
 
 
         } catch (\Throwable $e) {
