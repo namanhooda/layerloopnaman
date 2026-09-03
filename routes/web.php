@@ -11,6 +11,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\WhatsAppController;
 use App\Http\Controllers\ShiprocketWebhookController;
+use App\Http\Controllers\ShiprocketCheckoutWebhookController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ShiprocketController;
 use App\Http\Controllers\AuthController;
@@ -28,6 +29,11 @@ Route::post('/shiprocket/token', [ShiprocketController::class, 'generateToken'])
 Route::post('/shiprocket/cart-token', [CheckoutController::class, 'generateCartToken'])
     ->name('shiprocket.cart.token');
 
+
+Route::get(
+    '/orders-shipcheckout',
+    [ShiprocketCheckoutWebhookController::class, 'orderForm']
+)->name('orders.shipcheckout');
 
 Route::post('/shiprocket/webhook',[ShiprocketController::class,'webhook']);
 Route::post('/shiprocket/checkout-token', [CheckoutController::class, 'generateToken']);

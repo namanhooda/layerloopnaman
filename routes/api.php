@@ -27,11 +27,7 @@ Route::get('/shiprocket/collections', [ShiprocketCatalogController::class, 'coll
 Route::post(
     '/webhooks/shiprocket-checkout',
     [ShiprocketCheckoutWebhookController::class, 'handle']
-);
-Route::get(
-    '/webhooks/shiprocket-cart',
-    [ShiprocketCheckoutWebhookController::class, 'cart']
-);
+)->name('shiprocket.checkout.order.webhook');
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

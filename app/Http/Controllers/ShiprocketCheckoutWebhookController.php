@@ -20,22 +20,13 @@ use Illuminate\Support\Facades\DB;
 
 class ShiprocketCheckoutWebhookController extends Controller
 {
-  public function handle(Request $request)
-{
-    // Get cart_id directly from the webhook JSON
-    $orderId = $request->input('cart_id');
-
-    // Store complete webhook payload for debugging
-    
-            DB::table('tests')->insert([
-            'payload' => $orderId,
-            ]);
-        if (!$orderId) {
-            DB::table('tests')->insert([
-            'payload' => "id not found in webhook payload.",
-            ]);
-        }
-
+    public function orderForm(Request $request)
+    {
+        return view('admin.orders.checkoutform');
+    }
+    public function handle(Request $request)
+    {
+        $orderId = $request->input('cart_id');
 
         $timestamp = now()->utc()->toIso8601ZuluString();
 
@@ -43,9 +34,9 @@ class ShiprocketCheckoutWebhookController extends Controller
         $apiSecret = env('SHIPROCKET_CHECKOUT_SECRET');
 
         $payload = [
-            'order_id'  => $orderId,
-            'timestamp' => $timestamp,
-        ];
+                'order_id'  => $orderId,
+                'timestamp' => $timestamp,
+            ];
 
         // Convert the exact payload to JSON
         $jsonPayload = json_encode(
@@ -74,13 +65,8 @@ class ShiprocketCheckoutWebhookController extends Controller
             ->post(
                 'https://checkout-api.shiprocket.com/api/v1/custom-platform-order/details'
             );
-
-            $orderData = $response->json()['result'] ?? [];
-
-            DB::table('tests')->insert([
-            'payload' => $orderData,
-            ]);
-
+            $orderData = $response->json()['result'];
+            
         DB::beginTransaction();
 
         try {

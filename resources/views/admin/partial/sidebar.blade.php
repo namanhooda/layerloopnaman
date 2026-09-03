@@ -112,6 +112,39 @@
             </ul>
         </li>
         @endcan
+        @can('blog read')
+        <li class="menu-item {{ request()->routeIs('orders.nimbusShipment.*') || request()->routeIs('orders.ShiprocketShipment.*') ? 'active open' : '' }}">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon icon-base ti tabler-news"></i>
+                <div data-i18n="Blogs">Shipments</div>
+            </a>
+            <ul class="menu-sub">
+                @can('blog categories read')
+                <li class="menu-item {{ request()->routeIs('orders.nimbusShipment') ? 'active' : '' }}">
+                    <a href="{{ route('orders.nimbusShipment') }}" class="menu-link">
+                        <div data-i18n="Fetch Nimbus Shipments">Fetch Nimbus Shipments</div>
+                    </a>
+                </li>
+                @endcan
+                @can('blog read')
+                <li class="menu-item {{ request()->routeIs('orders.ShiprocketShipment') ? 'active' : '' }}">
+                    <a href="{{ route('orders.ShiprocketShipment') }}" class="menu-link">
+                        <div data-i18n="Fetch Shiprocket Shipments">Fetch Shiprocket Shipments</div>
+                    </a>
+                </li>
+                @endcan
+                @can('blog read')
+                <li class="menu-item {{ request()->routeIs('orders.shipcheckout') ? 'active' : '' }}">
+                    <a href="{{ route('orders.shipcheckout') }}" class="menu-link">
+                        <div data-i18n="Checkout Order">Checkout Order</div>
+                    </a>
+                </li>
+                @endcan
+            </ul>
+        </li>
+        @endcan
+
+       
 
         <!-- SEO Pages -->
         @can('pages read')
