@@ -29,6 +29,7 @@ class CheckoutController extends Controller
 
     public function checkout(Request $request)
     {
+        dd('nmn');
         $orderId = $request->oid;
 
         if (!$orderId) {
