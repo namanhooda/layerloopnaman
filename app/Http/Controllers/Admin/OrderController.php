@@ -172,6 +172,7 @@ if ($validator->fails()) {
             'updated_at'        => Carbon::parse($request->order_date),
         ]);
 
+        if($request->products){
         foreach ($request->products as $product) {
             OrderItem::create([
                 'order_id' => $orderarray->id,
@@ -180,6 +181,7 @@ if ($validator->fails()) {
                 'price'      => $product['price'],
             ]);
         }
+    }
 
 
 
