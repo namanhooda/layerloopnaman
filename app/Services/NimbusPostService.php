@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon;
 use App\Models\Order;
 use App\Models\Address;
+use DB;
 
 class NimbusPostService
 {
@@ -25,19 +26,28 @@ class NimbusPostService
     }
 
     public static function fetchNimbusOrders(array $params = [])
-    {
+{
+    // Increase execution time for this long-running process
+    set_time_limit(300); // 5 minutes
+
+    DB::beginTransaction();
+
+    try {
+
         $shipments = Http::withHeaders(self::getHeaders())
-        ->get('https://ship.nimbuspost.com/api/shipments', $params);
+            ->timeout(60)
+            ->get('https://ship.nimbuspost.com/api/shipments', $params);
 
         $dataShipments = $shipments->json();
-        
+
         // Safety check
         if (!isset($dataShipments['data'])) {
+            DB::commit();
             return [];
         }
 
-        $fromDate = Carbon::now()->subDays(30)->startOfDay(); // 20 days ago
-        $toDate   = Carbon::now()->endOfDay(); // today
+        $fromDate = Carbon::now()->subDays(30)->startOfDay();
+        $toDate   = Carbon::now()->endOfDay();
 
         $filtered = collect($dataShipments['data'])->filter(function ($shipment) use ($fromDate, $toDate) {
             if (!isset($shipment['created'])) {
@@ -47,21 +57,21 @@ class NimbusPostService
             $createdDate = Carbon::parse($shipment['created']);
 
             return $createdDate->between($fromDate, $toDate);
-        })->values(); // reset keys
+        })->values();
 
         foreach ($filtered as $shipmentOrder) {
 
             $code = 'LLORD' . str_pad(mt_rand(0, 999999), 6, '0', STR_PAD_LEFT);
 
-            $orderId = $shipmentOrder['order_id']; // real NimbusPost order ID
+            $orderId = $shipmentOrder['order_id'];
 
             $responseOrder = Http::withHeaders(self::getHeaders())
+                ->timeout(60)
                 ->get("https://ship.nimbuspost.com/api/orders/{$orderId}");
-
-;
 
             $getorder = $responseOrder->json();
             $shipOrder = $getorder['data'];
+
             $order = Order::where('order_code', $shipOrder['order_number'])->first();
 
             if ($order) {
@@ -72,27 +82,35 @@ class NimbusPostService
 
             $shipmentId = $shipOrder['id'];
 
-            // ✅ Parse order date safely
-            $createdAt = !empty($shipOrder['order_date']) ? Carbon::parse($shipOrder['order_date']) : now();
+            // Parse order date safely
+            $createdAt = !empty($shipOrder['order_date'])
+                ? Carbon::parse($shipOrder['order_date'])
+                : now();
 
-            $order = Order::where('shipment_order_id', $shipOrder['order_number'])->first();
+            $order = Order::where(
+                'shipment_order_id',
+                $shipOrder['order_number']
+            )->first();
 
             $orderCode = $order?->order_code ?? $code;
             $user = null;
 
             if (!empty($shipOrder['shipping_phone'])) {
+
                 $user = \App\Models\User::firstOrCreate(
                     [
                         'phone' => $shipOrder['shipping_phone'],
                     ],
                     [
-                        'name'     => trim(($shipOrder['shipping_fname'] ?? '') . ' ' . ($shipOrder['shipping_lname'] ?? '')),
+                        'name'     => trim(
+                            ($shipOrder['shipping_fname'] ?? '') . ' ' .
+                            ($shipOrder['shipping_lname'] ?? '')
+                        ),
                         'email'    => null,
-                        'password' => bcrypt($shipOrder['shipping_phone']), // required if password is not nullable
+                        'password' => bcrypt($shipOrder['shipping_phone']),
                     ]
                 );
             }
-
 
             $address = Address::firstOrCreate(
                 [
@@ -100,43 +118,65 @@ class NimbusPostService
                     'address_line1' => $shipOrder['shipping_address'] ?? 'India',
                 ],
                 [
-                    'user_id'   => $user?->id,
-                    'first_name'=> $shipOrder['shipping_fname'] ?? '',
-                    'last_name' => $shipOrder['shipping_lname'] ?? '',
-                    'country'   => $shipOrder['shipping_country'] ?? 'India',
-                    'city'      => $shipOrder['shipping_city'] ?? null,
-                    'state'     => $shipOrder['shipping_state'] ?? null,
-                    'zip'       => $shipOrder['shipping_zip'] ?? null,
-                    'email'     => null,
+                    'user_id'    => $user?->id,
+                    'first_name' => $shipOrder['shipping_fname'] ?? '',
+                    'last_name'  => $shipOrder['shipping_lname'] ?? '',
+                    'country'    => $shipOrder['shipping_country'] ?? 'India',
+                    'city'       => $shipOrder['shipping_city'] ?? null,
+                    'state'      => $shipOrder['shipping_state'] ?? null,
+                    'zip'        => $shipOrder['shipping_zip'] ?? null,
+                    'email'      => null,
                 ]
             );
 
-
-            // ✅ Store or update order (NO DUPLICATES)
+            // Store or update order (NO DUPLICATES)
             Order::updateOrCreate(
                 [
-                    'shipment_id' => $shipmentId, // 👈 duplicacy check
+                    'shipment_id' => $shipmentId,
                 ],
                 [
-                    'order_code'       => $orderCode, // stable
-                    'shipment_order_id'=> $shipOrder['order_number'], // stable
-                    'status'           => $shipmentOrder['status'],
-                    'payment_mod'      => $shipOrder['payment_method'],
-                    'total'            => $shipOrder['order_amount'],
-                    'created_at'       => Carbon::parse($shipOrder['order_date'])->setTime(12, 0, 0)->utc(),
-                    'order_date'       => Carbon::parse($shipOrder['order_date'])->setTime(12, 0, 0)->utc(),
-                    'address_id'       => $address->id,
-                    'user_id'          => $user?->id,
-                    'shipping_charges' => 0,
-                    'items'            => json_encode($shipOrder['products']) ?? null,
-                    'raw_response'     => json_encode($shipOrder),
-                    'shipment_from'    => 'NimbusPost',
+                    'order_code'        => $orderCode,
+                    'shipment_order_id' => $shipOrder['order_number'],
+                    'status'            => $shipmentOrder['status'],
+                    'payment_mod'       => $shipOrder['payment_method'],
+                    'total'             => $shipOrder['order_amount'],
+                    'created_at'        => Carbon::parse($shipOrder['order_date'])
+                        ->setTime(12, 0, 0)
+                        ->utc(),
+                    'order_date'        => Carbon::parse($shipOrder['order_date'])
+                        ->setTime(12, 0, 0)
+                        ->utc(),
+                    'address_id'        => $address->id,
+                    'user_id'           => $user?->id,
+                    'shipping_charges'  => 0,
+                    'items'             => json_encode($shipOrder['products']) ?? null,
+                    'raw_response'      => json_encode($shipOrder),
+                    'shipment_from'     => 'NimbusPost',
                 ]
             );
         }
 
+        DB::commit();
+
         return "success";
+
+    } catch (\Throwable $e) {
+
+        DB::rollBack();
+
+        \Log::error('Nimbus orders fetch failed', [
+            'message' => $e->getMessage(),
+            'file'    => $e->getFile(),
+            'line'    => $e->getLine(),
+            'trace'   => $e->getTraceAsString(),
+        ]);
+
+        return [
+            'status'  => false,
+            'message' => $e->getMessage(),
+        ];
     }
+}
     public static function getToken(): string
     {
         return Cache::get(self::CACHE_KEY) ?? self::loginAndStoreToken();
