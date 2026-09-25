@@ -134,7 +134,7 @@
                         <i class="icon-rotate-left"></i>
                     </div>
                     <div class="ll-feature-content">
-                        <h4>7 Days Return</h4>
+                        <h4>Brokage Return</h4>
                         <p>Hassle Free Returns</p>
                     </div>
                 </div>

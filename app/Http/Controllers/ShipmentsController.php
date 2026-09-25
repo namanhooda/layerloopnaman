@@ -21,26 +21,6 @@ class ShipmentsController extends Controller
     public function fetchShipmentsNimbus(Order $order)
     {
 
-        $fromDate = now()->subDays(10)->format('Y-m-d');
-        $toDate   = now()->format('Y-m-d');
-
-        NimbusPostService::fetchNimbusOrders([
-            'page'      => 1,
-            'per_page'  => 100, // keep lower to avoid timeout
-            'from_date' => $fromDate,
-            'to_date'   => $toDate,
-        ]);
-
-        // $fromDate = Carbon::now()->subDays(10)->format('Y-m-d');
-        // $toDate   = Carbon::now()->format('Y-m-d');
-        // $response = \App\Services\NimbusPostService::fetchNimbusOrders([
-        //     'page'      => 1,
-        //     'per_page'  => 200,
-        //     'from_date' => $fromDate,
-        //     'to_date'   => $toDate,
-        // ]);
-        // return redirect()->back()->with('success', 'Last 45 days shipments fetched successfully!');
-        dd('nmn');
         FetchNimbusShipmentsJob::dispatch();
 
         return back()->with('success', 'Shipments sync started in background!');

@@ -51,7 +51,7 @@
                                 <div class="product-body">
                                     <div class="product-cat">
                                     </div>
-                                    <h3 class="product-title"><a href="{{url('shop-product-detail/'.$product->slug)}}">{{$product->name}}</a></h3>
+                                    <h3 class="product-title"><a href="{{url('category/'.$product->slug)}}">{{$product->name}}</a></h3>
                                     <!-- End .product-title -->
                                 
                                 @php
