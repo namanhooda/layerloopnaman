@@ -116,7 +116,7 @@
         <li class="menu-item {{ request()->routeIs('orders.nimbusShipment.*') || request()->routeIs('orders.ShiprocketShipment.*') ? 'active open' : '' }}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon icon-base ti tabler-news"></i>
-                <div data-i18n="Blogs">Shipments</div>
+                <div data-i18n="Shipments">Shipments</div>
             </a>
             <ul class="menu-sub">
                 @can('blog categories read')

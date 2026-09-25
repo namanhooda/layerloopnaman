@@ -20,7 +20,7 @@
                     <div class="col-md-4 mb-3">
                         <label class="form-label">Shiprocket Cart ID</label>
                         <input type="text" name="cart_id" class="form-control"
-                            placeholder="Enter subtotal">
+                            placeholder="Shiprocket Cart ID">
                     </div>
                     <div class="col-12 text-center mt-3">
                         <button type="submit" class="btn btn-primary me-2">Create Order</button>
