@@ -20,7 +20,17 @@ class ShipmentsController extends Controller
 
     public function fetchShipmentsNimbus(Order $order)
     {
+        $fromDate = now()->subDays(10)->format('Y-m-d');
+        $toDate   = now()->format('Y-m-d');
 
+        NimbusPostService::fetchNimbusOrders([
+            'page'      => 1,
+            'per_page'  => 100, // keep lower to avoid timeout
+            'from_date' => $fromDate,
+            'to_date'   => $toDate,
+        ]);
+
+    
         FetchNimbusShipmentsJob::dispatch();
 
         return back()->with('success', 'Shipments sync started in background!');

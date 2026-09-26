@@ -8,8 +8,69 @@
                 <div class="d-flex align-items-end row">
                     <div class="col-7">
                         <div class="card-body text-nowrap">
-                            <h5 class="card-title mb-0">Welcome {{Auth::user()->name}}! 🎉</h5>
-                            <p class="mb-2">Total Sale This Month</p>
+                            <h5 class="card-title mb-0">Welcome {{Auth::user()->name}}! 🎉
+
+                            </h5>
+                            <div class="d-flex align-items-center justify-content-between ">
+    <p class="mb-0">Total Sale &nbsp;</p>
+
+    <form method="GET" action="{{ url()->current() }}" class="mb-0">
+        <select name="month"
+                id="month"
+                onchange="this.form.submit()"
+                class="form-select" style="width: 162%; line-height: 1;">
+
+            <option value="01" {{ request('month', now()->format('m')) == '01' ? 'selected' : '' }}>
+                January
+            </option>
+
+            <option value="02" {{ request('month', now()->format('m')) == '02' ? 'selected' : '' }}>
+                February
+            </option>
+
+            <option value="03" {{ request('month', now()->format('m')) == '03' ? 'selected' : '' }}>
+                March
+            </option>
+
+            <option value="04" {{ request('month', now()->format('m')) == '04' ? 'selected' : '' }}>
+                April
+            </option>
+
+            <option value="05" {{ request('month', now()->format('m')) == '05' ? 'selected' : '' }}>
+                May
+            </option>
+
+            <option value="06" {{ request('month', now()->format('m')) == '06' ? 'selected' : '' }}>
+                June
+            </option>
+
+            <option value="07" {{ request('month', now()->format('m')) == '07' ? 'selected' : '' }}>
+                July
+            </option>
+
+            <option value="08" {{ request('month', now()->format('m')) == '08' ? 'selected' : '' }}>
+                August
+            </option>
+
+            <option value="09" {{ request('month', now()->format('m')) == '09' ? 'selected' : '' }}>
+                September
+            </option>
+
+            <option value="10" {{ request('month', now()->format('m')) == '10' ? 'selected' : '' }}>
+                October
+            </option>
+
+            <option value="11" {{ request('month', now()->format('m')) == '11' ? 'selected' : '' }}>
+                November
+            </option>
+
+            <option value="12" {{ request('month', now()->format('m')) == '12' ? 'selected' : '' }}>
+                December
+            </option>
+
+        </select>
+    </form>
+</div>
                             <h4 class="text-primary mb-1">₹{{$arrayData['totalsalethismonth']}}</h4>
                             <a href="javascript:;" class="btn btn-primary">View Sales</a>
                         </div>
@@ -28,6 +89,9 @@
             <div class="card h-100">
                 <div class="card-header d-flex justify-content-between">
                     <h5 class="card-title mb-0">Statistics</h5>
+                    <h5 class="card-title mb-0">
+
+                    </h5>
                     <small class="text-body-secondary"></small>
                 </div>
                 <div class="card-body d-flex align-items-end">
@@ -35,41 +99,41 @@
                         <div class="row gy-3">
                             <div class="col-md-3 col-6">
                                 <a href="{{url('admin/orders')}}">
-                                <div class="d-flex align-items-center">
-                                    <div class="badge rounded bg-label-primary me-4 p-2">
-                                        <i class="icon-base ti tabler-chart-pie-2 icon-lg"></i>
+                                    <div class="d-flex align-items-center">
+                                        <div class="badge rounded bg-label-primary me-4 p-2">
+                                            <i class="icon-base ti tabler-chart-pie-2 icon-lg"></i>
+                                        </div>
+                                        <div class="card-info">
+                                            <h5 class="mb-0">{{$arrayData['totalOrders']}}</h5>
+                                            <small>Orders</small>
+                                        </div>
                                     </div>
-                                    <div class="card-info">
-                                        <h5 class="mb-0">{{$arrayData['totalOrders']}}</h5>
-                                        <small>Orders</small>
-                                    </div>
-                                </div>
                                 </a>
                             </div>
                             <div class="col-md-3 col-6">
                                 <a href="{{url('admin/users')}}">
-                                <div class="d-flex align-items-center">
-                                    <div class="badge rounded bg-label-info me-4 p-2">
-                                        <i class="icon-base ti tabler-users icon-lg"></i>
+                                    <div class="d-flex align-items-center">
+                                        <div class="badge rounded bg-label-info me-4 p-2">
+                                            <i class="icon-base ti tabler-users icon-lg"></i>
+                                        </div>
+                                        <div class="card-info">
+                                            <h5 class="mb-0">{{$arrayData['totalUsers']}}</h5>
+                                            <small>Customers</small>
+                                        </div>
                                     </div>
-                                    <div class="card-info">
-                                        <h5 class="mb-0">{{$arrayData['totalUsers']}}</h5>
-                                        <small>Customers</small>
-                                    </div>
-                                </div>
                                 </a>
                             </div>
                             <div class="col-md-3 col-6">
                                 <a href="{{url('admin/products')}}">
-                                <div class="d-flex align-items-center">
-                                    <div class="badge rounded bg-label-danger me-4 p-2">
-                                        <i class="icon-base ti tabler-shopping-cart icon-lg"></i>
+                                    <div class="d-flex align-items-center">
+                                        <div class="badge rounded bg-label-danger me-4 p-2">
+                                            <i class="icon-base ti tabler-shopping-cart icon-lg"></i>
+                                        </div>
+                                        <div class="card-info">
+                                            <h5 class="mb-0">{{$arrayData['totalProduct']}}</h5>
+                                            <small>Products</small>
+                                        </div>
                                     </div>
-                                    <div class="card-info">
-                                        <h5 class="mb-0">{{$arrayData['totalProduct']}}</h5>
-                                        <small>Products</small>
-                                    </div>
-                                </div>
                                 </a>
                             </div>
                             <div class="col-md-3 col-6">
@@ -106,19 +170,19 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($report as $row)
+                                    @foreach($report as $row)
                                     @php
-                                        $date = \Carbon\Carbon::createFromFormat(
-                                            'Ymd',
-                                            $row->getDimensionValues()[0]->getValue()
-                                        )->format('d F Y');
+                                    $date = \Carbon\Carbon::createFromFormat(
+                                    'Ymd',
+                                    $row->getDimensionValues()[0]->getValue()
+                                    )->format('d F Y');
                                     @endphp
                                     <tr>
                                         <td>{{ $date }}</td>
                                         <td>{{ $row->getMetricValues()[0]->getValue() }}</td>
                                         <td>{{ $row->getMetricValues()[1]->getValue() }}</td>
                                     </tr>
-                                @endforeach
+                                    @endforeach
                                 </tbody>
 
                             </table>
@@ -132,97 +196,90 @@
         <!--/ Website Analytics -->
 
 
-                <div class="col-xxl-4 col-md-6">
-                  <div class="card h-100">
-                    <div class="card-header d-flex justify-content-between">
-                      <div class="card-title mb-0">
+        <div class="col-xxl-4 col-md-6">
+            <div class="card h-100">
+                <div class="card-header d-flex justify-content-between">
+                    <div class="card-title mb-0">
                         <h5 class="mb-1">Earning Reports</h5>
                         <p class="card-subtitle">Earnings Overview</p>
-                      </div>
-                      <div class="dropdown">
-                        <button
-                          class="btn btn-text-secondary rounded-pill text-body-secondary border-0 p-2 me-n1"
-                          type="button"
-                          id="earningReports"
-                          data-bs-toggle="dropdown"
-                          aria-haspopup="true"
-                          aria-expanded="false">
-                          <i class="icon-base ti tabler-dots-vertical icon-md text-body-secondary"></i>
+                    </div>
+                    <div class="dropdown">
+                        <button class="btn btn-text-secondary rounded-pill text-body-secondary border-0 p-2 me-n1"
+                            type="button" id="earningReports" data-bs-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            <i class="icon-base ti tabler-dots-vertical icon-md text-body-secondary"></i>
                         </button>
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="earningReports">
-                          <a class="dropdown-item" href="javascript:void(0);">Download</a>
-                          <a class="dropdown-item" href="javascript:void(0);">Refresh</a>
-                          <a class="dropdown-item" href="javascript:void(0);">Share</a>
+                            <a class="dropdown-item" href="javascript:void(0);">Download</a>
+                            <a class="dropdown-item" href="javascript:void(0);">Refresh</a>
+                            <a class="dropdown-item" href="javascript:void(0);">Share</a>
                         </div>
-                      </div>
                     </div>
-                    <div class="card-body pb-0">
-                      <ul class="p-0 m-0">
-                        <li class="d-flex align-items-center mb-5">
-                          <div class="me-4">
-                            <span class="badge bg-label-primary rounded p-1_5"
-                              ><i class="icon-base ti tabler-chart-pie-2 icon-md"></i
-                            ></span>
-                          </div>
-                          <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                            <div class="me-2">
-                              <h6 class="mb-0">Net Profit</h6>
-                              <small class="text-body">12.4k Sales</small>
-                            </div>
-                            <div class="user-progress d-flex align-items-center gap-4">
-                              <small>$1,619</small>
-                              <div class="d-flex align-items-center gap-1">
-                                <i class="icon-base ti tabler-chevron-up text-success"></i>
-                                <small class="text-body-secondary">18.6%</small>
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-                        <li class="d-flex align-items-center mb-5">
-                          <div class="me-4">
-                            <span class="badge bg-label-success rounded p-1_5"
-                              ><i class="icon-base ti tabler-currency-dollar icon-md"></i
-                            ></span>
-                          </div>
-                          <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                            <div class="me-2">
-                              <h6 class="mb-0">Total Income</h6>
-                              <small class="text-body">Sales, Affiliation</small>
-                            </div>
-                            <div class="user-progress d-flex align-items-center gap-4">
-                              <small>$3,571</small>
-                              <div class="d-flex align-items-center gap-1">
-                                <i class="icon-base ti tabler-chevron-up text-success"></i>
-                                <small class="text-body-secondary">39.6%</small>
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-                        <li class="d-flex align-items-center mb-5">
-                          <div class="me-4">
-                            <span class="badge bg-label-secondary text-body rounded p-1_5"
-                              ><i class="icon-base ti tabler-credit-card icon-md"></i
-                            ></span>
-                          </div>
-                          <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                            <div class="me-2">
-                              <h6 class="mb-0">Total Expenses</h6>
-                              <small class="text-body">ADVT, Marketing</small>
-                            </div>
-                            <div class="user-progress d-flex align-items-center gap-4">
-                              <small>$430</small>
-                              <div class="d-flex align-items-center gap-1">
-                                <i class="icon-base ti tabler-chevron-up text-success"></i>
-                                <small class="text-body-secondary">52.8%</small>
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-                      </ul>
-                      <div id="reportBarChart"></div>
-                    </div>
-                  </div>
                 </div>
+                <div class="card-body pb-0">
+                    <ul class="p-0 m-0">
+                        <li class="d-flex align-items-center mb-5">
+                            <div class="me-4">
+                                <span class="badge bg-label-primary rounded p-1_5"><i
+                                        class="icon-base ti tabler-chart-pie-2 icon-md"></i></span>
+                            </div>
+                            <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                                <div class="me-2">
+                                    <h6 class="mb-0">Net Profit</h6>
+                                    <small class="text-body">12.4k Sales</small>
+                                </div>
+                                <div class="user-progress d-flex align-items-center gap-4">
+                                    <small>$1,619</small>
+                                    <div class="d-flex align-items-center gap-1">
+                                        <i class="icon-base ti tabler-chevron-up text-success"></i>
+                                        <small class="text-body-secondary">18.6%</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="d-flex align-items-center mb-5">
+                            <div class="me-4">
+                                <span class="badge bg-label-success rounded p-1_5"><i
+                                        class="icon-base ti tabler-currency-dollar icon-md"></i></span>
+                            </div>
+                            <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                                <div class="me-2">
+                                    <h6 class="mb-0">Total Income</h6>
+                                    <small class="text-body">Sales, Affiliation</small>
+                                </div>
+                                <div class="user-progress d-flex align-items-center gap-4">
+                                    <small>$3,571</small>
+                                    <div class="d-flex align-items-center gap-1">
+                                        <i class="icon-base ti tabler-chevron-up text-success"></i>
+                                        <small class="text-body-secondary">39.6%</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="d-flex align-items-center mb-5">
+                            <div class="me-4">
+                                <span class="badge bg-label-secondary text-body rounded p-1_5"><i
+                                        class="icon-base ti tabler-credit-card icon-md"></i></span>
+                            </div>
+                            <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                                <div class="me-2">
+                                    <h6 class="mb-0">Total Expenses</h6>
+                                    <small class="text-body">ADVT, Marketing</small>
+                                </div>
+                                <div class="user-progress d-flex align-items-center gap-4">
+                                    <small>$430</small>
+                                    <div class="d-flex align-items-center gap-1">
+                                        <i class="icon-base ti tabler-chevron-up text-success"></i>
+                                        <small class="text-body-secondary">52.8%</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div id="reportBarChart"></div>
+                </div>
+            </div>
+        </div>
 
 
         <!-- Average Daily Sales -->
@@ -291,7 +348,7 @@
         </div>
         <!--/ Sales Overview -->
 
-  
+
     </div>
 </div>
 @endsection

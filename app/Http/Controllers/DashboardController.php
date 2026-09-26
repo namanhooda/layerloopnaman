@@ -12,34 +12,53 @@ use Illuminate\Http\Request;
 class DashboardController extends Controller
 {
     public function dashboard(Request $request, GoogleAnalyticsService $analytics)
-    {
-        $order   = Order::query();
-        $product = Product::query();
-        $user    = User::query();
+{
+    $order   = Order::query();
+    $product = Product::query();
+    $user    = User::query();
 
+    // Selected month
+    $selectedMonth = $request->month;
 
-        $totalSaleThisMonth = (clone $order)
-            ->whereBetween('created_at', [
-                now()->startOfMonth(),
-                now()->endOfMonth()
-            ])->where('status','delivered')
-            ->sum('total');
-
-        $arrayData = [
-            'totalsalethismonth' => $totalSaleThisMonth,
-            'totalOrders'        => (clone $order)->count(),
-            'totalUsers'         => (clone $user)->count(),
-            'totalProduct'       => (clone $product)->count(),
-            'totalSale'          => (clone $order)->where('status','delivered')->sum('total'),
-        ];
-
-        
-        $report = collect($analytics->getReport())
-            ->sortByDesc(function ($row) {
-                return $row->getDimensionValues()[0]->getValue(); // date
-            })->values();
-
-        return view('dashboard', compact('report', 'arrayData'));
+    if ($selectedMonth) {
+        // Selected month: 1st day to last day of selected month
+        $monthStart = now()->setMonth((int) $selectedMonth)->startOfMonth();
+        $monthEnd   = now()->setMonth((int) $selectedMonth)->endOfMonth();
+    } else {
+        // No month selected: Current month
+        $monthStart = now()->startOfMonth();
+        $monthEnd   = now()->endOfMonth();
     }
+
+    $totalSaleThisMonth = (clone $order)
+        ->whereBetween('created_at', [
+            $monthStart,
+            $monthEnd
+        ])
+        ->where('status', 'delivered')
+        ->sum('total');
+
+    $arrayData = [
+        'totalsalethismonth' => $totalSaleThisMonth,
+        'totalOrders'        => (clone $order)->count(),
+        'totalUsers'         => (clone $user)->count(),
+        'totalProduct'       => (clone $product)->count(),
+        'totalSale'          => (clone $order)
+            ->where('status', 'delivered')
+            ->sum('total'),
+    ];
+
+    $report = collect($analytics->getReport())
+        ->sortByDesc(function ($row) {
+            return $row->getDimensionValues()[0]->getValue();
+        })
+        ->values();
+
+    return view('dashboard', compact(
+        'report',
+        'arrayData',
+        'selectedMonth'
+    ));
+}
 
 }

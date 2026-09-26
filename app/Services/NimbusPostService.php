@@ -28,7 +28,7 @@ class NimbusPostService
     public static function fetchNimbusOrders(array $params = [])
 {
     // Increase execution time for this long-running process
-    set_time_limit(300); // 5 minutes
+    set_time_limit(600); // 5 minutes
 
     DB::beginTransaction();
 
