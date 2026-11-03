@@ -84,15 +84,15 @@
 
     /* Default desktop images */
     .slide-1 {
-        background-image: url('storage/banners/krishna.webp');
+        background-image: url('storage/banners/krishna.png');
     }
 
     .slide-2 {
-        background-image: url('storage/banners/shiv.webp');
+        background-image: url('storage/banners/shiv.png');
     }
 
     .slide-3 {
-        background-image: url('storage/banners/anime.webp');
+        background-image: url('storage/banners/anime.png');
     }
 
     .intro-slide {
@@ -103,15 +103,15 @@
     /* Mobile override */
     @media (max-width: 768px) {
         .slide-1 {
-            background-image: url('storage/banners/krishna.webp');
+            background-image: url('storage/banners/krishna.png');
         }
 
         .slide-2 {
-            background-image: url('storage/banners/shiv.webp');
+            background-image: url('storage/banners/shiv.png');
         }
 
         .slide-3 {
-            background-image: url('storage/banners/anime.webp');
+            background-image: url('storage/banners/anime.png');
         }
     }
 
