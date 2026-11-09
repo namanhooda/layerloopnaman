@@ -13,6 +13,10 @@ class DashboardController extends Controller
 {
     public function dashboard(Request $request, GoogleAnalyticsService $analytics)
 {
+    $latestOrders = Order::with('user')->where('shipment_from', 'website')
+        ->latest()
+        ->take(5)
+        ->get();
     $order   = Order::query();
     $product = Product::query();
     $user    = User::query();
@@ -57,7 +61,8 @@ class DashboardController extends Controller
     return view('dashboard', compact(
         'report',
         'arrayData',
-        'selectedMonth'
+        'selectedMonth',
+        'latestOrders'
     ));
 }
 

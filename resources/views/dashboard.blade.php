@@ -200,7 +200,7 @@
             <div class="card h-100">
                 <div class="card-header d-flex justify-content-between">
                     <div class="card-title mb-0">
-                        <h5 class="mb-1">Earning Reports</h5>
+                        <h5 class="mb-1">Latest Website Orders</h5>
                         <p class="card-subtitle">Earnings Overview</p>
                     </div>
                     <div class="dropdown">
@@ -218,6 +218,7 @@
                 </div>
                 <div class="card-body pb-0">
                     <ul class="p-0 m-0">
+                        @foreach($latestOrders as $order)
                         <li class="d-flex align-items-center mb-5">
                             <div class="me-4">
                                 <span class="badge bg-label-primary rounded p-1_5"><i
@@ -225,18 +226,18 @@
                             </div>
                             <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                                 <div class="me-2">
-                                    <h6 class="mb-0">Net Profit</h6>
-                                    <small class="text-body">12.4k Sales</small>
+                                    <h6 class="mb-0"><a href="{{route('admin.orders.show', $order->id)}}">{{$order->order_code}}</a></h6>
+                                    <small class="text-body">{{$order->user->name ?? 'unknown'}}</small>
                                 </div>
                                 <div class="user-progress d-flex align-items-center gap-4">
-                                    <small>$1,619</small>
+                                    <small>{{$order->total}}</small>
                                     <div class="d-flex align-items-center gap-1">
-                                        <i class="icon-base ti tabler-chevron-up text-success"></i>
-                                        <small class="text-body-secondary">18.6%</small>
+                                        <small class="text-body-secondary">{{ $order->created_at->diffForHumans() }}</small>
                                     </div>
                                 </div>
                             </div>
                         </li>
+                        @endforeach
                         <li class="d-flex align-items-center mb-5">
                             <div class="me-4">
                                 <span class="badge bg-label-success rounded p-1_5"><i
