@@ -6,6 +6,8 @@ use App\Services\GoogleAnalyticsService;
 use App\Models\Product;
 use App\Models\Order;
 use App\Models\User;
+use DB;
+use App\Models\Cart;
 
 use Illuminate\Http\Request;
 
@@ -13,6 +15,18 @@ class DashboardController extends Controller
 {
     public function dashboard(Request $request, GoogleAnalyticsService $analytics)
 {
+    $cartProducts = DB::table('carts')
+    ->select('product_id')
+    ->selectRaw("
+        COUNT(DISTINCT COALESCE(
+            CONCAT('user:', user_id),
+            CONCAT('guest:', system_id)
+        )) as total_users
+    ")
+    ->groupBy('product_id')
+    ->orderByDesc('total_users')
+        ->take(5)
+    ->get();
     $latestOrders = Order::with('user')->where('shipment_from', 'website')
         ->latest()
         ->take(5)
@@ -62,7 +76,8 @@ class DashboardController extends Controller
         'report',
         'arrayData',
         'selectedMonth',
-        'latestOrders'
+        'latestOrders',
+        'cartProducts'
     ));
 }
 

@@ -1,5 +1,7 @@
 @extends('admin.partial.app')
 @section('content')
+
+    <link rel="stylesheet" href="{{asset('backend/assets/vendor/libs/apex-charts/apex-charts.css')}}" />
 <div class="container-xxl flex-grow-1 container-p-y">
     <div class="row g-6">
 
@@ -12,65 +14,75 @@
 
                             </h5>
                             <div class="d-flex align-items-center justify-content-between ">
-    <p class="mb-0">Total Sale &nbsp;</p>
+                                <p class="mb-0">Total Sale &nbsp;</p>
 
-    <form method="GET" action="{{ url()->current() }}" class="mb-0">
-        <select name="month"
-                id="month"
-                onchange="this.form.submit()"
-                class="form-select" style="width: 162%; line-height: 1;">
+                                <form method="GET" action="{{ url()->current() }}" class="mb-0">
+                                    <select name="month" id="month" onchange="this.form.submit()" class="form-select"
+                                        style="width: 162%; line-height: 1;">
 
-            <option value="01" {{ request('month', now()->format('m')) == '01' ? 'selected' : '' }}>
-                January
-            </option>
+                                        <option value="01"
+                                            {{ request('month', now()->format('m')) == '01' ? 'selected' : '' }}>
+                                            January
+                                        </option>
 
-            <option value="02" {{ request('month', now()->format('m')) == '02' ? 'selected' : '' }}>
-                February
-            </option>
+                                        <option value="02"
+                                            {{ request('month', now()->format('m')) == '02' ? 'selected' : '' }}>
+                                            February
+                                        </option>
 
-            <option value="03" {{ request('month', now()->format('m')) == '03' ? 'selected' : '' }}>
-                March
-            </option>
+                                        <option value="03"
+                                            {{ request('month', now()->format('m')) == '03' ? 'selected' : '' }}>
+                                            March
+                                        </option>
 
-            <option value="04" {{ request('month', now()->format('m')) == '04' ? 'selected' : '' }}>
-                April
-            </option>
+                                        <option value="04"
+                                            {{ request('month', now()->format('m')) == '04' ? 'selected' : '' }}>
+                                            April
+                                        </option>
 
-            <option value="05" {{ request('month', now()->format('m')) == '05' ? 'selected' : '' }}>
-                May
-            </option>
+                                        <option value="05"
+                                            {{ request('month', now()->format('m')) == '05' ? 'selected' : '' }}>
+                                            May
+                                        </option>
 
-            <option value="06" {{ request('month', now()->format('m')) == '06' ? 'selected' : '' }}>
-                June
-            </option>
+                                        <option value="06"
+                                            {{ request('month', now()->format('m')) == '06' ? 'selected' : '' }}>
+                                            June
+                                        </option>
 
-            <option value="07" {{ request('month', now()->format('m')) == '07' ? 'selected' : '' }}>
-                July
-            </option>
+                                        <option value="07"
+                                            {{ request('month', now()->format('m')) == '07' ? 'selected' : '' }}>
+                                            July
+                                        </option>
 
-            <option value="08" {{ request('month', now()->format('m')) == '08' ? 'selected' : '' }}>
-                August
-            </option>
+                                        <option value="08"
+                                            {{ request('month', now()->format('m')) == '08' ? 'selected' : '' }}>
+                                            August
+                                        </option>
 
-            <option value="09" {{ request('month', now()->format('m')) == '09' ? 'selected' : '' }}>
-                September
-            </option>
+                                        <option value="09"
+                                            {{ request('month', now()->format('m')) == '09' ? 'selected' : '' }}>
+                                            September
+                                        </option>
 
-            <option value="10" {{ request('month', now()->format('m')) == '10' ? 'selected' : '' }}>
-                October
-            </option>
+                                        <option value="10"
+                                            {{ request('month', now()->format('m')) == '10' ? 'selected' : '' }}>
+                                            October
+                                        </option>
 
-            <option value="11" {{ request('month', now()->format('m')) == '11' ? 'selected' : '' }}>
-                November
-            </option>
+                                        <option value="11"
+                                            {{ request('month', now()->format('m')) == '11' ? 'selected' : '' }}>
+                                            November
+                                        </option>
 
-            <option value="12" {{ request('month', now()->format('m')) == '12' ? 'selected' : '' }}>
-                December
-            </option>
+                                        <option value="12"
+                                            {{ request('month', now()->format('m')) == '12' ? 'selected' : '' }}>
+                                            December
+                                        </option>
 
-        </select>
-    </form>
-</div>
+                                    </select>
+                                </form>
+                            </div>
                             <h4 class="text-primary mb-1">₹{{$arrayData['totalsalethismonth']}}</h4>
                             <a href="javascript:;" class="btn btn-primary">View Sales</a>
                         </div>
@@ -153,7 +165,66 @@
             </div>
         </div>
 
-        <!-- Website Analytics -->
+        <!-- Website Analytics --><div class="col-xxl-4 col-12">
+                  <div class="row g-6">
+                    <!-- Profit last month -->
+                    <div class="col-xl-6 col-sm-6">
+                      <div class="card h-100">
+                        <div class="card-header pb-0">
+                          <h5 class="card-title mb-1">Profit</h5>
+                          <p class="card-subtitle">Last Month</p>
+                        </div>
+                        <div class="card-body">
+                          <div id="profitLastMonth"></div>
+                          <div class="d-flex justify-content-between align-items-center mt-3 gap-3">
+                            <h4 class="mb-0">624k</h4>
+                            <small class="text-success">+8.24%</small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!--/ Profit last month -->
+
+                    <!-- Expenses -->
+                    <div class="col-xl-6 col-sm-6">
+                      <div class="card h-100">
+                        <div class="card-header pb-2">
+                          <h5 class="card-title mb-1">82.5k</h5>
+                          <p class="card-subtitle">Expenses</p>
+                        </div>
+                        <div class="card-body">
+                          <div id="expensesChart"></div>
+                          <div class="mt-3 text-center">
+                            <small class="text-body-secondary mt-3">$21k Expenses more than last month</small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!--/ Expenses -->
+
+                    <!-- Generated Leads -->
+                    <div class="col-xl-12">
+                      <div class="card h-100">
+                        <div class="card-body d-flex justify-content-between">
+                          <div class="d-flex flex-column">
+                            <div class="card-title mb-auto">
+                              <h5 class="mb-0 text-nowrap">Generated Leads</h5>
+                              <p class="mb-0">Monthly Report</p>
+                            </div>
+                            <div class="chart-statistics">
+                              <h3 class="card-title mb-0">4,350</h3>
+                              <p class="text-success text-nowrap mb-0">
+                                <i class="icon-base ti tabler-chevron-up me-1"></i> 15.8%
+                              </p>
+                            </div>
+                          </div>
+                          <div id="generatedLeadsChart"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <!--/ Generated Leads -->
+                  </div>
+                </div>
         <div class="col-xl-8 col">
             <div class="swiper-container swiper-container-horizontal swiper swiper-card-advance-bg"
                 id="swiper-with-pagination-cards">
@@ -226,56 +297,120 @@
                             </div>
                             <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                                 <div class="me-2">
-                                    <h6 class="mb-0"><a href="{{route('admin.orders.show', $order->id)}}">{{$order->order_code}}</a></h6>
+                                    <h6 class="mb-0"><a
+                                            href="{{route('admin.orders.show', $order->id)}}">{{$order->order_code}}</a>
+                                    </h6>
                                     <small class="text-body">{{$order->user->name ?? 'unknown'}}</small>
                                 </div>
                                 <div class="user-progress d-flex align-items-center gap-4">
                                     <small>{{$order->total}}</small>
                                     <div class="d-flex align-items-center gap-1">
-                                        <small class="text-body-secondary">{{ $order->created_at->diffForHumans() }}</small>
+                                        <small
+                                            class="text-body-secondary">{{ $order->created_at->diffForHumans() }}</small>
                                     </div>
                                 </div>
                             </div>
                         </li>
                         @endforeach
+                    </ul>
+                    <div id="reportBarChart"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xxl-4 col-md-6">
+            <div class="card h-100">
+                <div class="card-header d-flex justify-content-between">
+                    <div class="card-title mb-0">
+                        <h5 class="mb-1">Popular Products</h5>
+                        <p class="card-subtitle">Earnings Overview</p>
+                    </div>
+                    <div class="dropdown">
+                        <button class="btn btn-text-secondary rounded-pill text-body-secondary border-0 p-2 me-n1"
+                            type="button" id="earningReports" data-bs-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            <i class="icon-base ti tabler-dots-vertical icon-md text-body-secondary"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="earningReports">
+                            <a class="dropdown-item" href="javascript:void(0);">Download</a>
+                            <a class="dropdown-item" href="javascript:void(0);">Refresh</a>
+                            <a class="dropdown-item" href="javascript:void(0);">Share</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body pb-0">
+                    <ul class="p-0 m-0">
+                        @foreach($latestOrders as $order)
                         <li class="d-flex align-items-center mb-5">
                             <div class="me-4">
-                                <span class="badge bg-label-success rounded p-1_5"><i
-                                        class="icon-base ti tabler-currency-dollar icon-md"></i></span>
+                                <span class="badge bg-label-primary rounded p-1_5"><i
+                                        class="icon-base ti tabler-chart-pie-2 icon-md"></i></span>
                             </div>
                             <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                                 <div class="me-2">
-                                    <h6 class="mb-0">Total Income</h6>
-                                    <small class="text-body">Sales, Affiliation</small>
+                                    <h6 class="mb-0"><a
+                                            href="{{route('admin.orders.show', $order->id)}}">{{$order->order_code}}</a>
+                                    </h6>
+                                    <small class="text-body">{{$order->user->name ?? 'unknown'}}</small>
                                 </div>
                                 <div class="user-progress d-flex align-items-center gap-4">
-                                    <small>$3,571</small>
+                                    <small>{{$order->total}}</small>
                                     <div class="d-flex align-items-center gap-1">
-                                        <i class="icon-base ti tabler-chevron-up text-success"></i>
-                                        <small class="text-body-secondary">39.6%</small>
+                                        <small
+                                            class="text-body-secondary">{{ $order->created_at->diffForHumans() }}</small>
                                     </div>
                                 </div>
                             </div>
                         </li>
+                        @endforeach
+                    </ul>
+                    <div id="reportBarChart"></div>
+                </div>
+            </div>
+        </div><div class="col-xxl-4 col-md-6">
+            <div class="card h-100">
+                <div class="card-header d-flex justify-content-between">
+                    <div class="card-title mb-0">
+                        <h5 class="mb-1">Latest Website Orders</h5>
+                        <p class="card-subtitle">Earnings Overview</p>
+                    </div>
+                    <div class="dropdown">
+                        <button class="btn btn-text-secondary rounded-pill text-body-secondary border-0 p-2 me-n1"
+                            type="button" id="earningReports" data-bs-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            <i class="icon-base ti tabler-dots-vertical icon-md text-body-secondary"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="earningReports">
+                            <a class="dropdown-item" href="javascript:void(0);">Download</a>
+                            <a class="dropdown-item" href="javascript:void(0);">Refresh</a>
+                            <a class="dropdown-item" href="javascript:void(0);">Share</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body pb-0">
+                    <ul class="p-0 m-0">
+                        @foreach($latestOrders as $order)
                         <li class="d-flex align-items-center mb-5">
                             <div class="me-4">
-                                <span class="badge bg-label-secondary text-body rounded p-1_5"><i
-                                        class="icon-base ti tabler-credit-card icon-md"></i></span>
+                                <span class="badge bg-label-primary rounded p-1_5"><i
+                                        class="icon-base ti tabler-chart-pie-2 icon-md"></i></span>
                             </div>
                             <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                                 <div class="me-2">
-                                    <h6 class="mb-0">Total Expenses</h6>
-                                    <small class="text-body">ADVT, Marketing</small>
+                                    <h6 class="mb-0"><a
+                                            href="{{route('admin.orders.show', $order->id)}}">{{$order->order_code}}</a>
+                                    </h6>
+                                    <small class="text-body">{{$order->user->name ?? 'unknown'}}</small>
                                 </div>
                                 <div class="user-progress d-flex align-items-center gap-4">
-                                    <small>$430</small>
+                                    <small>{{$order->total}}</small>
                                     <div class="d-flex align-items-center gap-1">
-                                        <i class="icon-base ti tabler-chevron-up text-success"></i>
-                                        <small class="text-body-secondary">52.8%</small>
+                                        <small
+                                            class="text-body-secondary">{{ $order->created_at->diffForHumans() }}</small>
                                     </div>
                                 </div>
                             </div>
                         </li>
+                        @endforeach
                     </ul>
                     <div id="reportBarChart"></div>
                 </div>
@@ -352,4 +487,11 @@
 
     </div>
 </div>
+    <script src="{{asset('backend/assets/vendor/libs/apex-charts/apexcharts.js')}}"></script>
+    <script src="{{asset('backend/assets/vendor/libs/swiper/swiper.js')}}"></script>
+
+    <script src="asset('backend/assets/js/app-ecommerce-dashboard.js')}}"></script>
+
+    <script src="asset('backend/assets/vendor/libs/apex-charts/apexcharts.js')}}"></script>
+    <script src="asset('backend/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js')}}"></script>
 @endsection

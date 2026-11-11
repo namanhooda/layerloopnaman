@@ -283,26 +283,27 @@
     @endif -->
     <!-- Plugins JS File -->
 
-{{-- Core JS --}}
-<script src="{{ asset('frontend/assets/js/jquery.min.js') }}" defer></script>
-<script src="{{ asset('frontend/assets/js/bootstrap.bundle.min.js') }}" defer></script>
+    <script src="{{asset('frontend/assets/js/jquery.min.js')}}"></script>
+    <script src="{{asset('frontend/assets/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{asset('frontend/assets/js/jquery.hoverIntent.min.js')}}"></script>
+    <script src="{{asset('frontend/assets/js/jquery.waypoints.min.js')}}"></script>
+    <script src="{{asset('frontend/assets/js/superfish.min.js')}}"></script>
+    <script src="{{asset('frontend/assets/js/owl.carousel.min.js')}}"></script>
+    <script src="{{asset('frontend/assets/js/jquery.plugin.min.js')}}"></script>
+    <script src="{{asset('frontend/assets/js/jquery.magnific-popup.min.js')}}"></script>
+    <script src="{{asset('frontend/assets/js/jquery.countdown.min.js')}}"></script>
+    <!-- Main JS File -->
+    <script src="{{asset('frontend/assets/js/main.js')}}"></script>
+    <script src="{{asset('frontend/assets/js/demos/demo-2.js')}}"></script>
 
-{{-- Plugins --}}
-<script src="{{ asset('frontend/assets/js/jquery.hoverIntent.min.js') }}" defer></script>
-<script src="{{ asset('frontend/assets/js/jquery.waypoints.min.js') }}" defer></script>
-<script src="{{ asset('frontend/assets/js/superfish.min.js') }}" defer></script>
-<script src="{{ asset('frontend/assets/js/owl.carousel.min.js') }}" defer></script>
-<script src="{{ asset('frontend/assets/js/jquery.plugin.min.js') }}" defer></script>
-<script src="{{ asset('frontend/assets/js/jquery.magnific-popup.min.js') }}" defer></script>
-<script src="{{ asset('frontend/assets/js/jquery.countdown.min.js') }}" defer></script>
 
-{{-- Main JS --}}
-<script src="{{ asset('frontend/assets/js/main.js') }}" defer></script>
-<script src="{{ asset('frontend/assets/js/demos/demo-2.js') }}" defer></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-{{-- Notifications --}}
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://checkout-ui.shiprocket.com/assets/js/channels/shopify.js"></script>
+
 <script>
     document.addEventListener("DOMContentLoaded", function () {
 
@@ -378,7 +379,7 @@ const input = document.getElementById('product-search');
 const overlay = document.getElementById('search-overlay');
 const suggestionsBox = document.getElementById('search-suggestions');
 const productsBox = document.getElementById('search-products');
-if (input) {
+
 input.addEventListener('focus', () => {
     overlay.classList.remove('d-none');
 });
@@ -415,8 +416,6 @@ input.addEventListener('keyup', function () {
             });
         });
 });
-}
-
 </script>
 
 <script>
@@ -601,6 +600,7 @@ document.querySelectorAll(".add-to-wishlist").forEach(button => {
 
 @stack('scripts')
 
+<script src="https://checkout-ui.shiprocket.com/assets/js/channels/shopify.js"></script>
 </body>
 
 
