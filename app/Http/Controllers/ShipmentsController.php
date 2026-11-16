@@ -20,6 +20,7 @@ class ShipmentsController extends Controller
 
     public function fetchShipmentsNimbus(Order $order)
     {
+        dd('nmn');
         $fromDate = now()->subDays(10)->format('Y-m-d');
         $toDate   = now()->format('Y-m-d');
 
