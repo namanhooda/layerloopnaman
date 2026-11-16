@@ -20,6 +20,7 @@ use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\Tags\Url;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\CustomAuthenticatedSessionController;
+use App\Http\Controllers\Admin\ExpenseController;
 
 
 ////////////////////////////  Shiprocket Product Sync  ////////////////////////////
@@ -210,6 +211,9 @@ Route::middleware(['role:Admin'])->group(function () {
             Route::resource('coupons', CouponController::class);
             Route::resource('newsletters', NewsLetterController::class);
             Route::resource('banner', App\Http\Controllers\Admin\BannerController::class);
+
+            Route::resource('expenses', ExpenseController::class)
+    ->names('expenses');
 
             Route::get('variant/{id}', [App\Http\Controllers\Admin\ProductController::class, 'variantCreate'])->name('products.variant');
 

@@ -27,6 +27,7 @@ class NimbusPostService
 
     public static function fetchNimbusOrders(array $params = [])
 {
+
     // Increase execution time for this long-running process
     set_time_limit(600); // 5 minutes
 
@@ -34,11 +35,22 @@ class NimbusPostService
 
     try {
 
-        $shipments = Http::withHeaders(self::getHeaders())
-            ->timeout(60)
-            ->get('https://ship.nimbuspost.com/api/shipments', $params);
+     $shipments = Http::withHeaders([
+        'NP-API-KEY' => env('NIMBUS_API_KEY'),
+        'Accept' => 'application/json',
+        'Accept-Encoding' => 'identity',
+    ])
+    ->withOptions([
+        'connect_timeout' => 30,
+        'timeout' => 120,
+        'decode_content' => false,
+        'verify' => true,
+    ])
+    ->get('https://ship.nimbuspost.com/api/orders', $params);
+    
+       
 
-        $dataShipments = $shipments->json();
+        $dataShipments = $shipments->json(); 
 
         // Safety check 
         if (!isset($dataShipments['data'])) {
@@ -161,6 +173,7 @@ class NimbusPostService
         return "success";
 
     } catch (\Throwable $e) {
+        dd($e);
 
         DB::rollBack();
 

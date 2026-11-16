@@ -59,6 +59,13 @@
             </a>
         </li>
 
+        <!-- Profile -->
+        <li class="menu-item  {{ request()->routeIs('admin.expenses.index') ? 'active' : '' }}">
+            <a href="{{ route('admin.expenses.index') }}" class="menu-link">
+                <i class="menu-icon icon-base ti tabler-user"></i>
+                <div data-i18n="Expense List">Expense List</div>
+            </a>
+        </li>
         <!-- Users -->
 
         <!-- Roles & Permissions -->
