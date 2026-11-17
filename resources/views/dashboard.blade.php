@@ -212,7 +212,7 @@
                               <p class="mb-0">Monthly Report</p>
                             </div>
                             <div class="chart-statistics">
-                              <h3 class="card-title mb-0">4,350</h3>
+                              <h3 class="card-title mb-0">{{ $analyticsReport['activeUsers'] }}</h3>
                               <p class="text-success text-nowrap mb-0">
                                 <i class="icon-base ti tabler-chevron-up me-1"></i> 15.8%
                               </p>

@@ -217,12 +217,21 @@ if ($validator->fails()) {
     {
         $order = Order::with('itemsData')->findOrFail($id);
         $response = \App\Services\NimbusPostService::createOrder($order);
-        if($response['message'] === 'Order already exists in NimbusPost') {
-            return redirect()->back()->with('error', 'Order already exists in NimbusPost');
-        }else{
-            
-            return redirect()->back()->with('success', 'Order created in NimbusPost successfully');
-        }
+        if (!isset($response['success']) || $response['success'] === false) {
+
+    return redirect()->back()
+        ->with('error', $response['message'] ?? 'Something went wrong.');
+
+} elseif ($response['success'] === true) {
+
+    return redirect()->back()
+        ->with('success', $response['message'] ?? 'Order created in NimbusPost successfully.');
+
+} else {
+
+    return redirect()->back()
+        ->with('error', 'Something went wrong.');
+}
 
     }
   

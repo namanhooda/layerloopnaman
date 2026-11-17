@@ -72,12 +72,24 @@ class DashboardController extends Controller
         })
         ->values();
 
+ $request->validate([
+        'month' => 'nullable|date_format:Y-m',
+    ]);
+
+    $analyticsReport = $analytics->getReporttotsl(
+        $request->month
+    );
+
+
+
+
     return view('dashboard', compact(
         'report',
         'arrayData',
         'selectedMonth',
         'latestOrders',
-        'cartProducts'
+        'cartProducts',
+        'analyticsReport'
     ));
 }
 

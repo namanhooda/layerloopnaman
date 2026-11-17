@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Google\Client;
 use Google\Service\AnalyticsData;
+use Carbon\Carbon;
 
 class GoogleAnalyticsService
 {
@@ -42,4 +43,46 @@ class GoogleAnalyticsService
 
         return $response->getRows();
     }
+
+    public function getReporttotsl($month = null)
+{
+    $propertyId = '502257525';
+
+    // Default: Current month
+    $selectedMonth = $month
+        ? Carbon::createFromFormat('Y-m', $month)
+        : Carbon::now();
+
+    $startDate = $selectedMonth->copy()->startOfMonth()->format('Y-m-d');
+    $endDate = $selectedMonth->copy()->endOfMonth()->format('Y-m-d');
+
+    // Google Analytics request
+    $request = new \Google\Service\AnalyticsData\RunReportRequest([
+        'metrics' => [
+            ['name' => 'activeUsers'],
+            ['name' => 'screenPageViews'],
+            ['name' => 'sessions'],
+        ],
+        'dateRanges' => [
+            [
+                'startDate' => $startDate,
+                'endDate'   => $endDate,
+            ]
+        ]
+    ]);
+
+    $response = $this->analytics->properties->runReport(
+        "properties/{$propertyId}",
+        $request
+    );
+
+    $row = $response->getRows()[0] ?? null;
+
+    return [
+        'month' => $selectedMonth->format('F Y'),
+        'activeUsers' => (int) ($row?->getMetricValues()[0]->getValue() ?? 0),
+        'pageViews' => (int) ($row?->getMetricValues()[1]->getValue() ?? 0),
+        'visits' => (int) ($row?->getMetricValues()[2]->getValue() ?? 0),
+    ];
+}
 }

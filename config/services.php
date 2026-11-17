@@ -43,6 +43,10 @@ return [
         'secret' => env('SHIPROCKET_SECRET'),
         'base' => env('SHIPROCKET_BASE_URL'),
     ],
+    'nimbuspost' => [
+    'api_key' => env('NIMBUSPOST_API_KEY'),
+    'api_secret' => env('NIMBUSPOST_API_SECRET'),
+],
     'shiprocket_checkout' => [
     'key' => env('SHIPROCKET_CHECKOUT_KEY'),
     'secret' => env('SHIPROCKET_CHECKOUT_SECRET'),

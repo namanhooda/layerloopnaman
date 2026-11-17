@@ -58,6 +58,12 @@
                 <div data-i18n="Order List">Order List</div>
             </a>
         </li>
+        <li class="menu-item  {{ request()->routeIs('admin.invoices.index') ? 'active' : '' }}">
+            <a href="{{ route('admin.invoices.index') }}" class="menu-link">
+                <i class="menu-icon icon-base ti tabler-user"></i>
+                <div data-i18n="Invoice List">Invoice List</div>
+            </a>
+        </li>
 
         <!-- Profile -->
         <li class="menu-item  {{ request()->routeIs('admin.expenses.index') ? 'active' : '' }}">

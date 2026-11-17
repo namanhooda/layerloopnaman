@@ -212,6 +212,9 @@ Route::middleware(['role:Admin'])->group(function () {
             Route::resource('newsletters', NewsLetterController::class);
             Route::resource('banner', App\Http\Controllers\Admin\BannerController::class);
 
+
+            Route::resource('invoices', InvoiceController::class);
+
             Route::resource('expenses', ExpenseController::class)
     ->names('expenses');
 
