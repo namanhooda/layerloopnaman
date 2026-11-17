@@ -47,6 +47,8 @@ class NimbusPostService
         'verify' => true,
     ])
     ->get('https://ship.nimbuspost.com/api/orders', $params);
+
+    // dd($shipments->json());
     
        
 
@@ -62,11 +64,11 @@ class NimbusPostService
         $toDate   = Carbon::now()->endOfDay();
 
         $filtered = collect($dataShipments['data'])->filter(function ($shipment) use ($fromDate, $toDate) {
-            if (!isset($shipment['created'])) {
+            if (!isset($shipment['order_date'])) {
                 return false;
             }
 
-            $createdDate = Carbon::parse($shipment['created']);
+            $createdDate = Carbon::parse($shipment['order_date']);
 
             return $createdDate->between($fromDate, $toDate);
         })->values();
@@ -75,14 +77,32 @@ class NimbusPostService
 
             $code = 'LLORD' . str_pad(mt_rand(0, 999999), 6, '0', STR_PAD_LEFT);
 
-            $orderId = $shipmentOrder['order_id'];
+            $orderId = $shipmentOrder['order_number'];
+            $shipOrder = $shipmentOrder;
 
-            $responseOrder = Http::withHeaders(self::getHeaders())
-                ->timeout(60)
-                ->get("https://ship.nimbuspost.com/api/orders/{$orderId}");
 
-            $getorder = $responseOrder->json();
-            $shipOrder = $getorder['data'];
+            $orderId = $shipmentOrder['id'];
+
+            $response = Http::withHeaders([
+                'x-api-key'    => 'npk_ed948cfe7b72394f',
+                'x-api-secret' => 'tiQVpBDnc6xUg2FsL1G-gBDqdmuV6L96',
+                'Accept'       => 'application/json',
+            ])
+            ->timeout(60)
+            ->get("https://api-v2.nimbuspost.com/v2/orders/{$orderId}");
+
+            if ($response->successful()) {
+                $orderdetail = $response->json();
+                $orderdatadetail = $orderdetail['data'] ?? null;
+
+                $status = $orderdatadetail['order_status'] ?? $shipmentOrder['status'];
+
+            } else {
+                $status = $shipmentOrder['status'];
+            }
+
+
+
 
             $order = Order::where('order_code', $shipOrder['order_number'])->first();
 
@@ -142,14 +162,14 @@ class NimbusPostService
             );
 
             // Store or update order (NO DUPLICATES)
-            Order::updateOrCreate(
+            $order =Order::updateOrCreate(
                 [
                     'shipment_id' => $shipmentId,
                 ],
                 [
                     'order_code'        => $orderCode,
                     'shipment_order_id' => $shipOrder['order_number'],
-                    'status'            => $shipmentOrder['status'],
+                    'status'            => $status,
                     'payment_mod'       => $shipOrder['payment_method'],
                     'total'             => $shipOrder['order_amount'],
                     'created_at'        => Carbon::parse($shipOrder['order_date'])
@@ -166,6 +186,7 @@ class NimbusPostService
                     'shipment_from'     => 'NimbusPost',
                 ]
             );
+        
         }
 
         DB::commit();
