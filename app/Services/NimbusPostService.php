@@ -317,6 +317,162 @@ public static function createB2COrder(Order $order): array
 
 public static function createOrder(Order $order): array
 {
+
+
+
+
+
+
+            $orderId = $order->shipment_id;
+
+
+            $responseorder = Http::withHeaders([
+                'x-api-key'    => 'npk_ed948cfe7b72394f',
+                'x-api-secret' => 'tiQVpBDnc6xUg2FsL1G-gBDqdmuV6L96',
+                'Accept'       => 'application/json',
+            ])
+            ->timeout(60)
+            ->get("https://api-v2.nimbuspost.com/v2/orders/$orderId");
+
+            $existingOrder = $responseorder->json('data', null);
+
+
+             $order->update([
+                    'shipment_id'       => $existingOrder['order_id'] ?? null,
+                    'status'            => $existingOrder['status'] ?? $order->status,
+                    'shipment_order_id' => $existingOrder['order_number'] ?? $order->order_code,
+                ]);
+
+
+            
+
+
+if ($existingOrder && strtolower($existingOrder['order_status']) !== 'cancelled') {
+    return [
+        'success' => true,
+        'message' => 'Order already exists in NimbusPost',
+        'data' => $existingOrder,
+    ];
+}
+
+$paymentMode = strtolower($order->payment_mod ?? 'prepaid');
+
+    $isPartialPaid = $paymentMode === 'partial_paid';
+
+    $isCod = in_array($paymentMode, [
+        'cod',
+        'partial_paid',
+        'cash_on_delivery',
+    ]);
+
+    $orderAmount = $isPartialPaid
+        ? ((float) $order->total - ((float) $order->total * 0.30))
+        : (float) ($order->total ?? 0);
+
+    // 3. Customer address
+    $address = $order->address;
+
+    if (!$address) {
+        dd('Customer shipping address not found for order: ' . $order->order_code);
+    }
+
+    // 4. Prepare order items
+    $items = $order->itemsData->map(function ($item) {
+
+        return [
+            'name'            => $item->product->name ?? 'Layerloop Product',
+            'qty'             => (int) ($item->quantity ?? 1),
+            'price'           => (float) ($item->price ?? 0),
+            'sku'             => $item->sku ?? '',
+            'hsn'             => $item->hsn ?? '',
+            'tax_rate'        => (float) ($item->tax_rate ?? 0),
+            'discount_amount' => (float) ($item->discount ?? 0),
+        ];
+
+    })->values()->toArray();
+
+    if (empty($items)) {
+        dd('No products found for order: ' . $order->order_code);
+    }
+
+    // 5. Warehouse ID
+    $warehouseId ='68d957f2-33d9-4112-a61f-86640f3db9be';
+
+    if (empty($warehouseId)) {
+        dd('NimbusPost warehouse ID is missing. Please configure NIMBUSPOST_WAREHOUSE_ID.');
+    }
+
+        $payload = [
+
+            'order_number' => $order->order_code,
+
+            'order_type' => 'b2c',
+
+            'payment_mode' => $isCod ? 'cod' : 'prepaid',
+
+            'order_collectable_amount' => (float) ($isCod ? $orderAmount : 0),
+
+            'warehouse_id' => $warehouseId,
+
+            'shipping_address' => [
+
+                'name' => trim(
+                    ($address->first_name ?? '') . ' ' .
+                    ($address->last_name ?? '')
+                ) ?: 'Layerloop',
+
+                'email'       => $address->email ?? '',
+                'address'     => $address->address_line1 ?? '',
+                'address_opt' => $address->address_line2 ?? '',
+                'pincode'     => (int) ($address->zip ?? 124201),
+                'city'        => $address->city ?? 'Beri',
+                'state'       => $address->state ?? 'Haryana',
+                'country'     => 'India',
+                'phone'       => $address->phone ?? '',
+            ],
+
+            'items' => $items,
+
+            'package' => [
+
+                // Assuming package_weight is stored in grams
+                'weight' => (float) (($order->package_weight ?? 300) / 1000),
+
+                'length' => (float) ($order->package_length ?? 10),
+
+                'width'  => (float) ($order->package_breadth ?? 15),
+
+                'height' => (float) ($order->package_height ?? 15),
+
+            ],
+
+        ];
+        $response = Http::withHeaders([
+            
+            'x-api-key'    => 'npk_ed948cfe7b72394f',
+            'x-api-secret' => 'tiQVpBDnc6xUg2FsL1G-gBDqdmuV6L96',
+            'Accept'       => 'application/json',
+        ])
+        ->timeout(60)
+        ->post('https://api-v2.nimbuspost.com/v2/orders', $payload);
+
+        $ordercompletion = $response->json();
+        $orderupdate = $ordercompletion['data'] ?? null;
+
+
+        $order->update([
+                    'shipment_id'       => $orderupdate['id'] ?? null,
+                    'status'            => $orderupdate['status'] ?? $order->status,
+                    'shipment_order_id' => $orderupdate['order_number'] ?? $order->order_code,
+                ]);
+                dd($order);
+
+
+
+
+
+
+
     // 1. Check whether order already exists in NimbusPost
     $fromDate = Carbon::now()->subDays(7)->startOfDay();
     $toDate   = Carbon::now()->endOfDay();
