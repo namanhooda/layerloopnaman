@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Test;
+use App\Models\Order;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\OrderPlacedNotification;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Product;
@@ -10,6 +13,8 @@ use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 use Illuminate\Support\Facades\File;
+use Throwable;
+
 
 use Barryvdh\DomPDF\Facade\Pdf;
 
@@ -20,6 +25,26 @@ class TestController extends Controller
      */
 public function index()
 {
+
+$order = Order::first();
+              try {
+
+    Mail::to('shop.layerloop@gmail.com')
+        ->send(new OrderPlacedNotification($order));
+
+    dd('Mail sent successfully!');
+
+} catch (Throwable $e) {
+
+    dd([
+        'message' => $e->getMessage(),
+        'file'    => $e->getFile(),
+        'line'    => $e->getLine(),
+    ]);
+
+}
+
+
     $files = Storage::disk('public')->files('Uploadsdata');
 
     $products = [];

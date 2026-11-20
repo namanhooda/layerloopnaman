@@ -297,6 +297,10 @@
                     <a href="{{ route('admin.invoices.index') }}" class="btn btn-outline-secondary d-grid w-100">
                         <i class="fas fa-list me-2"></i> All Invoices
                     </a>
+                    <br><button type="button" onclick="downloadInvoicePDF()"
+    class="btn btn-danger d-grid w-100 mb-3">
+    <i class="fas fa-file-pdf me-2"></i> Download Invoice PDF
+</button>
 
                     <hr>
 
@@ -401,6 +405,70 @@
         }
     }
 
-</style>
+    #print-invoice {
+    background: #ffffff !important;
+    color: #333333;
+}
 
+#print-invoice img {
+    max-width: 100%;
+}
+
+#print-invoice .table {
+    color: #333333;
+}
+
+#print-invoice p,
+#print-invoice h4,
+#print-invoice h5,
+#print-invoice h6 {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
+
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script>
+    function downloadInvoicePDF() {
+
+        const element = document.getElementById('print-invoice');
+
+        const invoiceNumber = @json($invoice->invoice_number);
+
+        const options = {
+            margin: [8, 8, 8, 8],
+
+            filename: 'Invoice-' + invoiceNumber + '.pdf',
+
+            image: {
+                type: 'jpeg',
+                quality: 1
+            },
+
+            html2canvas: {
+                scale: 2,
+                useCORS: true,
+                logging: false,
+                backgroundColor: '#ffffff',
+                scrollY: 0
+            },
+
+            jsPDF: {
+                unit: 'mm',
+                format: 'a4',
+                orientation: 'portrait'
+            },
+
+            pagebreak: {
+                mode: ['css', 'legacy'],
+                avoid: ['tr', 'img']
+            }
+        };
+
+        html2pdf()
+            .set(options)
+            .from(element)
+            .save();
+    }
+</script>
 @endsection

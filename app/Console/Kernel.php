@@ -18,6 +18,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
        $schedule->job(new FetchNimbusShipmentsJob)->everyTwoHours();
+
+        $schedule->command('contracts:send-expiry-reminders')->dailyAt('09:00');
        
     }
 

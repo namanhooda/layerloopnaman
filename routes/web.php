@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\{RoleController, PermissionController, UserController, ProfileController, ProductController, ProductCategoryController, OrderController, CouponController, PrototypeController, InvoiceController};
+use App\Http\Controllers\Admin\{ContractController, RoleController, PermissionController, UserController, ProfileController, ProductController, ProductCategoryController, OrderController, CouponController, PrototypeController, InvoiceController};
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\{ShiprocketProductController,CartController,ShipmentsController, CheckoutController, FrontendController, AddressController, WishlistController};
@@ -21,6 +21,10 @@ use Spatie\Sitemap\Tags\Url;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\CustomAuthenticatedSessionController;
 use App\Http\Controllers\Admin\ExpenseController;
+use App\Http\Controllers\Admin\AdvancePaidController;
+use App\Http\Controllers\Admin\AdvanceReceivedController;
+use App\Http\Controllers\Admin\AdvanceSettlementController;
+use App\Http\Controllers\Admin\PartyController;
 
 
 ////////////////////////////  Shiprocket Product Sync  ////////////////////////////
@@ -163,6 +167,29 @@ Route::post('/remove-coupon', [CartController::class, 'removeCoupon'])->name('re
 //// Wishlist 
 Route::resource('wishlist', WishlistController::class)->only(['index', 'store', 'destroy']);
 
+
+
+Route::middleware(['web', 'auth'])->prefix('advance-payments')->group(function () {
+    Route::resource('parties', PartyController::class)->names('advance-parties')->except(['show']);
+
+    Route::resource('received', AdvanceReceivedController::class)
+        ->parameters(['received' => 'advance_received'])
+        ->names('advance-received');
+
+    Route::resource('paid', AdvancePaidController::class)
+        ->parameters(['paid' => 'advance_paid'])
+        ->names('advance-paid');
+
+    Route::get('{type}/{id}/settlements/create', [AdvanceSettlementController::class, 'create'])
+        ->whereIn('type', ['received', 'paid'])->name('advance-settlements.create');
+    Route::post('{type}/{id}/settlements', [AdvanceSettlementController::class, 'store'])
+        ->whereIn('type', ['received', 'paid'])->name('advance-settlements.store');
+    Route::get('settlements/{settlement}/edit', [AdvanceSettlementController::class, 'edit'])->name('advance-settlements.edit');
+    Route::put('settlements/{settlement}', [AdvanceSettlementController::class, 'update'])->name('advance-settlements.update');
+    Route::delete('settlements/{settlement}', [AdvanceSettlementController::class, 'destroy'])->name('advance-settlements.destroy');
+});
+
+
 Route::middleware('auth')->group(function () {
     Route::post('/checkout/place-order', [CheckoutController::class, 'placeOrder'])->name('checkout.placeOrder');
     Route::get('/checkout/verify-order', [CheckoutController::class, 'verifyPayment'])->name('order.payment.verify');
@@ -213,10 +240,23 @@ Route::middleware(['role:Admin'])->group(function () {
             Route::resource('banner', App\Http\Controllers\Admin\BannerController::class);
 
 
+
+        Route::get('contracts', [ContractController::class, 'index'])->name('contracts.index');
+        Route::get('contracts/create', [ContractController::class, 'create'])->name('contracts.create');
+        Route::post('contracts', [ContractController::class, 'store'])->name('contracts.store');
+        Route::get('contracts/{contract}', [ContractController::class, 'show'])->name('contracts.show');
+        Route::get('contracts/{contract}/edit', [ContractController::class, 'edit'])->name('contracts.edit');
+        Route::put('contracts/{contract}', [ContractController::class, 'update'])->name('contracts.update');
+        Route::delete('contracts/{contract}', [ContractController::class, 'destroy'])->name('contracts.destroy');
+        Route::get('contracts/{contract}/pdf', [ContractController::class, 'pdf'])->name('contracts.pdf');
+        Route::post('contracts/{contract}/renew', [ContractController::class, 'renew'])->name('contracts.renew');
+
             Route::resource('invoices', InvoiceController::class);
 
             Route::resource('expenses', ExpenseController::class)
-    ->names('expenses');
+            ->names('expenses'); 
+            Route::resource('advance', AdvanceReceivedController::class)
+            ->names('advance');
 
             Route::get('variant/{id}', [App\Http\Controllers\Admin\ProductController::class, 'variantCreate'])->name('products.variant');
 

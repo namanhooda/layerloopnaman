@@ -189,8 +189,8 @@
                     <div class="col-xl-6 col-sm-6">
                       <div class="card h-100">
                         <div class="card-header pb-2">
-                          <h5 class="card-title mb-1">82.5k</h5>
-                          <p class="card-subtitle">Expenses</p>
+                          <h5 class="card-title mb-1">{{ $arrayData['AdvanceReceived'] }}</h5>
+                          <p class="card-subtitle">Total Advances</p>
                         </div>
                         <div class="card-body">
                           <div id="expensesChart"></div>
@@ -339,24 +339,29 @@
                 </div>
                 <div class="card-body pb-0">
                     <ul class="p-0 m-0">
-                        @foreach($latestOrders as $order)
+                        @foreach($cartProducts as $order)
+                        @php
+                            $product = \App\Models\Product::find($order->product_id);
+                        @endphp
                         <li class="d-flex align-items-center mb-5">
                             <div class="me-4">
-                                <span class="badge bg-label-primary rounded p-1_5"><i
-                                        class="icon-base ti tabler-chart-pie-2 icon-md"></i></span>
+                                <span class="badge bg-label-primary rounded p-1_5">
+                                    <img src="{{ asset('storage/'.$product->featured_image) }}"
+                                            alt="{{ $product->name }}" style="    width: 18px;">
+                                </span>
                             </div>
                             <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                                 <div class="me-2">
                                     <h6 class="mb-0"><a
-                                            href="{{route('admin.orders.show', $order->id)}}">{{$order->order_code}}</a>
+                                            href="{{route('admin.products.show', $order->product_id)}}">{{ Str::limit($product->name ?? 'unknown', 15, '...') }}</a>
                                     </h6>
-                                    <small class="text-body">{{$order->user->name ?? 'unknown'}}</small>
+                                    <small class="text-body">{{$product->price ?? 'unknown'}}</small>
                                 </div>
                                 <div class="user-progress d-flex align-items-center gap-4">
-                                    <small>{{$order->total}}</small>
+                                    
                                     <div class="d-flex align-items-center gap-1">
                                         <small
-                                            class="text-body-secondary">{{ $order->created_at->diffForHumans() }}</small>
+                                            class="text-body-secondary">Total Carts - {{ $product->id ?? 'unknown' }}</small>
                                     </div>
                                 </div>
                             </div>

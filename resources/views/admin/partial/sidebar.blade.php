@@ -18,38 +18,39 @@
         </li>
 
         <!-- eCommerce -->
-        <li class="menu-item {{ request()->routeIs('admin.ecom.*') || request()->routeIs('admin.products.*') || request()->routeIs('admin.product-categories.*') || request()->routeIs('admin.orders.*')  || request()->routeIs('admin.coupons.*') ? 'active open' : '' }}">
+        <li
+            class="menu-item {{ request()->routeIs('admin.ecom.*') || request()->routeIs('admin.products.*') || request()->routeIs('admin.product-categories.*') || request()->routeIs('admin.orders.*')  || request()->routeIs('admin.coupons.*') ? 'active open' : '' }}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon icon-base ti tabler-shopping-cart"></i>
                 <div data-i18n="eCommerce">eCommerce</div>
             </a>
-                    <ul class="menu-sub">
-                        <li class="menu-item {{ request()->routeIs('admin.products.index') ? 'active' : '' }}">
-                            <a href="{{ route('admin.products.index') }}" class="menu-link">
-                                <div data-i18n="Product List">Product List</div>
-                            </a>
-                        </li>
-                        <li class="menu-item {{ request()->routeIs('admin.products.create') ? 'active' : '' }}">
-                            <a href="{{ route('admin.products.create') }}" class="menu-link">
-                                <div data-i18n="Add Product">Add Product</div>
-                            </a>
-                        </li>
-                        <li class="menu-item {{ request()->routeIs('admin.product-prototypes.index') ? 'active' : '' }}">
-                            <a href="{{ route('admin.product-prototypes.index') }}" class="menu-link">
-                                <div data-i18n="Proto Types">Proto Types</div>
-                            </a>
-                        </li>
-                        <li class="menu-item {{ request()->routeIs('admin.product-categories.index') ? 'active' : '' }}">
-                            <a href="{{ route('admin.product-categories.index') }}" class="menu-link">
-                                <div data-i18n="Category List">Category List</div>
-                            </a>
-                        </li>
-                        <li class="menu-item {{ request()->routeIs('admin.coupons.index') ? 'active' : '' }}">
-                            <a href="{{ route('admin.coupons.index') }}" class="menu-link">
-                                <div data-i18n="Coupons">Coupons</div>
-                            </a>
-                        </li>
-                    </ul>
+            <ul class="menu-sub">
+                <li class="menu-item {{ request()->routeIs('admin.products.index') ? 'active' : '' }}">
+                    <a href="{{ route('admin.products.index') }}" class="menu-link">
+                        <div data-i18n="Product List">Product List</div>
+                    </a>
+                </li>
+                <li class="menu-item {{ request()->routeIs('admin.products.create') ? 'active' : '' }}">
+                    <a href="{{ route('admin.products.create') }}" class="menu-link">
+                        <div data-i18n="Add Product">Add Product</div>
+                    </a>
+                </li>
+                <li class="menu-item {{ request()->routeIs('admin.product-prototypes.index') ? 'active' : '' }}">
+                    <a href="{{ route('admin.product-prototypes.index') }}" class="menu-link">
+                        <div data-i18n="Proto Types">Proto Types</div>
+                    </a>
+                </li>
+                <li class="menu-item {{ request()->routeIs('admin.product-categories.index') ? 'active' : '' }}">
+                    <a href="{{ route('admin.product-categories.index') }}" class="menu-link">
+                        <div data-i18n="Category List">Category List</div>
+                    </a>
+                </li>
+                <li class="menu-item {{ request()->routeIs('admin.coupons.index') ? 'active' : '' }}">
+                    <a href="{{ route('admin.coupons.index') }}" class="menu-link">
+                        <div data-i18n="Coupons">Coupons</div>
+                    </a>
+                </li>
+            </ul>
         </li>
         <!-- Profile -->
         <li class="menu-item  {{ request()->routeIs('admin.orders.index') ? 'active' : '' }}">
@@ -65,18 +66,38 @@
             </a>
         </li>
 
-        <!-- Profile -->
-        <li class="menu-item  {{ request()->routeIs('admin.expenses.index') ? 'active' : '' }}">
-            <a href="{{ route('admin.expenses.index') }}" class="menu-link">
-                <i class="menu-icon icon-base ti tabler-user"></i>
-                <div data-i18n="Expense List">Expense List</div>
+
+        <li
+            class="menu-item {{ request()->routeIs('admin.ecom.*') || request()->routeIs('admin.expenses.*') || request()->routeIs('admin.product-categories.*') || request()->routeIs('admin.orders.*')  || request()->routeIs('admin.coupons.*') ? 'active open' : '' }}">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon icon-base ti tabler-shopping-cart"></i>
+                <div data-i18n="Payments">Payments</div>
             </a>
+            <ul class="menu-sub">
+                <li class="menu-item {{ request()->routeIs('admin.expenses.index') ? 'active' : '' }}">
+                    <a href="{{ route('admin.expenses.index') }}" class="menu-link">
+
+                        <div data-i18n="Expense List">Expense List</div>
+                    </a>
+                </li>
+                <li class="menu-item {{ request()->routeIs('admin.advance.index') ? 'active' : '' }}">
+                    <a href="{{ route('admin.advance.index') }}" class="menu-link">
+
+                        <div data-i18n="Advance Payments">Advance Payments</div>
+                    </a>
+                </li>
+
+            </ul>
         </li>
+
+        <!-- Profile -->
+
         <!-- Users -->
 
         <!-- Roles & Permissions -->
         @can('role read')
-        <li class="menu-item {{ request()->routeIs('roles.*') || request()->routeIs('permissions.*') ? 'active open' : '' }}">
+        <li
+            class="menu-item {{ request()->routeIs('roles.*') || request()->routeIs('permissions.*') ? 'active open' : '' }}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon icon-base ti tabler-shield-lock"></i>
                 <div data-i18n="Roles & Permissions">Roles & Permissions</div>
@@ -102,7 +123,8 @@
 
         <!-- Blogs -->
         @can('blog read')
-        <li class="menu-item {{ request()->routeIs('admin.blogs.*') || request()->routeIs('admin.blog-categories.*') ? 'active open' : '' }}">
+        <li
+            class="menu-item {{ request()->routeIs('admin.blogs.*') || request()->routeIs('admin.blog-categories.*') ? 'active open' : '' }}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon icon-base ti tabler-news"></i>
                 <div data-i18n="Blogs">Blogs</div>
@@ -126,7 +148,8 @@
         </li>
         @endcan
         @can('blog read')
-        <li class="menu-item {{ request()->routeIs('orders.nimbusShipment.*') || request()->routeIs('orders.ShiprocketShipment.*') ? 'active open' : '' }}">
+        <li
+            class="menu-item {{ request()->routeIs('orders.nimbusShipment.*') || request()->routeIs('orders.ShiprocketShipment.*') ? 'active open' : '' }}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon icon-base ti tabler-settings"></i>
                 <div data-i18n="Shipments">Shipments</div>
@@ -157,7 +180,7 @@
         </li>
         @endcan
 
-       
+
 
         <!-- SEO Pages -->
         @can('pages read')
@@ -200,10 +223,16 @@
                 <div data-i18n="Setting">Setting</div>
             </a>
         </li>
-       
+
         <li class="menu-item {{ request()->routeIs('profile.index') ? 'active' : '' }}">
             <a href="{{ route('admin.contact.index') }}" class="menu-link">
-               <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-phone"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" /></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="icon icon-tabler icons-tabler-outline icon-tabler-phone">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path
+                        d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" />
+                    </svg>
 
 
                 <div data-i18n="Contacts">Inquaries</div>

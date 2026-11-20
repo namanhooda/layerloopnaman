@@ -6,6 +6,7 @@ use App\Services\GoogleAnalyticsService;
 use App\Models\Product;
 use App\Models\Order;
 use App\Models\User;
+use App\Models\AdvanceReceived;
 use DB;
 use App\Models\Cart;
 
@@ -56,15 +57,29 @@ class DashboardController extends Controller
         ->where('status', 'delivered')
         ->sum('total');
 
+
+        $totalSale = (clone $order)
+            ->where('status', 'delivered')
+            ->sum('total');
+
+    $AdvanceReceived = AdvanceReceived::query()
+        ->where('status', '!=', 'fully_settled')
+        ->withSum('settlements', 'amount')
+        ->get()
+        ->sum(function ($advance) {
+            return $advance->amount - ($advance->settlements_sum_amount ?? 0);
+        });
     $arrayData = [
         'totalsalethismonth' => $totalSaleThisMonth,
         'totalOrders'        => (clone $order)->count(),
         'totalUsers'         => (clone $user)->count(),
         'totalProduct'       => (clone $product)->count(),
-        'totalSale'          => (clone $order)
-            ->where('status', 'delivered')
-            ->sum('total'),
+        'totalSale'          => $totalSale + $AdvanceReceived,
+        'AdvanceReceived'    => $AdvanceReceived,
     ];
+
+    
+    $AdvanceReceived = AdvanceReceived::query()->where('status', 'pending')->sum('amount');
 
     $report = collect($analytics->getReport())
         ->sortByDesc(function ($row) {
@@ -72,9 +87,9 @@ class DashboardController extends Controller
         })
         ->values();
 
- $request->validate([
-        'month' => 'nullable|date_format:Y-m',
-    ]);
+    $request->validate([
+            'month' => 'nullable|date_format:Y-m',
+        ]);
 
     $analyticsReport = $analytics->getReporttotsl(
         $request->month
@@ -89,7 +104,8 @@ class DashboardController extends Controller
         'selectedMonth',
         'latestOrders',
         'cartProducts',
-        'analyticsReport'
+        'analyticsReport',
+        'AdvanceReceived'
     ));
 }
 

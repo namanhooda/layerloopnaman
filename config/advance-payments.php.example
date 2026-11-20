@@ -1,0 +1,21 @@
+<?php
+
+return [
+    /*
+    | Existing Eloquent models that may be linked to a Party record.
+    | Replace these examples with the model classes used in your application.
+    */
+    'partyable_models' => [
+        // App\Models\Customer::class,
+        // App\Models\Vendor::class,
+    ],
+
+    'payment_modes' => [
+        'cash' => 'Cash',
+        'bank' => 'Bank Transfer',
+        'upi' => 'UPI',
+        'cheque' => 'Cheque',
+        'card' => 'Card',
+        'other' => 'Other',
+    ],
+];
