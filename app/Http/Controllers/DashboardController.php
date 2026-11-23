@@ -69,8 +69,22 @@ class DashboardController extends Controller
         ->sum(function ($advance) {
             return $advance->amount - ($advance->settlements_sum_amount ?? 0);
         });
+
+        $AdvanceReceivedthismonth = AdvanceReceived::query()
+        ->whereBetween('created_at', [
+            $monthStart,
+            $monthEnd
+        ])
+        ->where('status', '!=', 'fully_settled')
+        ->withSum('settlements', 'amount')
+        ->get()
+        ->sum(function ($advance) {
+            return $advance->amount - ($advance->settlements_sum_amount ?? 0);
+        });
+
+
     $arrayData = [
-        'totalsalethismonth' => $totalSaleThisMonth,
+        'totalsalethismonth' => $totalSaleThisMonth + $AdvanceReceivedthismonth,
         'totalOrders'        => (clone $order)->count(),
         'totalUsers'         => (clone $user)->count(),
         'totalProduct'       => (clone $product)->count(),
@@ -79,8 +93,6 @@ class DashboardController extends Controller
     ];
 
     
-    $AdvanceReceived = AdvanceReceived::query()->where('status', 'pending')->sum('amount');
-
     $report = collect($analytics->getReport())
         ->sortByDesc(function ($row) {
             return $row->getDimensionValues()[0]->getValue();
